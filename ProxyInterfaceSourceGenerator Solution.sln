@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31512.422
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CE637DC-E8F5-4603-8B57-E51A32F631F1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{19009F5B-3267-45E2-A8B6-89F2AB47D72C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src-examples", "src-examples", "{38BA087F-EDA1-4F8A-A140-85B84791B815}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGenerator", "src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj", "{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumer", "src-examples\ProxyInterfaceConsumer\ProxyInterfaceConsumer.csproj", "{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD} = {ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}
+		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {585F071D-051D-441C-9C6B-226D9E15A1F5}
+	EndGlobalSection
+EndGlobal
