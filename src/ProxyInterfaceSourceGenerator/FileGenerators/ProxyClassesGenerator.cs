@@ -9,12 +9,12 @@ using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ClassLibrarySourceGen
 {
-    internal class PartialInterfacesGenerator : IFilesGenerator
+    internal class ProxyClassesGenerator : IFilesGenerator
     {
         private readonly GeneratorExecutionContext _context;
         private readonly IDictionary<InterfaceDeclarationSyntax, string> _candidateInterfaces;
 
-        public PartialInterfacesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, string> candidateInterfaces)
+        public ProxyClassesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, string> candidateInterfaces)
         {
             _context = context;
             _candidateInterfaces = candidateInterfaces;
@@ -24,33 +24,42 @@ namespace ClassLibrarySourceGen
         {
             foreach (var ci in _candidateInterfaces)
             {
-                string interfaceName = $"I{ci.Value.Split('.').Last()}";
+                string interfaceName = $"{ci.Value.Split('.').Last()}";
                 yield return new Data
                 {
-                    FileName = $"I{interfaceName}.cs",
-                    Text = CreatePartialInterfaceCode(_context.Compilation.GetTypeByMetadataName(ci.Value), interfaceName)
+                    FileName = $"{interfaceName}Proxy.cs",
+                    Text = CreateProxyClassCode(_context.Compilation.GetTypeByMetadataName(ci.Value), interfaceName)
                 };
             }
         }
 
-        private string CreatePartialInterfaceCode(INamedTypeSymbol symbol, string interfaceName) => $@"using System;
+        private string CreateProxyClassCode(INamedTypeSymbol symbol, string interfaceName) => $@"using System;
 
 namespace {symbol.ContainingNamespace}
 {{
-    public partial interface {interfaceName}
+    public class {interfaceName}Proxy : I{interfaceName}
     {{
+        private {interfaceName} _instance;
+
+        public {interfaceName}Proxy({interfaceName} instance)
+        {{
+            _instance = instance;
+        }}
+
 {GenerateSimpleProperties(symbol)}
 
 {GenerateMethods(symbol)}
     }}
-}}";
+}}"; //{GenerateMethods(symbol)}
+
+        
 
         private string GenerateSimpleProperties(INamedTypeSymbol symbol)
         {
             var str = new StringBuilder();
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
             {
-                str.AppendLine($"        {property.ToCode()}");
+                str.AppendLine($"        public {property.ToProxyCode()}");
                 str.AppendLine();
             }
 
@@ -62,7 +71,7 @@ namespace {symbol.ContainingNamespace}
             var str = new StringBuilder();
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
-                str.AppendLine($"        {method.ToCode()};");
+                str.AppendLine($"        public {method.ToProxyCode()}");
                 str.AppendLine();
             }
 

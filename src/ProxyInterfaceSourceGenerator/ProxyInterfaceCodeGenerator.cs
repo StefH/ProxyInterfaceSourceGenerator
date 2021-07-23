@@ -15,10 +15,10 @@ namespace ProxyInterfaceSourceGenerator
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            if (!Debugger.IsAttached)
-            {
-                Debugger.Launch();
-            }
+            //if (!Debugger.IsAttached)
+            //{
+            //    Debugger.Launch();
+            //}
 
             context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
         }
@@ -35,9 +35,14 @@ namespace ProxyInterfaceSourceGenerator
             var p = context.Compilation.GetTypeByMetadataName("SourceGeneratorInterface.Person");
             var ec = context.Compilation.GetTypeByMetadataName("Microsoft.CodeAnalysis.GeneratorExecutionContext");
 
-            var generator = new PartialInterfacesGenerator(context, receiver.CandidateInterfaces);
+            var partialInterfacesGenerator = new PartialInterfacesGenerator(context, receiver.CandidateInterfaces);
+            foreach (var data in partialInterfacesGenerator.GenerateFiles())
+            {
+                context.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+            }
 
-            foreach (var data in generator.GenerateFiles())
+            var classesGenerator = new ProxyClassesGenerator(context, receiver.CandidateInterfaces);
+            foreach (var data in classesGenerator.GenerateFiles())
             {
                 context.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
@@ -49,6 +54,11 @@ namespace ProxyInterfaceSourceGenerator
         public int Id { get; set; }
 
         public Clazz C { get; }
+
+        public int Add(string s)
+        {
+            return 600;
+        }
     }
 
     public sealed class Clazz
@@ -61,6 +71,8 @@ namespace ProxyInterfaceSourceGenerator
         int Id { get; set; }
 
         IClazz C { get; }
+
+        int Add(string s);
     }
 
     public interface IClazz
@@ -88,6 +100,8 @@ namespace ProxyInterfaceSourceGenerator
         }
 
         public IClazz C => _clazz;
+
+        public int Add(string s) => _instance.Add(s);
     }
 
     public class ClazzMock : IClazz
@@ -99,11 +113,7 @@ namespace ProxyInterfaceSourceGenerator
             _instance = instance;
         }
 
-        public string Name
-        {
-            get => _instance.Name;
-            set => _instance.Name = value;
-        }
+        public string Name { get => _instance.Name;  set => _instance.Name = value; }
     }
 
     public interface IPrintable
