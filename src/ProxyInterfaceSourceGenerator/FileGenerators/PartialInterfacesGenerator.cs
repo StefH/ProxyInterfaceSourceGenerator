@@ -48,7 +48,7 @@ namespace {symbol.ContainingNamespace}
         private string GenerateSimpleProperties(INamedTypeSymbol symbol)
         {
             var str = new StringBuilder();
-            foreach (IPropertySymbol property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
             {
                 str.AppendLine($"        {property.ToCode()}");
                 str.AppendLine();
@@ -60,7 +60,7 @@ namespace {symbol.ContainingNamespace}
         private string GenerateMethods(INamedTypeSymbol symbol)
         {
             var str = new StringBuilder();
-            foreach (IMethodSymbol method in MemberHelper.GetPublicMethods(symbol))
+            foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
                 str.AppendLine($"        {method.ToCode()}");
                 str.AppendLine();
