@@ -7,16 +7,19 @@ namespace ProxyInterfaceSourceGenerator.Utils
 {
     internal static class MemberHelper
     {
-        private static string[] ExcludedMethods = new string[] { "ToString", "GetHashCode" };
+        private static string[] _excludedMethods = new string[] { "ToString", "GetHashCode" };
 
-        public static IEnumerable<IPropertySymbol> GetPublicProperties(INamedTypeSymbol classSymbol, Func<IPropertySymbol, bool> filter)
+        public static IEnumerable<IPropertySymbol> GetPublicProperties(INamedTypeSymbol classSymbol, params Func<IPropertySymbol, bool>[] filters)
         {
-            return GetPublicMembers(classSymbol, p => p.Kind == SymbolKind.Property, filter);
+            var allFilters = new List<Func<IPropertySymbol, bool>>(filters);
+            allFilters.Add(p => p.Kind == SymbolKind.Property);
+
+            return GetPublicMembers(classSymbol, allFilters.ToArray());
         }
 
-        public static IEnumerable<IMethodSymbol> GetPublicMethods(INamedTypeSymbol classSymbol, Func<IMethodSymbol, bool> filter = null)
+        public static IEnumerable<IMethodSymbol> GetPublicMethods(INamedTypeSymbol classSymbol, Func<IMethodSymbol, bool>? filter = null)
         {
-            if (filter == null)
+            if (filter is null)
             {
                 filter = _ => true;
             }
@@ -24,7 +27,7 @@ namespace ProxyInterfaceSourceGenerator.Utils
             return GetPublicMembers(classSymbol,
                 m => m.Kind == SymbolKind.Method,
                 m => m.MethodKind == MethodKind.Ordinary,
-                m => !ExcludedMethods.Contains(m.Name),
+                m => !_excludedMethods.Contains(m.Name),
                 filter);
         }
 

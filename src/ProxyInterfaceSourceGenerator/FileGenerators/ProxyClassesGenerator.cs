@@ -12,10 +12,10 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class ProxyClassesGenerator : IFilesGenerator
     {
-        private readonly GeneratorExecutionContext _context;
+        private readonly Context _context;
         private readonly IDictionary<InterfaceDeclarationSyntax, ProxyData> _candidateInterfaces;
 
-        public ProxyClassesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
+        public ProxyClassesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
         {
             _context = context;
             _candidateInterfaces = candidateInterfaces;
@@ -25,7 +25,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _candidateInterfaces)
             {
-                var symbol = _context.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
+                var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
                 if (symbol is null)
                 {
                     throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
@@ -33,11 +33,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
                 string className = $"{ci.Value.TypeName.Split('.').Last()}";
 
-                yield return new Data
-                {
-                    FileName = $"{className}Proxy.cs",
-                    Text = CreateProxyClassCode(symbol, className)
-                };
+                yield return new Data($"{className}Proxy.cs", CreateProxyClassCode(symbol, className));
             }
         }
 
@@ -65,7 +61,7 @@ namespace {symbol.ContainingNamespace}
             var str = new StringBuilder();
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
             {
-                str.AppendLine($"        public {property.ToProxyCode()}");
+                str.AppendLine($"        public {property.ToPropertyTextForClass()}");
                 str.AppendLine();
             }
 
@@ -77,7 +73,7 @@ namespace {symbol.ContainingNamespace}
             var str = new StringBuilder();
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
-                str.AppendLine($"        public {method.ToProxyCode()}");
+                str.AppendLine($"        public {method.ToMethodTextForClass()}");
                 str.AppendLine();
             }
 

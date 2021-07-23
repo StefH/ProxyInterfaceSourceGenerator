@@ -1,9 +1,6 @@
 ﻿namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
-    internal record Data
+    internal record Data(string FileName, string Text)
     {
-        public string FileName { get; init; }
-
-        public string Text { get; init; }
     }
 }

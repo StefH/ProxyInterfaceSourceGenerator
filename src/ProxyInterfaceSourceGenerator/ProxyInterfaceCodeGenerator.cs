@@ -13,19 +13,22 @@ namespace ProxyInterfaceSourceGenerator
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            //if (!System.DiagnosticsDebugger.IsAttached)
-            //{
-            //    System.DiagnosticsDebugger.Launch();
-            //}
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
 
             context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
         }
-        public void Execute(GeneratorExecutionContext context)
-        {
-            var attributeData = _proxyAttributeGenerator.GenerateFile();
-            context.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
 
-            if (context.SyntaxReceiver is not ProxySyntaxReceiver receiver)
+        public void Execute(GeneratorExecutionContext ctx)
+        {
+            var context = new Context(ctx);
+
+            var attributeData = _proxyAttributeGenerator.GenerateFile();
+            context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+
+            if (context.GeneratorExecutionContext.SyntaxReceiver is not ProxySyntaxReceiver receiver)
             {
                 return;
             }
@@ -33,13 +36,13 @@ namespace ProxyInterfaceSourceGenerator
             var partialInterfacesGenerator = new PartialInterfacesGenerator(context, receiver.CandidateInterfaces);
             foreach (var data in partialInterfacesGenerator.GenerateFiles())
             {
-                context.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
 
             var classesGenerator = new ProxyClassesGenerator(context, receiver.CandidateInterfaces);
             foreach (var data in classesGenerator.GenerateFiles())
             {
-                context.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
         }
     }

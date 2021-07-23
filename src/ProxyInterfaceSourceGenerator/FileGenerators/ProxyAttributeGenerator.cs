@@ -6,10 +6,7 @@
 
         public Data GenerateFile()
         {
-            return new Data
-            {
-                FileName = $"{ClassName}.cs",
-                Text = $@"using System;
+            return new Data($"{ClassName}.cs", $@"using System;
 
 namespace ProxyInterfaceGenerator
 {{
@@ -25,8 +22,7 @@ namespace ProxyInterfaceGenerator
             ProxyAll = proxyAll;
         }}
     }}
-}}"
-            };
+}}");
         }
     }
 }

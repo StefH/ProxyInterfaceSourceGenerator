@@ -1,9 +1,6 @@
 ﻿namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 {
-    internal record ProxyData
+    internal record ProxyData(string TypeName, bool ProxyAll)
     {
-        public string TypeName { get; init; }
-
-        public bool ProxyAll { get; init; }
     }
 }

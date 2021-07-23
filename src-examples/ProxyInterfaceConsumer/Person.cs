@@ -1,4 +1,6 @@
-﻿namespace SourceGeneratorInterface
+﻿using Microsoft.CodeAnalysis;
+
+namespace SourceGeneratorInterface
 {
     public class Person
     {
@@ -23,6 +25,10 @@
         {
             //
         }
+
+        public Compilation Compilation { get; }
+
+        public INamedTypeSymbol MyNamedTypeSymbol { get;set; }
     }
 
     public class Address
