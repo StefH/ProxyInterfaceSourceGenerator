@@ -17,10 +17,12 @@ namespace ProxyInterfaceGenerator
     public class {ClassName} : Attribute
     {{
         public Type Type {{ get; }}
+        public bool ProxyAll {{ get; }}
 
-        public {ClassName}(Type type)
+        public {ClassName}(Type type, bool proxyAll = true)
         {{
             Type = type;
+            ProxyAll = proxyAll;
         }}
     }}
 }}"

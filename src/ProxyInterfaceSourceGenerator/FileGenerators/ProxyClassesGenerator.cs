@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.FileGenerators;
+using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 
-namespace ClassLibrarySourceGen
+namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class ProxyClassesGenerator : IFilesGenerator
     {
         private readonly GeneratorExecutionContext _context;
-        private readonly IDictionary<InterfaceDeclarationSyntax, string> _candidateInterfaces;
+        private readonly IDictionary<InterfaceDeclarationSyntax, ProxyData> _candidateInterfaces;
 
-        public ProxyClassesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, string> candidateInterfaces)
+        public ProxyClassesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
         {
             _context = context;
             _candidateInterfaces = candidateInterfaces;
@@ -24,24 +25,31 @@ namespace ClassLibrarySourceGen
         {
             foreach (var ci in _candidateInterfaces)
             {
-                string interfaceName = $"{ci.Value.Split('.').Last()}";
+                var symbol = _context.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
+                if (symbol is null)
+                {
+                    throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
+                }
+
+                string className = $"{ci.Value.TypeName.Split('.').Last()}";
+
                 yield return new Data
                 {
-                    FileName = $"{interfaceName}Proxy.cs",
-                    Text = CreateProxyClassCode(_context.Compilation.GetTypeByMetadataName(ci.Value), interfaceName)
+                    FileName = $"{className}Proxy.cs",
+                    Text = CreateProxyClassCode(symbol, className)
                 };
             }
         }
 
-        private string CreateProxyClassCode(INamedTypeSymbol symbol, string interfaceName) => $@"using System;
+        private string CreateProxyClassCode(INamedTypeSymbol symbol, string className) => $@"using System;
 
 namespace {symbol.ContainingNamespace}
 {{
-    public class {interfaceName}Proxy : I{interfaceName}
+    public class {className}Proxy : I{className}
     {{
-        private {interfaceName} _instance;
+        private {className} _instance;
 
-        public {interfaceName}Proxy({interfaceName} instance)
+        public {className}Proxy({className} instance)
         {{
             _instance = instance;
         }}

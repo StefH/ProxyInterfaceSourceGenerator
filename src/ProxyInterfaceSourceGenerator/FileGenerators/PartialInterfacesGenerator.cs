@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.FileGenerators;
+using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 
-namespace ClassLibrarySourceGen
+namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class PartialInterfacesGenerator : IFilesGenerator
     {
         private readonly GeneratorExecutionContext _context;
-        private readonly IDictionary<InterfaceDeclarationSyntax, string> _candidateInterfaces;
+        private readonly IDictionary<InterfaceDeclarationSyntax, ProxyData> _candidateInterfaces;
 
-        public PartialInterfacesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, string> candidateInterfaces)
+        public PartialInterfacesGenerator(GeneratorExecutionContext context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
         {
             _context = context;
             _candidateInterfaces = candidateInterfaces;
@@ -24,11 +25,18 @@ namespace ClassLibrarySourceGen
         {
             foreach (var ci in _candidateInterfaces)
             {
-                string interfaceName = $"I{ci.Value.Split('.').Last()}";
+                var symbol = _context.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
+                if (symbol is null)
+                {
+                    throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
+                }
+
+                string interfaceName = $"I{ci.Value.TypeName.Split('.').Last()}";
+
                 yield return new Data
                 {
                     FileName = $"I{interfaceName}.cs",
-                    Text = CreatePartialInterfaceCode(_context.Compilation.GetTypeByMetadataName(ci.Value), interfaceName)
+                    Text = CreatePartialInterfaceCode(symbol, interfaceName)
                 };
             }
         }
