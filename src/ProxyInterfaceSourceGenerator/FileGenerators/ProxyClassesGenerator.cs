@@ -50,9 +50,7 @@ namespace {symbol.ContainingNamespace}
 
 {GenerateMethods(symbol)}
     }}
-}}"; //{GenerateMethods(symbol)}
-
-        
+}}";
 
         private string GenerateSimpleProperties(INamedTypeSymbol symbol)
         {

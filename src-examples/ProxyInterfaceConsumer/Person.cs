@@ -18,6 +18,11 @@
         {
             return 600;
         }
+
+        public void Void()
+        {
+            //
+        }
     }
 
     public class Address
