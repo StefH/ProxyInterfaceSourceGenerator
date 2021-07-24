@@ -5,18 +5,20 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class SymbolExtensions
     {
-        public static string ToPropertyText(this IPropertySymbol property)
+        public static string ToPropertyText(this IPropertySymbol property, string? overrideType = null)
         {
-            string get = property.GetMethod != null ? "get; " : string.Empty;
-            string set = property.SetMethod != null ? "set; " : string.Empty;
+            var get = property.GetMethod != null ? "get; " : string.Empty;
+            var set = property.SetMethod != null ? "set; " : string.Empty;
 
-            return $"{property.Type} {property.Name} {{ {get}{set}}}";
+            var type = !string.IsNullOrEmpty(overrideType) ? overrideType : $"{property.Type}";
+
+            return $"{type} {property.Name} {{ {get}{set}}}";
         }
 
         public static string ToPropertyTextForClass(this IPropertySymbol property)
         {
-            string get = property.GetMethod != null ? $"get => _instance.{property.Name}; " : string.Empty;
-            string set = property.SetMethod != null ? $"set => _instance.{property.Name} = value; " : string.Empty;
+            var get = property.GetMethod != null ? $"get => _instance.{property.Name}; " : string.Empty;
+            var set = property.SetMethod != null ? $"set => _instance.{property.Name} = value; " : string.Empty;
 
             return $"{property.Type} {property.Name} {{ {get}{set}}}";
         }

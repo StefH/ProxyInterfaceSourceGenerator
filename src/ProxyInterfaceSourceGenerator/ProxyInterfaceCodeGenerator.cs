@@ -13,17 +13,20 @@ namespace ProxyInterfaceSourceGenerator
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            //if (!System.Diagnostics.Debugger.IsAttached)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
 
             context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
         }
 
         public void Execute(GeneratorExecutionContext ctx)
         {
-            var context = new Context(ctx);
+            var context = new Context
+            {
+                GeneratorExecutionContext = ctx
+            };
 
             var attributeData = _proxyAttributeGenerator.GenerateFile();
             context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));

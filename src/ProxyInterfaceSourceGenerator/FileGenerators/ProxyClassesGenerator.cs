@@ -9,26 +9,18 @@ using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
-    internal class ProxyClassesGenerator : IFilesGenerator
+    internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
-        private readonly Context _context;
-        private readonly IDictionary<InterfaceDeclarationSyntax, ProxyData> _candidateInterfaces;
-
-        public ProxyClassesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
+        public ProxyClassesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces) :
+            base(context, candidateInterfaces)
         {
-            _context = context;
-            _candidateInterfaces = candidateInterfaces;
         }
 
         public IEnumerable<FileData> GenerateFiles()
         {
             foreach (var ci in _candidateInterfaces)
             {
-                var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
-                if (symbol is null)
-                {
-                    throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
-                }
+                var symbol = GetType(ci.Value.TypeName);
 
                 yield return new FileData(
                      $"{ci.Value.ClassName}Proxy.cs",
@@ -44,20 +36,25 @@ namespace {symbol.ContainingNamespace}
     public class {className}Proxy : {interfaceName}
     {{
         private {className} _instance;
-{GenerateComplexFields(symbol,proxyAll)}
+{GeneratePrivateComplexInterfaceFields(symbol,proxyAll)}
 
         public {className}Proxy({className} instance)
         {{
             _instance = instance;
         }}
 
-{GenerateProperties(symbol, proxyAll)}
+{GeneratePublicProperties(symbol, proxyAll)}
 
-{GenerateMethods(symbol)}
+{GeneratePublicMethods(symbol)}
     }}
 }}";
-        private string GenerateComplexFields(INamedTypeSymbol symbol, bool proxyAll)
+        private string GeneratePrivateComplexInterfaceFields(INamedTypeSymbol symbol, bool proxyAll)
         {
+            if (!proxyAll)
+            {
+                return string.Empty;
+            }
+
             var str = new StringBuilder();
 
             foreach (var property in GetComplexProperties(symbol, proxyAll))
@@ -68,7 +65,7 @@ namespace {symbol.ContainingNamespace}
             return str.ToString();
         }
 
-        private string GenerateProperties(INamedTypeSymbol symbol, bool proxyAll)
+        private string GeneratePublicProperties(INamedTypeSymbol symbol, bool proxyAll)
         {
             var str = new StringBuilder();
 
@@ -115,7 +112,7 @@ namespace {symbol.ContainingNamespace}
             return MemberHelper.GetPublicProperties(symbol, complexFilters.ToArray());
         }
 
-        private string GenerateMethods(INamedTypeSymbol symbol)
+        private string GeneratePublicMethods(INamedTypeSymbol symbol)
         {
             var str = new StringBuilder();
             foreach (var method in MemberHelper.GetPublicMethods(symbol))

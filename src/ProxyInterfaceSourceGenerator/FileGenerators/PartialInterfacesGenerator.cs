@@ -10,32 +10,38 @@ using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
-    internal class PartialInterfacesGenerator : IFilesGenerator
+    internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
-        private readonly Context _context;
-        private readonly IDictionary<InterfaceDeclarationSyntax, ProxyData> _candidateInterfaces;
+        private readonly List<FileData> files = new List<FileData>();
 
-        public PartialInterfacesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
+        public PartialInterfacesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces) :
+            base(context, candidateInterfaces)
         {
-            _context = context;
-            _candidateInterfaces = candidateInterfaces;
         }
 
         public IEnumerable<FileData> GenerateFiles()
         {
             foreach (var ci in _candidateInterfaces)
             {
-                var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(ci.Value.TypeName);
-                if (symbol is null)
-                {
-                    throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
-                }
-
-                yield return new FileData(
-                    $"{ci.Value.InterfaceName}.cs",
-                    CreatePartialInterfaceCode(symbol, ci.Value.InterfaceName, ci.Value.ProxyAll)
-                );
+                var file = GenerateFile(ci.Value.InterfaceName, ci.Value.TypeName, ci.Value.ProxyAll);
+                files.Add(file);
             }
+
+            return files;
+        }
+
+        private FileData GenerateFile(string interfaceName, string typeName, bool proxyAll)
+        {
+            var symbol = GetType(typeName);
+
+            var file = new FileData(
+                $"{interfaceName}.cs",
+                CreatePartialInterfaceCode(symbol, interfaceName, proxyAll)
+            );
+
+            _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = null, FileData = file });
+
+            return file;
         }
 
         private string CreatePartialInterfaceCode(INamedTypeSymbol symbol, string interfaceName, bool proxyAll) => $@"using System;
@@ -78,14 +84,29 @@ namespace {symbol.ContainingNamespace}
                 p => p.Type.TypeKind != TypeKind.Interface
             };
 
-            if (proxyAll)
-            {
-
-            }
-
             foreach (var property in MemberHelper.GetPublicProperties(symbol, complexFilters.ToArray()))
             {
-                str.AppendLine($"        {property.ToPropertyText()}");
+                if (proxyAll)
+                {
+                    var existing = _context.GeneratedData
+                        .FirstOrDefault(x => x.ClassName == $"{property.Name}Proxy" || x.InterfaceName == $"I{property.Name}");
+
+                    if (existing is not null)
+                    {
+                        str.AppendLine($"        {property.ToPropertyText(existing.InterfaceName)}");
+                    }
+                    else
+                    {
+                        // Create new
+                        var typeName = $"{property.Type}";
+                        var file = GenerateFile($"I{property.Name}", typeName, false);
+                        str.AppendLine($"        // {property.ToPropertyText($"I{property.Name}")}");
+                    }
+                }
+                else
+                {
+                    str.AppendLine($"        {property.ToPropertyText()}");
+                }
                 str.AppendLine();
             }
 

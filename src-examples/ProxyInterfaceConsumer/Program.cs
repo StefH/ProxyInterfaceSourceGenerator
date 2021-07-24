@@ -8,8 +8,8 @@ namespace SourceGeneratorInterface
         {
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
-            p.MyNamedTypeSymbol = null;
-            p.Compilation = null;
+            //p.MyNamedTypeSymbol = null;
+            //p.Compilation = null;
             //p.Add("x");
             //p.Void();
             Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(p));
