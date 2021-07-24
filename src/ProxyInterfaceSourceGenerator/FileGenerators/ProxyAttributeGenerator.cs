@@ -4,9 +4,9 @@
     {
         private const string ClassName = "ProxyAttribute";
 
-        public Data GenerateFile()
+        public FileData GenerateFile()
         {
-            return new Data($"{ClassName}.cs", $@"using System;
+            return new FileData($"{ClassName}.cs", $@"using System;
 
 namespace ProxyInterfaceGenerator
 {{

@@ -19,7 +19,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
         private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, out ProxyData data)
         {
-            data = new(string.Empty, false);
+            data = new(string.Empty, string.Empty, false);
 
             // TODO : how to check if the InterfaceDeclarationSyntax has 'partial' ?
             var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => a.Name.ToString().Equals("ProxyInterfaceGenerator.Proxy")));
@@ -36,6 +36,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
             data = new
             (
+                interfaceDeclarationSyntax.Identifier.ToString(),
                 argumentList.Arguments[0].Expression.ChildNodes().First().GetText().ToString(),
                 bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
             );

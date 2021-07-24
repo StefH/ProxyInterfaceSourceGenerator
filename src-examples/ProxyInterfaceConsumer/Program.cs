@@ -6,10 +6,12 @@ namespace SourceGeneratorInterface
     {
         public static void Main()
         {
-            PersonProxy p = new PersonProxy(new Person());
+            IPerson p = new PersonProxy(new Person());
             p.Name = "test";
-            p.Add("x");
-            p.Void();
+            p.MyNamedTypeSymbol = null;
+            p.Compilation = null;
+            //p.Add("x");
+            //p.Void();
             Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(p));
         }
     }

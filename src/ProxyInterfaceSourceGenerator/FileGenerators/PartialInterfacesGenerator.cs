@@ -21,7 +21,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             _candidateInterfaces = candidateInterfaces;
         }
 
-        public IEnumerable<Data> GenerateFiles()
+        public IEnumerable<FileData> GenerateFiles()
         {
             foreach (var ci in _candidateInterfaces)
             {
@@ -31,9 +31,10 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                     throw new Exception($"The type '{ci.Value.TypeName}' is not found.");
                 }
 
-                string interfaceName = $"I{ci.Value.TypeName.Split('.').Last()}";
-
-                yield return new Data($"I{interfaceName}.cs", CreatePartialInterfaceCode(symbol, interfaceName, ci.Value.ProxyAll));
+                yield return new FileData(
+                    $"{ci.Value.InterfaceName}.cs",
+                    CreatePartialInterfaceCode(symbol, ci.Value.InterfaceName, ci.Value.ProxyAll)
+                );
             }
         }
 
@@ -43,46 +44,35 @@ namespace {symbol.ContainingNamespace}
 {{
     public partial interface {interfaceName}
     {{
-{GenerateSimpleProperties(symbol)}
-
-{GenerateInterfaceProperties(symbol)}
-
-{GenerateComplexProperties(symbol, proxyAll)}
+{GenerateProperties(symbol, proxyAll)}
 
 {GenerateMethods(symbol)}
     }}
 }}";
 
-        private string GenerateSimpleProperties(INamedTypeSymbol symbol)
+        private string GenerateProperties(INamedTypeSymbol symbol, bool proxyAll)
         {
             var str = new StringBuilder();
+
+            // SimpleProperties
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
             {
-                str.AppendLine($"        {property.ToPropertyTextForInterface()}");
+                str.AppendLine($"        {property.ToPropertyText()}");
                 str.AppendLine();
             }
 
-            return str.ToString();
-        }
-
-        private string GenerateInterfaceProperties(INamedTypeSymbol symbol)
-        {
-            var str = new StringBuilder();
+            // InterfaceProperties
             foreach (var property in MemberHelper.GetPublicProperties(symbol,
                 p => !(p.Type.IsValueType || p.Type.ToString() == "string"),
                 p => p.Type.TypeKind == TypeKind.Interface)
             )
             {
-                str.AppendLine($"        {property.ToPropertyTextForInterface()}");
+                str.AppendLine($"        {property.ToPropertyText()}");
                 str.AppendLine();
             }
 
-            return "// GenerateInterfaceProperties";// str.ToString();
-        }
-
-        private string GenerateComplexProperties(INamedTypeSymbol symbol, bool proxyAll)
-        {
-            var filters = new List<Func<IPropertySymbol, bool>>
+            // ComplexProperties
+            var complexFilters = new List<Func<IPropertySymbol, bool>>
             {
                 p => !(p.Type.IsValueType || p.Type.ToString() == "string"),
                 p => p.Type.TypeKind != TypeKind.Interface
@@ -93,14 +83,13 @@ namespace {symbol.ContainingNamespace}
 
             }
 
-            var str = new StringBuilder();
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, filters.ToArray()))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol, complexFilters.ToArray()))
             {
-                str.AppendLine($"        {property.ToPropertyTextForInterface()}");
+                str.AppendLine($"        {property.ToPropertyText()}");
                 str.AppendLine();
             }
 
-            return "// GenerateComplexProperties";// str.ToString();
+            return str.ToString();
         }
 
         private string GenerateMethods(INamedTypeSymbol symbol)
@@ -112,7 +101,7 @@ namespace {symbol.ContainingNamespace}
                 str.AppendLine();
             }
 
-            return str.ToString();
+            return "// Methods"; // str.ToString();
         }
     }
 }

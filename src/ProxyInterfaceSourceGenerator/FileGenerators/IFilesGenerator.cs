@@ -4,6 +4,6 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal interface IFilesGenerator
     {
-        IEnumerable<Data> GenerateFiles();
+        IEnumerable<FileData> GenerateFiles();
     }
 }

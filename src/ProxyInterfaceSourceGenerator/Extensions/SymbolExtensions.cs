@@ -5,7 +5,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class SymbolExtensions
     {
-        public static string ToPropertyTextForInterface(this IPropertySymbol property)
+        public static string ToPropertyText(this IPropertySymbol property)
         {
             string get = property.GetMethod != null ? "get; " : string.Empty;
             string set = property.SetMethod != null ? "set; " : string.Empty;

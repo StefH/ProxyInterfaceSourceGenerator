@@ -26,7 +26,7 @@ namespace SourceGeneratorInterface
             //
         }
 
-        public Compilation Compilation { get; }
+        public Compilation Compilation { get; set; }
 
         public INamedTypeSymbol MyNamedTypeSymbol { get;set; }
     }
