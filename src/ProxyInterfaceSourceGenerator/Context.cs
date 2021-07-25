@@ -12,5 +12,7 @@ namespace ProxyInterfaceSourceGenerator
         public List<ContextData> GeneratedData { get; } = new List<ContextData>();
 
         public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; }
-    }
+
+        public Dictionary<string, string> ReplacedTypes { get; } = new Dictionary<string, string>();
+}
 }

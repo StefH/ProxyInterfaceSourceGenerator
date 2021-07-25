@@ -10,8 +10,6 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
-        private readonly List<FileData> files = new List<FileData>();
-
         public PartialInterfacesGenerator(Context context) :
             base(context)
         {
@@ -21,11 +19,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                var file = GenerateFile(ci.Value.InterfaceName, ci.Value.TypeName, ci.Value.ProxyAll);
-                files.Add(file);
+                yield return GenerateFile(ci.Value.InterfaceName, ci.Value.TypeName, ci.Value.ProxyAll);
             }
-
-            return files;
         }
 
         private FileData GenerateFile(string interfaceName, string typeName, bool proxyAll)
@@ -75,38 +70,8 @@ namespace {symbol.ContainingNamespace}
             // ComplexProperties
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
             {
-                //if (proxyAll)
-                //{
-                //    var existing = _context.GeneratedData
-                //        .FirstOrDefault(x => x.ClassName == $"{property.Name}Proxy" || x.InterfaceName == $"I{property.Name}");
-
-                //    if (existing is not null)
-                //    {
-                //        str.AppendLine($"        {property.ToPropertyText(existing.InterfaceName)}");
-                //    }
-                //    else
-                //    {
-                //        // Create new
-                //        var typeName = $"{property.Type}";
-                //        var file = GenerateFile($"I{property.Name}", typeName, false);
-                //        str.AppendLine($"        // {property.ToPropertyText($"I{property.Name}")}");
-                //    }
-                //}
-                //else
-
-                var type = GetPropertyType(property, out _);
+                var type = GetPropertyType(property);
                 str.AppendLine($"        {property.ToPropertyText(type)}");
-
-                //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == property.Type.ToString());
-                //if (existing is not null)
-                //{
-                //    str.AppendLine($"        {property.ToPropertyText(existing.InterfaceName)}");
-                //}
-                //else
-                //{
-                //    str.AppendLine($"        {property.ToPropertyText()}");
-                //}
-
                 str.AppendLine();
             }
 
@@ -118,8 +83,25 @@ namespace {symbol.ContainingNamespace}
             var str = new StringBuilder();
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
-                str.AppendLine($"        {method.ToMethodText()};");
+                var methodParameters = new List<string>();
+                foreach (var ps in method.Parameters)
+                {
+                    if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    {
+                        var type = GetParameterType(ps);
+                        methodParameters.Add($"{type} {ps.Name}");
+                    }
+                    else
+                    {
+                        methodParameters.Add($"{ps.Type} {ps.Name}");
+                    }
+                }
+
+                str.AppendLine($"        {method.ReturnType} {method.Name}({string.Join(", ", methodParameters)});");
                 str.AppendLine();
+
+                //str.AppendLine($"        {method.ToMethodText()};");
+                //str.AppendLine();
             }
 
             return str.ToString();

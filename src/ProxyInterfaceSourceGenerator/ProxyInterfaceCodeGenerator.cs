@@ -43,8 +43,8 @@ namespace ProxyInterfaceSourceGenerator
                 context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
 
-            var classesGenerator = new ProxyClassesGenerator(context);
-            foreach (var data in classesGenerator.GenerateFiles())
+            var proxyClassesGenerator = new ProxyClassesGenerator(context);
+            foreach (var data in proxyClassesGenerator.GenerateFiles())
             {
                 context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }

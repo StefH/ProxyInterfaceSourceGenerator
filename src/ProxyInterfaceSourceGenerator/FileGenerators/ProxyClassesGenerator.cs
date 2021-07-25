@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
@@ -10,10 +9,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
-        private readonly List<FileData> files = new List<FileData>();
-
-        public ProxyClassesGenerator(Context context) :
-            base(context)
+        public ProxyClassesGenerator(Context context) : base(context)
         {
         }
 
@@ -21,11 +17,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                var file = GenerateFile(ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
-                files.Add(file);
+                yield return GenerateFile(ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
             }
-
-            return files;
         }
 
         private FileData GenerateFile(string interfaceName, string className, string typeName, bool proxyAll)
@@ -53,16 +46,16 @@ namespace {symbol.ContainingNamespace}
 
         public {className} _Instance {{ get; }}
 
+{GeneratePublicProperties(symbol, proxyAll)}
+
+{GeneratePublicMethods(symbol)}
+
         public {className}Proxy({className} instance)
         {{
             _Instance = instance;
 
 {GenerateAutoMapper()}
         }}
-
-{GeneratePublicProperties(symbol, proxyAll)}
-
-{GeneratePublicMethods(symbol)}
     }}
 }}";
 
@@ -70,14 +63,14 @@ namespace {symbol.ContainingNamespace}
         {
             var str = new StringBuilder();
 
-            str.AppendLine("        _mapper = new MapperConfiguration(cfg =>");
-            str.AppendLine("        {");
-            foreach (var x in _context.CandidateInterfaces)
+            str.AppendLine("            _mapper = new MapperConfiguration(cfg =>");
+            str.AppendLine("            {");
+            foreach (var replacedType in _context.ReplacedTypes)
             {
-                str.AppendLine($"            cfg.CreateMap<{x.Value.InterfaceName}, {x.Value.ClassName}>();");
-                str.AppendLine($"            cfg.CreateMap<{x.Value.ClassName}, {x.Value.InterfaceName}>();");
+                str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>();");
+                str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>();");
             }
-            str.AppendLine("        }).CreateMapper();");
+            str.AppendLine("            }).CreateMapper();");
 
             return str.ToString();
         }
@@ -103,52 +96,8 @@ namespace {symbol.ContainingNamespace}
             // ComplexProperties
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
             {
-                var type = GetPropertyType(property, out var differs);
-                if (!differs.Any())
-                {
-                    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                }
-                else
-                {
-                    str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-                   // var get = property.GetMethod != null ? $"get => _mapper.Map<{type}>(_Instance.{property.Name}); " : string.Empty;
-                   // var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = _mapper.Map<{property.Type}>(value);" : string.Empty;
-                    //var p = $"{type} {property.Name} {{ {get}{set}}}";
-                    //str.AppendLine($"        public {type} {property.Name} {{ {get}{set}}}");
-                }
-
-                /*
-                 public IList<IClazz> Cs
-        {
-            get => _mapper.Map<IList<IClazz>>(_instance.Cs);
-
-            set => _instance.Cs = _mapper.Map<IList<Clazz>>(value);
-        }
-        }*/
-
-
-                //public static string ToPropertyTextForClass(this IPropertySymbol property, string overrideType)
-                //{
-                //   // var classNameProxy = $"Proxy";
-                //    var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>(_Instance.{property.Name}); " : string.Empty;
-                //    var set = property.SetMethod != null ? $"set => _mapper.Map<{property.Type}>( = (({classNameProxy}) value)._Instance; " : string.Empty;
-
-                //    return $"{overrideType} {property.Name} {{ {get}{set}}}";
-                //}
-
-
-                //str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-
-                //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == property.Type.ToString());
-                //if (existing is not null)
-                //{
-                //    str.AppendLine($"        public {property.ToPropertyTextForClass(existing.InterfaceName, existing.ClassName)}");
-                //}
-                //else
-                //{
-                //    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                //}
-
+                var type = GetPropertyType(property);
+                str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
                 str.AppendLine();
             }
 
@@ -160,7 +109,34 @@ namespace {symbol.ContainingNamespace}
             var str = new StringBuilder();
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
-                str.AppendLine($"        public {method.ToMethodTextForClass()}");
+                var methodParameters = new List<string>();
+                foreach (var ps in method.Parameters)
+                {
+                    if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    {
+                        var type = GetParameterType(ps);
+                        methodParameters.Add($"{type} {ps.Name}");
+                    }
+                    else
+                    {
+                        methodParameters.Add($"{ps.Type} {ps.Name}");
+                    }
+                }
+
+                var invokeParameters = new List<string>();
+                foreach (var ps in method.Parameters)
+                {
+                    if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    {
+                        invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
+                    }
+                    else
+                    {
+                        invokeParameters.Add($"{ps.Name}");
+                    }
+                }
+
+                str.AppendLine($"        public {method.ReturnType} {method.Name}({string.Join(", ", methodParameters)}) => _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
                 str.AppendLine();
             }
 

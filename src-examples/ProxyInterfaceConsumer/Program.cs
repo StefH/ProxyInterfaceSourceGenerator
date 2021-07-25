@@ -8,9 +8,6 @@ namespace ProxyInterfaceConsumer
     {
         public static void Main()
         {
-            
-            
-
             var c = new Clazz
             {
                 Name = "n"
@@ -29,7 +26,10 @@ namespace ProxyInterfaceConsumer
 
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
-            p.Address = new AddressProxy(new Address { HouseNumber = 42 });
+            var ap = new AddressProxy(new Address { HouseNumber = 42 });
+            p.Address = ap;
+            p.AddAddress(ap);
+            p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
             //p.MyNamedTypeSymbol = null;
             //p.Compilation = null;
