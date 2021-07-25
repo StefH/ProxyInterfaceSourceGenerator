@@ -1,6 +1,6 @@
-﻿namespace SourceGeneratorInterface
+﻿namespace ProxyInterfaceConsumer
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(SourceGeneratorInterface.Address))]
+    [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Address))]
     public partial interface IAddress
     {
     }

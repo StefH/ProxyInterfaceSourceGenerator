@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
@@ -81,7 +82,16 @@ namespace {symbol.ContainingNamespace}
             // ComplexProperties
             foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == property.Type.ToString());
+                if (existing is not null)
+                {
+                    str.AppendLine($"        public {property.ToPropertyTextForClass(existing.InterfaceName, existing.ClassName)}");
+                }
+                else
+                {
+                    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                }
+
                 str.AppendLine();
             }
 

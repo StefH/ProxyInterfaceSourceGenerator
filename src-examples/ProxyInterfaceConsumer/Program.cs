@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SourceGeneratorInterface
+namespace ProxyInterfaceConsumer
 {
     public class Program
     {
@@ -8,6 +8,8 @@ namespace SourceGeneratorInterface
         {
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
+            p.Address = new AddressProxy(new Address { HouseNumber = 42 });
+
             //p.MyNamedTypeSymbol = null;
             //p.Compilation = null;
             //p.Add("x");

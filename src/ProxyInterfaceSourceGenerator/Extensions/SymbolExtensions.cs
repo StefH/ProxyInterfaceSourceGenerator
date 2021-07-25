@@ -39,6 +39,15 @@ namespace ProxyInterfaceSourceGenerator.Extensions
             return $"{property.Type} {property.Name} {{ {get}{set}}}";
         }
 
+        public static string ToPropertyTextForClass(this IPropertySymbol property, string interfaceName, string className)
+        {
+            var classNameProxy = $"{className}Proxy";
+            var get = property.GetMethod != null ? $"get => new {classNameProxy}(_Instance.{property.Name}); " : string.Empty;
+            var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = (({classNameProxy}) value)._Instance; " : string.Empty;
+
+            return $"{interfaceName} {property.Name} {{ {get}{set}}}";
+        }
+
         public static string ToMethodText(this IMethodSymbol method)
         {
             var parameters = new List<string>();

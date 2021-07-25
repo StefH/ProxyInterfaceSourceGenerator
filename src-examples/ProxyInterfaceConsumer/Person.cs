@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace SourceGeneratorInterface
+namespace ProxyInterfaceConsumer
 {
     public class Person
     {
@@ -31,10 +31,7 @@ namespace SourceGeneratorInterface
         public INamedTypeSymbol MyNamedTypeSymbol { get;set; }
     }
 
-    public class Address
-    {
-        public int X { get; }
-    }
+    
 
     public enum E
     {
