@@ -5,6 +5,29 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
+    <Authors>Stef Heyenrath</Authors>
+    <Description></Description>
+    <Title>ProxyInterfaceGenerator</Title>
+    <PackageId>ProxyInterfaceGenerator</PackageId>
+    <Description>This project uses Source Generation to generate an interface and a Proxy class for classes. This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.</Description>
+    <PackageTags>class;Fluent;Builder;FluentBuilder;Model;DTO;SourceGenerator;Analyzer;Generation;Generate</PackageTags>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceGenerator</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator</RepositoryUrl>
+
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProjectGuid>{12344228-91F4-4502-9595-39584E5ABB34}</ProjectGuid>
+
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +37,15 @@
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.10.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="bin\Debug\netstandard2.0\\ProxyInterfaceGenerator.dll" />
+    <None Remove="bin\Release\netstandard2.0\\ProxyInterfaceGenerator.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>
