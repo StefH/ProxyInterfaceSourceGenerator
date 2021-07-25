@@ -17,17 +17,17 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                yield return GenerateFile(ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
+                yield return GenerateFile(ci.Value.Namespace, ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
             }
         }
 
-        private FileData GenerateFile(string interfaceName, string className, string typeName, bool proxyAll)
+        private FileData GenerateFile(string ns, string interfaceName, string className, string typeName, bool proxyAll)
         {
             var symbol = GetType(typeName);
 
             var file = new FileData(
                 $"{className}Proxy.cs",
-                CreateProxyClassCode(symbol, interfaceName, className, proxyAll)
+                CreateProxyClassCode(ns, symbol, interfaceName, className, proxyAll)
             );
 
             _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = className, FileData = file });
@@ -35,22 +35,22 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return file;
         }
 
-        private string CreateProxyClassCode(INamedTypeSymbol symbol, string interfaceName, string className, bool proxyAll) => $@"using System;
+        private string CreateProxyClassCode(string ns, INamedTypeSymbol symbol, string interfaceName, string className, bool proxyAll) => $@"using System;
 using AutoMapper;
 
-namespace {symbol.ContainingNamespace}
+namespace {ns}
 {{
     public class {className}Proxy : {interfaceName}
     {{
-        private readonly IMapper _mapper;
+        private readonly IMapper? _mapper;
 
-        public {className} _Instance {{ get; }}
+        public {symbol} _Instance {{ get; }}
 
 {GeneratePublicProperties(symbol, proxyAll)}
 
 {GeneratePublicMethods(symbol)}
 
-        public {className}Proxy({className} instance)
+        public {className}Proxy({symbol} instance)
         {{
             _Instance = instance;
 
@@ -61,6 +61,11 @@ namespace {symbol.ContainingNamespace}
 
         private string GenerateAutoMapper()
         {
+            if (_context.ReplacedTypes.Count == 0)
+            {
+                return string.Empty;
+            }
+
             var str = new StringBuilder();
 
             str.AppendLine("            _mapper = new MapperConfiguration(cfg =>");
@@ -110,33 +115,38 @@ namespace {symbol.ContainingNamespace}
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
                 var methodParameters = new List<string>();
-                foreach (var ps in method.Parameters)
-                {
-                    if (ps.GetTypeEnum() == TypeEnum.Complex)
-                    {
-                        var type = GetParameterType(ps);
-                        methodParameters.Add($"{type} {ps.Name}");
-                    }
-                    else
-                    {
-                        methodParameters.Add($"{ps.Type} {ps.Name}");
-                    }
-                }
-
                 var invokeParameters = new List<string>();
+
                 foreach (var ps in method.Parameters)
                 {
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
+                        methodParameters.Add($"{GetParameterType(ps)} {ps.Name}");
+
                         invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
                     }
                     else
                     {
+                        methodParameters.Add($"{ps.Type} {ps.Name}");
+
                         invokeParameters.Add($"{ps.Name}");
                     }
                 }
 
-                str.AppendLine($"        public {method.ReturnType} {method.Name}({string.Join(", ", methodParameters)}) => _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                string returnTypeAsString;
+                string call;
+                if (method.ReturnType.GetTypeEnum() == TypeEnum.Complex)
+                {
+                    returnTypeAsString = GetReplacedType(method.ReturnType);
+                    call = $"_mapper.Map<{returnTypeAsString}>(_Instance.{method.Name}({string.Join(", ", invokeParameters)}))";
+                }
+                else
+                {
+                    returnTypeAsString = method.ReturnType.ToString();
+                    call = $"_Instance.{method.Name}({string.Join(", ", invokeParameters)})";
+                }
+
+                str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)}) => {call};");
                 str.AppendLine();
             }
 

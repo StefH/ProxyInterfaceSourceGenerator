@@ -16,6 +16,7 @@ namespace ProxyInterfaceConsumer
         public List<Address> AddressesLIst { get; set; }
 
         public Dictionary<string, Address> AddressesDict { get; set; } = new Dictionary<string, Address>();
+        public Dictionary<Address, Address> AddressesDict2 { get; set; } = new Dictionary<Address, Address>();
 
         public E E { get; set; }
 
@@ -26,9 +27,11 @@ namespace ProxyInterfaceConsumer
             return 600;
         }
 
-        public void AddAddress(Address a)
+        public Address AddAddress(Address a)
         {
             AddressesDict.Add($"{AddressesDict.Count}", a);
+
+            return a;
         }
 
         public void Void()

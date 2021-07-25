@@ -22,12 +22,17 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 
         public static TypeEnum GetTypeEnum(this IParameterSymbol p)
         {
-            if (p.Type.IsValueType || p.Type.ToString() == "string")
+            return GetTypeEnum(p.Type);
+        }
+
+        public static TypeEnum GetTypeEnum(this ITypeSymbol ts)
+        {
+            if (ts.IsValueType || ts.ToString() == "string")
             {
                 return TypeEnum.ValueTypeOrString;
             }
 
-            if (p.Type.TypeKind == TypeKind.Interface)
+            if (ts.TypeKind == TypeKind.Interface)
             {
                 return TypeEnum.Interface;
             }

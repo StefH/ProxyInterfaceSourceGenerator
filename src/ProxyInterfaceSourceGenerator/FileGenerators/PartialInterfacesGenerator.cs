@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
@@ -19,17 +18,17 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                yield return GenerateFile(ci.Value.InterfaceName, ci.Value.TypeName, ci.Value.ProxyAll);
+                yield return GenerateFile(ci.Value.Namespace, ci.Value.InterfaceName, ci.Value.TypeName, ci.Value.ProxyAll);
             }
         }
 
-        private FileData GenerateFile(string interfaceName, string typeName, bool proxyAll)
+        private FileData GenerateFile(string ns, string interfaceName, string typeName, bool proxyAll)
         {
             var symbol = GetType(typeName);
 
             var file = new FileData(
                 $"{interfaceName}.cs",
-                CreatePartialInterfaceCode(symbol, interfaceName, proxyAll)
+                CreatePartialInterfaceCode(ns, symbol, interfaceName, proxyAll)
             );
 
             _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = null, FileData = file });
@@ -37,9 +36,9 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return file;
         }
 
-        private string CreatePartialInterfaceCode(INamedTypeSymbol symbol, string interfaceName, bool proxyAll) => $@"using System;
+        private string CreatePartialInterfaceCode(string ns, INamedTypeSymbol symbol, string interfaceName, bool proxyAll) => $@"using System;
 
-namespace {symbol.ContainingNamespace}
+namespace {ns}
 {{
     public partial interface {interfaceName}
     {{
@@ -97,11 +96,8 @@ namespace {symbol.ContainingNamespace}
                     }
                 }
 
-                str.AppendLine($"        {method.ReturnType} {method.Name}({string.Join(", ", methodParameters)});");
+                str.AppendLine($"        {GetReplacedType(method.ReturnType)} {method.Name}({string.Join(", ", methodParameters)});");
                 str.AppendLine();
-
-                //str.AppendLine($"        {method.ToMethodText()};");
-                //str.AppendLine();
             }
 
             return str.ToString();
