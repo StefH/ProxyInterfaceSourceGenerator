@@ -10,7 +10,7 @@
     <Title>ProxyInterfaceGenerator</Title>
     <PackageId>ProxyInterfaceGenerator</PackageId>
     <Description>This project uses Source Generation to generate an interface and a Proxy class for classes. This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.</Description>
-    <PackageTags>class;Fluent;Builder;FluentBuilder;Model;DTO;SourceGenerator;Analyzer;Generation;Generate</PackageTags>
+    <PackageTags>class;interface;proxy;SourceGenerator;Analyzer;Generation;Generate;wrap</PackageTags>
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
