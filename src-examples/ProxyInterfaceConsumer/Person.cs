@@ -1,10 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceConsumer
 {
     public class Person
     {
-
         private int PrivateId { get; }
         public int Id { get; }
 
@@ -13,6 +13,10 @@ namespace ProxyInterfaceConsumer
         public string Name { get; set; }
 
         public Address Address { get; set; }
+
+        public List<Address> AddressesLIst { get; set; }
+
+        public Dictionary<string, Address> AddressesDict { get; set; }
 
         public E E { get; set; }
 
@@ -28,10 +32,8 @@ namespace ProxyInterfaceConsumer
 
         public Compilation Compilation { get; set; }
 
-        public INamedTypeSymbol MyNamedTypeSymbol { get;set; }
+        public INamedTypeSymbol MyNamedTypeSymbol { get; set; }
     }
-
-    
 
     public enum E
     {

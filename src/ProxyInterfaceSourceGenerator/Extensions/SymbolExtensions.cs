@@ -39,14 +39,22 @@ namespace ProxyInterfaceSourceGenerator.Extensions
             return $"{property.Type} {property.Name} {{ {get}{set}}}";
         }
 
-        public static string ToPropertyTextForClass(this IPropertySymbol property, string interfaceName, string className)
+        public static string ToPropertyTextForClass(this IPropertySymbol property, string overrideType)
         {
-            var classNameProxy = $"{className}Proxy";
-            var get = property.GetMethod != null ? $"get => new {classNameProxy}(_Instance.{property.Name}); " : string.Empty;
-            var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = (({classNameProxy}) value)._Instance; " : string.Empty;
+            var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>(_Instance.{property.Name}); " : string.Empty;
+            var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
-            return $"{interfaceName} {property.Name} {{ {get}{set}}}";
+            return $"{overrideType} {property.Name} {{ {get}{set}}}";
         }
+
+        //public static string ToPropertyTextForClass(this IPropertySymbol property, string overrideType, string className)
+        //{
+        //    var classNameProxy = $"{className}Proxy";
+        //    var get = property.GetMethod != null ? $"get => new {classNameProxy}(_Instance.{property.Name}); " : string.Empty;
+        //    var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = (({classNameProxy}) value)._Instance; " : string.Empty;
+
+        //    return $"{overrideType} {property.Name} {{ {get}{set}}}";
+        //}
 
         public static string ToMethodText(this IMethodSymbol method)
         {

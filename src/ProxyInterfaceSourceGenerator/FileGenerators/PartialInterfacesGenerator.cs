@@ -94,16 +94,19 @@ namespace {symbol.ContainingNamespace}
                 //}
                 //else
 
-                var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == property.Type.ToString());
-                if (existing is not null)
-                {
-                    str.AppendLine($"        {property.ToPropertyText(existing.InterfaceName)}");
-                }
-                else
-                {
-                    str.AppendLine($"        {property.ToPropertyText()}");
-                }
-                
+                var type = GetPropertyType(property, out _);
+                str.AppendLine($"        {property.ToPropertyText(type)}");
+
+                //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == property.Type.ToString());
+                //if (existing is not null)
+                //{
+                //    str.AppendLine($"        {property.ToPropertyText(existing.InterfaceName)}");
+                //}
+                //else
+                //{
+                //    str.AppendLine($"        {property.ToPropertyText()}");
+                //}
+
                 str.AppendLine();
             }
 
