@@ -56,61 +56,103 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         protected string GetPropertyType(IPropertySymbol property)
         {
-            var propertyTypeAsString = property.Type.ToString();
+            return GetReplacedType(property.Type);
 
-            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == propertyTypeAsString);
-            if (existing is not null)
-            {
-                if (!_context.ReplacedTypes.ContainsKey(propertyTypeAsString))
-                {
-                    _context.ReplacedTypes.Add(propertyTypeAsString, existing.InterfaceName);
-                }
+            //var propertyTypeAsString = property.Type.ToString();
 
-                return existing.InterfaceName;
-            }
+            //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == propertyTypeAsString);
+            //if (existing is not null)
+            //{
+            //    if (!_context.ReplacedTypes.ContainsKey(propertyTypeAsString))
+            //    {
+            //        _context.ReplacedTypes.Add(propertyTypeAsString, existing.InterfaceName);
+            //    }
 
-            if (property.Type is INamedTypeSymbol namedTypedSymbol)
-            {
-                var propertyTypeAsStringToBeModified = propertyTypeAsString;
-                foreach (var typeArgument in namedTypedSymbol.TypeArguments)
-                {
-                    var typeArgumentAsString = typeArgument.ToString();
-                    var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeArgumentAsString);
-                    if (exist is not null)
-                    {
-                        if (!_context.ReplacedTypes.ContainsKey(typeArgumentAsString))
-                        {
-                            _context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
-                        }
+            //    return existing.InterfaceName;
+            //}
 
-                        propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
-                    }
-                }
+            //if (property.Type is INamedTypeSymbol namedTypedSymbol)
+            //{
+            //    var propertyTypeAsStringToBeModified = propertyTypeAsString;
+            //    foreach (var typeArgument in namedTypedSymbol.TypeArguments)
+            //    {
+            //        var typeArgumentAsString = typeArgument.ToString();
+            //        var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeArgumentAsString);
+            //        if (exist is not null)
+            //        {
+            //            if (!_context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+            //            {
+            //                _context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
+            //            }
 
-                return propertyTypeAsStringToBeModified;
-            }
+            //            propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
+            //        }
+            //    }
 
-            return propertyTypeAsString;
+            //    return propertyTypeAsStringToBeModified;
+            //}
+
+            //return propertyTypeAsString;
         }
 
         protected string GetParameterType(IParameterSymbol property)
         {
-            var propertyTypeAsString = property.Type.ToString();
+            return GetReplacedType(property.Type);
+            //var propertyTypeAsString = property.Type.ToString();
 
-            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == propertyTypeAsString);
+            //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == propertyTypeAsString);
+            //if (existing is not null)
+            //{
+            //    if (!_context.ReplacedTypes.ContainsKey(propertyTypeAsString))
+            //    {
+            //        _context.ReplacedTypes.Add(propertyTypeAsString, existing.InterfaceName);
+            //    }
+
+            //    return existing.InterfaceName;
+            //}
+
+            //if (property.Type is INamedTypeSymbol namedTypedSymbol)
+            //{
+            //    var propertyTypeAsStringToBeModified = propertyTypeAsString;
+            //    foreach (var typeArgument in namedTypedSymbol.TypeArguments)
+            //    {
+            //        var typeArgumentAsString = typeArgument.ToString();
+            //        var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeArgumentAsString);
+            //        if (exist is not null)
+            //        {
+            //            if (!_context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+            //            {
+            //                _context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
+            //            }
+
+            //            propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
+            //        }
+            //    }
+
+            //    return propertyTypeAsStringToBeModified;
+            //}
+
+            //return propertyTypeAsString;
+        }
+
+        protected string GetReplacedType(ITypeSymbol property)
+        {
+            var typeSymbolAsString = property.ToString();
+
+            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeSymbolAsString);
             if (existing is not null)
             {
-                if (!_context.ReplacedTypes.ContainsKey(propertyTypeAsString))
+                if (!_context.ReplacedTypes.ContainsKey(typeSymbolAsString))
                 {
-                    _context.ReplacedTypes.Add(propertyTypeAsString, existing.InterfaceName);
+                    _context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
                 }
 
                 return existing.InterfaceName;
             }
 
-            if (property.Type is INamedTypeSymbol namedTypedSymbol)
+            if (property is INamedTypeSymbol namedTypedSymbol)
             {
-                var propertyTypeAsStringToBeModified = propertyTypeAsString;
+                var propertyTypeAsStringToBeModified = typeSymbolAsString;
                 foreach (var typeArgument in namedTypedSymbol.TypeArguments)
                 {
                     var typeArgumentAsString = typeArgument.ToString();
@@ -129,7 +171,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 return propertyTypeAsStringToBeModified;
             }
 
-            return propertyTypeAsString;
+            return typeSymbolAsString;
         }
 
         protected INamedTypeSymbol GetType(string name)

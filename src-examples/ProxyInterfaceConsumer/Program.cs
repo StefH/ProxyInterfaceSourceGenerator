@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using AutoMapper;
+using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceConsumer
 {
@@ -34,7 +35,8 @@ namespace ProxyInterfaceConsumer
             p.Name = "test";
             var ap = new AddressProxy(new Address { HouseNumber = 42 });
             p.Address = ap;
-            p.AddAddress(ap);
+            var add = p.AddAddress(ap);
+            Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
             p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
             //p.MyNamedTypeSymbol = null;
@@ -42,6 +44,10 @@ namespace ProxyInterfaceConsumer
             //p.Add("x");
             //p.Void();
             Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
+
+            GeneratorExecutionContext g = new GeneratorExecutionContext();
+            IGeneratorExecutionContext gc = new GeneratorExecutionContextProxy(g);
+            int y = 9;
         }
     }
 

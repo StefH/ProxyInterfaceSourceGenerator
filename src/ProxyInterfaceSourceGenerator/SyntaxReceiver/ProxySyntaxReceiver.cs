@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ProxyInterfaceSourceGenerator.Extensions;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 {
@@ -19,7 +20,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
         private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, out ProxyData data)
         {
-            data = new(string.Empty, string.Empty, false);
+            data = new(string.Empty, string.Empty, string.Empty, false);
 
             // TODO : how to check if the InterfaceDeclarationSyntax has 'partial' ?
             var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => a.Name.ToString().Equals("ProxyInterfaceGenerator.Proxy")));
@@ -34,8 +35,15 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
                 return false;
             }
 
+            string ns = string.Empty;
+            if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out NamespaceDeclarationSyntax namespaceDeclarationSyntax))
+            {
+                ns = namespaceDeclarationSyntax.Name.ToString();
+            }
+
             data = new
             (
+                ns,
                 interfaceDeclarationSyntax.Identifier.ToString(),
                 argumentList.Arguments[0].Expression.ChildNodes().First().GetText().ToString(),
                 false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())

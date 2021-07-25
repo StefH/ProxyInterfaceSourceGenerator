@@ -16,7 +16,9 @@ namespace ProxyInterfaceConsumer
             p.Name = "test";
             var ap = new AddressProxy(new Address { HouseNumber = 42 });
             p.Address = ap;
-            p.AddAddress(ap);
+            var add = p.AddAddress(ap);
+            Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
+
             p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
             Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));

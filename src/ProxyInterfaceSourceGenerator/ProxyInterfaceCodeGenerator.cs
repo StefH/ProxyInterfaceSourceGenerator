@@ -28,25 +28,35 @@ namespace ProxyInterfaceSourceGenerator
                 return;
             }
 
-            var context = new Context
+            var context1 = new Context
             {
                 GeneratorExecutionContext = ctx,
                 CandidateInterfaces = receiver.CandidateInterfaces
             };
 
             var attributeData = _proxyAttributeGenerator.GenerateFile();
-            context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+            context1.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
 
-            var partialInterfacesGenerator = new PartialInterfacesGenerator(context);
+            var context2 = new Context
+            {
+                GeneratorExecutionContext = ctx,
+                CandidateInterfaces = receiver.CandidateInterfaces
+            };
+            var partialInterfacesGenerator = new PartialInterfacesGenerator(context2);
             foreach (var data in partialInterfacesGenerator.GenerateFiles())
             {
-                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context2.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
 
-            var proxyClassesGenerator = new ProxyClassesGenerator(context);
+            var context3 = new Context
+            {
+                GeneratorExecutionContext = ctx,
+                CandidateInterfaces = receiver.CandidateInterfaces
+            };
+            var proxyClassesGenerator = new ProxyClassesGenerator(context3);
             foreach (var data in proxyClassesGenerator.GenerateFiles())
             {
-                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context3.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
         }
     }
