@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>ProxyInterfaceConsumer</AssemblyName>
+    <RootNamespace>ProxyInterfaceConsumer</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.2" />
+  </ItemGroup>
+
+</Project>

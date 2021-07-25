@@ -1,8 +1,7 @@
-# ProxyInterfaceSourceGenerator
+# ProxyInterfaceGenerator
 
 This project uses Source Generation to generate an interface and a Proxy class for classes.
 This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.
-
 
 ## Install
 [![NuGet Badge](https://buildstats.info/nuget/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
@@ -21,12 +20,12 @@ Or via the Visual Studio NuGet package manager or if you use the `dotnet` comman
 ``` c#
 public sealed class Person
 {
-	public string Name { get; set; }
+    public string Name { get; set; }
 }
 ```
 
-## Create a partial interface
-And annotate this with `ProxyInterfaceGenerator.Proxy` with the Type which needs to be wrapped:
+### Create a partial interface
+And annotate this with `ProxyInterfaceGenerator.Proxy[...]` and with the Type which needs to be wrapped:
 
 ``` c#
 [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Person))]
@@ -35,24 +34,24 @@ public partial interface IPerson
 }
 ```
 
-## When the code is compiled, this source generator creates the following
+### When the code is compiled, this source generator creates the following
 
-### 1. An additional partial interface
+#### :one: An additional partial interface
 Which defines the same properties and methods as in the external class.
 ``` c#
 public partial interface IPerson
 {
-	string Name { get; set; }
+    string Name { get; set; }
 }
 ```
 
-### 2. A Proxy class
+#### :two: A Proxy class
 Which takes the external class in the constructor and wraps all properties.
 
 ``` c#
-public class PersonProxy
+public class PersonProxy : IPerson
 {
-	public Person _Instance { get; }
+    public Person _Instance { get; }
 
     public PersonProxy(Person instance)
     {
@@ -63,7 +62,7 @@ public class PersonProxy
 }
 ```
 
-## Use it
+### Use it
 ``` c#
 IPerson p = new PersonProxy(new Person());
 p.Name = "test";

@@ -16,9 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{19009F5B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src-examples", "src-examples", "{38BA087F-EDA1-4F8A-A140-85B84791B815}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGenerator", "src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj", "{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGenerator", "src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj", "{12344228-91F4-4502-9595-39584E5ABB34}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumer", "src-examples\ProxyInterfaceConsumer\ProxyInterfaceConsumer.csproj", "{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyInterfaceConsumerViaNuGet", "src-examples\ProxyInterfaceConsumerViaNuGet\ProxyInterfaceConsumerViaNuGet.csproj", "{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,21 +28,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12344228-91F4-4502-9595-39584E5ABB34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12344228-91F4-4502-9595-39584E5ABB34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12344228-91F4-4502-9595-39584E5ABB34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12344228-91F4-4502-9595-39584E5ABB34}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C880D4B0-1E9E-4449-AEF8-0A93FB2EDFAD} = {ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}
+		{12344228-91F4-4502-9595-39584E5ABB34} = {ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
+		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {585F071D-051D-441C-9C6B-226D9E15A1F5}

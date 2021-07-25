@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using AutoMapper;
 
 namespace ProxyInterfaceConsumer
 {
     public class Program
     {
+        private static JsonSerializerOptions JsonSerializerOptions = new ()
+        {
+            WriteIndented = true
+        };
+
         public static void Main()
         {
             var c = new Clazz
@@ -20,7 +26,7 @@ namespace ProxyInterfaceConsumer
             var tp = new TestProxy(t);
             tp.Cs = new List<IClazz> { cp };
 
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(t));
+            Console.WriteLine(JsonSerializer.Serialize(t, JsonSerializerOptions));
             Console.WriteLine(new string('-', 80));
 
 
@@ -35,7 +41,7 @@ namespace ProxyInterfaceConsumer
             //p.Compilation = null;
             //p.Add("x");
             //p.Void();
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(p));
+            Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
         }
     }
 
