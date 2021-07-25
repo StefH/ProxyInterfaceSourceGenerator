@@ -1,6 +1,6 @@
 ﻿namespace SourceGeneratorInterface
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(SourceGeneratorInterface.Person), true)]
+    [ProxyInterfaceGenerator.Proxy(typeof(SourceGeneratorInterface.Person))]
     public partial interface IPerson
     {
     }

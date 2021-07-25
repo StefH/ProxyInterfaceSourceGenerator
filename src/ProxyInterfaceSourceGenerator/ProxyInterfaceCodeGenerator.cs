@@ -23,26 +23,27 @@ namespace ProxyInterfaceSourceGenerator
 
         public void Execute(GeneratorExecutionContext ctx)
         {
-            var context = new Context
-            {
-                GeneratorExecutionContext = ctx
-            };
-
             var attributeData = _proxyAttributeGenerator.GenerateFile();
-            context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+            ctx.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
 
-            if (context.GeneratorExecutionContext.SyntaxReceiver is not ProxySyntaxReceiver receiver)
+            if (ctx.SyntaxReceiver is not ProxySyntaxReceiver receiver)
             {
                 return;
             }
 
-            var partialInterfacesGenerator = new PartialInterfacesGenerator(context, receiver.CandidateInterfaces);
+            var context = new Context
+            {
+                GeneratorExecutionContext = ctx,
+                CandidateInterfaces = receiver.CandidateInterfaces
+            };
+
+            var partialInterfacesGenerator = new PartialInterfacesGenerator(context);
             foreach (var data in partialInterfacesGenerator.GenerateFiles())
             {
                 context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
 
-            var classesGenerator = new ProxyClassesGenerator(context, receiver.CandidateInterfaces);
+            var classesGenerator = new ProxyClassesGenerator(context);
             foreach (var data in classesGenerator.GenerateFiles())
             {
                 context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));

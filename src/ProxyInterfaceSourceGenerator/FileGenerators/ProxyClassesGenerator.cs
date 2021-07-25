@@ -1,32 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
-        public ProxyClassesGenerator(Context context, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces) :
-            base(context, candidateInterfaces)
+        private readonly List<FileData> files = new List<FileData>();
+
+        public ProxyClassesGenerator(Context context) :
+            base(context)
         {
         }
 
         public IEnumerable<FileData> GenerateFiles()
         {
-            foreach (var ci in _candidateInterfaces)
+            foreach (var ci in _context.CandidateInterfaces)
             {
-                var symbol = GetType(ci.Value.TypeName);
-
-                yield return new FileData(
-                     $"{ci.Value.ClassName}Proxy.cs",
-                     CreateProxyClassCode(symbol, ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.ProxyAll)
-                );
+                var file = GenerateFile(ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
+                files.Add(file);
             }
+
+            return files;
+        }
+
+        private FileData GenerateFile(string interfaceName, string className, string typeName, bool proxyAll)
+        {
+            var symbol = GetType(typeName);
+
+            var file = new FileData(
+                $"{className}Proxy.cs",
+                CreateProxyClassCode(symbol, interfaceName, className, proxyAll)
+            );
+
+            _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = className, FileData = file });
+
+            return file;
         }
 
         private string CreateProxyClassCode(INamedTypeSymbol symbol, string interfaceName, string className, bool proxyAll) => $@"using System;
@@ -35,12 +47,11 @@ namespace {symbol.ContainingNamespace}
 {{
     public class {className}Proxy : {interfaceName}
     {{
-        private {className} _instance;
-{GeneratePrivateComplexInterfaceFields(symbol,proxyAll)}
+        public {className} _Instance {{ get; }}
 
         public {className}Proxy({className} instance)
         {{
-            _instance = instance;
+            _Instance = instance;
         }}
 
 {GeneratePublicProperties(symbol, proxyAll)}
@@ -48,68 +59,33 @@ namespace {symbol.ContainingNamespace}
 {GeneratePublicMethods(symbol)}
     }}
 }}";
-        private string GeneratePrivateComplexInterfaceFields(INamedTypeSymbol symbol, bool proxyAll)
-        {
-            if (!proxyAll)
-            {
-                return string.Empty;
-            }
-
-            var str = new StringBuilder();
-
-            foreach (var property in GetComplexProperties(symbol, proxyAll))
-            {
-                str.AppendLine($"        private {property.Type} _{property.Name};");
-            }
-
-            return str.ToString();
-        }
 
         private string GeneratePublicProperties(INamedTypeSymbol symbol, bool proxyAll)
         {
             var str = new StringBuilder();
 
             // SimpleProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.Type.IsValueType || p.Type.ToString() == "string"))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.ValueTypeOrString))
             {
                 str.AppendLine($"        public {property.ToPropertyTextForClass()}");
                 str.AppendLine();
             }
 
             // InterfaceProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol,
-                p => !(p.Type.IsValueType || p.Type.ToString() == "string"),
-                p => p.Type.TypeKind == TypeKind.Interface)
-            )
+            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
             {
                 str.AppendLine($"        public {property.ToPropertyTextForClass()}");
                 str.AppendLine();
             }
 
             // ComplexProperties
-            foreach (var property in GetComplexProperties(symbol, proxyAll))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
             {
                 str.AppendLine($"        public {property.ToPropertyTextForClass()}");
                 str.AppendLine();
             }
 
             return str.ToString();
-        }
-
-        private IEnumerable<IPropertySymbol> GetComplexProperties(INamedTypeSymbol symbol, bool proxyAll)
-        {
-            var complexFilters = new List<Func<IPropertySymbol, bool>>
-            {
-                p => !(p.Type.IsValueType || p.Type.ToString() == "string"),
-                p => p.Type.TypeKind != TypeKind.Interface
-            };
-
-            if (proxyAll)
-            {
-
-            }
-
-            return MemberHelper.GetPublicProperties(symbol, complexFilters.ToArray());
         }
 
         private string GeneratePublicMethods(INamedTypeSymbol symbol)

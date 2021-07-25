@@ -16,7 +16,7 @@ namespace ProxyInterfaceGenerator
         public Type Type {{ get; }}
         public bool ProxyAll {{ get; }}
 
-        public {ClassName}(Type type, bool proxyAll = true)
+        public {ClassName}(Type type, bool proxyAll = false)
         {{
             Type = type;
             ProxyAll = proxyAll;

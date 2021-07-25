@@ -38,7 +38,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
             (
                 interfaceDeclarationSyntax.Identifier.ToString(),
                 argumentList.Arguments[0].Expression.ChildNodes().First().GetText().ToString(),
-                bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
+                false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
             );
 
             return true;

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 namespace ProxyInterfaceSourceGenerator
 {
@@ -8,5 +10,7 @@ namespace ProxyInterfaceSourceGenerator
         public GeneratorExecutionContext GeneratorExecutionContext { get; init; }
 
         public List<ContextData> GeneratedData { get; } = new List<ContextData>();
+
+        public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; }
     }
 }

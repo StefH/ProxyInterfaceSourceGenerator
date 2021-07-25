@@ -1,10 +1,26 @@
 ﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
+using ProxyInterfaceSourceGenerator.Enums;
 
 namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class SymbolExtensions
     {
+        public static TypeEnum GetTypeEnum(this IPropertySymbol p)
+        {
+            if (p.Type.IsValueType || p.Type.ToString() == "string")
+            {
+                return TypeEnum.ValueTypeOrString;
+            }
+            
+            if (p.Type.TypeKind == TypeKind.Interface)
+            {
+                return TypeEnum.Interface;
+            }
+
+            return TypeEnum.Complex;
+        }
+
         public static string ToPropertyText(this IPropertySymbol property, string? overrideType = null)
         {
             var get = property.GetMethod != null ? "get; " : string.Empty;
@@ -17,13 +33,13 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 
         public static string ToPropertyTextForClass(this IPropertySymbol property)
         {
-            var get = property.GetMethod != null ? $"get => _instance.{property.Name}; " : string.Empty;
-            var set = property.SetMethod != null ? $"set => _instance.{property.Name} = value; " : string.Empty;
+            var get = property.GetMethod != null ? $"get => _Instance.{property.Name}; " : string.Empty;
+            var set = property.SetMethod != null ? $"set => _Instance.{property.Name} = value; " : string.Empty;
 
             return $"{property.Type} {property.Name} {{ {get}{set}}}";
         }
 
-        public static string ToMethodTextForInterface(this IMethodSymbol method)
+        public static string ToMethodText(this IMethodSymbol method)
         {
             var parameters = new List<string>();
             foreach (var ps in method.Parameters)
@@ -42,7 +58,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
                 parameters.Add($"{ps.Name}");
             }
 
-            return $"{method.ToMethodTextForInterface()} => _instance.{method.Name}({string.Join(", ", parameters)});";
+            return $"{method.ToMethodText()} => _Instance.{method.Name}({string.Join(", ", parameters)});";
         }
     }
 }
