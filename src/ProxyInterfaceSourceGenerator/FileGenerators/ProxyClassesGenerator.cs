@@ -42,7 +42,7 @@ namespace {ns}
 {{
     public class {className}Proxy : {interfaceName}
     {{
-        private readonly IMapper? _mapper;
+        private readonly IMapper _mapper;
 
         public {symbol} _Instance {{ get; }}
 
