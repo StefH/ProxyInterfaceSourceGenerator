@@ -45,6 +45,17 @@ namespace ProxyInterfaceConsumer
         {
         }
 
+        public void In_Out_Ref1(in int a, out int b, ref int c)
+        {
+            b = 1;
+        }
+
+        public int In_Out_Ref2(in Address a, out Address b, ref Address c)
+        {
+            b = new Address();
+            return 404;
+        }
+
         public void Void()
         {
         }

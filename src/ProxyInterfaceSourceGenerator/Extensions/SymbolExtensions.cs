@@ -5,6 +5,24 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class SymbolExtensions
     {
+        public static string GetRefPrefix(this IParameterSymbol ps)
+        {
+            switch (ps.RefKind)
+            {
+                case RefKind.In:
+                    return "in ";
+
+                case RefKind.Out:
+                    return "out ";
+
+                case RefKind.Ref:
+                    return "ref ";
+
+                default:
+                    return string.Empty;
+            }
+        }
+
         public static string GetParamsPrefix(this IParameterSymbol ps)
         {
             return ps.IsParams ? "params " : string.Empty;

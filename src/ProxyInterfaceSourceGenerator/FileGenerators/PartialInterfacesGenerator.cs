@@ -89,7 +89,7 @@ namespace {ns}
                 foreach (var ps in method.Parameters)
                 {
                     var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-                    methodParameters.Add($"{ps.GetParamsPrefix()}{type} {ps.Name}");
+                    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.Name}");
                 }
 
                 str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.Name}({string.Join(", ", methodParameters)});");
