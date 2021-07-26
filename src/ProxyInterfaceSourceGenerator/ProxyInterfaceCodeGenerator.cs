@@ -21,42 +21,57 @@ namespace ProxyInterfaceSourceGenerator
             context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
         }
 
-        public void Execute(GeneratorExecutionContext ctx)
+        public void Execute(GeneratorExecutionContext context)
         {
-            if (ctx.SyntaxReceiver is not ProxySyntaxReceiver receiver)
+            if (context.SyntaxReceiver is not ProxySyntaxReceiver receiver)
             {
                 return;
             }
 
-            var context1 = new Context
+            GenerateProxyAttribute(context, receiver);
+            GeneratePartialInterfaces(context, receiver);
+            GenerateProxyClasses(context, receiver);
+        }
+
+        private void GenerateProxyAttribute(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver)
+        {
+            var context = new Context
             {
                 GeneratorExecutionContext = ctx,
                 CandidateInterfaces = receiver.CandidateInterfaces
             };
 
             var attributeData = _proxyAttributeGenerator.GenerateFile();
-            context1.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+            context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+        }
 
-            var context2 = new Context
+        private static void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver)
+        {
+            var context = new Context
             {
                 GeneratorExecutionContext = ctx,
                 CandidateInterfaces = receiver.CandidateInterfaces
             };
-            var partialInterfacesGenerator = new PartialInterfacesGenerator(context2);
+
+            var partialInterfacesGenerator = new PartialInterfacesGenerator(context);
             foreach (var data in partialInterfacesGenerator.GenerateFiles())
             {
-                context2.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
+        }
 
-            var context3 = new Context
+        private static void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver)
+        {
+            var context = new Context
             {
                 GeneratorExecutionContext = ctx,
                 CandidateInterfaces = receiver.CandidateInterfaces
             };
-            var proxyClassesGenerator = new ProxyClassesGenerator(context3);
+
+            var proxyClassesGenerator = new ProxyClassesGenerator(context);
             foreach (var data in proxyClassesGenerator.GenerateFiles())
             {
-                context3.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
             }
         }
     }
