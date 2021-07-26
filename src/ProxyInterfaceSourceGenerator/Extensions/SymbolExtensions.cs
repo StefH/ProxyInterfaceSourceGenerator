@@ -7,17 +7,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
     {
         public static TypeEnum GetTypeEnum(this IPropertySymbol p)
         {
-            if (p.Type.IsValueType || p.Type.ToString() == "string")
-            {
-                return TypeEnum.ValueTypeOrString;
-            }
-
-            if (p.Type.TypeKind == TypeKind.Interface)
-            {
-                return TypeEnum.Interface;
-            }
-
-            return TypeEnum.Complex;
+            return GetTypeEnum(p.Type);
         }
 
         public static TypeEnum GetTypeEnum(this IParameterSymbol p)
@@ -27,7 +17,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 
         public static TypeEnum GetTypeEnum(this ITypeSymbol ts)
         {
-            if (ts.IsValueType || ts.ToString() == "string")
+            if (ts.IsValueType || ts.IsString())
             {
                 return TypeEnum.ValueTypeOrString;
             }
@@ -38,6 +28,11 @@ namespace ProxyInterfaceSourceGenerator.Extensions
             }
 
             return TypeEnum.Complex;
+        }
+
+        public static bool IsString(this ITypeSymbol ts)
+        {
+            return ts.ToString() == "string" || ts.ToString() == "string?";
         }
 
         public static string ToPropertyText(this IPropertySymbol property, string? overrideType = null)

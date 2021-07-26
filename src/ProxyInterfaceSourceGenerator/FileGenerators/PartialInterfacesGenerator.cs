@@ -52,26 +52,29 @@ namespace {ns}
         {
             var str = new StringBuilder();
 
-            // SimpleProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.ValueTypeOrString))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol))
             {
-                str.AppendLine($"        {property.ToPropertyText()}");
-                str.AppendLine();
-            }
+                switch (property.GetTypeEnum())
+                {
+                    case TypeEnum.ValueTypeOrString:
+                    case TypeEnum.Interface:
+                        str.AppendLine($"        {property.ToPropertyText()}");
+                        str.AppendLine();
+                        break;
 
-            // InterfaceProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
-            {
-                str.AppendLine($"        {property.ToPropertyText()}");
-                str.AppendLine();
-            }
-
-            // ComplexProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
-            {
-                var type = GetPropertyType(property);
-                str.AppendLine($"        {property.ToPropertyText(type)}");
-                str.AppendLine();
+                    default:
+                        var type = GetPropertyType(property, out var isReplaced);
+                        if (isReplaced)
+                        {
+                            str.AppendLine($"        {property.ToPropertyText(type)}");
+                        }
+                        else
+                        {
+                            str.AppendLine($"        {property.ToPropertyText()}");
+                        }
+                        str.AppendLine();
+                        break;
+                }
             }
 
             return str.ToString();
@@ -87,7 +90,7 @@ namespace {ns}
                 {
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
-                        var type = GetParameterType(ps);
+                        var type = GetParameterType(ps, out _);
                         methodParameters.Add($"{type} {ps.Name}");
                     }
                     else
@@ -96,7 +99,7 @@ namespace {ns}
                     }
                 }
 
-                str.AppendLine($"        {GetReplacedType(method.ReturnType)} {method.Name}({string.Join(", ", methodParameters)});");
+                str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.Name}({string.Join(", ", methodParameters)});");
                 str.AppendLine();
             }
 

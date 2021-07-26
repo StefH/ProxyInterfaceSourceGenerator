@@ -45,9 +45,9 @@ namespace ProxyInterfaceConsumer
             //p.Void();
             Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
 
-            GeneratorExecutionContext g = new GeneratorExecutionContext();
-            IGeneratorExecutionContext gc = new GeneratorExecutionContextProxy(g);
-            int y = 9;
+            //GeneratorExecutionContext g = new GeneratorExecutionContext();
+            //IGeneratorExecutionContext gc = new GeneratorExecutionContextProxy(g);
+            //int y = 9;
         }
     }
 

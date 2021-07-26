@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProxyInterfaceConsumer
 {
@@ -10,6 +11,8 @@ namespace ProxyInterfaceConsumer
         public long? NullableLong { get; }
 
         public string Name { get; set; }
+
+        public string? StringNullable { get; set; }
 
         public Address Address { get; set; }
 
@@ -36,6 +39,21 @@ namespace ProxyInterfaceConsumer
 
         public void Void()
         {
+        }
+
+        public Task Method1Async()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task<int> Method2Async()
+        {
+            return Task.FromResult(1);
+        }
+
+        public Task<string?> Method3Async()
+        {
+            return Task.FromResult((string?)"");
         }
     }
 
