@@ -52,7 +52,7 @@ namespace {ns}
         {
             var str = new StringBuilder();
 
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.ValueTypeOrString))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol))
             {
                 switch (property.GetTypeEnum())
                 {
@@ -75,25 +75,7 @@ namespace {ns}
                         str.AppendLine();
                         break;
                 }
-
-                //str.AppendLine($"        {property.ToPropertyText()}");
-                //str.AppendLine();
             }
-
-            //// InterfaceProperties
-            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
-            //{
-            //    str.AppendLine($"        {property.ToPropertyText()}");
-            //    str.AppendLine();
-            //}
-
-            //// ComplexProperties
-            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
-            //{
-            //    var type = GetPropertyType(property);
-            //    str.AppendLine($"        {property.ToPropertyText(type)}");
-            //    str.AppendLine();
-            //}
 
             return str.ToString();
         }

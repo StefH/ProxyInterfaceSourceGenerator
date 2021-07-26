@@ -107,23 +107,8 @@ namespace {ns}
                         str.AppendLine();
                         break;
                 }
-                
+
             }
-
-            // InterfaceProperties
-            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
-            //{
-            //    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-            //    str.AppendLine();
-            //}
-
-            //// ComplexProperties
-            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
-            //{
-            //    var type = GetPropertyType(property);
-            //    str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-            //    str.AppendLine();
-            //}
 
             return str.ToString();
         }
@@ -142,7 +127,7 @@ namespace {ns}
                     {
                         var type = GetParameterType(ps, out var isReplaced);
                         methodParameters.Add($"{type} {ps.Name}");
-                        
+
                         if (isReplaced)
                         {
                             invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
