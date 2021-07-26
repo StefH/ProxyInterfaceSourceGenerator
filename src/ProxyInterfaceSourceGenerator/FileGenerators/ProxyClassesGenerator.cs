@@ -84,27 +84,46 @@ namespace {ns}
         {
             var str = new StringBuilder();
 
-            // SimpleProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.ValueTypeOrString))
+            foreach (var property in MemberHelper.GetPublicProperties(symbol))
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                str.AppendLine();
+                switch (property.GetTypeEnum())
+                {
+                    case TypeEnum.ValueTypeOrString:
+                    case TypeEnum.Interface:
+                        str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                        str.AppendLine();
+                        break;
+
+                    default:
+                        var type = GetPropertyType(property, out var isReplaced);
+                        if (isReplaced)
+                        {
+                            str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
+                        }
+                        else
+                        {
+                            str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                        }
+                        str.AppendLine();
+                        break;
+                }
+                
             }
 
             // InterfaceProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
-            {
-                str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                str.AppendLine();
-            }
+            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Interface))
+            //{
+            //    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+            //    str.AppendLine();
+            //}
 
-            // ComplexProperties
-            foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
-            {
-                var type = GetPropertyType(property);
-                str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-                str.AppendLine();
-            }
+            //// ComplexProperties
+            //foreach (var property in MemberHelper.GetPublicProperties(symbol, p => p.GetTypeEnum() == TypeEnum.Complex))
+            //{
+            //    var type = GetPropertyType(property);
+            //    str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
+            //    str.AppendLine();
+            //}
 
             return str.ToString();
         }
@@ -121,9 +140,17 @@ namespace {ns}
                 {
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
-                        methodParameters.Add($"{GetParameterType(ps)} {ps.Name}");
-
-                        invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
+                        var type = GetParameterType(ps, out var isReplaced);
+                        methodParameters.Add($"{type} {ps.Name}");
+                        
+                        if (isReplaced)
+                        {
+                            invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
+                        }
+                        else
+                        {
+                            invokeParameters.Add($"{ps.Name}");
+                        }
                     }
                     else
                     {
@@ -134,16 +161,18 @@ namespace {ns}
                 }
 
                 string returnTypeAsString;
-                string call;
+                string call = $"_Instance.{method.Name}({string.Join(", ", invokeParameters)})";
                 if (method.ReturnType.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    returnTypeAsString = GetReplacedType(method.ReturnType);
-                    call = $"_mapper.Map<{returnTypeAsString}>(_Instance.{method.Name}({string.Join(", ", invokeParameters)}))";
+                    returnTypeAsString = GetReplacedType(method.ReturnType, out var isReplaced);
+                    if (isReplaced)
+                    {
+                        call = $"_mapper.Map<{returnTypeAsString}>(_Instance.{method.Name}({string.Join(", ", invokeParameters)}))";
+                    }
                 }
                 else
                 {
                     returnTypeAsString = method.ReturnType.ToString();
-                    call = $"_Instance.{method.Name}({string.Join(", ", invokeParameters)})";
                 }
 
                 str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)}) => {call};");

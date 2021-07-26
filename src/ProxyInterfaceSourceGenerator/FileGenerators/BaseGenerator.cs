@@ -54,9 +54,9 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         //    return propertyTypeAsString;
         //}
 
-        protected string GetPropertyType(IPropertySymbol property)
+        protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
         {
-            return GetReplacedType(property.Type);
+            return GetReplacedType(property.Type, out isReplaced);
 
             //var propertyTypeAsString = property.Type.ToString();
 
@@ -95,9 +95,9 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             //return propertyTypeAsString;
         }
 
-        protected string GetParameterType(IParameterSymbol property)
+        protected string GetParameterType(IParameterSymbol property, out bool isReplaced)
         {
-            return GetReplacedType(property.Type);
+            return GetReplacedType(property.Type, out isReplaced);
             //var propertyTypeAsString = property.Type.ToString();
 
             //var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == propertyTypeAsString);
@@ -135,8 +135,10 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             //return propertyTypeAsString;
         }
 
-        protected string GetReplacedType(ITypeSymbol property)
+        protected string GetReplacedType(ITypeSymbol property, out bool isReplaced)
         {
+            isReplaced = false;
+
             var typeSymbolAsString = property.ToString();
 
             var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeSymbolAsString);
@@ -147,6 +149,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                     _context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
                 }
 
+                isReplaced = true;
                 return existing.InterfaceName;
             }
 
@@ -159,6 +162,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                     var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeArgumentAsString);
                     if (exist is not null)
                     {
+                        isReplaced = true;
+
                         if (!_context.ReplacedTypes.ContainsKey(typeArgumentAsString))
                         {
                             _context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
@@ -171,6 +176,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 return propertyTypeAsStringToBeModified;
             }
 
+            
             return typeSymbolAsString;
         }
 
