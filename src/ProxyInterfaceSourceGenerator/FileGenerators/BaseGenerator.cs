@@ -71,6 +71,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         protected INamedTypeSymbol GetType(string name)
         {
+            // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
             var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
             if (symbol is null)
             {

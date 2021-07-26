@@ -8,6 +8,8 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 {
     internal class ProxySyntaxReceiver : ISyntaxReceiver
     {
+        private static readonly string[] Modifiers = new[] { "public", "partial" };
+
         public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
@@ -22,7 +24,12 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
         {
             data = new(string.Empty, string.Empty, string.Empty, false);
 
-            // TODO : how to check if the InterfaceDeclarationSyntax has 'partial' ?
+            if (interfaceDeclarationSyntax.Modifiers.Select(m => m.ToString()).Except(Modifiers).Count() != 0)
+            {
+                // InterfaceDeclarationSyntax should be "public" and "partial"
+                return false;
+            }
+
             var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => a.Name.ToString().Equals("ProxyInterfaceGenerator.Proxy")));
             if (attributeLists is null)
             {
@@ -45,7 +52,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
             (
                 ns,
                 interfaceDeclarationSyntax.Identifier.ToString(),
-                argumentList.Arguments[0].Expression.ChildNodes().First().GetText().ToString(),
+                ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString(),
                 false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
             );
 
