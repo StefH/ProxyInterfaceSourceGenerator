@@ -5,6 +5,11 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class SymbolExtensions
     {
+        public static string GetParamsPrefix(this IParameterSymbol ps)
+        {
+            return ps.IsParams ? "params " : string.Empty;
+        }
+
         public static TypeEnum GetTypeEnum(this IPropertySymbol p)
         {
             return GetTypeEnum(p.Type);

@@ -130,7 +130,7 @@ namespace {ns}
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
                         var type = GetParameterType(ps, out var isReplaced);
-                        methodParameters.Add($"{type} {ps.Name}");
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{type} {ps.Name}");
 
                         if (isReplaced)
                         {
@@ -143,7 +143,7 @@ namespace {ns}
                     }
                     else
                     {
-                        methodParameters.Add($"{ps.Type} {ps.Name}");
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.Type} {ps.Name}");
 
                         invokeParameters.Add($"{ps.Name}");
                     }
