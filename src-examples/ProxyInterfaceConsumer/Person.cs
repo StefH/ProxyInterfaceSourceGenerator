@@ -30,11 +30,19 @@ namespace ProxyInterfaceConsumer
             return 600;
         }
 
+        public void AddWithParams(params string[] values)
+        {
+        }
+
         public Address AddAddress(Address a)
         {
             AddressesDict.Add($"{AddressesDict.Count}", a);
 
             return a;
+        }
+
+        public void AddAddresses(params Address[] addresses)
+        {
         }
 
         public void Void()
