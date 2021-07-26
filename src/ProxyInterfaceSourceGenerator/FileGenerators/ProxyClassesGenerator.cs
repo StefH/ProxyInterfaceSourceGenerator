@@ -42,8 +42,6 @@ namespace {ns}
 {{
     public class {className}Proxy : {interfaceName}
     {{
-        private readonly IMapper _mapper;
-
         public {symbol} _Instance {{ get; }}
 
 {GeneratePublicProperties(symbol, proxyAll)}
@@ -54,12 +52,18 @@ namespace {ns}
         {{
             _Instance = instance;
 
-{GenerateAutoMapper()}
+{GenerateMapperConfigurationForAutoMapper()}
         }}
+
+{GeneratePrivateAutoMapper()}
     }}
 }}";
+        private string GeneratePrivateAutoMapper()
+        {
+            return _context.ReplacedTypes.Count == 0 ? string.Empty : "        private readonly IMapper _mapper;";
+        }
 
-        private string GenerateAutoMapper()
+        private string GenerateMapperConfigurationForAutoMapper()
         {
             if (_context.ReplacedTypes.Count == 0)
             {
