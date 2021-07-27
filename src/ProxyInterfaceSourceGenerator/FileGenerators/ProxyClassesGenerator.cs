@@ -125,7 +125,7 @@ namespace {ns}
             foreach (var method in MemberHelper.GetPublicMethods(symbol))
             {
                 var methodParameters = new List<string>();
-                var dict = new Dictionary<IParameterSymbol, string>();
+                var invokeParameters = new List<string>();
 
                 foreach (var ps in method.Parameters)
                 {
@@ -139,7 +139,7 @@ namespace {ns}
                         methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.Name}");
                     }
 
-                    dict.Add(ps, $"{ps.Name}_{Guid.NewGuid().ToString().Replace("-", string.Empty)}");
+                    invokeParameters.Add($"{ps.GetRefPrefix()}_{ps.Name}");
                 }
 
                 string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
@@ -149,9 +149,6 @@ namespace {ns}
                 foreach (var ps in method.Parameters)
                 {
                     string normalOrMap = $" = {ps.Name}";
-
-                    //if (ps.GetTypeEnum() == TypeEnum.Complex)
-                    
                     if (ps.RefKind == RefKind.Out)
                     {
                         normalOrMap = string.Empty;
@@ -165,11 +162,13 @@ namespace {ns}
                         }
                     }
 
-                    str.AppendLine($"             {ps.Type} {dict[ps]}{normalOrMap};");
+                    str.AppendLine($"             {ps.Type} _{ps.Name}{normalOrMap};");
                 }
 
-                var alternateReturnValueName = $"result_{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
-                var invokeParameters = dict.Select(entry => $"{entry.Key.GetRefPrefix()}{entry.Value}");
+#pragma warning disable RS1024 // Compare symbols correctly
+                int hash = method.ReturnType.GetHashCode();
+#pragma warning restore RS1024 // Compare symbols correctly
+                var alternateReturnVariableName = $"result_{Math.Abs(hash)}";
 
                 if (returnTypeAsString == "void")
                 {
@@ -177,18 +176,18 @@ namespace {ns}
                 }
                 else
                 {
-                    str.AppendLine($"             var {alternateReturnValueName} = _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
                 }
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
                 {
-                    string normalOrMap = $" = {dict[ps]}";
+                    string normalOrMap = $" = _{ps.Name}";
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
                         var type = GetParameterType(ps, out var isReplaced);
                         if (isReplaced)
                         {
-                            normalOrMap = $" = _mapper.Map<{type}>({dict[ps]})";
+                            normalOrMap = $" = _mapper.Map<{type}>(_{ps.Name})";
                         }
                     }
 
@@ -199,14 +198,14 @@ namespace {ns}
                 {
                     if (returnIsReplaced)
                     {
-                        str.AppendLine($"             return _mapper.Map<{returnTypeAsString}>({alternateReturnValueName});");
+                        str.AppendLine($"             return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
                     }
                     else
                     {
-                        str.AppendLine($"             return {alternateReturnValueName};");
+                        str.AppendLine($"             return {alternateReturnVariableName};");
                     }
                 }
-                                
+
                 str.AppendLine("        }");
                 str.AppendLine();
             }
