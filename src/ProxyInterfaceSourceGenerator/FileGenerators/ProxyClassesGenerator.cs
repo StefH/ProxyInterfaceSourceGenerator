@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
@@ -130,7 +132,101 @@ namespace {ns}
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
                         var type = GetParameterType(ps, out var isReplaced);
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{type} {ps.Name}");
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.Name}");
+                    }
+                    else
+                    {
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.Name}");
+                    }
+
+                    invokeParameters.Add($"{ps.GetRefPrefix()}_{ps.Name}");
+                }
+
+                string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
+
+                str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)})");
+                str.AppendLine("        {");
+                foreach (var ps in method.Parameters)
+                {
+                    string normalOrMap = $" = {ps.Name}";
+                    if (ps.RefKind == RefKind.Out)
+                    {
+                        normalOrMap = string.Empty;
+                    }
+                    else
+                    {
+                        var type = GetParameterType(ps, out var isReplaced);
+                        if (isReplaced)
+                        {
+                            normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.Name})";
+                        }
+                    }
+
+                    str.AppendLine($"             {ps.Type} _{ps.Name}{normalOrMap};");
+                }
+
+#pragma warning disable RS1024 // Compare symbols correctly
+                int hash = method.ReturnType.GetHashCode();
+#pragma warning restore RS1024 // Compare symbols correctly
+                var alternateReturnVariableName = $"result_{Math.Abs(hash)}";
+
+                if (returnTypeAsString == "void")
+                {
+                    str.AppendLine($"             _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                }
+                else
+                {
+                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                }
+
+                foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
+                {
+                    string normalOrMap = $" = _{ps.Name}";
+                    if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    {
+                        var type = GetParameterType(ps, out var isReplaced);
+                        if (isReplaced)
+                        {
+                            normalOrMap = $" = _mapper.Map<{type}>(_{ps.Name})";
+                        }
+                    }
+
+                    str.AppendLine($"             {ps.Name}{normalOrMap};");
+                }
+
+                if (returnTypeAsString != "void")
+                {
+                    if (returnIsReplaced)
+                    {
+                        str.AppendLine($"             return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
+                    }
+                    else
+                    {
+                        str.AppendLine($"             return {alternateReturnVariableName};");
+                    }
+                }
+
+                str.AppendLine("        }");
+                str.AppendLine();
+            }
+
+            return str.ToString();
+        }
+
+        private string GeneratePublicMethodsOld(INamedTypeSymbol symbol)
+        {
+            var str = new StringBuilder();
+            foreach (var method in MemberHelper.GetPublicMethods(symbol))
+            {
+                var methodParameters = new List<string>();
+                var invokeParameters = new List<string>();
+
+                foreach (var ps in method.Parameters)
+                {
+                    if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    {
+                        var type = GetParameterType(ps, out var isReplaced);
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.Name}");
 
                         if (isReplaced)
                         {
@@ -138,14 +234,14 @@ namespace {ns}
                         }
                         else
                         {
-                            invokeParameters.Add($"{ps.Name}");
+                            invokeParameters.Add($"{ps.GetRefPrefix()}{ps.Name}");
                         }
                     }
                     else
                     {
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.Type} {ps.Name}");
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.Name}");
 
-                        invokeParameters.Add($"{ps.Name}");
+                        invokeParameters.Add($"{ps.GetRefPrefix()}{ps.Name}");
                     }
                 }
 
