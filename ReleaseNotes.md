@@ -1,4 +1,4 @@
-# 0.0.4 (27 July 2021)
+# 0.0.4 (28 July 2021)
 - [#15](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/15) - Fix issue #4 (string?) [bug] contributed by [StefH](https://github.com/StefH)
 - [#16](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/16) - Fix 'params' [bug] contributed by [StefH](https://github.com/StefH)
 - [#17](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/17) - Fix method parameters: 'in', 'out' and 'ref' [bug] contributed by [StefH](https://github.com/StefH)
