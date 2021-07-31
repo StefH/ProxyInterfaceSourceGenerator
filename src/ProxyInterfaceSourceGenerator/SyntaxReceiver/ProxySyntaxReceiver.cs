@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -65,8 +64,9 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
         private static string ResolveType(string typeName)
         {
-            int number = typeName.Count(c => c == ',') + 1;
-            return $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty)}`{number}";
+            return typeName.Contains('<') && typeName.Contains('>')
+                ? $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty)}`{typeName.Count(c => c == ',') + 1}"
+                : typeName;
         }
     }
 }

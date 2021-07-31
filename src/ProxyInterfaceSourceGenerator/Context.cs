@@ -9,7 +9,7 @@ namespace ProxyInterfaceSourceGenerator
     {
         public GeneratorExecutionContext GeneratorExecutionContext { get; init; }
 
-        public List<ContextData> GeneratedData { get; } = new List<ContextData>();
+        // public List<ContextData> GeneratedData { get; } = new List<ContextData>();
 
         public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; }
 

@@ -1,6 +1,6 @@
 ﻿namespace ProxyInterfaceConsumer
 {
-    //[ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Address))]
+    [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Address))]
     public partial interface IAddress
     {
     }

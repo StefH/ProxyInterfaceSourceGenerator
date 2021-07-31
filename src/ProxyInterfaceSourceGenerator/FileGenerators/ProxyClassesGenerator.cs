@@ -26,32 +26,35 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         private FileData GenerateFile(ProxyData pd)
         {
-            var symbol = GetTypeByFullName(pd.TypeName);
+            var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName);
+            var interfaceName = targetClassSymbol.ResolveInterfaceName(pd.InterfaceName);
+            var className = targetClassSymbol.ResolveProxyClassName();
+            var constructorName = $"{targetClassSymbol.Name}Proxy";
 
             var file = new FileData(
                 $"{pd.FileName}Proxy.cs",
-                CreateProxyClassCode(pd.Namespace, symbol, pd.InterfaceName, pd.ClassName, pd.ProxyAll)
+                CreateProxyClassCode(pd.Namespace, targetClassSymbol, interfaceName, className, constructorName)
             );
 
-            _context.GeneratedData.Add(new() { InterfaceName = pd.InterfaceName, ClassName = pd.ClassName, FileData = file });
+            // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = pd.ClassName, FileData = file });
 
             return file;
         }
 
-        private string CreateProxyClassCode(string ns, INamedTypeSymbol symbol, string interfaceName, string className, bool proxyAll) => $@"using System;
+        private string CreateProxyClassCode(string ns, INamedTypeSymbol targetClassSymbol, string interfaceName, string className, string constructorName) => $@"using System;
 using AutoMapper;
 
 namespace {ns}
 {{
-    public class {className}Proxy : {interfaceName}
+    public class {className} : {interfaceName}
     {{
-        public {symbol} _Instance {{ get; }}
+        public {targetClassSymbol} _Instance {{ get; }}
 
-{GeneratePublicProperties(symbol, proxyAll)}
+{GeneratePublicProperties(targetClassSymbol, false)}
 
-{GeneratePublicMethods(symbol)}
+{GeneratePublicMethods(targetClassSymbol)}
 
-        public {className}Proxy({symbol} instance)
+        public {constructorName}({targetClassSymbol} instance)
         {{
             _Instance = instance;
 
@@ -87,11 +90,11 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GeneratePublicProperties(INamedTypeSymbol symbol, bool proxyAll)
+        private string GeneratePublicProperties(INamedTypeSymbol targetClassSymbol, bool proxyAll)
         {
             var str = new StringBuilder();
 
-            foreach (var property in MemberHelper.GetPublicProperties(symbol))
+            foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol))
             {
                 switch (property.GetTypeEnum())
                 {
@@ -120,10 +123,10 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GeneratePublicMethods(INamedTypeSymbol symbol)
+        private string GeneratePublicMethods(INamedTypeSymbol targetClassSymbol)
         {
             var str = new StringBuilder();
-            foreach (var method in MemberHelper.GetPublicMethods(symbol))
+            foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol))
             {
                 var methodParameters = new List<string>();
                 var invokeParameters = new List<string>();

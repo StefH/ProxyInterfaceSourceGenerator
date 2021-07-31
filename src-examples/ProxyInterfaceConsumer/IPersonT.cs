@@ -1,7 +1,7 @@
 ﻿namespace ProxyInterfaceConsumer
 {
     [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.PersonT<>))]
-    public partial interface IPersonT
+    public partial interface IPersonT<T>
     {
     }
 }

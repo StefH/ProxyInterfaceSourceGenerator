@@ -19,42 +19,42 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                //yield return GenerateFile(ci.Value.Namespace, ci.Value.InterfaceName, ci.Value.RawTypeName, ci.Value.ProxyAll);
                 yield return GenerateFile(ci.Value);
             }
         }
 
-        private FileData GenerateFile(ProxyData pd) // string ns, string interfaceName, string typeName, bool proxyAll)
+        private FileData GenerateFile(ProxyData pd)
         {
-            var symbol = GetTypeByFullName(pd.TypeName);
+            var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName);
+            var interfaceName = targetClassSymbol.ResolveInterfaceName(pd.InterfaceName);
 
             var file = new FileData(
                 $"{pd.FileName}.cs",
-                CreatePartialInterfaceCode(pd.Namespace, symbol, pd.InterfaceName, pd.ProxyAll)
+                CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd.ProxyAll)
             );
 
-            _context.GeneratedData.Add(new() { InterfaceName = pd.InterfaceName, ClassName = null, FileData = file });
+            // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = null, FileData = file });
 
             return file;
         }
 
-        private string CreatePartialInterfaceCode(string ns, INamedTypeSymbol symbol, string interfaceName, bool proxyAll) => $@"using System;
+        private string CreatePartialInterfaceCode(string ns, INamedTypeSymbol targetClassSymbol, string interfaceName, bool proxyAll) => $@"using System;
 
 namespace {ns}
 {{
     public partial interface {interfaceName}
     {{
-{GenerateProperties(symbol, proxyAll)}
+{GenerateProperties(targetClassSymbol, proxyAll)}
 
-{GenerateMethods(symbol)}
+{GenerateMethods(targetClassSymbol)}
     }}
 }}";
 
-        private string GenerateProperties(INamedTypeSymbol symbol, bool proxyAll)
+        private string GenerateProperties(INamedTypeSymbol targetClassSymbol, bool proxyAll)
         {
             var str = new StringBuilder();
 
-            foreach (var property in MemberHelper.GetPublicProperties(symbol))
+            foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol))
             {
                 switch (property.GetTypeEnum())
                 {
@@ -82,10 +82,10 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GenerateMethods(INamedTypeSymbol symbol)
+        private string GenerateMethods(INamedTypeSymbol targetClassSymbol)
         {
             var str = new StringBuilder();
-            foreach (var method in MemberHelper.GetPublicMethods(symbol))
+            foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol))
             {
                 var methodParameters = new List<string>();
                 foreach (var ps in method.Parameters)

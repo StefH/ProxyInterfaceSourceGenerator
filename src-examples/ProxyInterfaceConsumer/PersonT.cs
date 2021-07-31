@@ -2,6 +2,6 @@
 {
     public class PersonT<T>
     {
-        T TVal { get; set; }
+        public T TVal { get; set; }
     }
 }

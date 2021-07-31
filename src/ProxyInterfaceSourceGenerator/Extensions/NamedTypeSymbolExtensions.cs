@@ -34,5 +34,15 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 
             return str.ToString();
         }
+
+        public static string ResolveInterfaceName(this INamedTypeSymbol type, string interfaceName)
+        {
+            return !type.IsGenericType ? interfaceName : $"{interfaceName}<{string.Join(", ", type.TypeArguments.Select(ta => ta.Name))}>";
+        }
+
+        public static string ResolveProxyClassName(this INamedTypeSymbol type)
+        {
+            return !type.IsGenericType ? $"{type.Name}Proxy" : $"{type.Name}Proxy<{string.Join(", ", type.TypeArguments.Select(ta => ta.Name))}>";
+        }
     }
 }

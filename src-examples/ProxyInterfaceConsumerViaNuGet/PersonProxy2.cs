@@ -73,7 +73,7 @@ namespace ProxyInterfaceConsumer
         ProxyInterfaceConsumer.Address b_;
         ProxyInterfaceConsumer.Address c_ = _mapper.Map<ProxyInterfaceConsumer.Address>(c);
         var result_30316242 = _Instance.In_Out_Ref2(in a_, out b_, ref c_);
-        b = _mapper.Map<IAddress>(_b);
+        b = _mapper.Map<IAddress>(b_);
         return result_30316242;
     }
 
