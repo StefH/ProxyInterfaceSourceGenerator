@@ -14,45 +14,39 @@ namespace ProxyInterfaceConsumer
 
         public static void Main()
         {
-            var c = new Clazz
-            {
-                Name = "n"
-            };
-            var cp = new ClazzProxy(c);
+            IPersonT pT = new PersonTProxy(new PersonT<string>());
+            pT.TVal = "test";
 
-            var t = new Test();
-            t.Cs = new List<Clazz> { c };
+            //var c = new Clazz
+            //{
+            //    Name = "n"
+            //};
+            //var cp = new ClazzProxy(c);
 
-            var tp = new TestProxy(t);
-            tp.Cs = new List<IClazz> { cp };
+            //var t = new Test();
+            //t.Cs = new List<Clazz> { c };
 
-            Console.WriteLine(JsonSerializer.Serialize(t, JsonSerializerOptions));
-            Console.WriteLine(new string('-', 80));
+            //var tp = new TestProxy(t);
+            //tp.Cs = new List<IClazz> { cp };
+
+            //Console.WriteLine(JsonSerializer.Serialize(t, JsonSerializerOptions));
+            //Console.WriteLine(new string('-', 80));
 
 
-            IPerson p = new PersonProxy(new Person());
-            p.Name = "test";
-            Console.WriteLine("DefaultValue " + p.DefaultValue());
-            Console.WriteLine("DefaultValue " + p.DefaultValue(42));
+            //IPerson p = new PersonProxy(new Person());
+            //p.Name = "test";
+            //Console.WriteLine("DefaultValue " + p.DefaultValue());
+            //Console.WriteLine("DefaultValue " + p.DefaultValue(42));
 
-            var ap = new AddressProxy(new Address { HouseNumber = 42 });
-            p.Address = ap;
-            var add = p.AddAddress(ap);
-            Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
-            p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
+            //var ap = new AddressProxy(new Address { HouseNumber = 42 });
+            //p.Address = ap;
+            //var add = p.AddAddress(ap);
+            //Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
+            //p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
-            //p.MyNamedTypeSymbol = null;
-            //p.Compilation = null;
-            //p.Add("x");
-            //p.Void();
-            Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
-
-            //GeneratorExecutionContext g = new GeneratorExecutionContext();
-            //IGeneratorExecutionContext gc = new GeneratorExecutionContextProxy(g);
-            //int y = 9;
+            //Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
         }
     }
-
     public struct Test
     {
         public int Id { get; set; }

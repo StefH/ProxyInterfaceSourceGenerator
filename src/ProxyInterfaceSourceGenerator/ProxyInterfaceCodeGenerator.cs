@@ -13,10 +13,10 @@ namespace ProxyInterfaceSourceGenerator
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            //if (!System.Diagnostics.Debugger.IsAttached)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
 
             context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
         }

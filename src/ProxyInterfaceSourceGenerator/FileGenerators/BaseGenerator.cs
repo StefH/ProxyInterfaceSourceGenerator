@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-// using AnyOfTypes;
 using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
@@ -30,7 +29,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
             var typeSymbolAsString = typeSymbol.ToString();
 
-            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeSymbolAsString);
+            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeSymbolAsString);
             if (existing is not null)
             {
                 if (!_context.ReplacedTypes.ContainsKey(typeSymbolAsString))
@@ -48,7 +47,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 foreach (var typeArgument in namedTypedSymbol.TypeArguments)
                 {
                     var typeArgumentAsString = typeArgument.ToString();
-                    var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeArgumentAsString);
+                    var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeArgumentAsString);
                     if (exist is not null)
                     {
                         isReplaced = true;
@@ -68,13 +67,13 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return typeSymbolAsString;
         }
 
-        protected INamedTypeSymbol GetType(string name)
+        protected INamedTypeSymbol GetTypeByFullName(string fullName)
         {
             // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
-            var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
+            var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(fullName);
             if (symbol is null)
             {
-                throw new Exception($"The type '{name}' is not found.");
+                throw new Exception($"The type '{fullName}' is not found.");
             }
 
             return symbol;

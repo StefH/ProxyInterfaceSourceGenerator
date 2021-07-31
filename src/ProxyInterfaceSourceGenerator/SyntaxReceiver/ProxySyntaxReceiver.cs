@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -22,7 +23,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
         private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, out ProxyData data)
         {
-            data = new(string.Empty, string.Empty, string.Empty, false);
+            data = new(string.Empty, string.Empty, string.Empty, string.Empty, false);
 
             if (interfaceDeclarationSyntax.Modifiers.Select(m => m.ToString()).Except(Modifiers).Count() != 0)
             {
@@ -48,15 +49,24 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
                 ns = namespaceDeclarationSyntax.Name.ToString();
             }
 
+            string rawTypename = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString();
+
             data = new
             (
                 ns,
                 interfaceDeclarationSyntax.Identifier.ToString(),
-                ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString(),
+                rawTypename,
+                ResolveType(rawTypename),
                 false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
             );
 
             return true;
+        }
+
+        private static string ResolveType(string typeName)
+        {
+            int number = typeName.Count(c => c == ',') + 1;
+            return $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty)}`{number}";
         }
     }
 }
