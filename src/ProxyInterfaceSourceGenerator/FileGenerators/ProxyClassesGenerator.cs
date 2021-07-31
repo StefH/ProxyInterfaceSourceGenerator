@@ -131,15 +131,15 @@ namespace {ns}
                 {
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
-                        var type = GetParameterType(ps, out var isReplaced);
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.Name}");
+                        var type = GetParameterType(ps, out _);
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.SanitizedName()}");
                     }
                     else
                     {
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.Name}");
+                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.SanitizedName()}");
                     }
 
-                    invokeParameters.Add($"{ps.GetRefPrefix()}_{ps.Name}");
+                    invokeParameters.Add($"{ps.GetRefPrefix()}{ps.SanitizedName()}_");
                 }
 
                 string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
@@ -148,7 +148,7 @@ namespace {ns}
                 str.AppendLine("        {");
                 foreach (var ps in method.Parameters)
                 {
-                    string normalOrMap = $" = {ps.Name}";
+                    string normalOrMap = $" = {ps.SanitizedName()}";
                     if (ps.RefKind == RefKind.Out)
                     {
                         normalOrMap = string.Empty;
@@ -158,11 +158,11 @@ namespace {ns}
                         var type = GetParameterType(ps, out var isReplaced);
                         if (isReplaced)
                         {
-                            normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.Name})";
+                            normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.SanitizedName()})";
                         }
                     }
 
-                    str.AppendLine($"             {ps.Type} _{ps.Name}{normalOrMap};");
+                    str.AppendLine($"             {ps.Type} {ps.SanitizedName()}_{normalOrMap};");
                 }
 
 #pragma warning disable RS1024 // Compare symbols correctly
@@ -181,17 +181,17 @@ namespace {ns}
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
                 {
-                    string normalOrMap = $" = _{ps.Name}";
+                    string normalOrMap = $" = {ps.SanitizedName()}_";
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
                         var type = GetParameterType(ps, out var isReplaced);
                         if (isReplaced)
                         {
-                            normalOrMap = $" = _mapper.Map<{type}>(_{ps.Name})";
+                            normalOrMap = $" = _mapper.Map<{type}>({ps.SanitizedName()}_)";
                         }
                     }
 
-                    str.AppendLine($"             {ps.Name}{normalOrMap};");
+                    str.AppendLine($"             {ps.SanitizedName()}{normalOrMap};");
                 }
 
                 if (returnTypeAsString != "void")
@@ -207,60 +207,6 @@ namespace {ns}
                 }
 
                 str.AppendLine("        }");
-                str.AppendLine();
-            }
-
-            return str.ToString();
-        }
-
-        private string GeneratePublicMethodsOld(INamedTypeSymbol symbol)
-        {
-            var str = new StringBuilder();
-            foreach (var method in MemberHelper.GetPublicMethods(symbol))
-            {
-                var methodParameters = new List<string>();
-                var invokeParameters = new List<string>();
-
-                foreach (var ps in method.Parameters)
-                {
-                    if (ps.GetTypeEnum() == TypeEnum.Complex)
-                    {
-                        var type = GetParameterType(ps, out var isReplaced);
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.Name}");
-
-                        if (isReplaced)
-                        {
-                            invokeParameters.Add($"_mapper.Map<{ps.Type}>({ps.Name})");
-                        }
-                        else
-                        {
-                            invokeParameters.Add($"{ps.GetRefPrefix()}{ps.Name}");
-                        }
-                    }
-                    else
-                    {
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.Name}");
-
-                        invokeParameters.Add($"{ps.GetRefPrefix()}{ps.Name}");
-                    }
-                }
-
-                string returnTypeAsString;
-                string call = $"_Instance.{method.Name}({string.Join(", ", invokeParameters)})";
-                if (method.ReturnType.GetTypeEnum() == TypeEnum.Complex)
-                {
-                    returnTypeAsString = GetReplacedType(method.ReturnType, out var isReplaced);
-                    if (isReplaced)
-                    {
-                        call = $"_mapper.Map<{returnTypeAsString}>(_Instance.{method.Name}({string.Join(", ", invokeParameters)}))";
-                    }
-                }
-                else
-                {
-                    returnTypeAsString = method.ReturnType.ToString();
-                }
-
-                str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)}) => {call};");
                 str.AppendLine();
             }
 

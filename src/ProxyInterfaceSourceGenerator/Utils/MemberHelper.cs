@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceSourceGenerator.Utils
 {
@@ -31,6 +31,7 @@ namespace ProxyInterfaceSourceGenerator.Utils
                 filter);
         }
 
+        // TODO : do we need also to check for "SanitizedName()" here?
         private static IEnumerable<T> GetPublicMembers<T>(INamedTypeSymbol classSymbol, params Func<T, bool>[] filters) where T : ISymbol
         {
             var membersQuery = classSymbol.GetMembers().OfType<T>()

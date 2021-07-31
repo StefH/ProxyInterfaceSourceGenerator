@@ -8,6 +8,8 @@ namespace ProxyInterfaceConsumer
         private int PrivateId { get; }
         public int Id { get; }
 
+        public object @object { get; set; }
+
         public long? NullableLong { get; }
 
         public string Name { get; set; }
@@ -25,9 +27,9 @@ namespace ProxyInterfaceConsumer
 
         public IMyInterface MyInterface { get; set; }
 
-        public int Add(string s)
+        public string Add(string s, string @string)
         {
-            return 600;
+            return s + @string;
         }
 
         public void AddWithParams(params string[] values)
