@@ -1,3 +1,7 @@
+# 0.0.5 (31 July 2021)
+- [#18](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/18) - Add support for reserved keywords like @object and @string [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#9](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/9) - Support verbatim / reserved names like @object [bug]
+
 # 0.0.4 (28 July 2021)
 - [#15](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/15) - Fix issue #4 (string?) [bug] contributed by [StefH](https://github.com/StefH)
 - [#16](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/16) - Fix 'params' [bug] contributed by [StefH](https://github.com/StefH)
