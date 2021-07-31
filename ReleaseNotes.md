@@ -1,6 +1,8 @@
 # 0.0.5 (31 July 2021)
 - [#18](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/18) - Add support for reserved keywords like @object and @string [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#19](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/19) - Fix Default value [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#9](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/9) - Support verbatim / reserved names like @object [bug]
+- [#11](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/11) - interface methods do not propagate default value for parameters [bug]
 
 # 0.0.4 (28 July 2021)
 - [#15](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/15) - Fix issue #4 (string?) [bug] contributed by [StefH](https://github.com/StefH)

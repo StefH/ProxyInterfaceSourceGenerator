@@ -130,15 +130,6 @@ namespace {ns}
                 foreach (var ps in method.Parameters)
                 {
                     var type = GetParameterType(ps, out _);
-                    //if (ps.GetTypeEnum() == TypeEnum.Complex)
-                    //{
-                    //    var type = GetParameterType(ps, out _);
-                    //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-                    //}
-                    //else
-                    //{
-                    //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-                    //}
 
                     methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
                     invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
