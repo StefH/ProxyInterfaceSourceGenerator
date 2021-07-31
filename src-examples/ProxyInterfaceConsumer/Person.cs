@@ -27,6 +27,11 @@ namespace ProxyInterfaceConsumer
 
         public IMyInterface MyInterface { get; set; }
 
+        public int DefaultValue(int x = 100)
+        {
+            return x + 1;
+        }
+
         public string Add(string s, string @string)
         {
             return s + @string;

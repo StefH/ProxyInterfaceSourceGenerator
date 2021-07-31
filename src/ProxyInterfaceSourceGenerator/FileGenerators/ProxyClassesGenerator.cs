@@ -129,17 +129,19 @@ namespace {ns}
 
                 foreach (var ps in method.Parameters)
                 {
-                    if (ps.GetTypeEnum() == TypeEnum.Complex)
-                    {
-                        var type = GetParameterType(ps, out _);
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.SanitizedName()}");
-                    }
-                    else
-                    {
-                        methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.SanitizedName()}");
-                    }
+                    var type = GetParameterType(ps, out _);
+                    //if (ps.GetTypeEnum() == TypeEnum.Complex)
+                    //{
+                    //    var type = GetParameterType(ps, out _);
+                    //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+                    //}
+                    //else
+                    //{
+                    //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{ps.Type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+                    //}
 
-                    invokeParameters.Add($"{ps.GetRefPrefix()}{ps.SanitizedName()}_");
+                    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+                    invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
                 }
 
                 string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
@@ -148,7 +150,7 @@ namespace {ns}
                 str.AppendLine("        {");
                 foreach (var ps in method.Parameters)
                 {
-                    string normalOrMap = $" = {ps.SanitizedName()}";
+                    string normalOrMap = $" = {ps.GetSanitizedName()}";
                     if (ps.RefKind == RefKind.Out)
                     {
                         normalOrMap = string.Empty;
@@ -158,11 +160,11 @@ namespace {ns}
                         var type = GetParameterType(ps, out var isReplaced);
                         if (isReplaced)
                         {
-                            normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.SanitizedName()})";
+                            normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.GetSanitizedName()})";
                         }
                     }
 
-                    str.AppendLine($"             {ps.Type} {ps.SanitizedName()}_{normalOrMap};");
+                    str.AppendLine($"             {ps.Type} {ps.GetSanitizedName()}_{normalOrMap};");
                 }
 
 #pragma warning disable RS1024 // Compare symbols correctly
@@ -181,17 +183,17 @@ namespace {ns}
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
                 {
-                    string normalOrMap = $" = {ps.SanitizedName()}_";
+                    string normalOrMap = $" = {ps.GetSanitizedName()}_";
                     if (ps.GetTypeEnum() == TypeEnum.Complex)
                     {
                         var type = GetParameterType(ps, out var isReplaced);
                         if (isReplaced)
                         {
-                            normalOrMap = $" = _mapper.Map<{type}>({ps.SanitizedName()}_)";
+                            normalOrMap = $" = _mapper.Map<{type}>({ps.GetSanitizedName()}_)";
                         }
                     }
 
-                    str.AppendLine($"             {ps.SanitizedName()}{normalOrMap};");
+                    str.AppendLine($"             {ps.GetSanitizedName()}{normalOrMap};");
                 }
 
                 if (returnTypeAsString != "void")

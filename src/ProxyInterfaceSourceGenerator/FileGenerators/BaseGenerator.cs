@@ -24,11 +24,11 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return GetReplacedType(property.Type, out isReplaced);
         }
 
-        protected string GetReplacedType(ITypeSymbol property, out bool isReplaced)
+        protected string GetReplacedType(ITypeSymbol typeSymbol, out bool isReplaced)
         {
             isReplaced = false;
 
-            var typeSymbolAsString = property.ToString();
+            var typeSymbolAsString = typeSymbol.ToString();
 
             var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.TypeName == typeSymbolAsString);
             if (existing is not null)
@@ -42,7 +42,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 return existing.InterfaceName;
             }
 
-            if (property is INamedTypeSymbol namedTypedSymbol)
+            if (typeSymbol is INamedTypeSymbol namedTypedSymbol)
             {
                 var propertyTypeAsStringToBeModified = typeSymbolAsString;
                 foreach (var typeArgument in namedTypedSymbol.TypeArguments)
@@ -65,7 +65,6 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 return propertyTypeAsStringToBeModified;
             }
 
-            
             return typeSymbolAsString;
         }
 
