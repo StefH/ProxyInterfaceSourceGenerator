@@ -1,8 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using AutoMapper;
-using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceConsumer
 {
@@ -33,6 +32,9 @@ namespace ProxyInterfaceConsumer
 
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
+            Console.WriteLine("DefaultValue " + p.DefaultValue());
+            Console.WriteLine("DefaultValue " + p.DefaultValue(42));
+
             var ap = new AddressProxy(new Address { HouseNumber = 42 });
             p.Address = ap;
             var add = p.AddAddress(ap);
