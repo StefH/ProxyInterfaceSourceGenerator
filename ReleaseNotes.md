@@ -1,3 +1,7 @@
+# 0.0.6 (01 August 2021)
+- [#20](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/20) - Add support for generics [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#6](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/6) - no support for generics [bug]
+
 # 0.0.5 (31 July 2021)
 - [#18](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/18) - Add support for reserved keywords like @object and @string [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#19](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/19) - Fix Default value [enhancement] contributed by [StefH](https://github.com/StefH)
