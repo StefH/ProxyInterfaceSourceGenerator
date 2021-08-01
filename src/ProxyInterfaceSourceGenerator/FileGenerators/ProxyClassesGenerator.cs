@@ -96,28 +96,16 @@ namespace {ns}
 
             foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol))
             {
-                switch (property.GetTypeEnum())
+                var type = GetPropertyType(property, out var isReplaced);
+                if (isReplaced)
                 {
-                    case TypeEnum.ValueTypeOrString:
-                    case TypeEnum.Interface:
-                        str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                        str.AppendLine();
-                        break;
-
-                    default:
-                        var type = GetPropertyType(property, out var isReplaced);
-                        if (isReplaced)
-                        {
-                            str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-                        }
-                        else
-                        {
-                            str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                        }
-                        str.AppendLine();
-                        break;
+                    str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
                 }
-
+                else
+                {
+                    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                }
+                str.AppendLine();
             }
 
             return str.ToString();
