@@ -14,6 +14,7 @@ namespace ProxyInterfaceConsumer
 
         public static void Main()
         {
+            INoNamespace nn = new NoNamespaceProxy(new NoNamespace());
             IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
             pT.TVal = 1;
             Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
