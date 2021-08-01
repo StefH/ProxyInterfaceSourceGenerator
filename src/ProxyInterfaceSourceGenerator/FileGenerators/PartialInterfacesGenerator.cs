@@ -26,7 +26,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         private FileData GenerateFile(ProxyData pd)
         {
             var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName);
-            var interfaceName = targetClassSymbol.ResolveInterfaceName(pd.InterfaceName);
+            var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
 
             var file = new FileData(
                 $"{pd.FileName}.cs",

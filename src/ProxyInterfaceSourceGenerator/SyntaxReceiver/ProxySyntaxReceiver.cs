@@ -64,9 +64,9 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 
         private static string ResolveType(string typeName)
         {
-            return typeName.Contains('<') && typeName.Contains('>')
-                ? $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty)}`{typeName.Count(c => c == ',') + 1}"
-                : typeName;
+            return !(typeName.Contains('<') && typeName.Contains('>')) ?
+                typeName :
+                $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
         }
     }
 }

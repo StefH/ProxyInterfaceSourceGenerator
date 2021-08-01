@@ -14,9 +14,15 @@ namespace ProxyInterfaceConsumer
 
         public static void Main()
         {
-            IPersonT<string> pT = new PersonTProxy<string>(new PersonT<string>());
-            pT.TVal = "test";
-            Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
+            //IPersonT<string> pT = new PersonTProxy<string>(new PersonT<string>());
+            //pT.TVal = "test";
+            //Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
+            //Console.WriteLine(new string('-', 80));
+
+            IPersonTT<int, Program> pTT = new PersonTTProxy<int, Program>(new PersonTT<int, Program>());
+            pTT.TVal1 = 42;
+            pTT.TVal2 = new Program();
+            Console.WriteLine(JsonSerializer.Serialize(pTT, JsonSerializerOptions));
             Console.WriteLine(new string('-', 80));
 
             //var c = new Clazz
