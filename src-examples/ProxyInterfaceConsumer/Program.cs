@@ -30,11 +30,11 @@ namespace ProxyInterfaceConsumer
             Console.WriteLine("DefaultValue " + p.DefaultValue());
             Console.WriteLine("DefaultValue " + p.DefaultValue(42));
 
-            var ap = new AddressProxy(new Address { HouseNumber = 42 });
-            p.Address = ap;
-            var add = p.AddAddress(ap);
-            Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
-            p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
+            //var ap = new AddressProxy(new Address { HouseNumber = 42 });
+            //p.Address = ap;
+            //var add = p.AddAddress(ap);
+            //Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
+            //p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
             Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
         }

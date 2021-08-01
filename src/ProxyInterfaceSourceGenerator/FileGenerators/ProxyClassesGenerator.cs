@@ -129,7 +129,7 @@ namespace {ns}
 
                 string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-                str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)})");
+                str.AppendLine($"        public {returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
                 str.AppendLine("        {");
                 foreach (var ps in method.Parameters)
                 {
@@ -157,11 +157,11 @@ namespace {ns}
 
                 if (returnTypeAsString == "void")
                 {
-                    str.AppendLine($"             _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"             _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
                 else
                 {
-                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))

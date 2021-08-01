@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
@@ -82,8 +83,8 @@ namespace {ns}
                     var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
                     methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
                 }
-
-                str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.Name}({string.Join(", ", methodParameters)});");
+                
+                str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()};");
                 str.AppendLine();
             }
 
