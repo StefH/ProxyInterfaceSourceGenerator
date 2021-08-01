@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
+using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
@@ -19,38 +20,41 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                yield return GenerateFile(ci.Value.Namespace, ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
+                yield return GenerateFile(ci.Value); //.Namespace, ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
             }
         }
 
-        private FileData GenerateFile(string ns, string interfaceName, string className, string typeName, bool proxyAll)
+        private FileData GenerateFile(ProxyData pd)
         {
-            var symbol = GetType(typeName);
+            var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName);
+            var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
+            var className = targetClassSymbol.ResolveProxyClassName();
+            var constructorName = $"{targetClassSymbol.Name}Proxy";
 
             var file = new FileData(
-                $"{className}Proxy.cs",
-                CreateProxyClassCode(ns, symbol, interfaceName, className, proxyAll)
+                $"{pd.FileName}Proxy.cs",
+                CreateProxyClassCode(pd.Namespace, targetClassSymbol, interfaceName, className, constructorName)
             );
 
-            _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = className, FileData = file });
+            // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = pd.ClassName, FileData = file });
 
             return file;
         }
 
-        private string CreateProxyClassCode(string ns, INamedTypeSymbol symbol, string interfaceName, string className, bool proxyAll) => $@"using System;
+        private string CreateProxyClassCode(string ns, INamedTypeSymbol targetClassSymbol, string interfaceName, string className, string constructorName) => $@"using System;
 using AutoMapper;
 
 namespace {ns}
 {{
-    public class {className}Proxy : {interfaceName}
+    public class {className} : {interfaceName}
     {{
-        public {symbol} _Instance {{ get; }}
+        public {targetClassSymbol} _Instance {{ get; }}
 
-{GeneratePublicProperties(symbol, proxyAll)}
+{GeneratePublicProperties(targetClassSymbol, false)}
 
-{GeneratePublicMethods(symbol)}
+{GeneratePublicMethods(targetClassSymbol)}
 
-        public {className}Proxy({symbol} instance)
+        public {constructorName}({targetClassSymbol} instance)
         {{
             _Instance = instance;
 
@@ -86,43 +90,31 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GeneratePublicProperties(INamedTypeSymbol symbol, bool proxyAll)
+        private string GeneratePublicProperties(INamedTypeSymbol targetClassSymbol, bool proxyAll)
         {
             var str = new StringBuilder();
 
-            foreach (var property in MemberHelper.GetPublicProperties(symbol))
+            foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol))
             {
-                switch (property.GetTypeEnum())
+                var type = GetPropertyType(property, out var isReplaced);
+                if (isReplaced)
                 {
-                    case TypeEnum.ValueTypeOrString:
-                    case TypeEnum.Interface:
-                        str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                        str.AppendLine();
-                        break;
-
-                    default:
-                        var type = GetPropertyType(property, out var isReplaced);
-                        if (isReplaced)
-                        {
-                            str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
-                        }
-                        else
-                        {
-                            str.AppendLine($"        public {property.ToPropertyTextForClass()}");
-                        }
-                        str.AppendLine();
-                        break;
+                    str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
                 }
-
+                else
+                {
+                    str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                }
+                str.AppendLine();
             }
 
             return str.ToString();
         }
 
-        private string GeneratePublicMethods(INamedTypeSymbol symbol)
+        private string GeneratePublicMethods(INamedTypeSymbol targetClassSymbol)
         {
             var str = new StringBuilder();
-            foreach (var method in MemberHelper.GetPublicMethods(symbol))
+            foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol))
             {
                 var methodParameters = new List<string>();
                 var invokeParameters = new List<string>();
@@ -137,7 +129,7 @@ namespace {ns}
 
                 string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-                str.AppendLine($"        public {returnTypeAsString} {method.Name}({string.Join(", ", methodParameters)})");
+                str.AppendLine($"        public {returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
                 str.AppendLine("        {");
                 foreach (var ps in method.Parameters)
                 {
@@ -165,11 +157,11 @@ namespace {ns}
 
                 if (returnTypeAsString == "void")
                 {
-                    str.AppendLine($"             _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"             _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
                 else
                 {
-                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.Name}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))

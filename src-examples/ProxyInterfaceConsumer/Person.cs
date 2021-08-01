@@ -27,6 +27,13 @@ namespace ProxyInterfaceConsumer
 
         public IMyInterface MyInterface { get; set; }
 
+        public bool TMethod<T1, T2>(int x, T1 t1, T2 t2)
+            where T1 : struct
+            where T2 : class, new()
+        {
+            return true;
+        }
+
         public int DefaultValue(int x = 100)
         {
             return x + 1;

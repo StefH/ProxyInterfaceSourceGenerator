@@ -5,7 +5,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
     internal static class SyntaxNodeUtils
     {
         // https://stackoverflow.com/questions/20458457/getting-class-fullname-including-namespace-from-roslyn-classdeclarationsyntax
-        public static bool TryGetParentSyntax<T>(this SyntaxNode syntaxNode, out T result) where T : SyntaxNode
+        public static bool TryGetParentSyntax<T>(this SyntaxNode? syntaxNode, out T? result) where T : SyntaxNode
         {
             result = null;
 
