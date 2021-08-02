@@ -1,3 +1,7 @@
+# 0.0.7 (02 August 2021)
+- [#22](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/22) - Add support for using a simple type-name [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#3](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/3) - it is not allowed to put simple type name but only full name [bug]
+
 # 0.0.6 (01 August 2021)
 - [#20](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/20) - Add support for generics [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#6](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/6) - no support for generics [bug]

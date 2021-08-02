@@ -46,7 +46,7 @@ public partial interface IPerson
 ```
 
 #### :two: A Proxy class
-Which takes the external class in the constructor and wraps all properties.
+Which takes the external class in the constructor and wraps all properties and methods.
 
 ``` c#
 public class PersonProxy : IPerson
