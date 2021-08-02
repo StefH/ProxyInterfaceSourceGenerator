@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -20,9 +21,9 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
             }
         }
 
-        private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, out ProxyData data)
+        private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data)
         {
-            data = new(string.Empty, string.Empty, string.Empty, string.Empty, false);
+            data = null;
 
             if (interfaceDeclarationSyntax.Modifiers.Select(m => m.ToString()).Except(Modifiers).Count() != 0)
             {
@@ -42,27 +43,39 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
                 return false;
             }
 
+            var usings = new List<string>();
+
             string ns = string.Empty;
-            if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out NamespaceDeclarationSyntax namespaceDeclarationSyntax))
+            if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out NamespaceDeclarationSyntax? namespaceDeclarationSyntax))
             {
                 ns = namespaceDeclarationSyntax.Name.ToString();
+                usings.Add(ns);
+            }
+                        
+            if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out CompilationUnitSyntax? cc))
+            {
+                foreach (var @using in cc.Usings)
+                {
+                    usings.Add(@using.Name.ToString());
+                }
             }
 
-            string rawTypename = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString();
+            string rawTypeName = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString();
 
             data = new
             (
                 ns,
                 interfaceDeclarationSyntax.Identifier.ToString(),
-                rawTypename,
-                ResolveType(rawTypename),
+                rawTypeName,
+                ConvertTypeName(rawTypeName),
+                usings,
                 false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
             );
 
             return true;
         }
 
-        private static string ResolveType(string typeName)
+        private static string ConvertTypeName(string typeName)
         {
             return !(typeName.Contains('<') && typeName.Contains('>')) ?
                 typeName :

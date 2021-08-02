@@ -1,4 +1,4 @@
-﻿namespace ProxyInterfaceConsumer
+﻿namespace DifferentNamespace
 {
     public class Address
     {

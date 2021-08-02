@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
@@ -67,16 +68,28 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return typeSymbolAsString;
         }
 
-        protected INamedTypeSymbol GetNamedTypeSymbolByFullName(string fullName)
+        protected INamedTypeSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
         {
             // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
-            var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(fullName);
-            if (symbol is null)
+            var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
+            if (symbol is not null)
             {
-                throw new Exception($"The type '{fullName}' is not found.");
+                return symbol;
             }
 
-            return symbol;
+            if (usings is not null)
+            {
+                foreach (var @using in usings)
+                {
+                    symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
+                    if (symbol is not null)
+                    {
+                        return symbol;
+                    }
+                }
+            }
+
+            throw new Exception($"The type '{name}' is not found.");
         }
     }
 }
