@@ -31,6 +31,23 @@ namespace ProxyInterfaceSourceGenerator.Utils
                 filter);
         }
 
+        public static IEnumerable<IGrouping<string, IMethodSymbol>> GetPublicEvents(INamedTypeSymbol classSymbol, Func<IMethodSymbol, bool>? filter = null)
+        {
+            if (filter is null)
+            {
+                filter = _ => true;
+            }
+
+#pragma warning disable RS1024 // Compare symbols correctly
+            return GetPublicMembers(classSymbol,
+                m => m.MethodKind == MethodKind.EventAdd || m.MethodKind == MethodKind.EventRemove || m.MethodKind == MethodKind.EventRaise,
+                filter)
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                .GroupBy(e => e.AssociatedSymbol.Name);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore RS1024 // Compare symbols correctly
+        }
+
         // TODO : do we need also to check for "SanitizedName()" here?
         private static IEnumerable<T> GetPublicMembers<T>(INamedTypeSymbol classSymbol, params Func<T, bool>[] filters) where T : ISymbol
         {

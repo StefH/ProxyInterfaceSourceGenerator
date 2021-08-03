@@ -5,6 +5,7 @@ using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
@@ -47,6 +48,8 @@ namespace {ns}
 {GenerateProperties(targetClassSymbol, proxyAll)}
 
 {GenerateMethods(targetClassSymbol)}
+
+{GenerateEvents(targetClassSymbol)}
     }}
 }}";
 
@@ -85,6 +88,25 @@ namespace {ns}
 
                 str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()};");
                 str.AppendLine();
+            }
+
+            return str.ToString();
+        }
+
+        private string GenerateEvents(INamedTypeSymbol targetClassSymbol)
+        {
+            var str = new StringBuilder();
+            foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol))
+            {
+                var methodParameters = new List<string>();
+                //foreach (var ps in @event.Parameters)
+                //{
+                //    var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+                //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+                //}
+
+                //str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()};");
+                //str.AppendLine();
             }
 
             return str.ToString();
