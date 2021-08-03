@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                yield return GenerateFile(ci.Value); //.Namespace, ci.Value.InterfaceName, ci.Value.ClassName, ci.Value.TypeName, ci.Value.ProxyAll);
+                yield return GenerateFile(ci.Value);
             }
         }
 
@@ -53,6 +53,8 @@ namespace {ns}
 {GeneratePublicProperties(targetClassSymbol, false)}
 
 {GeneratePublicMethods(targetClassSymbol)}
+
+{GenerateEvents(targetClassSymbol)}
 
         public {constructorName}({targetClassSymbol} instance)
         {{
@@ -192,6 +194,32 @@ namespace {ns}
                 }
 
                 str.AppendLine("        }");
+                str.AppendLine();
+            }
+
+            return str.ToString();
+        }
+
+        private string GenerateEvents(INamedTypeSymbol targetClassSymbol)
+        {
+            var str = new StringBuilder();
+            foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol))
+            {
+                var name = @event.Key.GetSanitizedName();
+                var ps = @event.First().Parameters.First();
+                var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+                str.Append($"        public event {type} {name} {{");
+
+                if (@event.Any(e => e.MethodKind == MethodKind.EventAdd))
+                {
+                    str.Append($" add {{ _Instance.{name} += value; }}");
+                }
+                if (@event.Any(e => e.MethodKind == MethodKind.EventRemove))
+                {
+                    str.Append($" remove {{ _Instance.{name} -= value; }}");
+                }
+
+                str.AppendLine(" }");
                 str.AppendLine();
             }
 

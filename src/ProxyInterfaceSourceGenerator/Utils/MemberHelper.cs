@@ -31,21 +31,21 @@ namespace ProxyInterfaceSourceGenerator.Utils
                 filter);
         }
 
-        public static IEnumerable<IGrouping<string, IMethodSymbol>> GetPublicEvents(INamedTypeSymbol classSymbol, Func<IMethodSymbol, bool>? filter = null)
+        public static IEnumerable<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(INamedTypeSymbol classSymbol, Func<IMethodSymbol, bool>? filter = null)
         {
             if (filter is null)
             {
                 filter = _ => true;
             }
 
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
 #pragma warning disable RS1024 // Compare symbols correctly
             return GetPublicMembers(classSymbol,
-                m => m.MethodKind == MethodKind.EventAdd || m.MethodKind == MethodKind.EventRemove || m.MethodKind == MethodKind.EventRaise,
+                m => m.MethodKind == MethodKind.EventAdd || m.MethodKind == MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
                 filter)
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                .GroupBy(e => e.AssociatedSymbol.Name);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                .GroupBy(e => e.AssociatedSymbol);
 #pragma warning restore RS1024 // Compare symbols correctly
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
         }
 
         // TODO : do we need also to check for "SanitizedName()" here?
