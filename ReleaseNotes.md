@@ -1,3 +1,7 @@
+# 0.0.8 (03 August 2021)
+- [#23](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/23) - Add support for Events [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#8](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/8) - no support for events... maybe simple forwarders [enhancement]
+
 # 0.0.7 (02 August 2021)
 - [#22](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/22) - Add support for using a simple type-name [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#3](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/3) - it is not allowed to put simple type name but only full name [bug]
