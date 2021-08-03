@@ -45,6 +45,11 @@ namespace ProxyInterfaceConsumer
             return s + @string;
         }
 
+        public string HelloWorld(string name)
+        {
+            return $"Hello {name} !";
+        }
+
         public void AddWithParams(params string[] values)
         {
         }

@@ -27,6 +27,7 @@ namespace ProxyInterfaceConsumer
 
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
+            p.HelloWorld("stef");
             Console.WriteLine("DefaultValue " + p.DefaultValue());
             Console.WriteLine("DefaultValue " + p.DefaultValue(42));
 

@@ -21,6 +21,11 @@ Or via the Visual Studio NuGet package manager or if you use the `dotnet` comman
 public sealed class Person
 {
     public string Name { get; set; }
+
+    public string HelloWorld(string name)
+    {
+        return $"Hello {name} !";
+    }
 }
 ```
 
@@ -42,6 +47,8 @@ Which defines the same properties and methods as in the external class.
 public partial interface IPerson
 {
     string Name { get; set; }
+
+    string HelloWorld(string name);
 }
 ```
 
@@ -59,6 +66,13 @@ public class PersonProxy : IPerson
     }
 
     public string Name { get => _Instance.Name; set => _Instance.Name = value; }
+
+    public string HelloWorld(string name)
+    {
+        string name_ = name;
+        var result_19479959 = _Instance.HelloWorld(name_);
+        return result_19479959;
+    }
 }
 ```
 
@@ -66,4 +80,5 @@ public class PersonProxy : IPerson
 ``` c#
 IPerson p = new PersonProxy(new Person());
 p.Name = "test";
+p.HelloWorld("stef");
 ```
