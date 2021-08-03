@@ -1,6 +1,6 @@
-﻿using DifferentNamespace;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DifferentNamespace;
 
 namespace ProxyInterfaceConsumer
 {

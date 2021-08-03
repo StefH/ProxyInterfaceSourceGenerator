@@ -1,10 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
@@ -47,6 +48,8 @@ namespace {ns}
 {GenerateProperties(targetClassSymbol, proxyAll)}
 
 {GenerateMethods(targetClassSymbol)}
+
+{GenerateEvents(targetClassSymbol)}
     }}
 }}";
 
@@ -84,6 +87,20 @@ namespace {ns}
                 }
 
                 str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()};");
+                str.AppendLine();
+            }
+
+            return str.ToString();
+        }
+
+        private string GenerateEvents(INamedTypeSymbol targetClassSymbol)
+        {
+            var str = new StringBuilder();
+            foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol))
+            {
+                var ps = @event.First().Parameters.First();
+                var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+                str.AppendLine($"        event {type} {@event.Key.GetSanitizedName()};");
                 str.AppendLine();
             }
 
