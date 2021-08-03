@@ -28,6 +28,9 @@ namespace ProxyInterfaceConsumer
 
             var ap = new AddressProxy(new Address { HouseNumber = 42 });
             ap.HouseNumber = -1;
+            ap.MyEvent += delegate (object x, EventArgs a)
+            {
+            };
 
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
