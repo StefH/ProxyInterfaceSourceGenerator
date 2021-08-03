@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
@@ -14,5 +14,5 @@ namespace ProxyInterfaceSourceGenerator
         public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; }
 
         public Dictionary<string, string> ReplacedTypes { get; } = new Dictionary<string, string>();
-}
+    }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
 
 namespace ProxyInterfaceSourceGenerator.Extensions

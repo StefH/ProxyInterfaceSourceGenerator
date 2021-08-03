@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -51,7 +51,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
                 ns = namespaceDeclarationSyntax.Name.ToString();
                 usings.Add(ns);
             }
-                        
+
             if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out CompilationUnitSyntax? cc))
             {
                 foreach (var @using in cc.Usings)

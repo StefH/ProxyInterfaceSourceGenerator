@@ -1,4 +1,4 @@
-﻿using ProxyInterfaceSourceGenerator.FileGenerators;
+using ProxyInterfaceSourceGenerator.FileGenerators;
 
 namespace ProxyInterfaceSourceGenerator
 {
