@@ -11,8 +11,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
-        public PartialInterfacesGenerator(Context context) :
-            base(context)
+        public PartialInterfacesGenerator(Context context, bool supportsNullable) :
+            base(context, supportsNullable)
         {
         }
 
@@ -48,7 +48,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
-#nullable enable
+{(_supportsNullable ? "#nullable enable" : string.Empty)}
 using System;
 
 namespace {ns}
@@ -62,7 +62,7 @@ namespace {ns}
 {GenerateEvents(targetClassSymbol)}
     }}
 }}
-#nullable disable";
+{(_supportsNullable ? "#nullable disable" : string.Empty)}";
 
         private string GenerateProperties(INamedTypeSymbol targetClassSymbol, bool proxyAll)
         {
