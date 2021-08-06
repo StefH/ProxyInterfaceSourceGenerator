@@ -1,3 +1,10 @@
+# 0.0.10 (06 August 2021)
+- [#25](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/25) - Fix support for Nullable (language version 8) [bug] contributed by [StefH](https://github.com/StefH)
+- [#14](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/14) - for projects where #nullable is disabled emitting nullable reftype without preprocessor '#nullable enable' would result in compile time error. [bug]
+
+# 0.0.9 (05 August 2021)
+- [#24](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/24) - Add &lt;auto-generated&gt; [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.8 (03 August 2021)
 - [#23](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/23) - Add support for Events [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#8](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/8) - no support for events... maybe simple forwarders [enhancement]
