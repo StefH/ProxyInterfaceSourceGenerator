@@ -8,10 +8,12 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
     internal abstract class BaseGenerator
     {
         protected readonly Context _context;
+        protected readonly bool _supportsNullable;
 
-        public BaseGenerator(Context context)
+        public BaseGenerator(Context context, bool supportsNullable)
         {
             _context = context;
+            _supportsNullable = supportsNullable;
         }
 
         protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
