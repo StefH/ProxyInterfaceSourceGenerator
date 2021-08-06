@@ -32,7 +32,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             var constructorName = $"{targetClassSymbol.Name}Proxy";
 
             var file = new FileData(
-                $"{pd.FileName}Proxy.g.cs",
+                $"{targetClassSymbol.GetFileName()}Proxy.g.cs",
                 CreateProxyClassCode(pd.Namespace, targetClassSymbol, interfaceName, className, constructorName)
             );
 
