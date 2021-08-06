@@ -30,7 +30,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
 
             var file = new FileData(
-                $"{pd.FileName}.g.cs",
+                $"{targetClassSymbol.GetFileName()}.g.cs",
                 CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd.ProxyAll)
             );
 
