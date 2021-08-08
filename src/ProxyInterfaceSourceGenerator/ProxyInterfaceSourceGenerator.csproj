@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>0.0.10</Version>
+        <Version>0.0.10-preview-01</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <ProjectGuid>{12344228-91F4-4502-9595-39584E5ABB34}</ProjectGuid>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <Authors>Stef Heyenrath</Authors>
@@ -13,13 +14,11 @@
         <PackageTags>class;interface;proxy;SourceGenerator;Analyzer;Generation;Generate;wrap</PackageTags>
 
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
+        <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>
         <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceGenerator</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator</RepositoryUrl>
-
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <ProjectGuid>{12344228-91F4-4502-9595-39584E5ABB34}</ProjectGuid>
+        <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
 
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
@@ -29,6 +28,10 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../PackageReadme.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="10.1.1" />
