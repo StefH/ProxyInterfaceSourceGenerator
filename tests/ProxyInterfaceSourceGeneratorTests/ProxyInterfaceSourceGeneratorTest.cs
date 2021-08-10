@@ -47,7 +47,7 @@ namespace FluentBuilderGeneratorTests
             @interface.FilePath.Should().EndWith(interfaceFilename);
 
             var interfaceCode = @interface.ToString();
-            File.WriteAllText($"../../../Result/{interfaceFilename}", interfaceCode);
+            // File.WriteAllText($"../../../Result/{interfaceFilename}", interfaceCode);
             interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Result/{interfaceFilename}"));
 
             // Assert Proxy
@@ -55,7 +55,7 @@ namespace FluentBuilderGeneratorTests
             proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
             var proxyCode = proxyClass.ToString();
-            File.WriteAllText($"../../../Result/{proxyClassFilename}", proxyCode);
+            // File.WriteAllText($"../../../Result/{proxyClassFilename}", proxyCode);
             proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Result/{proxyClassFilename}"));
         }
     }
