@@ -14,6 +14,17 @@ Or via the Visual Studio NuGet package manager or if you use the `dotnet` comman
 
 `dotnet add package ProxyInterfaceGenerator`
 
+#### :pencil2: Using in a Library project
+When you use this Source Generator as a package reference in your library project, make sure that you define this NuGet package as a Private Asset (`<PrivateAssets>`) and define the correct `<IncludeAssets>`. This is needed to indicate that this dependency is purely used as a development dependency and that you don’t want to expose that to projects that will consume your package.
+
+``` xml
+<PackageReference Include="ProxyInterfaceGenerator" Version="0.0.10">
+    <!-- 👇 -->
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+</PackageReference>
+```
+
 ## Usage
 
 ### Given: an external existing class which does not implement an interface
@@ -21,6 +32,11 @@ Or via the Visual Studio NuGet package manager or if you use the `dotnet` comman
 public sealed class Person
 {
     public string Name { get; set; }
+
+    public string HelloWorld(string name)
+    {
+        return $"Hello {name} !";
+    }
 }
 ```
 
@@ -42,11 +58,13 @@ Which defines the same properties and methods as in the external class.
 public partial interface IPerson
 {
     string Name { get; set; }
+
+    string HelloWorld(string name);
 }
 ```
 
 #### :two: A Proxy class
-Which takes the external class in the constructor and wraps all properties.
+Which takes the external class in the constructor and wraps all properties and methods.
 
 ``` c#
 public class PersonProxy : IPerson
@@ -59,6 +77,13 @@ public class PersonProxy : IPerson
     }
 
     public string Name { get => _Instance.Name; set => _Instance.Name = value; }
+
+    public string HelloWorld(string name)
+    {
+        string name_ = name;
+        var result_19479959 = _Instance.HelloWorld(name_);
+        return result_19479959;
+    }
 }
 ```
 
@@ -66,4 +91,5 @@ public class PersonProxy : IPerson
 ``` c#
 IPerson p = new PersonProxy(new Person());
 p.Name = "test";
+p.HelloWorld("stef");
 ```

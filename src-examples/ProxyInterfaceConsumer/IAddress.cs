@@ -1,6 +1,10 @@
-﻿namespace ProxyInterfaceConsumer
+﻿using DifferentNamespace;
+using System;
+using System.Linq;
+
+namespace ProxyInterfaceConsumer
 {
-    // [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Address))]
+    [ProxyInterfaceGenerator.Proxy(typeof(Address))]
     public partial interface IAddress
     {
     }

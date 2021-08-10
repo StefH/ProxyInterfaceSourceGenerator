@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
@@ -27,7 +27,7 @@ namespace ProxyInterfaceSourceGenerator.Extensions
                 constraints.Add("new()");
             }
 
-            constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(contstraintType => contstraintType.GetFullTypeString()));
+            constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(contstraintType => contstraintType.GetFullType()));
 
             if (!constraints.Any())
             {

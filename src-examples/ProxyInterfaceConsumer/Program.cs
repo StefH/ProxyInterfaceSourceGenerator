@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+using AutoMapper;
+using DifferentNamespace;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -26,16 +27,19 @@ namespace ProxyInterfaceConsumer
             Console.WriteLine(JsonSerializer.Serialize(pTT, JsonSerializerOptions));
             Console.WriteLine(new string('-', 80));
 
+            var ap = new AddressProxy(new Address { HouseNumber = 42 });
+            ap.HouseNumber = -1;
+            ap.MyEvent += delegate (object x, EventArgs a)
+            {
+            };
+
             IPerson p = new PersonProxy(new Person());
             p.Name = "test";
+            p.HelloWorld("stef");
+            // p.Address = ap;
+
             Console.WriteLine("DefaultValue " + p.DefaultValue());
             Console.WriteLine("DefaultValue " + p.DefaultValue(42));
-
-            //var ap = new AddressProxy(new Address { HouseNumber = 42 });
-            //p.Address = ap;
-            //var add = p.AddAddress(ap);
-            //Console.WriteLine("add = " + JsonSerializer.Serialize(add, JsonSerializerOptions));
-            //p.AddAddress(new AddressProxy(new Address { HouseNumber = 1000 }));
 
             Console.WriteLine(JsonSerializer.Serialize(p, JsonSerializerOptions));
         }

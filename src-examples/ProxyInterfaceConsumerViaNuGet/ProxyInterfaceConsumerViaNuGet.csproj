@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.6" />
+    <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.10" />
   </ItemGroup>
 
 </Project>

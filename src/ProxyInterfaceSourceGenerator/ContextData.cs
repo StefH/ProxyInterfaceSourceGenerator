@@ -1,4 +1,4 @@
-﻿using ProxyInterfaceSourceGenerator.FileGenerators;
+using ProxyInterfaceSourceGenerator.FileGenerators;
 
 namespace ProxyInterfaceSourceGenerator
 {
@@ -8,6 +8,6 @@ namespace ProxyInterfaceSourceGenerator
 
         public string? ClassName { get; init; }
 
-        public FileData FileData { get; init; }
+        public FileData FileData { get; init; } = default!;
     }
 }

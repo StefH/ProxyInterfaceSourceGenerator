@@ -1,4 +1,4 @@
-﻿namespace ProxyInterfaceSourceGenerator.FileGenerators
+namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal interface IFileGenerator
     {

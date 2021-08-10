@@ -1,4 +1,3 @@
-﻿using System;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -7,19 +6,25 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class NamedTypeSymbolExtensions
     {
-        /// <summary>
-        /// See https://www.codeproject.com/Articles/861548/Roslyn-Code-Analysis-in-Easy-Samples-Part
-        /// </summary>
-        public static string GetFullTypeString(this INamedTypeSymbol namedTypeSymbol)
+        public static string GetFileName(this INamedTypeSymbol namedTypeSymbol)
         {
-            var str = new StringBuilder(namedTypeSymbol.Name);
+            var typeName = namedTypeSymbol.GetFullType();
+            return !(typeName.Contains('<') && typeName.Contains('>')) ?
+                typeName :
+                $"{typeName.Replace('.', '_').Replace('<', '_').Replace('>', '_').Replace(", ", "-")}_{typeName.Count(c => c == ',') + 1}";
+        }
 
-            if (namedTypeSymbol.TypeArguments.Count() > 0)
-            {
-                str.AppendFormat("<{0}>", string.Join(", ", namedTypeSymbol.TypeArguments.OfType<INamedTypeSymbol>().Select(typeArg => typeArg.GetFullTypeString())));
-            }
+        public static string GetFullType(this INamedTypeSymbol namedTypeSymbol)
+        {
+            // https://www.codeproject.com/Articles/861548/Roslyn-Code-Analysis-in-Easy-Samples-Part
+            //var str = new StringBuilder(namedTypeSymbol.Name);
 
-            return str.ToString();
+            //if (namedTypeSymbol.TypeArguments.Count() > 0)
+            //{
+            //    str.AppendFormat("<{0}>", string.Join(", ", namedTypeSymbol.TypeArguments.OfType<INamedTypeSymbol>().Select(typeArg => typeArg.GetFullType())));
+            //}
+
+            return namedTypeSymbol.OriginalDefinition.ToString();// str.ToString();
         }
 
         public static string ResolveInterfaceNameWithOptionalTypeConstraints(this INamedTypeSymbol namedTypeSymbol, string interfaceName)

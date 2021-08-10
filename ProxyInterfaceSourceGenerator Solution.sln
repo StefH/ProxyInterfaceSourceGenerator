@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CE637DC-E8F5-4603-8B57-E51A32F631F1}"
 	ProjectSection(SolutionItems) = preProject
-		GitHubReleaseNotes.txt = GitHubReleaseNotes.txt
+		.editorconfig = .editorconfig
+		Generate-ReleaseNotes.bat = Generate-ReleaseNotes.bat
+		PackageReadme.md = PackageReadme.md
+		PackageReleaseNotes.template = PackageReleaseNotes.template
+		PackageReleaseNotes.txt = PackageReleaseNotes.txt
 		README.md = README.md
 		ReleaseNotes.md = ReleaseNotes.md
 	EndProjectSection
@@ -20,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGenerat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumer", "src-examples\ProxyInterfaceConsumer\ProxyInterfaceConsumer.csproj", "{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyInterfaceConsumerViaNuGet", "src-examples\ProxyInterfaceConsumerViaNuGet\ProxyInterfaceConsumerViaNuGet.csproj", "{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumerViaNuGet", "src-examples\ProxyInterfaceConsumerViaNuGet\ProxyInterfaceConsumerViaNuGet.csproj", "{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGeneratorTests", "tests\ProxyInterfaceSourceGeneratorTests\ProxyInterfaceSourceGeneratorTests.csproj", "{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +46,10 @@ Global
 		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +58,7 @@ Global
 		{12344228-91F4-4502-9595-39584E5ABB34} = {ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
+		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A} = {19009F5B-3267-45E2-A8B6-89F2AB47D72C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {585F071D-051D-441C-9C6B-226D9E15A1F5}

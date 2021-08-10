@@ -1,3 +1,21 @@
+# 0.0.11 (10 August 2021)
+- [#26](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/26) - Update filename for generated interface files + set DevelopmentDependency to true for the project [enhancement] contributed by [StefH](https://github.com/StefH)
+
+# 0.0.10 (06 August 2021)
+- [#25](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/25) - Fix support for Nullable (language version 8) [bug] contributed by [StefH](https://github.com/StefH)
+- [#14](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/14) - for projects where #nullable is disabled emitting nullable reftype without preprocessor '#nullable enable' would result in compile time error. [bug]
+
+# 0.0.9 (05 August 2021)
+- [#24](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/24) - Add &lt;auto-generated&gt; [enhancement] contributed by [StefH](https://github.com/StefH)
+
+# 0.0.8 (03 August 2021)
+- [#23](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/23) - Add support for Events [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#8](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/8) - no support for events... maybe simple forwarders [enhancement]
+
+# 0.0.7 (02 August 2021)
+- [#22](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/22) - Add support for using a simple type-name [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#3](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/3) - it is not allowed to put simple type name but only full name [bug]
+
 # 0.0.6 (01 August 2021)
 - [#20](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/20) - Add support for generics [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#6](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/6) - no support for generics [bug]
