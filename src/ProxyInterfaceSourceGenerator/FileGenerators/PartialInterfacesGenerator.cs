@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
@@ -20,17 +21,18 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             foreach (var ci in _context.CandidateInterfaces)
             {
-                yield return GenerateFile(ci.Value);
+                yield return GenerateFile(ci.Key, ci.Value);
             }
         }
 
-        private FileData GenerateFile(ProxyData pd)
+        private FileData GenerateFile(InterfaceDeclarationSyntax ci, ProxyData pd)
         {
+            var sourceInterfaceSymbol = GetNamedTypeSymbolByFullName(ci.Identifier.ToString(), pd.Usings);
             var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
             var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
 
             var file = new FileData(
-                $"{targetClassSymbol.GetFileName()}.g.cs",
+                $"{sourceInterfaceSymbol.GetFileName()}.g.cs",
                 CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd.ProxyAll)
             );
 

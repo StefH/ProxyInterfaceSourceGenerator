@@ -19,7 +19,7 @@ namespace ProxyInterfaceConsumer
 
         public Address Address { get; set; }
 
-        public List<Address> AddressesLIst { get; set; }
+        public List<Address> AddressesList { get; set; }
 
         public Dictionary<string, Address> AddressesDict { get; set; } = new Dictionary<string, Address>();
         public Dictionary<Address, Address> AddressesDict2 { get; set; } = new Dictionary<Address, Address>();

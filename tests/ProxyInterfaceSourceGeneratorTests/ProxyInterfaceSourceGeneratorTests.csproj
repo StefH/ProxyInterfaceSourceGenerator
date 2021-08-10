@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
+        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="5.10.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.5" />
+        <!--<ProjectReference Include="..\..\..\FluentBuilder\src-extensions\CSharp.SourceGenerators.Extensions\CSharp.SourceGenerators.Extensions.csproj" />-->
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Source\IPerson.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Source\Person.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
+        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
+    </ItemGroup>
+
+</Project>
