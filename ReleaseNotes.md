@@ -1,3 +1,6 @@
+# 0.0.11 (10 August 2021)
+- [#26](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/26) - Update filename for generated interface files + set DevelopmentDependency to true for the project [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.10 (06 August 2021)
 - [#25](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/25) - Fix support for Nullable (language version 8) [bug] contributed by [StefH](https://github.com/StefH)
 - [#14](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/14) - for projects where #nullable is disabled emitting nullable reftype without preprocessor '#nullable enable' would result in compile time error. [bug]
