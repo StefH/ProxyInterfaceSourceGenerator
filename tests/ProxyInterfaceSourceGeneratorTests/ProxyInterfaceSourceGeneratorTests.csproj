@@ -9,8 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Result\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
-        <Compile Remove="Result\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
+        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
+        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -37,17 +37,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="DTO\IPerson.cs">
+        <Compile Update="Source\IPerson.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="DTO\Person.cs">
+        <Compile Update="Source\Person.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="Result\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
-        <None Include="Result\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
+        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
+        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
     </ItemGroup>
 
 </Project>
