@@ -35,8 +35,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public string HelloWorld(string name)
         {
              string name_ = name;
-             var result_15289640 = _Instance.HelloWorld(name_);
-             return result_15289640;
+             var result_12199115 = _Instance.HelloWorld(name_);
+             return result_12199115;
         }
 
         public void WithParams(params string[] values)
@@ -49,15 +49,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
              string s_ = s;
              string @string_ = @string;
-             var result_15289640 = _Instance.Add(s_, @string_);
-             return result_15289640;
+             var result_12199115 = _Instance.Add(s_, @string_);
+             return result_12199115;
         }
 
         public int DefaultValue(int x = 100)
         {
              int x_ = x;
-             var result_54302544 = _Instance.DefaultValue(x_);
-             return result_54302544;
+             var result_36432607 = _Instance.DefaultValue(x_);
+             return result_36432607;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
@@ -74,26 +74,26 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
              int x_ = x;
              T1 t1_ = t1;
              T2 t2_ = t2;
-             var result_40004473 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-             return result_40004473;
+             var result_30821982 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+             return result_30821982;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-             var result_50153955 = _Instance.Method1Async();
-             return result_50153955;
+             var result_46342038 = _Instance.Method1Async();
+             return result_46342038;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-             var result_1151242754 = _Instance.Method2Async();
-             return result_1151242754;
+             var result_914945885 = _Instance.Method2Async();
+             return result_914945885;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-             var result_1190255658 = _Instance.Method3Async();
-             return result_1190255658;
+             var result_890712393 = _Instance.Method3Async();
+             return result_890712393;
         }
 
 
