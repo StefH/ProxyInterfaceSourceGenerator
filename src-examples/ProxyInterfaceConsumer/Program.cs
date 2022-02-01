@@ -15,16 +15,16 @@ namespace ProxyInterfaceConsumer
 
         public static void Main()
         {
-            IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
-            pT.TVal = 1;
-            Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
-            Console.WriteLine(new string('-', 80));
+            //IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
+            //pT.TVal = 1;
+            //Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
+            //Console.WriteLine(new string('-', 80));
 
-            IPersonTT<int, Program> pTT = new PersonTTProxy<int, Program>(new PersonTT<int, Program>());
-            pTT.TVal1 = 42;
-            pTT.TVal2 = new Program();
-            Console.WriteLine(JsonSerializer.Serialize(pTT, JsonSerializerOptions));
-            Console.WriteLine(new string('-', 80));
+            //IPersonTT<int, Program> pTT = new PersonTTProxy<int, Program>(new PersonTT<int, Program>());
+            //pTT.TVal1 = 42;
+            //pTT.TVal2 = new Program();
+            //Console.WriteLine(JsonSerializer.Serialize(pTT, JsonSerializerOptions));
+            //Console.WriteLine(new string('-', 80));
 
             var ap = new AddressProxy(new Address { HouseNumber = 42 });
             ap.HouseNumber = -1;
