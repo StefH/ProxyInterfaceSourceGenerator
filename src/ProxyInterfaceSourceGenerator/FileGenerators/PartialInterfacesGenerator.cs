@@ -29,11 +29,11 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         {
             var sourceInterfaceSymbol = GetNamedTypeSymbolByFullName(ci.Identifier.ToString(), pd.Usings);
             var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
-            var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
+            var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
 
             var file = new FileData(
-                $"{sourceInterfaceSymbol.GetFileName()}.g.cs",
-                CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd.ProxyAll)
+                $"{sourceInterfaceSymbol.Symbol.GetFileName()}.g.cs",
+                CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol.Symbol, interfaceName, pd.ProxyAll)
             );
 
             // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = null, FileData = file });

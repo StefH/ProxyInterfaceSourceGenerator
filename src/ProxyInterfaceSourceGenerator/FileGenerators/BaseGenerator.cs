@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using ProxyInterfaceSourceGenerator.Extensions;
+using ProxyInterfaceSourceGenerator.Model;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
@@ -70,13 +72,13 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return typeSymbolAsString;
         }
 
-        protected INamedTypeSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
+        protected ClassDetails GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
         {
             // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
             var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
             if (symbol is not null)
             {
-                return symbol;
+                return new ClassDetails(symbol, symbol.GetBaseTypes());
             }
 
             if (usings is not null)
@@ -86,7 +88,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                     symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
                     if (symbol is not null)
                     {
-                        return symbol;
+                        return new ClassDetails(symbol, symbol.GetBaseTypes());
                     }
                 }
             }

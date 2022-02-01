@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -6,6 +7,25 @@ namespace ProxyInterfaceSourceGenerator.Extensions
 {
     internal static class NamedTypeSymbolExtensions
     {
+        public static List<INamedTypeSymbol> GetBaseTypes(this INamedTypeSymbol? type)
+        {
+            var types = new List<INamedTypeSymbol>();
+
+            bool me = true;
+            while (type != null && type.SpecialType != SpecialType.System_Object)
+            {
+                if (!me)
+                {
+                    types.Add(type);
+                }
+
+                type = type.BaseType;
+                me = false;
+            }
+
+            return types;
+        }
+
         public static string GetFileName(this INamedTypeSymbol namedTypeSymbol)
         {
             var typeName = namedTypeSymbol.GetFullType();

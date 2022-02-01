@@ -27,13 +27,13 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         private FileData GenerateFile(ProxyData pd)
         {
             var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
-            var interfaceName = targetClassSymbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
-            var className = targetClassSymbol.ResolveProxyClassName();
-            var constructorName = $"{targetClassSymbol.Name}Proxy";
+            var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
+            var className = targetClassSymbol.Symbol.ResolveProxyClassName();
+            var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
             var file = new FileData(
-                $"{targetClassSymbol.GetFileName()}Proxy.g.cs",
-                CreateProxyClassCode(pd.Namespace, targetClassSymbol, interfaceName, className, constructorName)
+                $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
+                CreateProxyClassCode(pd.Namespace, targetClassSymbol.Symbol, interfaceName, className, constructorName)
             );
 
             // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = pd.ClassName, FileData = file });
