@@ -38,9 +38,22 @@ namespace ProxyInterfaceSourceGenerator
             // https://github.com/reactiveui/refit/blob/main/InterfaceStubGenerator.Core/InterfaceStubGenerator.cs
             var supportsNullable = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp8;
 
-            GenerateProxyAttribute(context, receiver);
-            GeneratePartialInterfaces(context, receiver, supportsNullable);
-            GenerateProxyClasses(context, receiver, supportsNullable);
+            try
+            {
+                GenerateProxyAttribute(context, receiver);
+                GeneratePartialInterfaces(context, receiver, supportsNullable);
+                GenerateProxyClasses(context, receiver, supportsNullable);
+            }
+            catch (Exception exception)
+            {
+                GenerateError(context, exception);
+            }
+        }
+
+        private void GenerateError(GeneratorExecutionContext context, Exception exception)
+        {
+            var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)} Error\r\n{exception}\r\n*/";
+            context.AddSource("Error", SourceText.From(message, Encoding.UTF8));
         }
 
         private void GenerateProxyAttribute(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver)

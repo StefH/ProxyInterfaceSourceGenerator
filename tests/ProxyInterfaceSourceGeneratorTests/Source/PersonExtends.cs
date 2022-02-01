@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class Person
+    public class PersonExtends : Human
     {
         public string Name { get; set; }
 

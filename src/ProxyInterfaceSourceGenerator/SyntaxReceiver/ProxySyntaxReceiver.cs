@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -61,6 +62,15 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
             }
 
             string rawTypeName = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString();
+            bool proxyAllClasses;
+            try
+            {
+                proxyAllClasses = bool.Parse(((LiteralExpressionSyntax)argumentList.Arguments[1].Expression).ToString());
+            }
+            catch
+            {
+                proxyAllClasses = false;
+            }
 
             data = new
             (
@@ -69,7 +79,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
                 rawTypeName,
                 ConvertTypeName(rawTypeName),
                 usings,
-                false //bool.Parse(argumentList.Arguments[1].Expression.GetText().ToString())
+                proxyAllClasses
             );
 
             return true;

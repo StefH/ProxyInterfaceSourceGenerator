@@ -19,7 +19,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         public IEnumerable<FileData> GenerateFiles()
         {
-            foreach (var ci in _context.CandidateInterfaces)
+            foreach (var ci in Context.CandidateInterfaces)
             {
                 yield return GenerateFile(ci.Key, ci.Value);
             }
@@ -52,7 +52,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
-{(_supportsNullable ? "#nullable enable" : string.Empty)}
+{(SupportsNullable ? "#nullable enable" : string.Empty)}
 using System;
 
 namespace {ns}
@@ -66,7 +66,7 @@ namespace {ns}
 {GenerateEvents(classSymbol, proxyBaseClasses)}
     }}
 }}
-{(_supportsNullable ? "#nullable disable" : string.Empty)}";
+{(SupportsNullable ? "#nullable disable" : string.Empty)}";
 
         private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
         {

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using AnyOfTypes;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
@@ -23,10 +25,10 @@ namespace ProxyInterfaceSourceGeneratorTests
         {
             // Arrange
             var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
-            var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
-            var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
+            var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs";
+            var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
 
-            var path = "./Source/IPerson.cs";
+            var path = "./Source/IPersonExtends.cs";
             var sourceFile = new SourceFile
             {
                 Path = path,
@@ -34,7 +36,7 @@ namespace ProxyInterfaceSourceGeneratorTests
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Person)"
+                    ArgumentList = new [] { "typeof(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends)", "true" }
                 }
             };
 

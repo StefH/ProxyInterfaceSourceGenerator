@@ -38,7 +38,13 @@
       <Compile Update="Source\IHuman.cs">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Compile>
+      <Compile Update="Source\IPersonExtends.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
       <Compile Update="Source\IPerson.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Source\PersonExtends.cs">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Compile>
       <Compile Update="Source\Person.cs">

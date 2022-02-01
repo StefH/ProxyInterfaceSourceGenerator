@@ -9,13 +9,13 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 {
     internal abstract class BaseGenerator
     {
-        protected readonly Context _context;
-        protected readonly bool _supportsNullable;
+        protected readonly Context Context;
+        protected readonly bool SupportsNullable;
 
         protected BaseGenerator(Context context, bool supportsNullable)
         {
-            _context = context;
-            _supportsNullable = supportsNullable;
+            Context = context;
+            SupportsNullable = supportsNullable;
         }
 
         protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
@@ -34,12 +34,12 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
             var typeSymbolAsString = typeSymbol.ToString();
 
-            var existing = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeSymbolAsString);
+            var existing = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeSymbolAsString);
             if (existing is not null)
             {
-                if (!_context.ReplacedTypes.ContainsKey(typeSymbolAsString))
+                if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
                 {
-                    _context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
+                    Context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
                 }
 
                 isReplaced = true;
@@ -52,14 +52,14 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 foreach (var typeArgument in namedTypedSymbol.TypeArguments)
                 {
                     var typeArgumentAsString = typeArgument.ToString();
-                    var exist = _context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeArgumentAsString);
+                    var exist = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeArgumentAsString);
                     if (exist is not null)
                     {
                         isReplaced = true;
 
-                        if (!_context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+                        if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
                         {
-                            _context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
+                            Context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
                         }
 
                         propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
@@ -75,7 +75,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         protected ClassSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
         {
             // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
-            var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
+            var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
             if (symbol is not null)
             {
                 return new ClassSymbol(symbol, symbol.GetBaseTypes());
@@ -85,7 +85,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             {
                 foreach (var @using in usings)
                 {
-                    symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
+                    symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
                     if (symbol is not null)
                     {
                         return new ClassSymbol(symbol, symbol.GetBaseTypes());

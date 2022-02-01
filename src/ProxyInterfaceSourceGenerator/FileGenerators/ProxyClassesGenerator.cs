@@ -19,7 +19,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         public IEnumerable<FileData> GenerateFiles()
         {
-            foreach (var ci in _context.CandidateInterfaces)
+            foreach (var ci in Context.CandidateInterfaces)
             {
                 yield return GenerateFile(ci.Value);
             }
@@ -36,8 +36,6 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                 $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
                 CreateProxyClassCode(pd.Namespace, targetClassSymbol, pd.ProxyBaseClasses, interfaceName, className, constructorName)
             );
-
-            // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = pd.ClassName, FileData = file });
 
             return file;
         }
@@ -57,7 +55,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
-{(_supportsNullable ? "#nullable enable" : string.Empty)}
+{(SupportsNullable ? "#nullable enable" : string.Empty)}
 using System;
 using AutoMapper;
 
@@ -67,7 +65,7 @@ namespace {ns}
     {{
         public {targetClassSymbol.Symbol} _Instance {{ get; }}
 
-{GeneratePublicProperties(targetClassSymbol, false)}
+{GeneratePublicProperties(targetClassSymbol, proxyBaseClasses)}
 
 {GeneratePublicMethods(targetClassSymbol, proxyBaseClasses)}
 
@@ -83,15 +81,15 @@ namespace {ns}
 {GeneratePrivateAutoMapper()}
     }}
 }}
-{(_supportsNullable ? "#nullable disable" : string.Empty)}";
+{(SupportsNullable ? "#nullable disable" : string.Empty)}";
         private string GeneratePrivateAutoMapper()
         {
-            return _context.ReplacedTypes.Count == 0 ? string.Empty : "        private readonly IMapper _mapper;";
+            return Context.ReplacedTypes.Count == 0 ? string.Empty : "        private readonly IMapper _mapper;";
         }
 
         private string GenerateMapperConfigurationForAutoMapper()
         {
-            if (_context.ReplacedTypes.Count == 0)
+            if (Context.ReplacedTypes.Count == 0)
             {
                 return string.Empty;
             }
@@ -100,7 +98,7 @@ namespace {ns}
 
             str.AppendLine("            _mapper = new MapperConfiguration(cfg =>");
             str.AppendLine("            {");
-            foreach (var replacedType in _context.ReplacedTypes)
+            foreach (var replacedType in Context.ReplacedTypes)
             {
                 str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>();");
                 str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>();");

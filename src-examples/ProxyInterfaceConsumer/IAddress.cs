@@ -1,6 +1,4 @@
-﻿using DifferentNamespace;
-using System;
-using System.Linq;
+using DifferentNamespace;
 
 namespace ProxyInterfaceConsumer
 {
