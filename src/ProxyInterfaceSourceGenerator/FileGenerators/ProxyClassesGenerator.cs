@@ -165,7 +165,7 @@ namespace {ns}
                         }
                     }
 
-                    str.AppendLine($"             {ps.Type} {ps.GetSanitizedName()}_{normalOrMap};");
+                    str.AppendLine($"            {ps.Type} {ps.GetSanitizedName()}_{normalOrMap};");
                 }
 
 #pragma warning disable RS1024 // Compare symbols correctly
@@ -175,11 +175,11 @@ namespace {ns}
 
                 if (returnTypeAsString == "void")
                 {
-                    str.AppendLine($"             _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"            _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
                 else
                 {
-                    str.AppendLine($"             var {alternateReturnVariableName} = _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                    str.AppendLine($"            var {alternateReturnVariableName} = _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
                 }
 
                 foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
@@ -194,18 +194,18 @@ namespace {ns}
                         }
                     }
 
-                    str.AppendLine($"             {ps.GetSanitizedName()}{normalOrMap};");
+                    str.AppendLine($"            {ps.GetSanitizedName()}{normalOrMap};");
                 }
 
                 if (returnTypeAsString != "void")
                 {
                     if (returnIsReplaced)
                     {
-                        str.AppendLine($"             return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
+                        str.AppendLine($"            return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
                     }
                     else
                     {
-                        str.AppendLine($"             return {alternateReturnVariableName};");
+                        str.AppendLine($"            return {alternateReturnVariableName};");
                     }
                 }
 

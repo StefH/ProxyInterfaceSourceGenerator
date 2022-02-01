@@ -29,71 +29,71 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public void Void()
         {
-             _Instance.Void();
+            _Instance.Void();
         }
 
         public string HelloWorld(string name)
         {
-             string name_ = name;
-             var result_54575493 = _Instance.HelloWorld(name_);
-             return result_54575493;
+            string name_ = name;
+            var result_1072252 = _Instance.HelloWorld(name_);
+            return result_1072252;
         }
 
         public void WithParams(params string[] values)
         {
-             string[] values_ = values;
-             _Instance.WithParams(values_);
+            string[] values_ = values;
+            _Instance.WithParams(values_);
         }
 
         public string Add(string s, string @string)
         {
-             string s_ = s;
-             string @string_ = @string;
-             var result_54575493 = _Instance.Add(s_, @string_);
-             return result_54575493;
+            string s_ = s;
+            string @string_ = @string;
+            var result_1072252 = _Instance.Add(s_, @string_);
+            return result_1072252;
         }
 
         public int DefaultValue(int x = 100)
         {
-             int x_ = x;
-             var result_57746181 = _Instance.DefaultValue(x_);
-             return result_57746181;
+            int x_ = x;
+            var result_6876535 = _Instance.DefaultValue(x_);
+            return result_6876535;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
         {
-             int a_ = a;
-             int b_;
-             int c_ = c;
-             _Instance.In_Out_Ref1(in a_, out b_, ref c_);
-             b = b_;
+            int a_ = a;
+            int b_;
+            int c_ = c;
+            _Instance.In_Out_Ref1(in a_, out b_, ref c_);
+            b = b_;
         }
 
         public bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new()
         {
-             int x_ = x;
-             T1 t1_ = t1;
-             T2 t2_ = t2;
-             var result_62514245 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-             return result_62514245;
+            int x_ = x;
+            T1 t1_ = t1;
+            T2 t2_ = t2;
+            var result_4718927 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+            return result_4718927;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-             var result_36894086 = _Instance.Method1Async();
-             return result_36894086;
+            var result_57170533 = _Instance.Method1Async();
+            return result_57170533;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-             var result_566521485 = _Instance.Method2Async();
-             return result_566521485;
+            var result_1470717918 = _Instance.Method2Async();
+            return result_1470717918;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-             var result_563350797 = _Instance.Method3Async();
-             return result_563350797;
+            var result_1476522201 = _Instance.Method3Async();
+            return result_1476522201;
         }
 
 
@@ -108,6 +108,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
+        public bool IsAlive { get; set; }
     }
 }
 #nullable disable

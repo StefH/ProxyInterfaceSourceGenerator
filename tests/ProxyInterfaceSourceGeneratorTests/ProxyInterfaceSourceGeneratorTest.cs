@@ -71,6 +71,8 @@ namespace ProxyInterfaceSourceGeneratorTests
         {
             // Arrange
             var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
+            var interfaceHumanFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHuman.g.cs";
+            var proxyClassHumanFilename = "ProxyInterfaceSourceGeneratorTests.Source.HumanProxy.g.cs";
             var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
             var proxyClassPersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
 
@@ -109,15 +111,35 @@ namespace ProxyInterfaceSourceGeneratorTests
             var attribute = result.Files[0].SyntaxTree;
             attribute.FilePath.Should().EndWith(attributeFilename);
 
+
+            // Assert interface Human
+            var interfaceHuman = result.Files[1].SyntaxTree;
+            interfaceHuman.FilePath.Should().EndWith(interfaceHumanFilename);
+
+            var interfaceCodeHuman = interfaceHuman.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{interfaceHumanFilename}", interfaceCodeHuman);
+            interfaceCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceHumanFilename}"));
+
+
             // Assert interface Person
             var interfacePerson = result.Files[2].SyntaxTree;
             interfacePerson.FilePath.Should().EndWith(interfacePersonFilename);
 
-            var interfaceCode = interfacePerson.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{interfacePersonFilename}", interfaceCode);
-            interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
+            var interfaceCodePerson = interfacePerson.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{interfacePersonFilename}", interfaceCodePerson);
+            interfaceCodePerson.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
 
-            // Assert Proxy
+
+            // Assert Proxy Human
+            var proxyClassHuman = result.Files[3].SyntaxTree;
+            proxyClassHuman.FilePath.Should().EndWith(proxyClassHumanFilename);
+
+            var proxyCodeHuman = proxyClassHuman.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{proxyClassHumanFilename}", proxyCodeHuman);
+            proxyCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassHumanFilename}"));
+
+
+            // Assert Proxy Person
             var proxyClassPerson = result.Files[4].SyntaxTree;
             proxyClassPerson.FilePath.Should().EndWith(proxyClassPersonFilename);
 
