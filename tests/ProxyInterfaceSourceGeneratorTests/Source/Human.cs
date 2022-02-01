@@ -1,6 +1,7 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IPerson
+    public class Human
     {
+        public bool IsAlive { get; set; }
     }
 }

@@ -11,11 +11,11 @@
 using System;
 using AutoMapper;
 
-namespace ProxyInterfaceSourceGeneratorTests.DTO
+namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class PersonProxy : IPerson
     {
-        public ProxyInterfaceSourceGeneratorTests.DTO.Person _Instance { get; }
+        public ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
@@ -100,7 +100,7 @@ namespace ProxyInterfaceSourceGeneratorTests.DTO
 
 
 
-        public PersonProxy(ProxyInterfaceSourceGeneratorTests.DTO.Person instance)
+        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance)
         {
             _Instance = instance;
 

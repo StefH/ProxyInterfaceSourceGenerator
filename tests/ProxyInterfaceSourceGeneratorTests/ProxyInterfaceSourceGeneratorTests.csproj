@@ -9,11 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
-        <Compile Remove="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
@@ -34,20 +29,6 @@
     <ItemGroup>
         <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.5" />
         <!--<ProjectReference Include="..\..\..\FluentBuilder\src-extensions\CSharp.SourceGenerators.Extensions\CSharp.SourceGenerators.Extensions.csproj" />-->
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Update="Source\IPerson.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-        <Compile Update="Source\Person.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs" />
-        <None Include="Destination\ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs" />
     </ItemGroup>
 
 </Project>

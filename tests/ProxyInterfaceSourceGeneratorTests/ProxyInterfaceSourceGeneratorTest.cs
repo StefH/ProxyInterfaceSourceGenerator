@@ -5,10 +5,12 @@ using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
 using Xunit;
 
-namespace FluentBuilderGeneratorTests
+namespace ProxyInterfaceSourceGeneratorTests
 {
     public class ProxyInterfaceSourceGeneratorTest
     {
+        private bool Write = true;
+
         private readonly ProxyInterfaceCodeGenerator _sut;
 
         public ProxyInterfaceSourceGeneratorTest()
@@ -21,8 +23,8 @@ namespace FluentBuilderGeneratorTests
         {
             // Arrange
             var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
-            var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.DTO.IPerson.g.cs";
-            var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.DTO.PersonProxy.g.cs";
+            var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
+            var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
 
             var path = "./Source/IPerson.cs";
             var sourceFile = new SourceFile
@@ -32,7 +34,7 @@ namespace FluentBuilderGeneratorTests
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.DTO.Person)"
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Person)"
                 }
             };
 
@@ -44,15 +46,15 @@ namespace FluentBuilderGeneratorTests
             result.Files.Should().HaveCount(3);
 
             // Assert interface
-            var @attribute = result.Files[0].SyntaxTree;
-            @attribute.FilePath.Should().EndWith(attributeFilename);
+            var attribute = result.Files[0].SyntaxTree;
+            attribute.FilePath.Should().EndWith(attributeFilename);
 
             // Assert interface
             var @interface = result.Files[1].SyntaxTree;
             @interface.FilePath.Should().EndWith(interfaceFilename);
 
             var interfaceCode = @interface.ToString();
-            File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
+            if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
             interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
 
             // Assert Proxy
@@ -60,7 +62,7 @@ namespace FluentBuilderGeneratorTests
             proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
             var proxyCode = proxyClass.ToString();
-            File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
+            if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
             proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
         }
     }

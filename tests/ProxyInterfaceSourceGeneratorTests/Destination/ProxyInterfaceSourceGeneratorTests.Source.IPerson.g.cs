@@ -10,7 +10,7 @@
 #nullable enable
 using System;
 
-namespace ProxyInterfaceSourceGeneratorTests.DTO
+namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPerson
     {

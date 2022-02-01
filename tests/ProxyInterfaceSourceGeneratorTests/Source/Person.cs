@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
-namespace ProxyInterfaceSourceGeneratorTests.DTO
+namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class Person
+    public class Person : Human
     {
         public string Name { get; set; }
 
