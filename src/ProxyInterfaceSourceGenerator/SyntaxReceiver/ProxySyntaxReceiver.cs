@@ -9,7 +9,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
 {
     internal class ProxySyntaxReceiver : ISyntaxReceiver
     {
-        private static readonly string[] Modifiers = new[] { "public", "partial" };
+        private static readonly string[] Modifiers = { "public", "partial" };
 
         public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 

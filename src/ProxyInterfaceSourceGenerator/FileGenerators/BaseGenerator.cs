@@ -12,7 +12,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
         protected readonly Context _context;
         protected readonly bool _supportsNullable;
 
-        public BaseGenerator(Context context, bool supportsNullable)
+        protected BaseGenerator(Context context, bool supportsNullable)
         {
             _context = context;
             _supportsNullable = supportsNullable;
@@ -72,13 +72,13 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
             return typeSymbolAsString;
         }
 
-        protected ClassDetails GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
+        protected ClassSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
         {
             // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
             var symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
             if (symbol is not null)
             {
-                return new ClassDetails(symbol, symbol.GetBaseTypes());
+                return new ClassSymbol(symbol, symbol.GetBaseTypes());
             }
 
             if (usings is not null)
@@ -88,7 +88,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
                     symbol = _context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
                     if (symbol is not null)
                     {
-                        return new ClassDetails(symbol, symbol.GetBaseTypes());
+                        return new ClassSymbol(symbol, symbol.GetBaseTypes());
                     }
                 }
             }

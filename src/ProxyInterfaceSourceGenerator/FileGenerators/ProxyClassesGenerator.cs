@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
+using ProxyInterfaceSourceGenerator.Model;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 
@@ -33,7 +34,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
             var file = new FileData(
                 $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
-                CreateProxyClassCode(pd.Namespace, targetClassSymbol.Symbol, interfaceName, className, constructorName)
+                CreateProxyClassCode(pd.Namespace, targetClassSymbol, pd.ProxyBaseClasses, interfaceName, className, constructorName)
             );
 
             // _context.GeneratedData.Add(new() { InterfaceName = interfaceName, ClassName = pd.ClassName, FileData = file });
@@ -43,7 +44,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators
 
         private string CreateProxyClassCode(
             string ns,
-            INamedTypeSymbol targetClassSymbol,
+            ClassSymbol targetClassSymbol,
+            bool proxyBaseClasses,
             string interfaceName,
             string className,
             string constructorName) => $@"//----------------------------------------------------------------------------------------
@@ -63,13 +65,13 @@ namespace {ns}
 {{
     public class {className} : {interfaceName}
     {{
-        public {targetClassSymbol} _Instance {{ get; }}
+        public {targetClassSymbol.Symbol} _Instance {{ get; }}
 
 {GeneratePublicProperties(targetClassSymbol, false)}
 
-{GeneratePublicMethods(targetClassSymbol)}
+{GeneratePublicMethods(targetClassSymbol, proxyBaseClasses)}
 
-{GenerateEvents(targetClassSymbol)}
+{GenerateEvents(targetClassSymbol, proxyBaseClasses)}
 
         public {constructorName}({targetClassSymbol} instance)
         {{
@@ -108,11 +110,11 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GeneratePublicProperties(INamedTypeSymbol targetClassSymbol, bool proxyAll)
+        private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
         {
             var str = new StringBuilder();
 
-            foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol))
+            foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
             {
                 var type = GetPropertyType(property, out var isReplaced);
                 if (isReplaced)
@@ -129,10 +131,10 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GeneratePublicMethods(INamedTypeSymbol targetClassSymbol)
+        private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
         {
             var str = new StringBuilder();
-            foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol))
+            foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
             {
                 var methodParameters = new List<string>();
                 var invokeParameters = new List<string>();
@@ -216,10 +218,10 @@ namespace {ns}
             return str.ToString();
         }
 
-        private string GenerateEvents(INamedTypeSymbol targetClassSymbol)
+        private string GenerateEvents(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
         {
             var str = new StringBuilder();
-            foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol))
+            foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyBaseClasses))
             {
                 var name = @event.Key.GetSanitizedName();
                 var ps = @event.First().Parameters.First();
