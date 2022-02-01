@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
-namespace ProxyInterfaceSourceGenerator.Model
+namespace ProxyInterfaceSourceGenerator.Model;
+
+internal record ClassSymbol(INamedTypeSymbol Symbol, List<INamedTypeSymbol> BaseTypes)
 {
-    internal record ClassSymbol(INamedTypeSymbol Symbol, List<INamedTypeSymbol> BaseTypes)
+    public override string ToString()
     {
-        public override string ToString()
-        {
-            return Symbol.ToString();
-        }
+        return Symbol.ToString();
     }
 }

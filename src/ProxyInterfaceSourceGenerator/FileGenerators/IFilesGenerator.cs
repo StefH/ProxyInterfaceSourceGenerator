@@ -1,9 +1,6 @@
-using System.Collections.Generic;
+namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators
+internal interface IFilesGenerator
 {
-    internal interface IFilesGenerator
-    {
-        IEnumerable<FileData> GenerateFiles();
-    }
+    IEnumerable<FileData> GenerateFiles();
 }

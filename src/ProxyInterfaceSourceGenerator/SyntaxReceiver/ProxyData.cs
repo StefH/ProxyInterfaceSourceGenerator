@@ -1,14 +1,11 @@
-using System.Collections.Generic;
+namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
-namespace ProxyInterfaceSourceGenerator.SyntaxReceiver
-{
-    internal record ProxyData
-    (
-        string Namespace,
-        string InterfaceName,
-        string RawTypeName,
-        string TypeName,
-        List<string> Usings,
-        bool ProxyBaseClasses
-    );
-}
+internal record ProxyData
+(
+    string Namespace,
+    string InterfaceName,
+    string RawTypeName,
+    string TypeName,
+    List<string> Usings,
+    bool ProxyBaseClasses
+);

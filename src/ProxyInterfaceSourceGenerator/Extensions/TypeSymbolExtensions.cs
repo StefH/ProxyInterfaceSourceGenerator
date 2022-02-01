@@ -1,28 +1,27 @@
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
 
-namespace ProxyInterfaceSourceGenerator.Extensions
+namespace ProxyInterfaceSourceGenerator.Extensions;
+
+internal static class TypeSymbolExtensions
 {
-    internal static class TypeSymbolExtensions
+    public static TypeEnum GetTypeEnum(this ITypeSymbol ts)
     {
-        public static TypeEnum GetTypeEnum(this ITypeSymbol ts)
+        if (ts.IsValueType || ts.IsString())
         {
-            if (ts.IsValueType || ts.IsString())
-            {
-                return TypeEnum.ValueTypeOrString;
-            }
-
-            if (ts.TypeKind == TypeKind.Interface)
-            {
-                return TypeEnum.Interface;
-            }
-
-            return TypeEnum.Complex;
+            return TypeEnum.ValueTypeOrString;
         }
 
-        public static bool IsString(this ITypeSymbol ts)
+        if (ts.TypeKind == TypeKind.Interface)
         {
-            return ts.ToString() == "string" || ts.ToString() == "string?";
+            return TypeEnum.Interface;
         }
+
+        return TypeEnum.Complex;
+    }
+
+    public static bool IsString(this ITypeSymbol ts)
+    {
+        return ts.ToString() == "string" || ts.ToString() == "string?";
     }
 }

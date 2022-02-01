@@ -1,13 +1,12 @@
 using ProxyInterfaceSourceGenerator.FileGenerators;
 
-namespace ProxyInterfaceSourceGenerator
+namespace ProxyInterfaceSourceGenerator;
+
+internal record ContextData
 {
-    internal record ContextData
-    {
-        public string? InterfaceName { get; init; }
+    public string? InterfaceName { get; init; }
 
-        public string? ClassName { get; init; }
+    public string? ClassName { get; init; }
 
-        public FileData FileData { get; init; } = default!;
-    }
+    public FileData FileData { get; init; } = default!;
 }

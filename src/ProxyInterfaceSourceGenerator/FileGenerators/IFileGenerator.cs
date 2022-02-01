@@ -1,7 +1,6 @@
-namespace ProxyInterfaceSourceGenerator.FileGenerators
+namespace ProxyInterfaceSourceGenerator.FileGenerators;
+
+internal interface IFileGenerator
 {
-    internal interface IFileGenerator
-    {
-        FileData GenerateFile();
-    }
+    FileData GenerateFile();
 }
