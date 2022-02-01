@@ -11,11 +11,11 @@
 using System;
 using AutoMapper;
 
-namespace ProxyInterfaceSourceGeneratorTests.DTO
+namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class PersonProxy : IPerson
     {
-        public ProxyInterfaceSourceGeneratorTests.DTO.Person _Instance { get; }
+        public ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
@@ -29,78 +29,78 @@ namespace ProxyInterfaceSourceGeneratorTests.DTO
 
         public void Void()
         {
-             _Instance.Void();
+            _Instance.Void();
         }
 
         public string HelloWorld(string name)
         {
-             string name_ = name;
-             var result_15289640 = _Instance.HelloWorld(name_);
-             return result_15289640;
+            string name_ = name;
+            var result_56365455 = _Instance.HelloWorld(name_);
+            return result_56365455;
         }
 
         public void WithParams(params string[] values)
         {
-             string[] values_ = values;
-             _Instance.WithParams(values_);
+            string[] values_ = values;
+            _Instance.WithParams(values_);
         }
 
         public string Add(string s, string @string)
         {
-             string s_ = s;
-             string @string_ = @string;
-             var result_15289640 = _Instance.Add(s_, @string_);
-             return result_15289640;
+            string s_ = s;
+            string @string_ = @string;
+            var result_56365455 = _Instance.Add(s_, @string_);
+            return result_56365455;
         }
 
         public int DefaultValue(int x = 100)
         {
-             int x_ = x;
-             var result_54302544 = _Instance.DefaultValue(x_);
-             return result_54302544;
+            int x_ = x;
+            var result_39875940 = _Instance.DefaultValue(x_);
+            return result_39875940;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
         {
-             int a_ = a;
-             int b_;
-             int c_ = c;
-             _Instance.In_Out_Ref1(in a_, out b_, ref c_);
-             b = b_;
+            int a_ = a;
+            int b_;
+            int c_ = c;
+            _Instance.In_Out_Ref1(in a_, out b_, ref c_);
+            b = b_;
         }
 
         public bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new()
         {
-             int x_ = x;
-             T1 t1_ = t1;
-             T2 t2_ = t2;
-             var result_40004473 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-             return result_40004473;
+            int x_ = x;
+            T1 t1_ = t1;
+            T2 t2_ = t2;
+            var result_41799290 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+            return result_41799290;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-             var result_50153955 = _Instance.Method1Async();
-             return result_50153955;
+            var result_32599313 = _Instance.Method1Async();
+            return result_32599313;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-             var result_1151242754 = _Instance.Method2Async();
-             return result_1151242754;
+            var result_1620495907 = _Instance.Method2Async();
+            return result_1620495907;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-             var result_1190255658 = _Instance.Method3Async();
-             return result_1190255658;
+            var result_1604006392 = _Instance.Method3Async();
+            return result_1604006392;
         }
 
 
 
 
 
-        public PersonProxy(ProxyInterfaceSourceGeneratorTests.DTO.Person instance)
+        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance)
         {
             _Instance = instance;
 

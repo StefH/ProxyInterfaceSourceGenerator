@@ -1,11 +1,10 @@
-﻿namespace ProxyInterfaceSourceGenerator.Enums
+namespace ProxyInterfaceSourceGenerator.Enums;
+
+internal enum TypeEnum
 {
-    internal enum TypeEnum
-    {
-        ValueTypeOrString,
+    ValueTypeOrString,
 
-        Interface,
+    Interface,
 
-        Complex
-    }
+    Complex
 }

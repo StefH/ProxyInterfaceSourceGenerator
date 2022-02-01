@@ -10,9 +10,9 @@
 #nullable enable
 using System;
 
-namespace ProxyInterfaceSourceGeneratorTests.DTO
+namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IPerson
+    public partial interface IPersonExtends
     {
         string Name { get; set; }
 
@@ -21,6 +21,10 @@ namespace ProxyInterfaceSourceGeneratorTests.DTO
         long? NullableLong { get; }
 
         object @object { get; set; }
+
+        bool IsAlive { get; set; }
+
+        bool X { get; set; }
 
 
 

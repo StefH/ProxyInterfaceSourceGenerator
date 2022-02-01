@@ -38,6 +38,17 @@ public partial interface IPerson
 }
 ```
 
+#### ProxyBaseClasses
+In case also want to proxy the properties/methods/events from the base class(es), use this:
+
+``` c#
+[ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Person), true)] // 👈 Provide `true` as second parameter.
+public partial interface IPerson
+{
+}
+```
+
+
 ### When the code is compiled, this source generator creates the following
 
 #### :one: An additional partial interface
