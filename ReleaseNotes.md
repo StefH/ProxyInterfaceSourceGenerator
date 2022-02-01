@@ -1,3 +1,6 @@
+# 0.0.12 (01 February 2022)
+- [#27](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/27) - ProxyBaseClasses [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.11 (10 August 2021)
 - [#26](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/26) - Update filename for generated interface files + set DevelopmentDependency to true for the project [enhancement] contributed by [StefH](https://github.com/StefH)
 
