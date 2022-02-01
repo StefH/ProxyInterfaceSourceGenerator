@@ -45,7 +45,7 @@ namespace ProxyInterfaceSourceGeneratorTests
             result.Valid.Should().BeTrue();
             result.Files.Should().HaveCount(3);
 
-            // Assert interface
+            // Assert attribute
             var attribute = result.Files[0].SyntaxTree;
             attribute.FilePath.Should().EndWith(attributeFilename);
 
@@ -64,6 +64,66 @@ namespace ProxyInterfaceSourceGeneratorTests
             var proxyCode = proxyClass.ToString();
             if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
             proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+        }
+
+        [Fact]
+        public void GenerateFiles_ForTwoClasses_Should_GenerateCorrectFiles()
+        {
+            // Arrange
+            var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
+            var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
+            var proxyClassPersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
+
+            var pathPerson = "./Source/IPerson.cs";
+            var sourceFilePerson = new SourceFile
+            {
+                Path = pathPerson,
+                Text = File.ReadAllText(pathPerson),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Person)"
+                }
+            };
+
+            var pathHuman = "./Source/IHuman.cs";
+            var sourceFileHuman = new SourceFile
+            {
+                Path = pathHuman,
+                Text = File.ReadAllText(pathHuman),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Human)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[] { sourceFileHuman, sourceFilePerson });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(5);
+
+            // Assert attribute
+            var attribute = result.Files[0].SyntaxTree;
+            attribute.FilePath.Should().EndWith(attributeFilename);
+
+            // Assert interface Person
+            var interfacePerson = result.Files[2].SyntaxTree;
+            interfacePerson.FilePath.Should().EndWith(interfacePersonFilename);
+
+            var interfaceCode = interfacePerson.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{interfacePersonFilename}", interfaceCode);
+            interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
+
+            // Assert Proxy
+            var proxyClassPerson = result.Files[4].SyntaxTree;
+            proxyClassPerson.FilePath.Should().EndWith(proxyClassPersonFilename);
+
+            var proxyCode = proxyClassPerson.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
+            proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
         }
     }
 }
