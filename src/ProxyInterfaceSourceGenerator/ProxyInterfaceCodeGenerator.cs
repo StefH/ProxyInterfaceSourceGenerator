@@ -51,7 +51,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
     private void GenerateError(GeneratorExecutionContext context, Exception exception)
     {
-        var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n{exception}\r\n*/";
+        var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n{exception}\r\n\r\n{exception.StackTrace}*/";
         context.AddSource("Error.g", SourceText.From(message, Encoding.UTF8));
     }
 
