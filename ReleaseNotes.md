@@ -1,3 +1,6 @@
+# 0.0.13 (02 February 2022)
+- [#28](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/28) - Add support for static properties and methods [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.12 (01 February 2022)
 - [#27](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/27) - ProxyBaseClasses [enhancement] contributed by [StefH](https://github.com/StefH)
 
