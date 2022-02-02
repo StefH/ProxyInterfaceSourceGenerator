@@ -24,8 +24,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool IsAlive { get; set; }
 
-        bool X { get; set; }
-
 
 
         void Void();
