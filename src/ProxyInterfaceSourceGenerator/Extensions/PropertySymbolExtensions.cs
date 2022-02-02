@@ -1,5 +1,6 @@
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
+using ProxyInterfaceSourceGenerator.Model;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
 
@@ -18,18 +19,26 @@ internal static class PropertySymbolExtensions
         return $"{type} {property.GetSanitizedName()} {{ {get}{set}}}";
     }
 
-    public static string ToPropertyTextForClass(this IPropertySymbol property)
+    public static string ToPropertyTextForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol)
     {
-        var get = property.GetMethod != null ? $"get => _Instance.{property.GetSanitizedName()}; " : string.Empty;
-        var set = property.SetMethod != null ? $"set => _Instance.{property.GetSanitizedName()} = value; " : string.Empty;
+        string instance = !property.IsStatic ?
+            "_Instance" :
+            $"{targetClassSymbol.Symbol}";
+
+        var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
+        var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
 
         return $"{property.Type} {property.GetSanitizedName()} {{ {get}{set}}}";
     }
 
-    public static string ToPropertyTextForClass(this IPropertySymbol property, string overrideType)
+    public static string ToPropertyTextForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol, string overrideType)
     {
-        var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>(_Instance.{property.GetSanitizedName()}); " : string.Empty;
-        var set = property.SetMethod != null ? $"set => _Instance.{property.GetSanitizedName()} = _mapper.Map<{property.Type}>(value); " : string.Empty;
+        string instance = !property.IsStatic ?
+            "_Instance" :
+            $"{targetClassSymbol.Symbol}";
+
+        var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>({instance}.{property.GetSanitizedName()}); " : string.Empty;
+        var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
         return $"{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
     }

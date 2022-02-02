@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Model;
@@ -18,11 +19,11 @@ internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         foreach (var ci in Context.CandidateInterfaces)
         {
-            yield return GenerateFile(ci.Value);
+            yield return GenerateFile(ci.Value, Context.CandidateInterfaces);
         }
     }
 
-    private FileData GenerateFile(ProxyData pd)
+    private FileData GenerateFile(ProxyData pd, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
     {
         var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
         var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
@@ -58,7 +59,7 @@ using AutoMapper;
 
 namespace {ns}
 {{
-    public class {className} : {interfaceName}
+    public partial class {className} : {interfaceName}
     {{
         public {targetClassSymbol.Symbol} _Instance {{ get; }}
 
@@ -79,6 +80,7 @@ namespace {ns}
     }}
 }}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
+
     private string GeneratePrivateAutoMapper()
     {
         return Context.ReplacedTypes.Count == 0 ? string.Empty : "        private readonly IMapper _mapper;";
@@ -114,11 +116,11 @@ namespace {ns}
             var type = GetPropertyType(property, out var isReplaced);
             if (isReplaced)
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass(type)}");
+                str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol, type)}");
             }
             else
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass()}");
+                str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol)}");
             }
             str.AppendLine();
         }
@@ -168,15 +170,20 @@ namespace {ns}
 #pragma warning disable RS1024 // Compare symbols correctly
             int hash = method.ReturnType.GetHashCode();
 #pragma warning restore RS1024 // Compare symbols correctly
+
             var alternateReturnVariableName = $"result_{Math.Abs(hash)}";
+
+            string instance = !method.IsStatic ?
+                "_Instance" :
+                $"{targetClassSymbol.Symbol}";
 
             if (returnTypeAsString == "void")
             {
-                str.AppendLine($"            _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                str.AppendLine($"            {instance}.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
             }
             else
             {
-                str.AppendLine($"            var {alternateReturnVariableName} = _Instance.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                str.AppendLine($"            var {alternateReturnVariableName} = {instance}.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
             }
 
             foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))

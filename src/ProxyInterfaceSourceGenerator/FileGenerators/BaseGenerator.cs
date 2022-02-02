@@ -75,7 +75,7 @@ internal abstract class BaseGenerator
         var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
         if (symbol is not null)
         {
-            return new ClassSymbol(symbol, symbol.GetBaseTypes());
+            return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
         }
 
         if (usings is not null)
@@ -85,7 +85,7 @@ internal abstract class BaseGenerator
                 symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
                 if (symbol is not null)
                 {
-                    return new ClassSymbol(symbol, symbol.GetBaseTypes());
+                    return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
                 }
             }
         }

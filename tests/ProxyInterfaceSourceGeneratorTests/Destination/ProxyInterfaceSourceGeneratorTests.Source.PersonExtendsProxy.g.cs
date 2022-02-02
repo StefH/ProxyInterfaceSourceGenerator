@@ -13,9 +13,11 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class PersonExtendsProxy : IPersonExtends
+    public partial class PersonExtendsProxy : IPersonExtends
     {
         public ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
+
+        public string StaticString { get => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString; set => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString = value; }
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
@@ -29,6 +31,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+        public string StaticMethod(int x, string y)
+        {
+            int x_ = x;
+            string y_ = y;
+            var result_6851397 = ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticMethod(x_, y_);
+            return result_6851397;
+        }
+
         public void Void()
         {
             _Instance.Void();
@@ -37,8 +47,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public string HelloWorld(string name)
         {
             string name_ = name;
-            var result_52652604 = _Instance.HelloWorld(name_);
-            return result_52652604;
+            var result_6851397 = _Instance.HelloWorld(name_);
+            return result_6851397;
         }
 
         public void WithParams(params string[] values)
@@ -51,15 +61,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             string s_ = s;
             string @string_ = @string;
-            var result_52652604 = _Instance.Add(s_, @string_);
-            return result_52652604;
+            var result_6851397 = _Instance.Add(s_, @string_);
+            return result_6851397;
         }
 
         public int DefaultValue(int x = 100)
         {
             int x_ = x;
-            var result_66976071 = _Instance.DefaultValue(x_);
-            return result_66976071;
+            var result_3873514 = _Instance.DefaultValue(x_);
+            return result_3873514;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
@@ -76,26 +86,26 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             int x_ = x;
             T1 t1_ = t1;
             T2 t2_ = t2;
-            var result_58477331 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-            return result_58477331;
+            var result_14331071 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+            return result_14331071;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-            var result_42930144 = _Instance.Method1Async();
-            return result_42930144;
+            var result_39535275 = _Instance.Method1Async();
+            return result_39535275;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-            var result_1191507733 = _Instance.Method2Async();
-            return result_1191507733;
+            var result_772784336 = _Instance.Method2Async();
+            return result_772784336;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-            var result_1177184266 = _Instance.Method3Async();
-            return result_1177184266;
+            var result_769806453 = _Instance.Method3Async();
+            return result_769806453;
         }
 
 
