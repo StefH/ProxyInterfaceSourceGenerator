@@ -4,6 +4,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class PersonExtends : Human
     {
+        public static string StaticMethod(int x, string y)
+        {
+            return "test";
+        }
+
+        public static string StaticString { get; set; } = "500";
+
         public string Name { get; set; }
 
         public string? StringNullable { get; set; }

@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPersonExtends
     {
+        string StaticString { get; set; }
+
         string Name { get; set; }
 
         string? StringNullable { get; set; }
@@ -24,9 +26,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool IsAlive { get; set; }
 
-        bool X { get; set; }
 
 
+        string StaticMethod(int x, string y);
 
         void Void();
 

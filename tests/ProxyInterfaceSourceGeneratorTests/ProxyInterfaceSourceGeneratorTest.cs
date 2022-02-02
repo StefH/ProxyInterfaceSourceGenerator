@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using AnyOfTypes;
@@ -6,6 +7,7 @@ using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
 using Xunit;
+using Xunit.Sdk;
 
 namespace ProxyInterfaceSourceGeneratorTests
 {
@@ -108,6 +110,8 @@ namespace ProxyInterfaceSourceGeneratorTests
             // Assert
             result.Valid.Should().BeTrue();
             result.Files.Should().HaveCount(5);
+
+            throw new Exception();
 
             // Assert attribute
             var attribute = result.Files[0].SyntaxTree;
