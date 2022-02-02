@@ -186,12 +186,7 @@ namespace {pd.Namespace}
             }
 
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
-
-#pragma warning disable RS1024 // Compare symbols correctly
-            int hash = methodName.GetHashCode();
-#pragma warning restore RS1024 // Compare symbols correctly
-
-            var alternateReturnVariableName = $"result_{Math.Abs(hash)}";
+            var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
             string instance = !method.IsStatic ?
                 "_Instance" :
