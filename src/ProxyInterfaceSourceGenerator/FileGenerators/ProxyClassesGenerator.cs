@@ -185,8 +185,10 @@ namespace {pd.Namespace}
                 str.AppendLine($"            {ps.Type} {ps.GetSanitizedName()}_{normalOrMap};");
             }
 
+            var methodName = method.GetMethodNameWithOptionalTypeParameters();
+
 #pragma warning disable RS1024 // Compare symbols correctly
-            int hash = method.ReturnType.GetHashCode();
+            int hash = methodName.GetHashCode();
 #pragma warning restore RS1024 // Compare symbols correctly
 
             var alternateReturnVariableName = $"result_{Math.Abs(hash)}";
@@ -197,11 +199,11 @@ namespace {pd.Namespace}
 
             if (returnTypeAsString == "void")
             {
-                str.AppendLine($"            {instance}.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                str.AppendLine($"            {instance}.{methodName}({string.Join(", ", invokeParameters)});");
             }
             else
             {
-                str.AppendLine($"            var {alternateReturnVariableName} = {instance}.{method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", invokeParameters)});");
+                str.AppendLine($"            var {alternateReturnVariableName} = {instance}.{methodName}({string.Join(", ", invokeParameters)});");
             }
 
             foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
