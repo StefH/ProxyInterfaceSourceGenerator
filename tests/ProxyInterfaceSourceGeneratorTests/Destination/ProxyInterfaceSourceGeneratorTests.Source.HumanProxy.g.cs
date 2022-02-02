@@ -13,9 +13,10 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class HumanProxy : IHuman
+    public partial class HumanProxy : IHuman
     {
         public ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
+        
 
         public bool IsAlive { get => _Instance.IsAlive; set => _Instance.IsAlive = value; }
 

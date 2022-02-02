@@ -13,9 +13,11 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class PersonProxy : IPerson
+    public partial class PersonProxy : ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, IPerson
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceBase { get; }
+
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
@@ -35,8 +37,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public string HelloWorld(string name)
         {
             string name_ = name;
-            var result_37309470 = _Instance.HelloWorld(name_);
-            return result_37309470;
+            var result_12378949 = _Instance.HelloWorld(name_);
+            return result_12378949;
         }
 
         public void WithParams(params string[] values)
@@ -49,15 +51,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             string s_ = s;
             string @string_ = @string;
-            var result_37309470 = _Instance.Add(s_, @string_);
-            return result_37309470;
+            var result_12378949 = _Instance.Add(s_, @string_);
+            return result_12378949;
         }
 
         public int DefaultValue(int x = 100)
         {
             int x_ = x;
-            var result_24216618 = _Instance.DefaultValue(x_);
-            return result_24216618;
+            var result_66434220 = _Instance.DefaultValue(x_);
+            return result_66434220;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
@@ -74,33 +76,33 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             int x_ = x;
             T1 t1_ = t1;
             T2 t2_ = t2;
-            var result_60333940 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-            return result_60333940;
+            var result_23257044 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+            return result_23257044;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-            var result_2292327 = _Instance.Method1Async();
-            return result_2292327;
+            var result_35312893 = _Instance.Method1Async();
+            return result_35312893;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-            var result_1229624901 = _Instance.Method2Async();
-            return result_1229624901;
+            var result_2062744829 = _Instance.Method2Async();
+            return result_2062744829;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-            var result_1242717753 = _Instance.Method3Async();
-            return result_1242717753;
+            var result_2116800100 = _Instance.Method3Async();
+            return result_2116800100;
         }
 
 
 
 
 
-        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance)
+        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;
 
@@ -108,7 +110,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-        public bool IsAlive { get; set; }
     }
 }
 #nullable disable

@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
-using ProxyInterfaceSourceGenerator.Model;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
 

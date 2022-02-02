@@ -1,3 +1,5 @@
+using ProxyInterfaceSourceGenerator.Models;
+
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal class ProxyAttributeGenerator : IFileGenerator

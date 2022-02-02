@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Model;
+using ProxyInterfaceSourceGenerator.Models;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 using ProxyInterfaceSourceGenerator.Utils;
 

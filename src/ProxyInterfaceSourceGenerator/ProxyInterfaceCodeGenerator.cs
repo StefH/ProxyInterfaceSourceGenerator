@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using ProxyInterfaceSourceGenerator.FileGenerators;
+using ProxyInterfaceSourceGenerator.Models;
 using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 namespace ProxyInterfaceSourceGenerator;

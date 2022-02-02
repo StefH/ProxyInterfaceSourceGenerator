@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Model;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 

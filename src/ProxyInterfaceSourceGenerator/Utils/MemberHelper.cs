@@ -1,5 +1,5 @@
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Model;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.Utils;
 

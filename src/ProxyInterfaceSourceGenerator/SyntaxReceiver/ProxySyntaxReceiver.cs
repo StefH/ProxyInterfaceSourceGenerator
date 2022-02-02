@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 

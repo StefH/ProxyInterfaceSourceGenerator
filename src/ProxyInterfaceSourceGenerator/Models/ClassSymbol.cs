@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace ProxyInterfaceSourceGenerator.Model;
+namespace ProxyInterfaceSourceGenerator.Models;
 
 internal record ClassSymbol(INamedTypeSymbol Symbol, List<INamedTypeSymbol> BaseTypes, List<INamedTypeSymbol> Interfaces)
 {
