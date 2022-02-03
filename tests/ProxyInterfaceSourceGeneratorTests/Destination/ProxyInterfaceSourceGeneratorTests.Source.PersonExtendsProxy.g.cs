@@ -9,7 +9,7 @@
 
 #nullable enable
 using System;
-using AutoMapper;
+
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
