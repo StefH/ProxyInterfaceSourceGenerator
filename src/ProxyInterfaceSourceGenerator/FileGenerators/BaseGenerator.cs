@@ -37,11 +37,11 @@ internal abstract class BaseGenerator
         {
             if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
             {
-                Context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
+                Context.ReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
             }
 
             isReplaced = true;
-            return existing.InterfaceName;
+            return existing.FullInterfaceName;
         }
 
         if (typeSymbol is INamedTypeSymbol namedTypedSymbol)
@@ -57,10 +57,10 @@ internal abstract class BaseGenerator
 
                     if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
                     {
-                        Context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
+                        Context.ReplacedTypes.Add(typeArgumentAsString, exist.FullInterfaceName);
                     }
 
-                    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
+                    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.FullInterfaceName);
                 }
             }
 

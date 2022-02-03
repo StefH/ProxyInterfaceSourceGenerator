@@ -76,6 +76,7 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         (
             ns,
             interfaceDeclarationSyntax.Identifier.ToString(),
+            $"{ns}.{interfaceDeclarationSyntax.Identifier}",
             rawTypeName,
             ConvertTypeName(rawTypeName),
             usings,

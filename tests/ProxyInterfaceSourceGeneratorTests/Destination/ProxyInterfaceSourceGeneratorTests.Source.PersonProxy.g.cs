@@ -29,6 +29,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+        public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> GetHumans()
+        {
+            var result__2016372152 = _Instance.GetHumans();
+            return _mapper.Map<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result__2016372152);
+        }
+
         public void Void()
         {
             _Instance.Void();
@@ -106,10 +112,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
 
+            _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>();
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>();
+            }).CreateMapper();
 
         }
 
-
+        private readonly IMapper _mapper;
     }
 }
 #nullable disable

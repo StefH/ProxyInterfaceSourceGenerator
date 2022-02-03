@@ -24,6 +24,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+        System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> GetHumans();
+
         void Void();
 
         string HelloWorld(string name);

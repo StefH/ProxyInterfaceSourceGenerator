@@ -35,7 +35,7 @@ internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
             return false;
         }
 
-        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
+        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.ShortInterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 

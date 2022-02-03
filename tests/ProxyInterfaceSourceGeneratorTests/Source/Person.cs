@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
+        public IList<Human> GetHumans()
+        {
+            return new List<Human>();
+        }
+
         public string Name { get; set; }
 
         public string? StringNullable { get; set; }

@@ -3,7 +3,8 @@ namespace ProxyInterfaceSourceGenerator.Models;
 internal record ProxyData
 (
     string Namespace,
-    string InterfaceName,
+    string ShortInterfaceName,
+    string FullInterfaceName,
     string RawTypeName,
     string TypeName,
     List<string> Usings,
