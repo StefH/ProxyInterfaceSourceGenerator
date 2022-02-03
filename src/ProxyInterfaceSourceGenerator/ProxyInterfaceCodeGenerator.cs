@@ -11,7 +11,7 @@ namespace ProxyInterfaceSourceGenerator;
 [Generator]
 internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
-    private readonly ProxyAttributeGenerator _proxyAttributeGenerator = new ProxyAttributeGenerator();
+    private readonly ProxyAttributeGenerator _proxyAttributeGenerator = new ();
 
     public void Initialize(GeneratorInitializationContext context)
     {
@@ -52,7 +52,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
     private void GenerateError(GeneratorExecutionContext context, Exception exception)
     {
-        var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n{exception}\r\n\r\n{exception.StackTrace}*/";
+        var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n[Exception]\r\n{exception}\r\n\r\n[StackTrace]\r\n{exception.StackTrace}*/";
         context.AddSource("Error.g", SourceText.From(message, Encoding.UTF8));
     }
 

@@ -17,10 +17,10 @@ namespace ProxyInterfaceConsumer
         {
             var t = new TestProxy(new Test());
 
-            //IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
-            //pT.TVal = 1;
-            //Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
-            //Console.WriteLine(new string('-', 80));
+            IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
+            pT.TVal = 1;
+            Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
+            Console.WriteLine(new string('-', 80));
 
             //IPersonTT<int, Program> pTT = new PersonTTProxy<int, Program>(new PersonTT<int, Program>());
             //pTT.TVal1 = 42;
