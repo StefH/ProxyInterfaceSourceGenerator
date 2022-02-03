@@ -8,5 +8,10 @@ namespace ProxyInterfaceConsumer
         {
             return default;
         }
+
+        public PersonT<T> Call2(int x, PersonT<T> pt)
+        {
+            return new PersonT<T>();
+        }
     }
 }
