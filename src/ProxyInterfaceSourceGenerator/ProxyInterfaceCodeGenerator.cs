@@ -25,21 +25,21 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
     public void Execute(GeneratorExecutionContext context)
     {
-        if (context.ParseOptions is not CSharpParseOptions csharpParseOptions)
-        {
-            throw new NotSupportedException("Only C# is supported.");
-        }
-
-        if (context.SyntaxReceiver is not ProxySyntaxReceiver receiver)
-        {
-            return;
-        }
-
-        // https://github.com/reactiveui/refit/blob/main/InterfaceStubGenerator.Core/InterfaceStubGenerator.cs
-        var supportsNullable = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp8;
-
         try
         {
+            if (context.ParseOptions is not CSharpParseOptions csharpParseOptions)
+            {
+                throw new NotSupportedException("Only C# is supported.");
+            }
+
+            if (context.SyntaxReceiver is not ProxySyntaxReceiver receiver)
+            {
+                throw new NotSupportedException($"Only {nameof(ProxySyntaxReceiver)} is supported.");
+            }
+
+            // https://github.com/reactiveui/refit/blob/main/InterfaceStubGenerator.Core/InterfaceStubGenerator.cs
+            var supportsNullable = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp8;
+
             GenerateProxyAttribute(context, receiver);
             GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
@@ -77,9 +77,9 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
-        foreach (var data in partialInterfacesGenerator.GenerateFiles())
+        foreach (var (fileName, text) in partialInterfacesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
         }
     }
 
@@ -92,9 +92,9 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
-        foreach (var data in proxyClassesGenerator.GenerateFiles())
+        foreach (var (fileName, text) in proxyClassesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(data.FileName, SourceText.From(data.Text, Encoding.UTF8));
+            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
         }
     }
 }

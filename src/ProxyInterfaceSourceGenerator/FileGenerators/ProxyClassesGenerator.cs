@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
@@ -19,31 +18,40 @@ internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         foreach (var ci in Context.CandidateInterfaces)
         {
-            yield return GenerateFile(ci.Value, Context.CandidateInterfaces);
+            if (TryGenerateFile(ci.Value, out var file))
+            {
+                yield return file;
+            }
         }
     }
 
     [SuppressMessage("MicrosoftCodeAnalysisCorrectness", "RS1024:Compare symbols correctly", Justification = "<Pending>")]
-    private FileData GenerateFile(ProxyData pd, IDictionary<InterfaceDeclarationSyntax, ProxyData> candidateInterfaces)
+    private bool TryGenerateFile(ProxyData pd, [NotNullWhen(true)] out FileData? fileData)
     {
-        var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
+        fileData = default;
+
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        {
+            return false;
+        }
+
         var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
         var extendsProxyClasses = targetClassSymbol.BaseTypes
             .Join(
-                candidateInterfaces.Values.Select(v => v.RawTypeName),
+                Context.CandidateInterfaces.Values.Select(v => v.RawTypeName),
                 bt => bt.ToString(),
                 ci => ci, (bt, _) => bt
             ).ToList();
 
-        var file = new FileData(
+        fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
             CreateProxyClassCode(pd, targetClassSymbol, extendsProxyClasses, interfaceName, className, constructorName)
         );
 
-        return file;
+        return true;
     }
 
     private string CreateProxyClassCode(

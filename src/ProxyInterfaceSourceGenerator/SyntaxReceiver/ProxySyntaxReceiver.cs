@@ -45,13 +45,13 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         var usings = new List<string>();
 
         string ns = string.Empty;
-        if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out NamespaceDeclarationSyntax? namespaceDeclarationSyntax))
+        if (interfaceDeclarationSyntax.TryGetParentSyntax(out NamespaceDeclarationSyntax? namespaceDeclarationSyntax))
         {
             ns = namespaceDeclarationSyntax.Name.ToString();
             usings.Add(ns);
         }
 
-        if (SyntaxNodeUtils.TryGetParentSyntax(interfaceDeclarationSyntax, out CompilationUnitSyntax? cc))
+        if (interfaceDeclarationSyntax.TryGetParentSyntax(out CompilationUnitSyntax? cc))
         {
             foreach (var @using in cc.Usings)
             {
@@ -59,7 +59,9 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             }
         }
 
-        string rawTypeName = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type.ToString();
+        var type = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type;
+
+        string rawTypeName = type.ToString();
         bool proxyAllClasses;
         try
         {

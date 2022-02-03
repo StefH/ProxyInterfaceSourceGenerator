@@ -19,6 +19,30 @@ namespace ProxyInterfaceSourceGeneratorTests
         }
 
         [Fact]
+        public void GenerateFiles_ForStruct_Should_Not_GenerateProxyCode()
+        {
+            // Arrange
+            var path = "./Source/IMyStruct.cs";
+            var sourceFile = new SourceFile
+            {
+                Path = path,
+                Text = File.ReadAllText(path),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.MyStruct)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[] { sourceFile });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(1);
+        }
+
+        [Fact]
         public void GenerateFiles_ForSingleClass_Should_GenerateCorrectFiles()
         {
             // Arrange

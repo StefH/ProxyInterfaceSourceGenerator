@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
@@ -69,27 +70,28 @@ internal abstract class BaseGenerator
         return typeSymbolAsString;
     }
 
-    protected ClassSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
+    protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
     {
+        classSymbol = default;
+
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
         var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
-        if (symbol is not null)
+        if (symbol is not null && symbol.TypeKind == kind)
         {
-            return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+            classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+            return true;
         }
 
-        if (usings is not null)
+        foreach (var @using in usings)
         {
-            foreach (var @using in usings)
+            symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
+            if (symbol is not null && symbol.TypeKind == kind)
             {
-                symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
-                if (symbol is not null)
-                {
-                    return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
-                }
+                classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+                return true;
             }
         }
 
-        throw new Exception($"The type '{name}' is not found.");
+        return false;
     }
 }

@@ -28,26 +28,10 @@
 
     <ItemGroup>
         <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.6" />
-        <!--<ProjectReference Include="..\..\..\FluentBuilder\src-extensions\CSharp.SourceGenerators.Extensions\CSharp.SourceGenerators.Extensions.csproj" />-->
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Source\Human.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IHuman.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IPersonExtends.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IPerson.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\PersonExtends.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\Person.cs">
+      <Compile Update="Source\*.cs">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>
