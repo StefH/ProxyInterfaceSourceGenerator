@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -64,7 +63,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string constructorName)
     {
         var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
-       // var extends = extendsFullName != null ? $"{extendsFullName}, " : string.Empty;
+        // var extends = extendsFullName != null ? $"{extendsFullName}, " : string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : string.Empty;
@@ -137,10 +136,14 @@ namespace {pd.Namespace}
         str.AppendLine("            {");
         foreach (var replacedType in Context.ReplacedTypes)
         {
-            var proxy = $"{replacedType.Key}Proxy";
+            var fullTypeName = Context.CandidateInterfaces.First(ci => ci.Value.FullTypeName == replacedType.Key);
+            var classNameProxy = $"{fullTypeName.Value.Namespace}.{fullTypeName.Value.ShortTypeName}Proxy";
 
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing(instance => new {proxy}(instance));");
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing(proxy => (({proxy}) proxy)._Instance);");
+            var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
+            var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
+
+            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing({instance} => new {classNameProxy}({instance}));");
+            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing({proxy} => (({classNameProxy}) {proxy})._Instance);");
         }
         str.AppendLine("            }).CreateMapper();");
 

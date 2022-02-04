@@ -33,18 +33,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Source\*.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Source\PnP\IClientContext.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\PnP\IClientRuntimeContext.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
+        <Compile Update="Source\*.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Source\PnP\*.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
     </ItemGroup>
 
 </Project>
