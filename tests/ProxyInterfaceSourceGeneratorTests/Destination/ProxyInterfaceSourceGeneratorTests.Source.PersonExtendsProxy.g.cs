@@ -30,6 +30,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public bool IsAlive { get => _Instance.IsAlive; set => _Instance.IsAlive = value; }
 
+        public string GetterOnly { get => _Instance.GetterOnly; }
+
 
 
         public string StaticMethod(int x, string y)
@@ -116,6 +118,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public PersonExtendsProxy(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends instance)
         {
             _Instance = instance;
+            
 
 
         }

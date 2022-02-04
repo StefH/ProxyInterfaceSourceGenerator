@@ -3,6 +3,7 @@ using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Source;
 using Xunit;
 
 namespace ProxyInterfaceSourceGeneratorTests
@@ -16,6 +17,12 @@ namespace ProxyInterfaceSourceGeneratorTests
         public ProxyInterfaceSourceGeneratorTest()
         {
             _sut = new ProxyInterfaceCodeGenerator();
+
+            var pp = new PersonProxy(new Person());
+
+            var h = pp.GetHumans();
+
+            int x = 0;
         }
 
         [Fact]

@@ -7,7 +7,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public IList<Human> GetHumans()
         {
-            return new List<Human>();
+            return new List<Human> { new Human { IsAlive = true } };
         }
 
         public string Name { get; set; }

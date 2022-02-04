@@ -111,11 +111,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;
+            _InstanceBase = instance;
 
             _mapper = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>();
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>();
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>().ConstructUsing(instance => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance));
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>().ConstructUsing(proxy => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy)._Instance);
             }).CreateMapper();
 
         }

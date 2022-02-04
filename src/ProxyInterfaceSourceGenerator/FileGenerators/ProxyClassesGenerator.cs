@@ -8,7 +8,7 @@ using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
-internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
+internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 {
     public ProxyClassesGenerator(Context context, bool supportsNullable) : base(context, supportsNullable)
     {
@@ -66,7 +66,8 @@ internal class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var extends = extendsProxyClasses.Any() ? $"{string.Join(", ", extendsFullNames)}, " : string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-        var instanceBase = extendsProxyClasses.Any() ? $"public {extendsProxyClasses.First()} _InstanceBase {{ get; }}\r\n" : string.Empty;
+        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses.First()} _InstanceBase {{ get; }}\r\n" : string.Empty;
+        var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
 
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
@@ -100,7 +101,7 @@ namespace {pd.Namespace}
     public partial class {className} : {extends}{interfaceName}
     {{
         public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
-        {instanceBase}
+        {instanceBaseDefinition}
 
 {properties}
 
@@ -111,6 +112,7 @@ namespace {pd.Namespace}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
+            {instanceBaseSet}
 
 {configurationForAutoMapper}
         }}
@@ -134,8 +136,10 @@ namespace {pd.Namespace}
         str.AppendLine("            {");
         foreach (var replacedType in Context.ReplacedTypes)
         {
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>();");
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>();");
+            var proxy = $"{replacedType.Key}Proxy";
+
+            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing(instance => new {proxy}(instance));");
+            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing(proxy => (({proxy}) proxy)._Instance);");
         }
         str.AppendLine("            }).CreateMapper();");
 

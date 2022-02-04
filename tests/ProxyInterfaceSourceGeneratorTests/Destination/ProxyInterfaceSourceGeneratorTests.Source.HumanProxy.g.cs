@@ -20,6 +20,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public bool IsAlive { get => _Instance.IsAlive; set => _Instance.IsAlive = value; }
 
+        public string GetterOnly { get => _Instance.GetterOnly; }
+
 
 
 
@@ -29,6 +31,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public HumanProxy(ProxyInterfaceSourceGeneratorTests.Source.Human instance)
         {
             _Instance = instance;
+            
 
 
         }
