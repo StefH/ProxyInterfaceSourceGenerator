@@ -71,4 +71,11 @@ internal static class NamedTypeSymbolExtensions
             $"{namedTypeSymbol.Name}Proxy" :
             $"{namedTypeSymbol.Name}Proxy<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>";
     }
+
+    public static string ResolveFullProxyClassName(this INamedTypeSymbol namedTypeSymbol)
+    {
+        return !namedTypeSymbol.IsGenericType ?
+            $"{namedTypeSymbol}Proxy" :
+            $"{namedTypeSymbol}Proxy<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>";
+    }
 }

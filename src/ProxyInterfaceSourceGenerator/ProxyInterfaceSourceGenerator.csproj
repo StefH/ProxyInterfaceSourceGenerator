@@ -36,7 +36,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <!--<PackageReference Include="AutoMapper" Version="10.1.1" />-->
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -46,11 +46,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="bin\Debug\netstandard2.0\\ProxyInterfaceGenerator.dll" />
-        <None Remove="bin\Release\netstandard2.0\\ProxyInterfaceGenerator.dll" />
+        <ProjectCapability Include="DynamicDependentFile" />
+        <ProjectCapability Include="DynamicFileNesting" />
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="ProxyClassesGenerator.*.cs">
+            <DependentUpon>ProxyClassesGenerator.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="bin\Debug\netstandard2.0\\ProxyInterfaceGenerator.dll" />
+        <None Remove="bin\Release\netstandard2.0\\ProxyInterfaceGenerator.dll" />
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
 

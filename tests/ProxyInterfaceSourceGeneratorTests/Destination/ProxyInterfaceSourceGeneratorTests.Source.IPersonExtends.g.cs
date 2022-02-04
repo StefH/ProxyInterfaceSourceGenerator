@@ -26,6 +26,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool IsAlive { get; set; }
 
+        string GetterOnly { get; }
+
 
 
         string StaticMethod(int x, string y);

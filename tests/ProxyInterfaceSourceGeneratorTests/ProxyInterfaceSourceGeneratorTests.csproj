@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
@@ -28,26 +29,10 @@
 
     <ItemGroup>
         <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.6" />
-        <!--<ProjectReference Include="..\..\..\FluentBuilder\src-extensions\CSharp.SourceGenerators.Extensions\CSharp.SourceGenerators.Extensions.csproj" />-->
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Source\Human.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IHuman.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IPersonExtends.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IPerson.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\PersonExtends.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\Person.cs">
+      <Compile Update="Source\*.cs">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>

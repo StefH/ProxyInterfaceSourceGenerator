@@ -1,6 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Model;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
@@ -36,11 +37,11 @@ internal abstract class BaseGenerator
         {
             if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
             {
-                Context.ReplacedTypes.Add(typeSymbolAsString, existing.InterfaceName);
+                Context.ReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
             }
 
             isReplaced = true;
-            return existing.InterfaceName;
+            return existing.FullInterfaceName;
         }
 
         if (typeSymbol is INamedTypeSymbol namedTypedSymbol)
@@ -56,10 +57,10 @@ internal abstract class BaseGenerator
 
                     if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
                     {
-                        Context.ReplacedTypes.Add(typeArgumentAsString, exist.InterfaceName);
+                        Context.ReplacedTypes.Add(typeArgumentAsString, exist.FullInterfaceName);
                     }
 
-                    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.InterfaceName);
+                    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.FullInterfaceName);
                 }
             }
 
@@ -69,27 +70,28 @@ internal abstract class BaseGenerator
         return typeSymbolAsString;
     }
 
-    protected ClassSymbol GetNamedTypeSymbolByFullName(string name, IEnumerable<string>? usings = null)
+    protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
     {
+        classSymbol = default;
+
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
         var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
-        if (symbol is not null)
+        if (symbol is not null && symbol.TypeKind == kind)
         {
-            return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+            classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+            return true;
         }
 
-        if (usings is not null)
+        foreach (var @using in usings)
         {
-            foreach (var @using in usings)
+            symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
+            if (symbol is not null && symbol.TypeKind == kind)
             {
-                symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
-                if (symbol is not null)
-                {
-                    return new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
-                }
+                classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+                return true;
             }
         }
 
-        throw new Exception($"The type '{name}' is not found.");
+        return false;
     }
 }

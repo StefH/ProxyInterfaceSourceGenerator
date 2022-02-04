@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using AnyOfTypes;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Source;
 using Xunit;
-using Xunit.Sdk;
 
 namespace ProxyInterfaceSourceGeneratorTests
 {
@@ -20,6 +17,36 @@ namespace ProxyInterfaceSourceGeneratorTests
         public ProxyInterfaceSourceGeneratorTest()
         {
             _sut = new ProxyInterfaceCodeGenerator();
+
+            var pp = new PersonProxy(new Person());
+
+            var h = pp.AddHuman(new HumanProxy(new Human()));
+
+            int x = 0;
+        }
+
+        [Fact]
+        public void GenerateFiles_ForStruct_Should_Not_GenerateProxyCode()
+        {
+            // Arrange
+            var path = "./Source/IMyStruct.cs";
+            var sourceFile = new SourceFile
+            {
+                Path = path,
+                Text = File.ReadAllText(path),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.MyStruct)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[] { sourceFile });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(1);
         }
 
         [Fact]
@@ -111,7 +138,7 @@ namespace ProxyInterfaceSourceGeneratorTests
             result.Valid.Should().BeTrue();
             result.Files.Should().HaveCount(5);
 
-            throw new Exception();
+           // throw new Exception();
 
             // Assert attribute
             var attribute = result.Files[0].SyntaxTree;

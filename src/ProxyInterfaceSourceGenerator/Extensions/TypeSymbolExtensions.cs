@@ -20,8 +20,9 @@ internal static class TypeSymbolExtensions
         return TypeEnum.Complex;
     }
 
-    public static bool IsString(this ITypeSymbol ts)
-    {
-        return ts.ToString() == "string" || ts.ToString() == "string?";
-    }
+    public static bool IsString(this ITypeSymbol ts) =>
+        ts.ToString() == "string" || ts.ToString() == "string?";
+
+    internal static bool IsClass(this ITypeSymbol ts) =>
+        ts.IsReferenceType && ts.TypeKind == TypeKind.Class;
 }

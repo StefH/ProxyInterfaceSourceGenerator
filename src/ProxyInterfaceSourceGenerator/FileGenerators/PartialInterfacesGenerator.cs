@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Model;
-using ProxyInterfaceSourceGenerator.SyntaxReceiver;
+using ProxyInterfaceSourceGenerator.Models;
 using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
@@ -19,22 +20,35 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
         foreach (var ci in Context.CandidateInterfaces)
         {
-            yield return GenerateFile(ci.Key, ci.Value);
+            if (TryGenerateFile(ci.Key, ci.Value, out var file))
+            {
+                yield return file;
+            }
         }
     }
 
-    private FileData GenerateFile(InterfaceDeclarationSyntax ci, ProxyData pd)
+    private bool TryGenerateFile(InterfaceDeclarationSyntax ci, ProxyData pd, [NotNullWhen(true)] out FileData? fileData)
     {
-        var sourceInterfaceSymbol = GetNamedTypeSymbolByFullName(ci.Identifier.ToString(), pd.Usings);
-        var targetClassSymbol = GetNamedTypeSymbolByFullName(pd.TypeName, pd.Usings);
-        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.InterfaceName);
+        fileData = default;
 
-        var file = new FileData(
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Interface, ci.Identifier.ToString(), pd.Usings, out var sourceInterfaceSymbol))
+        {
+            return false;
+        }
+
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        {
+            return false;
+        }
+
+        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.ShortInterfaceName);
+
+        fileData = new FileData(
             $"{sourceInterfaceSymbol.Symbol.GetFileName()}.g.cs",
             CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd.ProxyBaseClasses)
         );
 
-        return file;
+        return true;
     }
 
     private string CreatePartialInterfaceCode(

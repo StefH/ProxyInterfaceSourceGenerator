@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="IPersonT.cs" />
     <Compile Remove="IPersonTT.cs" />
-    <Compile Remove="PersonT.cs" />
     <Compile Remove="PersonTT.cs" />
   </ItemGroup>
 

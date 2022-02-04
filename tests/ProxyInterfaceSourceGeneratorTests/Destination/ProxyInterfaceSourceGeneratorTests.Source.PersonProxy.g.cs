@@ -13,9 +13,11 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public class PersonProxy : IPerson
+    public partial class PersonProxy : ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, IPerson
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceBase { get; }
+
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
@@ -27,6 +29,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+        public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
+        {
+            ProxyInterfaceSourceGeneratorTests.Source.Human h_ = _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
+            var result_907493286 = _Instance.AddHuman(h_);
+            return _mapper.Map<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
+        }
+
         public void Void()
         {
             _Instance.Void();
@@ -35,8 +44,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public string HelloWorld(string name)
         {
             string name_ = name;
-            var result_37309470 = _Instance.HelloWorld(name_);
-            return result_37309470;
+            var result_282270798 = _Instance.HelloWorld(name_);
+            return result_282270798;
         }
 
         public void WithParams(params string[] values)
@@ -49,15 +58,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             string s_ = s;
             string @string_ = @string;
-            var result_37309470 = _Instance.Add(s_, @string_);
-            return result_37309470;
+            var result__1127157211 = _Instance.Add(s_, @string_);
+            return result__1127157211;
         }
 
         public int DefaultValue(int x = 100)
         {
             int x_ = x;
-            var result_24216618 = _Instance.DefaultValue(x_);
-            return result_24216618;
+            var result__378509684 = _Instance.DefaultValue(x_);
+            return result__378509684;
         }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
@@ -74,41 +83,46 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             int x_ = x;
             T1 t1_ = t1;
             T2 t2_ = t2;
-            var result_60333940 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
-            return result_60333940;
+            var result_542538942 = _Instance.Generic2<T1, T2>(x_, t1_, t2_);
+            return result_542538942;
         }
 
         public System.Threading.Tasks.Task Method1Async()
         {
-            var result_2292327 = _Instance.Method1Async();
-            return result_2292327;
+            var result__57678382 = _Instance.Method1Async();
+            return result__57678382;
         }
 
         public System.Threading.Tasks.Task<int> Method2Async()
         {
-            var result_1229624901 = _Instance.Method2Async();
-            return result_1229624901;
+            var result__57677169 = _Instance.Method2Async();
+            return result__57677169;
         }
 
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
-            var result_1242717753 = _Instance.Method3Async();
-            return result_1242717753;
+            var result__57684656 = _Instance.Method3Async();
+            return result__57684656;
         }
 
 
 
 
 
-        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance)
+        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;
+            _InstanceBase = instance;
 
+            _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>().ConstructUsing(instance => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance));
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>().ConstructUsing(proxy => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy)._Instance);
+            }).CreateMapper();
 
         }
 
-
-        public bool IsAlive { get; set; }
+        private readonly IMapper _mapper;
     }
 }
 #nullable disable
