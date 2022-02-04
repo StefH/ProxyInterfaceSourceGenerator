@@ -1,4 +1,4 @@
-# 0.0.13 (02 February 2022)
-- #28 Add support for static properties and methods [enhancement]
+# 0.0.14 (04 February 2022)
+- #29 Add support for base (proxy) class [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
