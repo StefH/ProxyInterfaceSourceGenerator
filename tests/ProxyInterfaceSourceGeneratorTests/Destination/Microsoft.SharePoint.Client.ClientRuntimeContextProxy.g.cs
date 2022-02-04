@@ -52,85 +52,85 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
-        public  void ExecuteQuery()
+        public void ExecuteQuery()
         {
             _Instance.ExecuteQuery();
         }
 
-        public  void RetryQuery(Microsoft.SharePoint.Client.ClientRequest request)
+        public void RetryQuery(Microsoft.SharePoint.Client.ClientRequest request)
         {
             Microsoft.SharePoint.Client.ClientRequest request_ = request;
             _Instance.RetryQuery(request_);
         }
 
-        public  System.Threading.Tasks.Task ExecuteQueryAsync()
+        public System.Threading.Tasks.Task ExecuteQueryAsync()
         {
             var result_737681611 = _Instance.ExecuteQueryAsync();
             return result_737681611;
         }
 
-        public  System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request)
+        public System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request)
         {
             Microsoft.SharePoint.Client.ClientRequest request_ = request;
             var result_1373930992 = _Instance.RetryQueryAsync(request_);
             return result_1373930992;
         }
 
-        public  T CastTo<T>(Microsoft.SharePoint.Client.ClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject
+        public T CastTo<T>(Microsoft.SharePoint.Client.ClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject
         {
             Microsoft.SharePoint.Client.ClientObject obj_ = obj;
             var result_366781530 = _Instance.CastTo<T>(obj_);
             return result_366781530;
         }
 
-        public  void AddQuery(Microsoft.SharePoint.Client.ClientAction query)
+        public void AddQuery(Microsoft.SharePoint.Client.ClientAction query)
         {
             Microsoft.SharePoint.Client.ClientAction query_ = query;
             _Instance.AddQuery(query_);
         }
 
-        public  void AddQueryIdAndResultObject(long id, object obj)
+        public void AddQueryIdAndResultObject(long id, object obj)
         {
             long id_ = id;
             object obj_ = obj;
             _Instance.AddQueryIdAndResultObject(id_, obj_);
         }
 
-        public  object ParseObjectFromJsonString(string json)
+        public object ParseObjectFromJsonString(string json)
         {
             string json_ = json;
             var result__1648501661 = _Instance.ParseObjectFromJsonString(json_);
             return result__1648501661;
         }
 
-        public  void AddClientTypeAssembly(System.Reflection.Assembly @assembly)
+        public void AddClientTypeAssembly(System.Reflection.Assembly @assembly)
         {
             System.Reflection.Assembly @assembly_ = @assembly;
             Microsoft.SharePoint.Client.ClientRuntimeContext.AddClientTypeAssembly(@assembly_);
         }
 
-        public  void Load<T>(T clientObject, params System.Linq.Expressions.Expression<System.Func<T, object>>[] retrievals) where T : Microsoft.SharePoint.Client.ClientObject
+        public void Load<T>(T clientObject, params System.Linq.Expressions.Expression<System.Func<T, object>>[] retrievals) where T : Microsoft.SharePoint.Client.ClientObject
         {
             T clientObject_ = clientObject;
             System.Linq.Expressions.Expression<System.Func<T, object>>[] retrievals_ = retrievals;
             _Instance.Load<T>(clientObject_, retrievals_);
         }
 
-        public  System.Collections.Generic.IEnumerable<T> LoadQuery<T>(Microsoft.SharePoint.Client.ClientObjectCollection<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject
+        public System.Collections.Generic.IEnumerable<T> LoadQuery<T>(Microsoft.SharePoint.Client.ClientObjectCollection<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject
         {
             Microsoft.SharePoint.Client.ClientObjectCollection<T> clientObjects_ = clientObjects;
             var result_2035927496 = _Instance.LoadQuery<T>(clientObjects_);
             return result_2035927496;
         }
 
-        public  System.Collections.Generic.IEnumerable<T> LoadQuery<T>(System.Linq.IQueryable<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject
+        public System.Collections.Generic.IEnumerable<T> LoadQuery<T>(System.Linq.IQueryable<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject
         {
             System.Linq.IQueryable<T> clientObjects_ = clientObjects;
             var result_2035927496 = _Instance.LoadQuery<T>(clientObjects_);
             return result_2035927496;
         }
 
-        public  void Dispose()
+        public void Dispose()
         {
             _Instance.Dispose();
         }

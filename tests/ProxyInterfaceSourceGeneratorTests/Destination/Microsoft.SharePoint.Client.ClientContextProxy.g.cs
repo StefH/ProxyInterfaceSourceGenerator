@@ -29,18 +29,18 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
-        public  Microsoft.SharePoint.Client.FormDigestInfo GetFormDigestDirect()
+        public Microsoft.SharePoint.Client.FormDigestInfo GetFormDigestDirect()
         {
             var result_333437737 = _Instance.GetFormDigestDirect();
             return result_333437737;
         }
 
-        public new  void ExecuteQuery()
+        public new void ExecuteQuery()
         {
             _Instance.ExecuteQuery();
         }
 
-        public new  System.Threading.Tasks.Task ExecuteQueryAsync()
+        public new System.Threading.Tasks.Task ExecuteQueryAsync()
         {
             var result_737681611 = _Instance.ExecuteQueryAsync();
             return result_737681611;
