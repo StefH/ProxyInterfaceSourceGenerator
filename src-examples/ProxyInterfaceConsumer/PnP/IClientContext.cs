@@ -1,6 +1,8 @@
+using Microsoft.SharePoint.Client;
+
 namespace ProxyInterfaceConsumer.PnP
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(Microsoft.SharePoint.Client.ClientContext))]
+    [ProxyInterfaceGenerator.Proxy(typeof(ClientContext))]
     public partial interface IClientContext
     {
         // public virtual void X();

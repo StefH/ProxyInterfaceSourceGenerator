@@ -198,7 +198,7 @@ namespace ProxyInterfaceSourceGeneratorTests
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(Microsoft.SharePoint.Client.Web)"
+                    ArgumentList = "typeof(Web)" // Only name, no namespace
                 }
             };
 
@@ -210,7 +210,7 @@ namespace ProxyInterfaceSourceGeneratorTests
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientContext)"
+                    ArgumentList = "typeof(ClientContext)" // Only name, no namespace
                 }
             };
 

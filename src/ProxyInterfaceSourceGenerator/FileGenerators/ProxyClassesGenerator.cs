@@ -63,7 +63,6 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string constructorName)
     {
         var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
-        // var extends = extendsFullName != null ? $"{extendsFullName}, " : string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : string.Empty;
@@ -136,8 +135,8 @@ namespace {pd.Namespace}
         str.AppendLine("            {");
         foreach (var replacedType in Context.ReplacedTypes)
         {
-            var fullTypeName = Context.CandidateInterfaces.First(ci => ci.Value.FullTypeName == replacedType.Key);
-            var classNameProxy = $"{fullTypeName.Value.Namespace}.{fullTypeName.Value.ShortTypeName}Proxy";
+            TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
+            var classNameProxy = $"{fullTypeName!.Namespace}.{fullTypeName.ShortTypeName}Proxy";
 
             var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
             var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
