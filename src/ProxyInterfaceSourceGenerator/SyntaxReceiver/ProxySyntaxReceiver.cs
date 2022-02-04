@@ -78,7 +78,8 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             interfaceDeclarationSyntax.Identifier.ToString(),
             $"{ns}.{interfaceDeclarationSyntax.Identifier}",
             rawTypeName,
-            ConvertTypeName(rawTypeName),
+            ConvertTypeName(rawTypeName).Split('.').Last(), // ShortTypeName
+            ConvertTypeName(rawTypeName), // FullTypeName
             usings,
             proxyAllClasses
         );

@@ -32,7 +32,7 @@ internal abstract class BaseGenerator
 
         var typeSymbolAsString = typeSymbol.ToString();
 
-        var existing = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeSymbolAsString);
+        var existing = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.FullRawTypeName == typeSymbolAsString);
         if (existing is not null)
         {
             if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
@@ -50,7 +50,7 @@ internal abstract class BaseGenerator
             foreach (var typeArgument in namedTypedSymbol.TypeArguments)
             {
                 var typeArgumentAsString = typeArgument.ToString();
-                var exist = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.RawTypeName == typeArgumentAsString);
+                var exist = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.FullRawTypeName == typeArgumentAsString);
                 if (exist is not null)
                 {
                     isReplaced = true;

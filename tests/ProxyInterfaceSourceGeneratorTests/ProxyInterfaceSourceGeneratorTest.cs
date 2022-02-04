@@ -138,8 +138,6 @@ namespace ProxyInterfaceSourceGeneratorTests
             result.Valid.Should().BeTrue();
             result.Files.Should().HaveCount(5);
 
-           // throw new Exception();
-
             // Assert attribute
             var attribute = result.Files[0].SyntaxTree;
             attribute.FilePath.Should().EndWith(attributeFilename);
@@ -179,6 +177,82 @@ namespace ProxyInterfaceSourceGeneratorTests
             var proxyCode = proxyClassPerson.ToString();
             if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
             proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
+        }
+
+        [Fact]
+        public void GenerateFiles_ForPnP_Should_GenerateCorrectFiles()
+        {
+            // Arrange
+            var interfaceClientContextFilename = "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs";
+            var proxyClassClientContextFilename = "Microsoft.SharePoint.Client.ClientContextProxy.g.cs";
+            var interfaceClientRuntimeContextFilename = "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs";
+            var proxyClassClientRuntimeContextFilename = "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs";
+
+            var pathPerson = "./Source/PnP/IClientContext.cs";
+            var sourceFilePerson = new SourceFile
+            {
+                Path = pathPerson,
+                Text = File.ReadAllText(pathPerson),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientContext)"
+                }
+            };
+
+            var pathHuman = "./Source/Pnp/IClientRuntimeContext.cs";
+            var sourceFileHuman = new SourceFile
+            {
+                Path = pathHuman,
+                Text = File.ReadAllText(pathHuman),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientRuntimeContext)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[] { sourceFileHuman, sourceFilePerson });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(5);
+
+            // Assert interface ClientContext
+            var interfaceHuman = result.Files[2].SyntaxTree;
+            interfaceHuman.FilePath.Should().EndWith(interfaceClientContextFilename);
+
+            var interfaceCodeHuman = interfaceHuman.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{interfaceClientContextFilename}", interfaceCodeHuman);
+            interfaceCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceClientContextFilename}"));
+
+
+            // Assert interface ClientRuntimeContext
+            var interfacePerson = result.Files[1].SyntaxTree;
+            interfacePerson.FilePath.Should().EndWith(interfaceClientRuntimeContextFilename);
+
+            var interfaceCodePerson = interfacePerson.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{interfaceClientRuntimeContextFilename}", interfaceCodePerson);
+            interfaceCodePerson.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceClientRuntimeContextFilename}"));
+
+
+            // Assert Proxy ClientContext
+            var proxyClassClientContext = result.Files[4].SyntaxTree;
+            proxyClassClientContext.FilePath.Should().EndWith(proxyClassClientContextFilename);
+
+            var proxyCodeClientContext = proxyClassClientContext.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{proxyClassClientContextFilename}", proxyCodeClientContext);
+            proxyCodeClientContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassClientContextFilename}"));
+
+
+            // Assert Proxy ClientRuntimeContext
+            var proxyClassClientRuntimeContext = result.Files[3].SyntaxTree;
+            proxyClassClientRuntimeContext.FilePath.Should().EndWith(proxyClassClientRuntimeContextFilename);
+
+            var proxyCodeClientRuntimeContext = proxyClassClientRuntimeContext.ToString();
+            if (Write) File.WriteAllText($"../../../Destination/{proxyClassClientRuntimeContextFilename}", proxyCodeClientRuntimeContext);
+            proxyCodeClientRuntimeContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassClientRuntimeContextFilename}"));
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -30,7 +31,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         fileData = default;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
@@ -41,9 +42,9 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var extendsProxyClasses = targetClassSymbol.BaseTypes
             .Join(
-                Context.CandidateInterfaces.Values.Select(v => v.RawTypeName),
-                bt => bt.ToString(),
-                ci => ci, (bt, _) => bt
+                Context.CandidateInterfaces.Values, // .Select(v => v.RawTypeName)
+                namedTypeSymbol => namedTypeSymbol.ToString(),
+                proxyData => proxyData.FullRawTypeName, (_, proxyData) => proxyData
             ).ToList();
 
         fileData = new FileData(
@@ -57,16 +58,16 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     private string CreateProxyClassCode(
         ProxyData pd,
         ClassSymbol targetClassSymbol,
-        List<INamedTypeSymbol> extendsProxyClasses,
+        List<ProxyData> extendsProxyClasses,
         string interfaceName,
         string className,
         string constructorName)
     {
-        var extendsFullNames = extendsProxyClasses.Select(e => e.ResolveFullProxyClassName()).ToList();
-        var extends = extendsProxyClasses.Any() ? $"{string.Join(", ", extendsFullNames)}, " : string.Empty;
+        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
+       // var extends = extendsFullName != null ? $"{extendsFullName}, " : string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses.First()} _InstanceBase {{ get; }}\r\n" : string.Empty;
+        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : string.Empty;
         var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
 
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);

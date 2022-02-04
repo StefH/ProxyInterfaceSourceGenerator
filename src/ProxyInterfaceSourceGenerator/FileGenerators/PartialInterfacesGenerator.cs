@@ -36,7 +36,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
             return false;
         }
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }

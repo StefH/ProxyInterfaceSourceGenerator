@@ -3,6 +3,8 @@ using DifferentNamespace;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.SharePoint.Client;
+using ProxyInterfaceConsumer.PnP;
 
 namespace ProxyInterfaceConsumer
 {
@@ -15,6 +17,9 @@ namespace ProxyInterfaceConsumer
 
         public static void Main()
         {
+            var cp = new ClientContextProxy(new ClientContext("x"));
+
+
             var t = new TestProxy(new Test());
 
             IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
