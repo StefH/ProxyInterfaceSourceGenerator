@@ -18,6 +18,7 @@ namespace ProxyInterfaceConsumer
         public static void Main()
         {
             var cp = new ClientContextProxy(new ClientContext("x"));
+            cp.ExecuteQuery();
 
 
             var t = new TestProxy(new Test());

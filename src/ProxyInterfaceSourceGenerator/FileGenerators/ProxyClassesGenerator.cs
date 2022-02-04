@@ -71,7 +71,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
 
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
-        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
+        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForAutoMapper = string.Empty;
@@ -168,7 +168,7 @@ namespace {pd.Namespace}
         return str.ToString();
     }
 
-    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses, List<ProxyData> extendsProxyClasses)
     {
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
@@ -184,9 +184,19 @@ namespace {pd.Namespace}
                 invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
             }
 
+            string addNew = string.Empty;
+            if (method.IsOverride && method.OverriddenMethod != null)
+            {
+                var baseType = method.OverriddenMethod.ContainingType.GetFullType();
+                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, Enumerable.Empty<string>(), out var baseTypeClassSymbol))
+                {
+                    addNew = "new ";
+                }
+            }
+
             string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-            str.AppendLine($"        public {returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
+            str.AppendLine($"        public {addNew}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {
