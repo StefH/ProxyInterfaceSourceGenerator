@@ -5,9 +5,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
-        public IList<Human> GetHumans()
+        public IList<Human> AddHuman(Human h)
         {
-            return new List<Human> { new Human { IsAlive = true } };
+            return new List<Human> { h, new Human { IsAlive = true } };
         }
 
         public string Name { get; set; }

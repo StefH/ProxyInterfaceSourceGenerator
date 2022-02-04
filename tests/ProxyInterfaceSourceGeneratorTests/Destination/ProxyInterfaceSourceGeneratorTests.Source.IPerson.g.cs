@@ -24,7 +24,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-        System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> GetHumans();
+        System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h);
 
         void Void();
 

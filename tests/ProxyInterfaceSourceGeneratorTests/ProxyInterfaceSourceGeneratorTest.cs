@@ -20,7 +20,7 @@ namespace ProxyInterfaceSourceGeneratorTests
 
             var pp = new PersonProxy(new Person());
 
-            var h = pp.GetHumans();
+            var h = pp.AddHuman(new HumanProxy(new Human()));
 
             int x = 0;
         }

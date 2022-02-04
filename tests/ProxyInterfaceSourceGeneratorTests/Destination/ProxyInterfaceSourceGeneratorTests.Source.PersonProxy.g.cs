@@ -29,10 +29,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-        public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> GetHumans()
+        public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
         {
-            var result__2016372152 = _Instance.GetHumans();
-            return _mapper.Map<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result__2016372152);
+            ProxyInterfaceSourceGeneratorTests.Source.Human h_ = _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
+            var result_907493286 = _Instance.AddHuman(h_);
+            return _mapper.Map<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
         }
 
         public void Void()
