@@ -56,7 +56,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request);
 
-        T CastTo<T>(Microsoft.SharePoint.Client.ClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject;
+        T CastTo<T>(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject;
 
         void AddQuery(Microsoft.SharePoint.Client.ClientAction query);
 

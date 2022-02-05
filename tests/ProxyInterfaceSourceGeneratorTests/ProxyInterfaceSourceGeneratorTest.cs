@@ -186,12 +186,12 @@ namespace ProxyInterfaceSourceGeneratorTests
             // Arrange
             var fileNames = new[]
             {
-                // "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject.g.cs",
+                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
 
-                // "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
+                "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
                 "Microsoft.SharePoint.Client.WebProxy.g.cs",
                 "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs",
                 "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
@@ -248,7 +248,7 @@ namespace ProxyInterfaceSourceGeneratorTests
             // Act
             var result = _sut.Execute(new[]
             {
-                // sourceFileClientObject,
+                sourceFileClientObject,
                 sourceFileWeb,
                 sourceFileClientRuntimeContext,
                 sourceFileClientContext
