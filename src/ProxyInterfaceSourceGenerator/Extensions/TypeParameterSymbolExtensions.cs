@@ -25,7 +25,7 @@ internal static class TypeParameterSymbolExtensions
             constraints.Add("new()");
         }
 
-        constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(contstraintType => contstraintType.GetFullType()));
+        constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(constraintType => constraintType.GetFullType()));
 
         if (!constraints.Any())
         {
