@@ -186,13 +186,27 @@ namespace ProxyInterfaceSourceGeneratorTests
             // Arrange
             var fileNames = new[]
             {
+                // "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
 
+                // "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
                 "Microsoft.SharePoint.Client.WebProxy.g.cs",
                 "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs",
                 "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
+            };
+
+            var pathClientObject = "./Source/PnP/IClientObject.cs";
+            var sourceFileClientObject = new SourceFile
+            {
+                Path = pathClientObject,
+                Text = File.ReadAllText(pathClientObject),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientObject)"
+                }
             };
 
             var pathWeb = "./Source/PnP/IWeb.cs";
@@ -232,7 +246,13 @@ namespace ProxyInterfaceSourceGeneratorTests
             };
 
             // Act
-            var result = _sut.Execute(new[] { sourceFileWeb, sourceFileClientRuntimeContext, sourceFileClientContext });
+            var result = _sut.Execute(new[]
+            {
+                // sourceFileClientObject,
+                sourceFileWeb,
+                sourceFileClientRuntimeContext,
+                sourceFileClientContext
+            });
 
             // Assert
             result.Valid.Should().BeTrue();
