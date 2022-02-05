@@ -37,9 +37,19 @@ internal static class PropertySymbolExtensions
             "_Instance" :
             $"{targetClassSymbol.Symbol}";
 
+        string overrideOrVirtual = string.Empty;
+        if (property.IsOverride)
+        {
+            overrideOrVirtual = "override ";
+        }
+        else if (property.IsVirtual)
+        {
+            overrideOrVirtual = "virtual ";
+        }
+
         var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>({instance}.{property.GetSanitizedName()}); " : string.Empty;
         var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
-        return $"{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
+        return $"{overrideOrVirtual}{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
     }
 }

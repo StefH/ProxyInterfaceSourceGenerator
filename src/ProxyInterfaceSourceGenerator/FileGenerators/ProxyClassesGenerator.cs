@@ -122,7 +122,7 @@ namespace {pd.Namespace}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
     }
 
-    
+
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
@@ -131,6 +131,7 @@ namespace {pd.Namespace}
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
         {
             var type = GetPropertyType(property, out var isReplaced);
+
             if (isReplaced)
             {
                 str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol, type)}");
@@ -161,7 +162,7 @@ namespace {pd.Namespace}
                 invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
             }
 
-            string @overrideOrVirtual = string.Empty;
+            string overrideOrVirtual = string.Empty;
             if (method.IsOverride && method.OverriddenMethod != null)
             {
                 var baseType = method.OverriddenMethod.ContainingType.GetFullType();
@@ -177,7 +178,7 @@ namespace {pd.Namespace}
 
             string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-            str.AppendLine($"        public {@overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
+            str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {
