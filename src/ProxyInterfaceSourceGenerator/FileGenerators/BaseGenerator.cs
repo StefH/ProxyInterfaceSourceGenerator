@@ -60,7 +60,7 @@ internal abstract class BaseGenerator
         var list = new List<string>();
         foreach (var typeParameterSymbol in method.TypeParameters)
         {
-            if (TryGetWhereConstraints(typeParameterSymbol, out var constraint))
+            if (TryGetWhereConstraints(typeParameterSymbol, false, out var constraint))
             {
                 list.Add(constraint.ToString());
             }
@@ -80,7 +80,7 @@ internal abstract class BaseGenerator
 
         foreach (var typeParameterSymbol in namedTypeSymbol.TypeArguments.OfType<ITypeParameterSymbol>())
         {
-            if (TryGetWhereConstraints(typeParameterSymbol, out var constraint))
+            if (TryGetWhereConstraints(typeParameterSymbol, false, out var constraint))
             {
                 str.Append(constraint);
             }
@@ -92,7 +92,7 @@ internal abstract class BaseGenerator
     /// <summary>
     /// https://www.codeproject.com/Articles/871704/Roslyn-Code-Analysis-in-Easy-Samples-Part-2
     /// </summary>
-    public bool TryGetWhereConstraints(ITypeParameterSymbol typeParameterSymbol, [NotNullWhen(true)] out ConstraintInfo? constraint)
+    public bool TryGetWhereConstraints(ITypeParameterSymbol typeParameterSymbol, bool replaceIt, [NotNullWhen(true)] out ConstraintInfo? constraint)
     {
         var constraints = new List<string>();
         if (typeParameterSymbol.HasReferenceTypeConstraint)
@@ -112,18 +112,23 @@ internal abstract class BaseGenerator
 
         foreach (var namedTypeSymbol in typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>())
         {
-            constraints.Add(GetReplacedType(namedTypeSymbol, out _));
+            if (replaceIt)
+            {
+                constraints.Add(GetReplacedType(namedTypeSymbol, out _));
+            }
+            else
+            {
+                constraints.Add(namedTypeSymbol.GetFullType());
+            }
         }
-
-        //  constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(constraintType => constraintType.GetFullType()));
 
         if (!constraints.Any())
         {
             constraint = null;
-            return false; //(string.Empty, new List<string>());
+            return false;
         }
 
-        constraint = new(typeParameterSymbol.Name, constraints); //$" where {typeParameterSymbol.Name} : {string.Join(", ", constraints)}";
+        constraint = new(typeParameterSymbol.Name, constraints);
         return true;
     }
 
