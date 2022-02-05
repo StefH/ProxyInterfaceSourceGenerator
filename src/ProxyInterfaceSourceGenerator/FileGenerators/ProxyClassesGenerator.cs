@@ -35,7 +35,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
             return false;
         }
 
-        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
@@ -178,7 +178,9 @@ namespace {pd.Namespace}
 
             string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-            str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
+            var whereStatement = GetWhereStatementFromMethod(method);
+
+            str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {

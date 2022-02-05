@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
@@ -47,6 +48,83 @@ internal abstract class BaseGenerator
         }
 
         return false;
+    }
+
+    protected string GetWhereStatementFromMethod(IMethodSymbol method)
+    {
+        if (!method.IsGenericMethod)
+        {
+            return string.Empty;
+        }
+
+        var list = new List<string>();
+        foreach (var typeParameterSymbol in method.TypeParameters)
+        {
+            if (TryGetWhereConstraints(typeParameterSymbol, out var constraint))
+            {
+                list.Add(constraint.ToString());
+            }
+        }
+
+        return string.Concat(list);
+    }
+
+    protected string ResolveInterfaceNameWithOptionalTypeConstraints(INamedTypeSymbol namedTypeSymbol, string interfaceName)
+    {
+        if (!namedTypeSymbol.IsGenericType)
+        {
+            return interfaceName;
+        }
+
+        var str = new StringBuilder($"{interfaceName}<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>");
+
+        foreach (var typeParameterSymbol in namedTypeSymbol.TypeArguments.OfType<ITypeParameterSymbol>())
+        {
+            if (TryGetWhereConstraints(typeParameterSymbol, out var constraint))
+            {
+                str.Append(constraint);
+            }
+        }
+
+        return str.ToString();
+    }
+
+    /// <summary>
+    /// https://www.codeproject.com/Articles/871704/Roslyn-Code-Analysis-in-Easy-Samples-Part-2
+    /// </summary>
+    public bool TryGetWhereConstraints(ITypeParameterSymbol typeParameterSymbol, [NotNullWhen(true)] out ConstraintInfo? constraint)
+    {
+        var constraints = new List<string>();
+        if (typeParameterSymbol.HasReferenceTypeConstraint)
+        {
+            constraints.Add("class");
+        }
+
+        if (typeParameterSymbol.HasValueTypeConstraint)
+        {
+            constraints.Add("struct");
+        }
+
+        if (typeParameterSymbol.HasConstructorConstraint)
+        {
+            constraints.Add("new()");
+        }
+
+        foreach (var namedTypeSymbol in typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>())
+        {
+            constraints.Add(GetReplacedType(namedTypeSymbol, out _));
+        }
+
+        //  constraints.AddRange(typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>().Select(constraintType => constraintType.GetFullType()));
+
+        if (!constraints.Any())
+        {
+            constraint = null;
+            return false; //(string.Empty, new List<string>());
+        }
+
+        constraint = new(typeParameterSymbol.Name, constraints); //$" where {typeParameterSymbol.Name} : {string.Join(", ", constraints)}";
+        return true;
     }
 
     protected string GetReplacedType(ITypeSymbol typeSymbol, out bool isReplaced)
