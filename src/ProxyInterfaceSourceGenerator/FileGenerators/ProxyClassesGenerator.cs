@@ -41,7 +41,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var extendsProxyClasses = targetClassSymbol.BaseTypes
             .Join(
-                Context.CandidateInterfaces.Values, // .Select(v => v.RawTypeName)
+                Context.CandidateInterfaces.Values,
                 namedTypeSymbol => namedTypeSymbol.ToString(),
                 proxyData => proxyData.FullRawTypeName, (_, proxyData) => proxyData
             ).ToList();
@@ -121,8 +121,6 @@ namespace {pd.Namespace}
 }}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
     }
-
-
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
