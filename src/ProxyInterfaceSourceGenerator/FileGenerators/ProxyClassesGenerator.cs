@@ -122,32 +122,7 @@ namespace {pd.Namespace}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
     }
 
-    private static string GeneratePrivateAutoMapper()
-    {
-        return "        private readonly IMapper _mapper;";
-    }
-
-    private string GenerateMapperConfigurationForAutoMapper()
-    {
-        var str = new StringBuilder();
-
-        str.AppendLine("            _mapper = new MapperConfiguration(cfg =>");
-        str.AppendLine("            {");
-        foreach (var replacedType in Context.ReplacedTypes)
-        {
-            TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
-            var classNameProxy = $"{fullTypeName!.Namespace}.{fullTypeName.ShortTypeName}Proxy";
-
-            var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
-            var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
-
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing({instance} => new {classNameProxy}({instance}));");
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing({proxy} => (({classNameProxy}) {proxy})._Instance);");
-        }
-        str.AppendLine("            }).CreateMapper();");
-
-        return str.ToString();
-    }
+    
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
@@ -186,19 +161,23 @@ namespace {pd.Namespace}
                 invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
             }
 
-            string addNew = string.Empty;
+            string @overrideOrVirtual = string.Empty;
             if (method.IsOverride && method.OverriddenMethod != null)
             {
                 var baseType = method.OverriddenMethod.ContainingType.GetFullType();
-                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, Enumerable.Empty<string>(), out var baseTypeClassSymbol))
+                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, Enumerable.Empty<string>(), out _))
                 {
-                    addNew = "new ";
+                    overrideOrVirtual = "override ";
                 }
+            }
+            else if (method.IsVirtual)
+            {
+                overrideOrVirtual = "virtual ";
             }
 
             string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-            str.AppendLine($"        public {addNew}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
+            str.AppendLine($"        public {@overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {

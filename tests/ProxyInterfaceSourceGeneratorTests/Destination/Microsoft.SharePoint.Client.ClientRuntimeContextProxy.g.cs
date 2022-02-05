@@ -52,24 +52,24 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
-        public void ExecuteQuery()
+        public virtual void ExecuteQuery()
         {
             _Instance.ExecuteQuery();
         }
 
-        public void RetryQuery(Microsoft.SharePoint.Client.ClientRequest request)
+        public virtual void RetryQuery(Microsoft.SharePoint.Client.ClientRequest request)
         {
             Microsoft.SharePoint.Client.ClientRequest request_ = request;
             _Instance.RetryQuery(request_);
         }
 
-        public System.Threading.Tasks.Task ExecuteQueryAsync()
+        public virtual System.Threading.Tasks.Task ExecuteQueryAsync()
         {
             var result_737681611 = _Instance.ExecuteQueryAsync();
             return result_737681611;
         }
 
-        public System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request)
+        public virtual System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request)
         {
             Microsoft.SharePoint.Client.ClientRequest request_ = request;
             var result_1373930992 = _Instance.RetryQueryAsync(request_);

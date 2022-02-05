@@ -100,19 +100,6 @@ internal abstract class BaseGenerator
 
                     propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
                 }
-
-                //var exist = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.FullRawTypeName == typeArgumentAsString);
-                //if (exist is not null)
-                //{
-                //    isReplaced = true;
-
-                //    if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
-                //    {
-                //        Context.ReplacedTypes.Add(typeArgumentAsString, exist.FullInterfaceName);
-                //    }
-
-                //    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, exist.FullInterfaceName);
-                //}
             }
 
             return propertyTypeAsStringToBeModified;

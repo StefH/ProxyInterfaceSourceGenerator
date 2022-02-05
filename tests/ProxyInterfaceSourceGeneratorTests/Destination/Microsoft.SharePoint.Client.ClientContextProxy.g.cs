@@ -35,12 +35,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_333437737;
         }
 
-        public new void ExecuteQuery()
+        public override void ExecuteQuery()
         {
             _Instance.ExecuteQuery();
         }
 
-        public new System.Threading.Tasks.Task ExecuteQueryAsync()
+        public override System.Threading.Tasks.Task ExecuteQueryAsync()
         {
             var result_737681611 = _Instance.ExecuteQueryAsync();
             return result_737681611;

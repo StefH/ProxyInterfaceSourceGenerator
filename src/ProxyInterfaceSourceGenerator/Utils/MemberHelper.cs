@@ -25,10 +25,7 @@ internal static class MemberHelper
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
     {
-        if (filter is null)
-        {
-            filter = _ => true;
-        }
+        filter ??= _ => true;
 
         return GetPublicMembers(classSymbol,
             proxyBaseClasses,
@@ -43,16 +40,13 @@ internal static class MemberHelper
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
     {
-        if (filter is null)
-        {
-            filter = _ => true;
-        }
+        filter ??= _ => true;
 
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
 #pragma warning disable RS1024 // Compare symbols correctly
         return GetPublicMembers(classSymbol,
                 proxyBaseClasses,
-                m => m.MethodKind == MethodKind.EventAdd || m.MethodKind == MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
+                m => m.MethodKind is MethodKind.EventAdd or MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
                 filter)
             .GroupBy(e => e.AssociatedSymbol);
 #pragma warning restore RS1024 // Compare symbols correctly
