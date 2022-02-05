@@ -54,10 +54,6 @@ internal abstract class BaseGenerator
         isReplaced = false;
 
         var typeSymbolAsString = typeSymbol.ToString();
-        if (typeSymbolAsString == "Microsoft.SharePoint.Client.Web")
-        {
-            int y = 0;
-        }
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
@@ -69,18 +65,6 @@ internal abstract class BaseGenerator
             isReplaced = true;
             return existing.FullInterfaceName;
         }
-
-        //var existing = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.FullRawTypeName == typeSymbolAsString);
-        //if (existing is not null)
-        //{
-        //    if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
-        //    {
-        //        Context.ReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
-        //    }
-
-        //    isReplaced = true;
-        //    return existing.FullInterfaceName;
-        //}
 
         if (typeSymbol is INamedTypeSymbol namedTypedSymbol)
         {
