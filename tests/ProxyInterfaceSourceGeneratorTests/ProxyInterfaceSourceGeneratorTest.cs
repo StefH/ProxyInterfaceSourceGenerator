@@ -187,21 +187,13 @@ namespace ProxyInterfaceSourceGeneratorTests
             var fileNames = new[]
             {
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
                 "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
+                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
 
                 "Microsoft.SharePoint.Client.WebProxy.g.cs",
-                "Microsoft.SharePoint.Client.ClientContextProxy.g.cs",
-                "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs"
+                "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs",
+                "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
             };
-
-
-            var interfaceWebFilename = "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs";
-            var proxyClassWebFilename = "Microsoft.SharePoint.Client.WebProxy.g.cs";
-            var interfaceClientContextFilename = "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs";
-            var proxyClassClientContextFilename = "Microsoft.SharePoint.Client.ClientContextProxy.g.cs";
-            var interfaceClientRuntimeContextFilename = "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs";
-            var proxyClassClientRuntimeContextFilename = "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs";
 
             var pathWeb = "./Source/PnP/IWeb.cs";
             var sourceFileWeb = new SourceFile
@@ -212,18 +204,6 @@ namespace ProxyInterfaceSourceGeneratorTests
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
                     ArgumentList = "typeof(Web)" // Only name, no namespace
-                }
-            };
-
-            var pathClientContext = "./Source/PnP/IClientContext.cs";
-            var sourceFileClientContext = new SourceFile
-            {
-                Path = pathClientContext,
-                Text = File.ReadAllText(pathClientContext),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(ClientContext)" // Only name, no namespace
                 }
             };
 
@@ -239,74 +219,33 @@ namespace ProxyInterfaceSourceGeneratorTests
                 }
             };
 
+            var pathClientContext = "./Source/PnP/IClientContext.cs";
+            var sourceFileClientContext = new SourceFile
+            {
+                Path = pathClientContext,
+                Text = File.ReadAllText(pathClientContext),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ClientContext)" // Only name, no namespace
+                }
+            };
+
             // Act
             var result = _sut.Execute(new[] { sourceFileWeb, sourceFileClientRuntimeContext, sourceFileClientContext });
 
             // Assert
             result.Valid.Should().BeTrue();
-            result.Files.Should().HaveCount(7);
+            result.Files.Should().HaveCount(fileNames.Length + 1);
 
-
-            foreach (var x in fileNames.Select((fileName, index) => new { fileName, index }))
+            foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
             {
-                var builder = result.Files[x.index];
-                builder.Path.Should().EndWith(x.fileName);
-                if (Write) File.WriteAllText($"../../../DTO/{x.fileName}", builder.Text);
-                builder.Text.Should().Be(File.ReadAllText($"../../../DTO/{x.fileName}"));
+                var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+                builder.Path.Should().EndWith(fileName.fileName);
+
+                if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+                builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
             }
-
-
-            //// Assert interface Web
-            //var interfaceWeb = result.Files[1].SyntaxTree;
-            //interfaceWeb.FilePath.Should().EndWith(interfaceWebFilename);
-
-            //var interfaceCodeWeb = interfaceWeb.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{interfaceWebFilename}", interfaceCodeWeb);
-            //interfaceCodeWeb.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceWebFilename}"));
-
-
-            //// Assert interface ClientRuntimeContext
-            //var interfaceClientRuntimeContext = result.Files[2].SyntaxTree;
-            //interfaceClientRuntimeContext.FilePath.Should().EndWith(interfaceClientRuntimeContextFilename);
-
-            //var interfaceCodeClientRuntimeContext = interfaceClientRuntimeContext.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{interfaceClientRuntimeContextFilename}", interfaceCodeClientRuntimeContext);
-            //interfaceCodeClientRuntimeContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceClientRuntimeContextFilename}"));
-
-
-            //// Assert interface ClientContext
-            //var interfaceClientContext = result.Files[3].SyntaxTree;
-            //interfaceClientContext.FilePath.Should().EndWith(interfaceClientContextFilename);
-
-            //var interfaceCodeClientContext = interfaceClientContext.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{interfaceClientContextFilename}", interfaceCodeClientContext);
-            //interfaceCodeClientContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceClientContextFilename}"));
-
-
-            //// Assert Proxy Web
-            //var proxyClassWeb = result.Files[4].SyntaxTree;
-            //proxyClassWeb.FilePath.Should().EndWith(proxyClassWebFilename);
-
-            //var proxyCodeWeb = proxyClassWeb.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{proxyClassWebFilename}", proxyCodeWeb);
-            //proxyCodeWeb.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassWebFilename}"));
-
-
-            //// Assert Proxy ClientRuntimeContext
-            //var proxyClassClientRuntimeContext = result.Files[5].SyntaxTree;
-            //proxyClassClientRuntimeContext.FilePath.Should().EndWith(proxyClassClientRuntimeContextFilename);
-
-            //var proxyCodeClientRuntimeContext = proxyClassClientRuntimeContext.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{proxyClassClientRuntimeContextFilename}", proxyCodeClientRuntimeContext);
-            //proxyCodeClientRuntimeContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassClientRuntimeContextFilename}"));
-
-            //// Assert Proxy ClientContext
-            //var proxyClassClientContext = result.Files[6].SyntaxTree;
-            //proxyClassClientContext.FilePath.Should().EndWith(proxyClassClientContextFilename);
-
-            //var proxyCodeClientContext = proxyClassClientContext.ToString();
-            //if (Write) File.WriteAllText($"../../../Destination/{proxyClassClientContextFilename}", proxyCodeClientContext);
-            //proxyCodeClientContext.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassClientContextFilename}"));
         }
     }
 }
