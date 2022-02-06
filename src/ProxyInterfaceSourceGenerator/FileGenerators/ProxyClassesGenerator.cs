@@ -30,20 +30,20 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         fileData = default;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
 
-        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
         var extendsProxyClasses = targetClassSymbol.BaseTypes
             .Join(
-                Context.CandidateInterfaces.Values.Select(v => v.RawTypeName),
-                bt => bt.ToString(),
-                ci => ci, (bt, _) => bt
+                Context.CandidateInterfaces.Values,
+                namedTypeSymbol => namedTypeSymbol.ToString(),
+                proxyData => proxyData.FullRawTypeName, (_, proxyData) => proxyData
             ).ToList();
 
         fileData = new FileData(
@@ -57,20 +57,19 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     private string CreateProxyClassCode(
         ProxyData pd,
         ClassSymbol targetClassSymbol,
-        List<INamedTypeSymbol> extendsProxyClasses,
+        List<ProxyData> extendsProxyClasses,
         string interfaceName,
         string className,
         string constructorName)
     {
-        var extendsFullNames = extendsProxyClasses.Select(e => e.ResolveFullProxyClassName()).ToList();
-        var extends = extendsProxyClasses.Any() ? $"{string.Join(", ", extendsFullNames)}, " : string.Empty;
+        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses.First()} _InstanceBase {{ get; }}\r\n" : string.Empty;
+        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : string.Empty;
         var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
 
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
-        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
+        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForAutoMapper = string.Empty;
@@ -123,29 +122,6 @@ namespace {pd.Namespace}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
     }
 
-    private static string GeneratePrivateAutoMapper()
-    {
-        return "        private readonly IMapper _mapper;";
-    }
-
-    private string GenerateMapperConfigurationForAutoMapper()
-    {
-        var str = new StringBuilder();
-
-        str.AppendLine("            _mapper = new MapperConfiguration(cfg =>");
-        str.AppendLine("            {");
-        foreach (var replacedType in Context.ReplacedTypes)
-        {
-            var proxy = $"{replacedType.Key}Proxy";
-
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing(instance => new {proxy}(instance));");
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing(proxy => (({proxy}) proxy)._Instance);");
-        }
-        str.AppendLine("            }).CreateMapper();");
-
-        return str.ToString();
-    }
-
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
@@ -153,6 +129,7 @@ namespace {pd.Namespace}
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
         {
             var type = GetPropertyType(property, out var isReplaced);
+
             if (isReplaced)
             {
                 str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol, type)}");
@@ -167,7 +144,7 @@ namespace {pd.Namespace}
         return str.ToString();
     }
 
-    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses, List<ProxyData> extendsProxyClasses)
     {
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
@@ -183,9 +160,25 @@ namespace {pd.Namespace}
                 invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
             }
 
+            string overrideOrVirtual = string.Empty;
+            if (method.IsOverride && method.OverriddenMethod != null)
+            {
+                var baseType = method.OverriddenMethod.ContainingType.GetFullType();
+                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, Enumerable.Empty<string>(), out _))
+                {
+                    overrideOrVirtual = "override ";
+                }
+            }
+            else if (method.IsVirtual)
+            {
+                overrideOrVirtual = "virtual ";
+            }
+
             string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
-            str.AppendLine($"        public {returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()}");
+            var whereStatement = GetWhereStatementFromMethod(method);
+
+            str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {

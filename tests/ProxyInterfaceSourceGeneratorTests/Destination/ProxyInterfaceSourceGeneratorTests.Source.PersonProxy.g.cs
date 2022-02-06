@@ -116,8 +116,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
             _mapper = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>().ConstructUsing(instance => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>().ConstructUsing(proxy => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy)._Instance);
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>().ConstructUsing(instance_1903550791 => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance_1903550791));
+                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>().ConstructUsing(proxy1075308949 => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1075308949)._Instance);
             }).CreateMapper();
 
         }

@@ -5,8 +5,9 @@ internal record ProxyData
     string Namespace,
     string ShortInterfaceName,
     string FullInterfaceName,
-    string RawTypeName,
-    string TypeName,
+    string FullRawTypeName,
+    string ShortTypeName,
+    string FullTypeName,
     List<string> Usings,
     bool ProxyBaseClasses
 );

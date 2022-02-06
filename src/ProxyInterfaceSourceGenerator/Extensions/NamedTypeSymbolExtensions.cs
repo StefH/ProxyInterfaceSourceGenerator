@@ -45,22 +45,7 @@ internal static class NamedTypeSymbolExtensions
         return namedTypeSymbol.OriginalDefinition.ToString();// str.ToString();
     }
 
-    public static string ResolveInterfaceNameWithOptionalTypeConstraints(this INamedTypeSymbol namedTypeSymbol, string interfaceName)
-    {
-        if (!namedTypeSymbol.IsGenericType)
-        {
-            return interfaceName;
-        }
-
-        var str = new StringBuilder($"{interfaceName}<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>");
-
-        foreach (var typeParameterSymbol in namedTypeSymbol.TypeArguments.OfType<ITypeParameterSymbol>())
-        {
-            str.Append(typeParameterSymbol.GetWhereStatement());
-        }
-
-        return str.ToString();
-    }
+    
 
     /// <summary>
     /// See https://stackoverflow.com/questions/24157101/roslyns-gettypebymetadataname-and-generic-types

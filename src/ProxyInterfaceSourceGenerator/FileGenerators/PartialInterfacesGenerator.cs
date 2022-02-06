@@ -36,12 +36,12 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
             return false;
         }
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.TypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
 
-        var interfaceName = targetClassSymbol.Symbol.ResolveInterfaceNameWithOptionalTypeConstraints(pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
 
         fileData = new FileData(
             $"{sourceInterfaceSymbol.Symbol.GetFileName()}.g.cs",
@@ -113,7 +113,12 @@ namespace {ns}
                 methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
             }
 
-            str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){method.GetWhereStatement()};");
+            var whereStatement = GetWhereStatementFromMethod(method);
+
+            //public static string GetWhereStatement(this IMethodSymbol method) =>
+            //    !method.IsGenericMethod ? string.Empty : string.Join("", method.TypeParameters.Select(tp => tp.GetWhereConstraints()));
+
+            str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
             str.AppendLine();
         }
 

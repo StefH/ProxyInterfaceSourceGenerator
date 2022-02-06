@@ -59,9 +59,9 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             }
         }
 
-        var type = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type;
+        var typeSyntax = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type;
+        string rawTypeName = typeSyntax.ToString();
 
-        string rawTypeName = type.ToString();
         bool proxyAllClasses;
         try
         {
@@ -71,19 +71,25 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         {
             proxyAllClasses = false;
         }
-
+        
         data = new
         (
             ns,
             interfaceDeclarationSyntax.Identifier.ToString(),
             $"{ns}.{interfaceDeclarationSyntax.Identifier}",
             rawTypeName,
-            ConvertTypeName(rawTypeName),
+            ConvertTypeName(rawTypeName).Split('.').Last(), // ShortTypeName
+            ConvertTypeName(rawTypeName), // FullTypeName
             usings,
             proxyAllClasses
         );
 
         return true;
+    }
+
+    private string GetFullTypeName(TypeSyntax typeSyntax, string ns)
+    {
+        return "";
     }
 
     private static string ConvertTypeName(string typeName)
