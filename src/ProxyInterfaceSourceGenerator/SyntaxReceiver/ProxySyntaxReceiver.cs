@@ -9,6 +9,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 internal class ProxySyntaxReceiver : ISyntaxReceiver
 {
     private static readonly string[] Modifiers = { "public", "partial" };
+    private static readonly string[] GenerateProxyAttributes = { "ProxyInterfaceGenerator.Proxy", "Proxy" };
 
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
@@ -30,9 +31,10 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             return false;
         }
 
-        var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => a.Name.ToString().Equals("ProxyInterfaceGenerator.Proxy")));
+        var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString())));
         if (attributeLists is null)
         {
+            // InterfaceDeclarationSyntax should have the correct attribute
             return false;
         }
 
@@ -85,11 +87,6 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         );
 
         return true;
-    }
-
-    private string GetFullTypeName(TypeSyntax typeSyntax, string ns)
-    {
-        return "";
     }
 
     private static string ConvertTypeName(string typeName)
