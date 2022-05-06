@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
@@ -66,6 +67,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public Task<string?> Method3Async()
         {
             return Task.FromResult((string?)"");
+        }
+
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null)
+        {
         }
     }
 }
