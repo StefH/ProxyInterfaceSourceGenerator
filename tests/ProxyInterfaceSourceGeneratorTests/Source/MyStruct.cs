@@ -1,7 +1,6 @@
-namespace ProxyInterfaceSourceGeneratorTests.Source
+namespace ProxyInterfaceSourceGeneratorTests.Source;
+
+public struct MyStruct
 {
-    public struct MyStruct
-    {
-        public int Id { get; set; }
-    }
+    public int Id { get; set; }
 }
