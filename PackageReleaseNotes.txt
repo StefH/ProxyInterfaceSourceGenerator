@@ -1,4 +1,4 @@
-# 0.0.15 (06 February 2022)
-- #30 Fixed TryFindProxyDataByTypeName [bug]
+# 0.0.16 (06 May 2022)
+- #31 Fix for Explicit DefaultValue is not defined [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
