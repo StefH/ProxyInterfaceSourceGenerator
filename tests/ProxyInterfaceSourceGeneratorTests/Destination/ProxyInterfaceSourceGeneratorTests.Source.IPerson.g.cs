@@ -46,7 +46,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = "null");
+        void CreateInvokeHttpClient(int i = 5, string? appId = null);
 
 
 
