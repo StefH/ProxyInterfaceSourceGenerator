@@ -105,6 +105,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
+        public void CreateInvokeHttpClient(int i = 5, string? appId = "null")
+        {
+            int i_ = i;
+            string? appId_ = appId;
+            _Instance.CreateInvokeHttpClient(i_, appId_);
+        }
+
 
 
 
