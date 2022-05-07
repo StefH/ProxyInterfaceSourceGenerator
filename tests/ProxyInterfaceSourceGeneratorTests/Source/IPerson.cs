@@ -1,6 +1,6 @@
-namespace ProxyInterfaceSourceGeneratorTests.Source
+// file-scoped namespace !
+namespace ProxyInterfaceSourceGeneratorTests.Source;
+
+public partial interface IPerson : IHuman
 {
-    public partial interface IPerson : IHuman
-    {
-    }
 }

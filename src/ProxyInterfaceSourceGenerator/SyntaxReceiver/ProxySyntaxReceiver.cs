@@ -46,10 +46,9 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
 
         var usings = new List<string>();
 
-        string ns = string.Empty;
-        if (interfaceDeclarationSyntax.TryGetParentSyntax(out NamespaceDeclarationSyntax? namespaceDeclarationSyntax))
+        string ns = interfaceDeclarationSyntax.GetNamespace();
+        if (!string.IsNullOrEmpty(ns))
         {
-            ns = namespaceDeclarationSyntax.Name.ToString();
             usings.Add(ns);
         }
 
@@ -73,18 +72,18 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         {
             proxyAllClasses = false;
         }
-        
-        data = new
-        (
-            ns,
-            interfaceDeclarationSyntax.Identifier.ToString(),
-            $"{ns}.{interfaceDeclarationSyntax.Identifier}",
-            rawTypeName,
-            ConvertTypeName(rawTypeName).Split('.').Last(), // ShortTypeName
-            ConvertTypeName(rawTypeName), // FullTypeName
-            usings,
-            proxyAllClasses
-        );
+
+        data = new ProxyData
+        {
+            Namespace = ns,
+            ShortInterfaceName = interfaceDeclarationSyntax.Identifier.ToString(),
+            FullInterfaceName = CreateFullBuilderClassName(ns, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
+            FullRawTypeName = rawTypeName,
+            ShortTypeName = ConvertTypeName(rawTypeName).Split('.').Last(),
+            FullTypeName = ConvertTypeName(rawTypeName),
+            Usings = usings,
+            ProxyBaseClasses = proxyAllClasses
+        };
 
         return true;
     }
@@ -94,5 +93,10 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         return !(typeName.Contains('<') && typeName.Contains('>')) ?
             typeName :
             $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
+    }
+
+    private static string CreateFullBuilderClassName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
+    {
+        return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
     }
 }
