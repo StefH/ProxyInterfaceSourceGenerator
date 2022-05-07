@@ -15,10 +15,12 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-        //if (!System.Diagnostics.Debugger.IsAttached)
-        //{
-        //    System.Diagnostics.Debugger.Launch();
-        //}
+#if DEBUGATTACH
+        if (!System.Diagnostics.Debugger.IsAttached)
+        {
+            System.Diagnostics.Debugger.Launch();
+        }
+#endif
 
         context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
     }
