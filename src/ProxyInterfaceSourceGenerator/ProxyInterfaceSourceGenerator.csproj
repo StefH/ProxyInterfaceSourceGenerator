@@ -25,6 +25,7 @@
         <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
         <DevelopmentDependency>true</DevelopmentDependency>
         <ImplicitUsings>enable</ImplicitUsings>
+        <Configurations>Debug;Release;DebugAttach</Configurations>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
