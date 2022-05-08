@@ -1,3 +1,6 @@
+# 0.0.21 (08 May 2022)
+- [#36](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/36) - If the parameter is defined as Nullable, always return &quot;null&quot; as default value. [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.20 (08 May 2022)
 - [#35](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/35) - The new() constraint must be the last constraint specified [bug] contributed by [StefH](https://github.com/StefH)
 
