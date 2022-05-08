@@ -10,20 +10,13 @@ internal static class ParameterSymbolExtensions
 
     public static string GetRefPrefix(this IParameterSymbol ps)
     {
-        switch (ps.RefKind)
+        return ps.RefKind switch
         {
-            case RefKind.In:
-                return "in ";
-
-            case RefKind.Out:
-                return "out ";
-
-            case RefKind.Ref:
-                return "ref ";
-
-            default:
-                return string.Empty;
-        }
+            RefKind.In => "in ",
+            RefKind.Out => "out ",
+            RefKind.Ref => "ref ",
+            _ => string.Empty
+        };
     }
 
     public static string GetParamsPrefix(this IParameterSymbol ps) =>
@@ -41,13 +34,15 @@ internal static class ParameterSymbolExtensions
         {
             if (ps.NullableAnnotation == NullableAnnotation.Annotated)
             {
-                // The parameter is defined as Nullable, so always return "null".
-                return ParameterValueNull;
+                // The parameter is defined as Nullable, so always use "null".
+                defaultValue = ParameterValueNull;
             }
-
-            defaultValue = ps.Type.IsReferenceType ?
-                ParameterValueNull :   // The parameter is a ReferenceType, so return "null".
-                $"default({ps.Type})"; // The parameter is not a ReferenceType, so return "default(T)".
+            else
+            {
+                defaultValue = ps.Type.IsReferenceType
+                    ? ParameterValueNull : // The parameter is a ReferenceType, so use "null".
+                    $"default({ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
+            }
         }
         else
         {
