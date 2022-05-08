@@ -105,11 +105,6 @@ internal abstract class BaseGenerator
             constraints.Add("struct");
         }
 
-        if (typeParameterSymbol.HasConstructorConstraint)
-        {
-            constraints.Add("new()");
-        }
-
         foreach (var namedTypeSymbol in typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>())
         {
             if (replaceIt)
@@ -122,14 +117,20 @@ internal abstract class BaseGenerator
             }
         }
 
-        if (!constraints.Any())
+        // The new() constraint must be the last constraint specified.
+        if (typeParameterSymbol.HasConstructorConstraint)
         {
-            constraint = null;
-            return false;
+            constraints.Add("new()");
         }
 
-        constraint = new(typeParameterSymbol.Name, constraints);
-        return true;
+        if (constraints.Any())
+        {
+            constraint = new(typeParameterSymbol.Name, constraints);
+            return true;
+        }
+
+        constraint = null;
+        return false;
     }
 
     protected string GetReplacedType(ITypeSymbol typeSymbol, out bool isReplaced)
