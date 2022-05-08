@@ -115,9 +115,6 @@ namespace {ns}
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
-            //public static string GetWhereStatement(this IMethodSymbol method) =>
-            //    !method.IsGenericMethod ? string.Empty : string.Join("", method.TypeParameters.Select(tp => tp.GetWhereConstraints()));
-
             str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
             str.AppendLine();
         }

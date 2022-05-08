@@ -1,11 +1,12 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using ProxyInterfaceSourceGenerator.Enums;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class ParameterSymbolExtensions
 {
-    private const string ParameterValueDefault = "default";
+    // private const string ParameterValueDefault = "default";
     private const string ParameterValueNull = "null";
 
     public static string GetRefPrefix(this IParameterSymbol ps)
@@ -37,20 +38,17 @@ internal static class ParameterSymbolExtensions
         }
 
         string defaultValue;
-        if (ps.ExplicitDefaultValue is null)
+        if (ps.ExplicitDefaultValue == null)
         {
-            defaultValue = ps.NullableAnnotation == NullableAnnotation.Annotated
-                ? ParameterValueNull
-                : ParameterValueDefault;
+            defaultValue = ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})";
         }
         else
         {
-            defaultValue = ps.ExplicitDefaultValue.ToString();
+            defaultValue = SymbolDisplay.FormatPrimitive(ps.ExplicitDefaultValue, true, false);
         }
 
         return $" = {defaultValue}";
     }
 
-    public static TypeEnum GetTypeEnum(this IParameterSymbol p) =>
-        p.Type.GetTypeEnum();
+    public static TypeEnum GetTypeEnum(this IParameterSymbol p) => p.Type.GetTypeEnum();
 }
