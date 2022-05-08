@@ -6,25 +6,17 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class ParameterSymbolExtensions
 {
-    // private const string ParameterValueDefault = "default";
     private const string ParameterValueNull = "null";
 
     public static string GetRefPrefix(this IParameterSymbol ps)
     {
-        switch (ps.RefKind)
+        return ps.RefKind switch
         {
-            case RefKind.In:
-                return "in ";
-
-            case RefKind.Out:
-                return "out ";
-
-            case RefKind.Ref:
-                return "ref ";
-
-            default:
-                return string.Empty;
-        }
+            RefKind.In => "in ",
+            RefKind.Out => "out ",
+            RefKind.Ref => "ref ",
+            _ => string.Empty
+        };
     }
 
     public static string GetParamsPrefix(this IParameterSymbol ps) =>
@@ -40,7 +32,17 @@ internal static class ParameterSymbolExtensions
         string defaultValue;
         if (ps.ExplicitDefaultValue == null)
         {
-            defaultValue = ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})";
+            if (ps.NullableAnnotation == NullableAnnotation.Annotated)
+            {
+                // The parameter is defined as Nullable, so always use "null".
+                defaultValue = ParameterValueNull;
+            }
+            else
+            {
+                defaultValue = ps.Type.IsReferenceType
+                    ? ParameterValueNull : // The parameter is a ReferenceType, so use "null".
+                    $"default({ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
+            }
         }
         else
         {
