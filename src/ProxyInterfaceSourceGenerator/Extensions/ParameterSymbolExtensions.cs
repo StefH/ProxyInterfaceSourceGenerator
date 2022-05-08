@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using ProxyInterfaceSourceGenerator.Enums;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
@@ -36,16 +37,15 @@ internal static class ParameterSymbolExtensions
             return string.Empty;
         }
 
-        var defaultValue = ps.ExplicitDefaultValue switch
+        string defaultValue;
+        if (ps.ExplicitDefaultValue == null)
         {
-            string stringValue => $"\"{stringValue}\"",
-
-            char charValue => $"'{charValue}'",
-
-            null => ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})",
-
-            _ => ps.ExplicitDefaultValue.ToString()
-        };
+            defaultValue = ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})";
+        }
+        else
+        {
+            defaultValue = SymbolDisplay.FormatPrimitive(ps.ExplicitDefaultValue, true, false);
+        }
 
         return $" = {defaultValue}";
     }

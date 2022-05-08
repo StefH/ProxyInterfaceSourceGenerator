@@ -34,6 +34,21 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return $"Hello {name} !";
         }
 
+        public string HelloWorld3(char? ch = 'c')
+        {
+            return $"Hello {ch} !";
+        }
+
+        public string HelloWorld4(char ch)
+        {
+            return $"Hello {ch} !";
+        }
+
+        public string HelloWorld5(char? ch)
+        {
+            return $"Hello {ch} !";
+        }
+
         public void WithParams(params string[] values)
         {
         }

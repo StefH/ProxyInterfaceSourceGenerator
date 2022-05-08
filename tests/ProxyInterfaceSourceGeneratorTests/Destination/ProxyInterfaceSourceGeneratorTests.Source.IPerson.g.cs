@@ -32,6 +32,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         string HelloWorld2(string? name = "x");
 
+        string HelloWorld3(char? ch = 'c');
+
+        string HelloWorld4(char ch);
+
+        string HelloWorld5(char? ch);
+
         void WithParams(params string[] values);
 
         string Add(string s, string @string);

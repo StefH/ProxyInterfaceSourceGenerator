@@ -55,6 +55,27 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1104421408;
         }
 
+        public string HelloWorld3(char? ch = 'c')
+        {
+            char? ch_ = ch;
+            var result__1104421409 = _Instance.HelloWorld3(ch_);
+            return result__1104421409;
+        }
+
+        public string HelloWorld4(char ch)
+        {
+            char ch_ = ch;
+            var result__1104421414 = _Instance.HelloWorld4(ch_);
+            return result__1104421414;
+        }
+
+        public string HelloWorld5(char? ch)
+        {
+            char? ch_ = ch;
+            var result__1104421415 = _Instance.HelloWorld5(ch_);
+            return result__1104421415;
+        }
+
         public void WithParams(params string[] values)
         {
             string[] values_ = values;
