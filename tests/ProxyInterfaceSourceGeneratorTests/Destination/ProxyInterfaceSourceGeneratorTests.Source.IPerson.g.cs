@@ -30,6 +30,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         string HelloWorld(string name);
 
+        string HelloWorld2(string? name = "x");
+
         void WithParams(params string[] values);
 
         string Add(string s, string @string);
@@ -46,7 +48,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Threading.CancellationToken token = default);
+        void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = default, System.Threading.CancellationToken token = default);
 
 
 

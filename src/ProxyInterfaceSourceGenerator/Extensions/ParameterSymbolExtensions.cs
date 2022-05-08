@@ -45,12 +45,53 @@ internal static class ParameterSymbolExtensions
         }
         else
         {
-            defaultValue = ps.ExplicitDefaultValue.ToString();
+            switch (ps.ExplicitDefaultValue)
+            {
+                case string stringValue:
+                    defaultValue = $"\"{stringValue}\"";
+                    break;
+
+                case char charValue:
+                    defaultValue = $"'{charValue}'";
+                    break;
+
+                default:
+                    defaultValue = ps.ExplicitDefaultValue.ToString();
+                    break;
+            }
         }
+
+        //string defaultValue;
+        ////if (ps.ExplicitDefaultValue is null)
+        ////{
+        ////    defaultValue = ps.NullableAnnotation == NullableAnnotation.Annotated
+        ////        ? ParameterValueNull
+        ////        : ParameterValueDefault;
+        ////}
+        ////else
+        ////{
+        //    switch (ps.ExplicitDefaultValue)
+        //    {
+        //        case string stringValue:
+        //            defaultValue = $"\"{stringValue}\"";
+        //            break;
+
+        //        case char charValue:
+        //            defaultValue = $"'{charValue}'";
+        //            break;
+
+        //        case null:
+        //            defaultValue = ParameterValueNull;
+        //            break;
+
+        //        default:
+        //            defaultValue = ps.ExplicitDefaultValue.ToString();
+        //            break;
+        //    }
+        ////}
 
         return $" = {defaultValue}";
     }
 
-    public static TypeEnum GetTypeEnum(this IParameterSymbol p) =>
-        p.Type.GetTypeEnum();
+    public static TypeEnum GetTypeEnum(this IParameterSymbol p) => p.Type.GetTypeEnum();
 }

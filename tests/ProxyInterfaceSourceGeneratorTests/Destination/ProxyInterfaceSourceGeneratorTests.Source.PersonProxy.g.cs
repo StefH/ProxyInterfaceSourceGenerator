@@ -48,6 +48,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_282270798;
         }
 
+        public string HelloWorld2(string? name = "x")
+        {
+            string? name_ = name;
+            var result__1104421408 = _Instance.HelloWorld2(name_);
+            return result__1104421408;
+        }
+
         public void WithParams(params string[] values)
         {
             string[] values_ = values;
@@ -105,12 +112,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Threading.CancellationToken token = default)
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = default, System.Threading.CancellationToken token = default)
         {
             int i_ = i;
             string? appId_ = appId;
+            System.Collections.Generic.IReadOnlyDictionary<string, string> metadata_ = metadata;
             System.Threading.CancellationToken token_ = token;
-            _Instance.CreateInvokeHttpClient(i_, appId_, token_);
+            _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
         }
 
 

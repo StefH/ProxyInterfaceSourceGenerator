@@ -28,6 +28,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             return $"Hello {name} !";
         }
+        
+        public string HelloWorld2(string? name = "x")
+        {
+            return $"Hello {name} !";
+        }
 
         public void WithParams(params string[] values)
         {
@@ -70,7 +75,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult((string?)"");
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, CancellationToken token = default)
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken token = default)
         {
         }
     }
