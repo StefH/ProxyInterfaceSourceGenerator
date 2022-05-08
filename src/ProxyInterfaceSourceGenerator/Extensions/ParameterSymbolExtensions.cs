@@ -36,32 +36,7 @@ internal static class ParameterSymbolExtensions
             return string.Empty;
         }
 
-        //string defaultValue;
-        //if (ps.ExplicitDefaultValue is null)
-        //{
-        //    defaultValue = ps.NullableAnnotation == NullableAnnotation.Annotated
-        //        ? ParameterValueNull
-        //        : ParameterValueDefault;
-        //}
-        //else
-        //{
-        //    switch (ps.ExplicitDefaultValue)
-        //    {
-        //        case string stringValue:
-        //            defaultValue = $"\"{stringValue}\"";
-        //            break;
-
-        //        case char charValue:
-        //            defaultValue = $"'{charValue}'";
-        //            break;
-
-        //        default:
-        //            defaultValue = ps.ExplicitDefaultValue.ToString();
-        //            break;
-        //    }
-        //}
-
-        string defaultValue = ps.ExplicitDefaultValue switch
+        var defaultValue = ps.ExplicitDefaultValue switch
         {
             string stringValue => $"\"{stringValue}\"",
 
