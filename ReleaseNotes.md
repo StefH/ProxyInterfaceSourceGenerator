@@ -1,3 +1,6 @@
+# 0.0.19 (08 May 2022)
+- [#34](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/34) - Fix default valeu for reference types and non-reference types [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.18 (08 May 2022)
 - [#33](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/33) - Fix for default parameter (default) [bug] contributed by [StefH](https://github.com/StefH)
 
