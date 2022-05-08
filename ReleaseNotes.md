@@ -1,3 +1,6 @@
+# 0.0.18 (08 May 2022)
+- [#33](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/33) - Fix for default parameter (default) [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.17 (07 May 2022)
 - [#32](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/32) - Add support for 'file-scoped' namespaces [bug] contributed by [StefH](https://github.com/StefH)
 
