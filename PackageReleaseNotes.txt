@@ -1,4 +1,4 @@
-# 0.0.19 (08 May 2022)
-- #34 Fix default valeu for reference types and non-reference types [bug]
+# 0.0.20 (08 May 2022)
+- #35 The new() constraint must be the last constraint specified [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
