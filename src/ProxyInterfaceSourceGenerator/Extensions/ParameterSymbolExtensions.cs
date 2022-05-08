@@ -61,25 +61,16 @@ internal static class ParameterSymbolExtensions
         //    }
         //}
 
-        string defaultValue;
-        switch (ps.ExplicitDefaultValue)
+        string defaultValue = ps.ExplicitDefaultValue switch
         {
-            case string stringValue:
-                defaultValue = $"\"{stringValue}\"";
-                break;
+            string stringValue => $"\"{stringValue}\"",
 
-            case char charValue:
-                defaultValue = $"'{charValue}'";
-                break;
+            char charValue => $"'{charValue}'",
 
-            case null:
-                defaultValue = ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})";
-                break;
+            null => ps.Type.IsReferenceType ? ParameterValueNull : $"default({ps.Type})",
 
-            default:
-                defaultValue = ps.ExplicitDefaultValue.ToString();
-                break;
-        }
+            _ => ps.ExplicitDefaultValue.ToString()
+        };
 
         return $" = {defaultValue}";
     }
