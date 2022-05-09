@@ -50,7 +50,6 @@ internal static class PropertySymbolExtensions
         var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>({instance}.{property.GetSanitizedName()}); " : string.Empty;
         var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
-        //return $"{overrideOrVirtual}{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
         return ($"{overrideOrVirtual}{overrideType}", property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
 }
