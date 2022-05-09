@@ -129,11 +129,20 @@ namespace {pd.Namespace}
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
         {
             var type = GetPropertyType(property, out var isReplaced);
-            (string PropertyType, string? PropertyName, string GetSet) = isReplaced ?
-                property.ToPropertyDetails(type) :
-                property.ToPropertyDetails();
+            (string propertyType, string? propertyName, string getSet) = isReplaced ?
+                property.ToPropertyDetailsForClass(targetClassSymbol, type) :
+                property.ToPropertyDetailsForClass(targetClassSymbol);
+
+            if (property.IsIndexer)
+            {
+                var parameters = GetMethodParameters(property.Parameters.ToArray());
+                propertyName = $"this[{string.Join(",", parameters)}]";
+            }
 
             // public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
+
+
+            /*
             if (isReplaced)
             {
                 str.AppendLine($"        public {property.ToPropertyDetailsForClass(targetClassSymbol, type)}");
@@ -141,7 +150,9 @@ namespace {pd.Namespace}
             else
             {
                 str.AppendLine($"        public {property.ToPropertyDetailsForClass(targetClassSymbol)}");
-            }
+            }*/
+
+            str.AppendLine($"        public {propertyType} {propertyName} {getSet}");
             str.AppendLine();
         }
 

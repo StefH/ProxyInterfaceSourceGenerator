@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
 
@@ -199,5 +200,17 @@ internal abstract class BaseGenerator
         }
 
         return false;
+    }
+
+    protected IList<string> GetMethodParameters(IParameterSymbol[] parameters)
+    {
+        var methodParameters = new List<string>();
+        foreach (var ps in parameters)
+        {
+            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+        }
+
+        return methodParameters;
     }
 }

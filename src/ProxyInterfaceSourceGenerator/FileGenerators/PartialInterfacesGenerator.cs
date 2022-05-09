@@ -88,17 +88,17 @@ namespace {ns}
         {
             var type = GetPropertyType(property, out var isReplaced);
 
-            (string PropertyType, string? PropertyName, string GetSet) = isReplaced ?
+            (string propertyType, string? propertyName, string getSet) = isReplaced ?
                 property.ToPropertyDetails(type) :
                 property.ToPropertyDetails();
 
             if (property.IsIndexer)
             {
                 var methodParameters = GetMethodParameters(property.Parameters.ToArray());
-                PropertyName = $"this[{string.Join(",", methodParameters)}]";
+                propertyName = $"this[{string.Join(",", methodParameters)}]";
             }
             
-            str.AppendLine($"        {PropertyType} {PropertyName} {GetSet}");
+            str.AppendLine($"        {propertyType} {propertyName} {getSet}");
             str.AppendLine();
         }
 
@@ -125,18 +125,6 @@ namespace {ns}
         }
 
         return str.ToString();
-    }
-
-    private IList<string> GetMethodParameters(IParameterSymbol[] parameters)
-    {
-        var methodParameters = new List<string>();
-        foreach (var ps in parameters)
-        {
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-            methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-        }
-
-        return methodParameters;
     }
 
     private string GenerateEvents(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

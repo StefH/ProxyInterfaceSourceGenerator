@@ -20,7 +20,7 @@ internal static class PropertySymbolExtensions
 
     public static (string PropertyType, string? PropertyName, string GetSet) ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol)
     {
-        string instance = !property.IsStatic ?
+        var instance = !property.IsStatic ?
             "_Instance" :
             $"{targetClassSymbol.Symbol}";
 
@@ -31,13 +31,13 @@ internal static class PropertySymbolExtensions
         return (property.Type.ToString(), property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
 
-    public static string ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol, string overrideType)
+    public static (string PropertyType, string? PropertyName, string GetSet) ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol, string overrideType)
     {
-        string instance = !property.IsStatic ?
+        var instance = !property.IsStatic ?
             "_Instance" :
             $"{targetClassSymbol.Symbol}";
 
-        string overrideOrVirtual = string.Empty;
+        var overrideOrVirtual = string.Empty;
         if (property.IsOverride)
         {
             overrideOrVirtual = "override ";
@@ -50,6 +50,7 @@ internal static class PropertySymbolExtensions
         var get = property.GetMethod != null ? $"get => _mapper.Map<{overrideType}>({instance}.{property.GetSanitizedName()}); " : string.Empty;
         var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
-        return $"{overrideOrVirtual}{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
+        //return $"{overrideOrVirtual}{overrideType} {property.GetSanitizedName()} {{ {get}{set}}}";
+        return ($"{overrideOrVirtual}{overrideType}", property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
 }
