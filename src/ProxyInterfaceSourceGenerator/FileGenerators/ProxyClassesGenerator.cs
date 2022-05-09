@@ -139,10 +139,10 @@ namespace {pd.Namespace}
             if (property.IsIndexer)
             {
                 var parameters = GetMethodParameters(property.Parameters, true);
-                propertyName = $"this[{string.Join(",", parameters)}]";
+                propertyName = $"this[{string.Join(", ", parameters)}]";
 
                 var instanceParameters = GetMethodParameters(property.Parameters, false);
-                instancePropertyName = $"{instance}[{string.Join(",", instanceParameters)}]";
+                instancePropertyName = $"{instance}[{string.Join(", ", instanceParameters)}]";
             }
 
             var overrideOrVirtual = string.Empty;
@@ -155,53 +155,20 @@ namespace {pd.Namespace}
                 overrideOrVirtual = "virtual ";
             }
 
-            string get = string.Empty;
-            string set = string.Empty;
+            string get;
+            string set;
             if (isReplaced)
             {
                 get = property.GetMethod != null ? $"get => _mapper.Map<{type}>({instancePropertyName}); " : string.Empty;
                 set = property.SetMethod != null ? $"set => {instancePropertyName} = _mapper.Map<{property.Type}>(value); " : string.Empty;
-
-                str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
             }
             else
             {
-                
-
                 get = property.GetMethod != null ? $"get => {instancePropertyName}; " : string.Empty;
                 set = property.SetMethod != null ? $"set => {instancePropertyName} = value; " : string.Empty;
-                str.AppendLine($"        public {overrideOrVirtual}{property.Type} {propertyName} {{ {get}{set}}}");
             }
 
-            /*
-             *
-         //var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
-        //var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
-
-        //return $"{property.Type} {property.GetSanitizedName()} {{ {get}{set}}}";
-        return (property.Type.ToString(), property.GetSanitizedName(), instance, property.GetMethod != null, property.SetMethod != null);
-             */
-
-            //(string propertyType, string? propertyName, string getSet) = isReplaced ?
-            //    property.ToPropertyDetailsForClass(targetClassSymbol, type) :
-            //    property.ToPropertyDetailsForClass(targetClassSymbol);
-
-
-
-            // public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
-
-
-            /*
-            if (isReplaced)
-            {
-                str.AppendLine($"        public {property.ToPropertyDetailsForClass(targetClassSymbol, type)}");
-            }
-            else
-            {
-                str.AppendLine($"        public {property.ToPropertyDetailsForClass(targetClassSymbol)}");
-            }*/
-
-            //str.AppendLine($"        public {propertyType} {propertyName} {{ {get}{set}}}");
+            str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
             str.AppendLine();
         }
 

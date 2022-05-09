@@ -16,6 +16,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
 
+        ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get; set; }
+
         string Name { get; set; }
 
         string? StringNullable { get; set; }

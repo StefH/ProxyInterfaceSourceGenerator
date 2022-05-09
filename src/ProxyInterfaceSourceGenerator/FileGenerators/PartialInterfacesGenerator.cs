@@ -95,7 +95,7 @@ namespace {ns}
             if (property.IsIndexer)
             {
                 var methodParameters = GetMethodParameters(property.Parameters, true);
-                propertyName = $"this[{string.Join(",", methodParameters)}]";
+                propertyName = $"this[{string.Join(", ", methodParameters)}]";
             }
             
             str.AppendLine($"        {propertyType} {propertyName} {getSet}");

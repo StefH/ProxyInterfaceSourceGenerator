@@ -6,12 +6,18 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
-        private readonly MyStruct[] arr = new MyStruct[1];
+        private readonly MyStruct[] _arr = new MyStruct[1];
 
         public MyStruct this[int i]
         {
-            get { return arr[i]; }
-            set { arr[i] = value; }
+            get { return _arr[i]; }
+            set { _arr[i] = value; }
+        }
+
+        public MyStruct this[int i, string s]
+        {
+            get { return _arr[i]; }
+            set { _arr[i] = value; }
         }
 
         public IList<Human> AddHuman(Human h)
