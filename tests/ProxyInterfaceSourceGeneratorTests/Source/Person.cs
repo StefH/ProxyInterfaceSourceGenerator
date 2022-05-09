@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,6 +6,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
+        private readonly MyStruct[] arr = new MyStruct[1];
+
+        public MyStruct this[int i]
+        {
+            get { return arr[i]; }
+            set { arr[i] = value; }
+        }
+
         public IList<Human> AddHuman(Human h)
         {
             return new List<Human> { h, new Human { IsAlive = true } };
@@ -28,7 +35,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             return $"Hello {name} !";
         }
-        
+
         public string HelloWorld2(string? name = "x")
         {
             return $"Hello {name} !";

@@ -87,14 +87,18 @@ namespace {ns}
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
         {
             var type = GetPropertyType(property, out var isReplaced);
-            if (isReplaced)
+
+            (string PropertyType, string? PropertyName, string GetSet) = isReplaced ?
+                property.ToPropertyDetails(type) :
+                property.ToPropertyDetails();
+
+            if (property.IsIndexer)
             {
-                str.AppendLine($"        {property.ToPropertyText(type)}");
+                var methodParameters = GetMethodParameters(property.Parameters.ToArray());
+                PropertyName = $"this[{string.Join(",", methodParameters)}]";
             }
-            else
-            {
-                str.AppendLine($"        {property.ToPropertyText()}");
-            }
+            
+            str.AppendLine($"        {PropertyType} {PropertyName} {GetSet}");
             str.AppendLine();
         }
 
@@ -106,12 +110,13 @@ namespace {ns}
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
-            var methodParameters = new List<string>();
-            foreach (var ps in method.Parameters)
-            {
-                var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-                methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-            }
+            var methodParameters = GetMethodParameters(method.Parameters.ToArray());
+            //var methodParameters = new List<string>();
+            //foreach (var ps in method.Parameters)
+            //{
+            //    var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+            //}
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -120,6 +125,18 @@ namespace {ns}
         }
 
         return str.ToString();
+    }
+
+    private IList<string> GetMethodParameters(IParameterSymbol[] parameters)
+    {
+        var methodParameters = new List<string>();
+        foreach (var ps in parameters)
+        {
+            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+        }
+
+        return methodParameters;
     }
 
     private string GenerateEvents(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

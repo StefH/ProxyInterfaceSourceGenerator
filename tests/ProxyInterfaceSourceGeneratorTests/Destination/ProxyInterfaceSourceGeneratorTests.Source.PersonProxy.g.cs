@@ -19,6 +19,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceBase { get; }
 
 
+        public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
+
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
         public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value; }
