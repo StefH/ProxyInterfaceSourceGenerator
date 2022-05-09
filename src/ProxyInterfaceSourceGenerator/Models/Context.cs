@@ -11,5 +11,5 @@ internal record Context
 
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; } = default!;
 
-    public Dictionary<string, string> ReplacedTypes { get; } = new Dictionary<string, string>();
+    public Dictionary<string, string> ReplacedTypes { get; } = new();
 }

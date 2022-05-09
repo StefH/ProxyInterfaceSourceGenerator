@@ -19,8 +19,7 @@ internal static class ParameterSymbolExtensions
         };
     }
 
-    public static string GetParamsPrefix(this IParameterSymbol ps) =>
-        ps.IsParams ? "params " : string.Empty;
+    public static string GetParamsPrefix(this IParameterSymbol ps) => ps.IsParams ? "params " : string.Empty;
 
     public static string GetDefaultValue(this IParameterSymbol ps)
     {

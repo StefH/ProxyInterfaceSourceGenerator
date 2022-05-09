@@ -130,14 +130,45 @@ namespace {pd.Namespace}
         {
             var type = GetPropertyType(property, out var isReplaced);
 
+            var instance = !property.IsStatic ?
+                "_Instance" :
+                $"{targetClassSymbol.Symbol}";
+
+            var propertyName = property.GetSanitizedName();
+            var instancePropertyName = $"{instance}.{propertyName}";
+            if (property.IsIndexer)
+            {
+                var parameters = GetMethodParameters(property.Parameters, true);
+                propertyName = $"this[{string.Join(", ", parameters)}]";
+
+                var instanceParameters = GetMethodParameters(property.Parameters, false);
+                instancePropertyName = $"{instance}[{string.Join(", ", instanceParameters)}]";
+            }
+
+            var overrideOrVirtual = string.Empty;
+            if (property.IsOverride)
+            {
+                overrideOrVirtual = "override ";
+            }
+            else if (property.IsVirtual)
+            {
+                overrideOrVirtual = "virtual ";
+            }
+
+            string get;
+            string set;
             if (isReplaced)
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol, type)}");
+                get = property.GetMethod != null ? $"get => _mapper.Map<{type}>({instancePropertyName}); " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = _mapper.Map<{property.Type}>(value); " : string.Empty;
             }
             else
             {
-                str.AppendLine($"        public {property.ToPropertyTextForClass(targetClassSymbol)}");
+                get = property.GetMethod != null ? $"get => {instancePropertyName}; " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = value; " : string.Empty;
             }
+
+            str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
             str.AppendLine();
         }
 
