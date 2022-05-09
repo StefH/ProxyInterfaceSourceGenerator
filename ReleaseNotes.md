@@ -1,3 +1,7 @@
+# 0.0.22 (09 May 2022)
+- [#37](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/37) - Add support for indexers [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#13](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/13) - no support for indexers [bug]
+
 # 0.0.21 (08 May 2022)
 - [#36](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/36) - If the parameter is defined as Nullable, always return &quot;null&quot; as default value. [enhancement] contributed by [StefH](https://github.com/StefH)
 
