@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
@@ -45,7 +44,7 @@ internal static class NamedTypeSymbolExtensions
         return namedTypeSymbol.OriginalDefinition.ToString();// str.ToString();
     }
 
-    
+
 
     /// <summary>
     /// See https://stackoverflow.com/questions/24157101/roslyns-gettypebymetadataname-and-generic-types
