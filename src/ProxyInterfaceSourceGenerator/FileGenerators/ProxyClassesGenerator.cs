@@ -135,12 +135,16 @@ namespace {pd.Namespace}
                 $"{targetClassSymbol.Symbol}";
 
             string propertyName = property.GetSanitizedName();
+            
             if (isReplaced)
             {
 
             }
             else
             {
+                var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
+                var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
+
                 if (property.IsIndexer)
                 {
                     var parameters = GetMethodParameters(property.Parameters.ToArray());
@@ -151,7 +155,8 @@ namespace {pd.Namespace}
             }
 
             /*
-             * //var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
+             *
+         //var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
         //var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
 
         //return $"{property.Type} {property.GetSanitizedName()} {{ {get}{set}}}";
