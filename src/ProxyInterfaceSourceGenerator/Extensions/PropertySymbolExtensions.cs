@@ -18,17 +18,17 @@ internal static class PropertySymbolExtensions
         return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
 
-    public static (string PropertyType, string? PropertyName, string GetSet) ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol)
+    public static (string PropertyType, string? PropertyName, string Instance, bool Get, bool Set) ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol)
     {
         var instance = !property.IsStatic ?
             "_Instance" :
             $"{targetClassSymbol.Symbol}";
 
-        var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
-        var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
+        //var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
+        //var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
 
         //return $"{property.Type} {property.GetSanitizedName()} {{ {get}{set}}}";
-        return (property.Type.ToString(), property.GetSanitizedName(), $"{{ {get}{set}}}");
+        return (property.Type.ToString(), property.GetSanitizedName(), instance, property.GetMethod != null, property.SetMethod != null);
     }
 
     public static (string PropertyType, string? PropertyName, string GetSet) ToPropertyDetailsForClass(this IPropertySymbol property, ClassSymbol targetClassSymbol, string overrideType)

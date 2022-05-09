@@ -129,15 +129,40 @@ namespace {pd.Namespace}
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
         {
             var type = GetPropertyType(property, out var isReplaced);
-            (string propertyType, string? propertyName, string getSet) = isReplaced ?
-                property.ToPropertyDetailsForClass(targetClassSymbol, type) :
-                property.ToPropertyDetailsForClass(targetClassSymbol);
 
-            if (property.IsIndexer)
+            var instance = !property.IsStatic ?
+                "_Instance" :
+                $"{targetClassSymbol.Symbol}";
+
+            string propertyName = property.GetSanitizedName();
+            if (isReplaced)
             {
-                var parameters = GetMethodParameters(property.Parameters.ToArray());
-                propertyName = $"this[{string.Join(",", parameters)}]";
+
             }
+            else
+            {
+                if (property.IsIndexer)
+                {
+                    var parameters = GetMethodParameters(property.Parameters.ToArray());
+                    propertyName = $"this[{string.Join(",", parameters)}]";
+                }
+
+                str.AppendLine($"        public {property.Type} {propertyName} {getSet}");
+            }
+
+            /*
+             * //var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
+        //var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
+
+        //return $"{property.Type} {property.GetSanitizedName()} {{ {get}{set}}}";
+        return (property.Type.ToString(), property.GetSanitizedName(), instance, property.GetMethod != null, property.SetMethod != null);
+             */
+
+            //(string propertyType, string? propertyName, string getSet) = isReplaced ?
+            //    property.ToPropertyDetailsForClass(targetClassSymbol, type) :
+            //    property.ToPropertyDetailsForClass(targetClassSymbol);
+
+            
 
             // public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
