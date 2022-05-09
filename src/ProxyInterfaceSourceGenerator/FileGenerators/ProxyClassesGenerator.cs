@@ -134,29 +134,43 @@ namespace {pd.Namespace}
                 "_Instance" :
                 $"{targetClassSymbol.Symbol}";
 
-            string propertyName = property.GetSanitizedName();
+            var propertyName = property.GetSanitizedName();
+            var instancePropertyName = $"{instance}.{propertyName}";
+            if (property.IsIndexer)
+            {
+                var parameters = GetMethodParameters(property.Parameters, true);
+                propertyName = $"this[{string.Join(",", parameters)}]";
+
+                var instanceParameters = GetMethodParameters(property.Parameters, false);
+                instancePropertyName = $"{instance}[{string.Join(",", instanceParameters)}]";
+            }
+
+            var overrideOrVirtual = string.Empty;
+            if (property.IsOverride)
+            {
+                overrideOrVirtual = "override ";
+            }
+            else if (property.IsVirtual)
+            {
+                overrideOrVirtual = "virtual ";
+            }
+
             string get = string.Empty;
             string set = string.Empty;
             if (isReplaced)
             {
+                get = property.GetMethod != null ? $"get => _mapper.Map<{type}>({instancePropertyName}); " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = _mapper.Map<{property.Type}>(value); " : string.Empty;
 
+                str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
             }
             else
             {
-                string instancePropertyName = $"{instance}.{propertyName}";
-
-                if (property.IsIndexer)
-                {
-                    var parameters = GetMethodParameters(property.Parameters, true);
-                    propertyName = $"this[{string.Join(",", parameters)}]";
-
-                    var instanceParameters = GetMethodParameters(property.Parameters, false);
-                    instancePropertyName = $"{instance}[{string.Join(",", instanceParameters)}]";
-                }
+                
 
                 get = property.GetMethod != null ? $"get => {instancePropertyName}; " : string.Empty;
                 set = property.SetMethod != null ? $"set => {instancePropertyName} = value; " : string.Empty;
-                str.AppendLine($"        public {property.Type} {propertyName} {{ {get}{set}}}");
+                str.AppendLine($"        public {overrideOrVirtual}{property.Type} {propertyName} {{ {get}{set}}}");
             }
 
             /*
@@ -172,7 +186,7 @@ namespace {pd.Namespace}
             //    property.ToPropertyDetailsForClass(targetClassSymbol, type) :
             //    property.ToPropertyDetailsForClass(targetClassSymbol);
 
-            
+
 
             // public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
