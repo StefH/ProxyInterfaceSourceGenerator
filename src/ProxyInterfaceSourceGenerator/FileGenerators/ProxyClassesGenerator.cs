@@ -135,23 +135,28 @@ namespace {pd.Namespace}
                 $"{targetClassSymbol.Symbol}";
 
             string propertyName = property.GetSanitizedName();
-            
+            string get = string.Empty;
+            string set = string.Empty;
             if (isReplaced)
             {
 
             }
             else
             {
-                var get = property.GetMethod != null ? $"get => {instance}.{property.GetSanitizedName()}; " : string.Empty;
-                var set = property.SetMethod != null ? $"set => {instance}.{property.GetSanitizedName()} = value; " : string.Empty;
+                string instancePropertyName = $"{instance}.{propertyName}";
 
                 if (property.IsIndexer)
                 {
-                    var parameters = GetMethodParameters(property.Parameters.ToArray());
+                    var parameters = GetMethodParameters(property.Parameters, true);
                     propertyName = $"this[{string.Join(",", parameters)}]";
+
+                    var instanceParameters = GetMethodParameters(property.Parameters, false);
+                    instancePropertyName = $"{instance}[{string.Join(",", instanceParameters)}]";
                 }
 
-                str.AppendLine($"        public {property.Type} {propertyName} {getSet}");
+                get = property.GetMethod != null ? $"get => {instancePropertyName}; " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = value; " : string.Empty;
+                str.AppendLine($"        public {property.Type} {propertyName} {{ {get}{set}}}");
             }
 
             /*
@@ -182,7 +187,7 @@ namespace {pd.Namespace}
                 str.AppendLine($"        public {property.ToPropertyDetailsForClass(targetClassSymbol)}");
             }*/
 
-            str.AppendLine($"        public {propertyType} {propertyName} {getSet}");
+            //str.AppendLine($"        public {propertyType} {propertyName} {{ {get}{set}}}");
             str.AppendLine();
         }
 

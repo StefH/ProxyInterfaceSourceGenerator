@@ -94,7 +94,7 @@ namespace {ns}
 
             if (property.IsIndexer)
             {
-                var methodParameters = GetMethodParameters(property.Parameters.ToArray());
+                var methodParameters = GetMethodParameters(property.Parameters, true);
                 propertyName = $"this[{string.Join(",", methodParameters)}]";
             }
             
@@ -110,7 +110,7 @@ namespace {ns}
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
-            var methodParameters = GetMethodParameters(method.Parameters.ToArray());
+            var methodParameters = GetMethodParameters(method.Parameters, true);
             //var methodParameters = new List<string>();
             //foreach (var ps in method.Parameters)
             //{

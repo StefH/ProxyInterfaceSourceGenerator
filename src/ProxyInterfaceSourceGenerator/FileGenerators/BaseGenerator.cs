@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -202,13 +203,18 @@ internal abstract class BaseGenerator
         return false;
     }
 
-    protected IList<string> GetMethodParameters(IParameterSymbol[] parameters)
+    protected IList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameters, bool includeType)
     {
         var methodParameters = new List<string>();
         foreach (var ps in parameters)
         {
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-            methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+            string t = string.Empty;
+            if (includeType)
+            {
+                var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+                t = $"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} ";
+            }
+            methodParameters.Add($"{t}{ps.GetSanitizedName()}{ps.GetDefaultValue()}");
         }
 
         return methodParameters;
