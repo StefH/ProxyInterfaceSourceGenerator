@@ -63,14 +63,14 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         var typeSyntax = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type;
         string rawTypeName = typeSyntax.ToString();
 
-        bool proxyAllClasses;
+        bool proxyBaseClasses;
         try
         {
-            proxyAllClasses = bool.Parse(((LiteralExpressionSyntax)argumentList.Arguments[1].Expression).ToString());
+            proxyBaseClasses = bool.Parse(((LiteralExpressionSyntax)argumentList.Arguments[1].Expression).ToString());
         }
         catch
         {
-            proxyAllClasses = false;
+            proxyBaseClasses = false;
         }
 
         data = new ProxyData
@@ -82,7 +82,7 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             ShortTypeName = ConvertTypeName(rawTypeName).Split('.').Last(),
             FullTypeName = ConvertTypeName(rawTypeName),
             Usings = usings,
-            ProxyBaseClasses = proxyAllClasses
+            ProxyBaseClasses = proxyBaseClasses
         };
 
         return true;
