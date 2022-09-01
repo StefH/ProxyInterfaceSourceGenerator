@@ -23,6 +23,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public string AccessRequestSiteDescription { get => _Instance.AccessRequestSiteDescription; }
 
+        public string Acronym { get => _Instance.Acronym; }
+
         public Microsoft.SharePoint.Client.AlertCollection Alerts { get => _Instance.Alerts; }
 
         public bool AllowAutomaticASPXPageIndexing { get => _Instance.AllowAutomaticASPXPageIndexing; set => _Instance.AllowAutomaticASPXPageIndexing = value; }
@@ -87,6 +89,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public string Description { get => _Instance.Description; set => _Instance.Description = value; }
 
+        public string DescriptionForExistingLanguage { get => _Instance.DescriptionForExistingLanguage; set => _Instance.DescriptionForExistingLanguage = value; }
+
         public Microsoft.SharePoint.Client.UserResource DescriptionResource { get => _Instance.DescriptionResource; }
 
         public System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> DescriptionTranslations { get => _Instance.DescriptionTranslations; set => _Instance.DescriptionTranslations = value; }
@@ -136,6 +140,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         public Microsoft.SharePoint.ClientSideComponent.HostedAppsManager HostedApps { get => _Instance.HostedApps; }
 
         public System.Guid Id { get => _Instance.Id; }
+
+        public bool IsEduClass { get => _Instance.IsEduClass; }
+
+        public bool IsEduClassProvisionChecked { get => _Instance.IsEduClassProvisionChecked; }
+
+        public bool IsEduClassProvisionPending { get => _Instance.IsEduClassProvisionPending; }
 
         public bool IsHomepageModernized { get => _Instance.IsHomepageModernized; }
 
@@ -247,6 +257,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public string Title { get => _Instance.Title; set => _Instance.Title = value; }
 
+        public string TitleForExistingLanguage { get => _Instance.TitleForExistingLanguage; set => _Instance.TitleForExistingLanguage = value; }
+
         public Microsoft.SharePoint.Client.UserResource TitleResource { get => _Instance.TitleResource; }
 
         public System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> TitleTranslations { get => _Instance.TitleTranslations; set => _Instance.TitleTranslations = value; }
@@ -315,6 +327,105 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             string userLogin2_ = userLogin2;
             string groupNameSeed_ = groupNameSeed;
             _Instance.CreateDefaultAssociatedGroups(userLogin_, userLogin2_, groupNameSeed_);
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
+        {
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            string url_ = url;
+            bool isEditLink_ = isEditLink;
+            var result_2070260011 = Microsoft.SharePoint.Client.Web.CreateOrganizationSharingLink(context_, url_, isEditLink_);
+            return result_2070260011;
+        }
+
+        public void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
+        {
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            string url_ = url;
+            bool isEditLink_ = isEditLink;
+            bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
+            Microsoft.SharePoint.Client.Web.DestroyOrganizationSharingLink(context_, url_, isEditLink_, removeAssociatedSharingLinkGroup_);
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl)
+        {
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            string fileUrl_ = fileUrl;
+            var result_654626020 = Microsoft.SharePoint.Client.Web.GetSharingLinkKind(context_, fileUrl_);
+            return result_654626020;
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl)
+        {
+            string linkUrl_ = linkUrl;
+            var result__2107757018 = _Instance.GetSharingLinkData(linkUrl_);
+            return result__2107757018;
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size)
+        {
+            string fileName_ = fileName;
+            string progId_ = progId;
+            Microsoft.SharePoint.Client.Utilities.IconSize size_ = size;
+            var result_384589064 = _Instance.MapToIcon(fileName_, progId_, size_);
+            return result_384589064;
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl)
+        {
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            string pageFullUrl_ = pageFullUrl;
+            var result__907059837 = Microsoft.SharePoint.Client.Web.GetWebUrlFromPageUrl(context_, pageFullUrl_);
+            return result__907059837;
+        }
+
+        public Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken)
+        {
+            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
+            string serviceToken_ = serviceToken;
+            var result__117534630 = _Instance.RegisterPushNotificationSubscriber(deviceAppInstanceId_, serviceToken_);
+            return result__117534630;
+        }
+
+        public void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId)
+        {
+            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
+            _Instance.UnregisterPushNotificationSubscriber(deviceAppInstanceId_);
+        }
+
+        public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs)
+        {
+            string customArgs_ = customArgs;
+            var result_144086076 = _Instance.GetPushNotificationSubscribersByArgs(customArgs_);
+            return result_144086076;
+        }
+
+        public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName)
+        {
+            string userName_ = userName;
+            var result__1280834962 = _Instance.GetPushNotificationSubscribersByUser(userName_);
+            return result__1280834962;
+        }
+
+        public Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId)
+        {
+            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
+            var result__1309404561 = _Instance.DoesPushNotificationSubscriberExist(deviceAppInstanceId_);
+            return result__1309404561;
+        }
+
+        public Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId)
+        {
+            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
+            var result_1696633571 = _Instance.GetPushNotificationSubscriber(deviceAppInstanceId_);
+            return result_1696633571;
+        }
+
+        public Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid)
+        {
+            string puid_ = puid;
+            var result__1448181221 = _Instance.GetSiteUserIncludingDeletedByPuid(puid_);
+            return result__1448181221;
         }
 
         public Microsoft.SharePoint.Client.User GetUserById(int userId)
@@ -434,96 +545,26 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             Microsoft.SharePoint.Client.Web.DeleteAnonymousLinkForObject(context_, url_, isEditLink_, removeAssociatedSharingLinkGroup_);
         }
 
-        public Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
+        public Microsoft.SharePoint.Client.ListCollection GetLists(Microsoft.SharePoint.Client.GetListsParameters getListsParams)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
-            string url_ = url;
-            bool isEditLink_ = isEditLink;
-            var result_2070260011 = Microsoft.SharePoint.Client.Web.CreateOrganizationSharingLink(context_, url_, isEditLink_);
-            return result_2070260011;
+            Microsoft.SharePoint.Client.GetListsParameters getListsParams_ = getListsParams;
+            var result_1293372807 = _Instance.GetLists(getListsParams_);
+            return result_1293372807;
         }
 
-        public void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
+        public Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
-            string url_ = url;
-            bool isEditLink_ = isEditLink;
-            bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
-            Microsoft.SharePoint.Client.Web.DestroyOrganizationSharingLink(context_, url_, isEditLink_, removeAssociatedSharingLinkGroup_);
+            uint lcid_ = lcid;
+            bool doIncludeCrossLanguage_ = doIncludeCrossLanguage;
+            var result__1052443476 = _Instance.GetAvailableWebTemplates(lcid_, doIncludeCrossLanguage_);
+            return result__1052443476;
         }
 
-        public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl)
+        public Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
-            string fileUrl_ = fileUrl;
-            var result_654626020 = Microsoft.SharePoint.Client.Web.GetSharingLinkKind(context_, fileUrl_);
-            return result_654626020;
-        }
-
-        public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl)
-        {
-            string linkUrl_ = linkUrl;
-            var result__2107757018 = _Instance.GetSharingLinkData(linkUrl_);
-            return result__2107757018;
-        }
-
-        public Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size)
-        {
-            string fileName_ = fileName;
-            string progId_ = progId;
-            Microsoft.SharePoint.Client.Utilities.IconSize size_ = size;
-            var result_384589064 = _Instance.MapToIcon(fileName_, progId_, size_);
-            return result_384589064;
-        }
-
-        public Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl)
-        {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
-            string pageFullUrl_ = pageFullUrl;
-            var result__907059837 = Microsoft.SharePoint.Client.Web.GetWebUrlFromPageUrl(context_, pageFullUrl_);
-            return result__907059837;
-        }
-
-        public Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken)
-        {
-            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
-            string serviceToken_ = serviceToken;
-            var result__117534630 = _Instance.RegisterPushNotificationSubscriber(deviceAppInstanceId_, serviceToken_);
-            return result__117534630;
-        }
-
-        public void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId)
-        {
-            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
-            _Instance.UnregisterPushNotificationSubscriber(deviceAppInstanceId_);
-        }
-
-        public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs)
-        {
-            string customArgs_ = customArgs;
-            var result_144086076 = _Instance.GetPushNotificationSubscribersByArgs(customArgs_);
-            return result_144086076;
-        }
-
-        public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName)
-        {
-            string userName_ = userName;
-            var result__1280834962 = _Instance.GetPushNotificationSubscribersByUser(userName_);
-            return result__1280834962;
-        }
-
-        public Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId)
-        {
-            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
-            var result__1309404561 = _Instance.DoesPushNotificationSubscriberExist(deviceAppInstanceId_);
-            return result__1309404561;
-        }
-
-        public Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId)
-        {
-            System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
-            var result_1696633571 = _Instance.GetPushNotificationSubscriber(deviceAppInstanceId_);
-            return result_1696633571;
+            int typeCatalog_ = typeCatalog;
+            var result__1458409307 = _Instance.GetCatalog(typeCatalog_);
+            return result__1458409307;
         }
 
         public Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItems(string pagingInfo, int rowLimit, bool isAscending, Microsoft.SharePoint.Client.RecycleBinOrderBy orderBy, Microsoft.SharePoint.Client.RecycleBinItemState itemState)
@@ -620,19 +661,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_127789125;
         }
 
-        public Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage)
+        public void Update()
         {
-            uint lcid_ = lcid;
-            bool doIncludeCrossLanguage_ = doIncludeCrossLanguage;
-            var result__1052443476 = _Instance.GetAvailableWebTemplates(lcid_, doIncludeCrossLanguage_);
-            return result__1052443476;
-        }
-
-        public Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog)
-        {
-            int typeCatalog_ = typeCatalog;
-            var result__1458409307 = _Instance.GetCatalog(typeCatalog_);
-            return result__1458409307;
+            _Instance.Update();
         }
 
         public Microsoft.SharePoint.Client.View GetViewFromUrl(string listUrl)
@@ -767,11 +798,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         public void DeleteObject()
         {
             _Instance.DeleteObject();
-        }
-
-        public void Update()
-        {
-            _Instance.Update();
         }
 
         public Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo)
