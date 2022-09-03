@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumerViaNu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceSourceGeneratorTests", "tests\ProxyInterfaceSourceGeneratorTests\ProxyInterfaceSourceGeneratorTests.csproj", "{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumerForPnP", "src-examples\ProxyInterfaceConsumerForPnP\ProxyInterfaceConsumerForPnP.csproj", "{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,12 @@ Global
 		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.DebugAttach|Any CPU.Build.0 = DebugAttach|Any CPU
 		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.DebugAttach|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.DebugAttach|Any CPU.Build.0 = Debug|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +74,7 @@ Global
 		{7E0A10EE-CCC3-4281-9541-B0AF037D3DF9} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 		{6BEBFEB9-635F-44A2-949C-15DDDF0B7740} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 		{1BDB9046-D6D1-4FB4-AAB5-F24E33EEAE0A} = {19009F5B-3267-45E2-A8B6-89F2AB47D72C}
+		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {585F071D-051D-441C-9C6B-226D9E15A1F5}
