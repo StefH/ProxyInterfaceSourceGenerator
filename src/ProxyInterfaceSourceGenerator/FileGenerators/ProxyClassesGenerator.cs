@@ -81,19 +81,19 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string constructorName)
     {
         var firstExtends = extendsProxyClasses.FirstOrDefault();
-        var extends = string.Empty; //extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
-        var @base = string.Empty; //extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
-        //var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-
-        var instanceBaseDefinition = string.Empty; //string.Join("\r\n", extendsProxyClasses.Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}"));
-        var instanceBaseSetter = string.Empty; //string.Join("\r\n", extendsProxyClasses.Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;"));
+        var extends = string.Empty;
+        var @base = string.Empty;
+        var @new = string.Empty;
+        var instanceBaseDefinition = string.Empty; 
+        var instanceBaseSetter = string.Empty;
 
         if (firstExtends is not null)
         {
             extends = $"{firstExtends.Namespace}.{firstExtends.ShortTypeName}Proxy, ";
             @base = " : base(instance)";
-            instanceBaseDefinition = $"        public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
-            instanceBaseSetter = $"            _Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
+            @new = "new ";
+            instanceBaseDefinition = $"public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
+            instanceBaseSetter = $"_Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
         }
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
@@ -129,7 +129,7 @@ namespace {pd.Namespace}
     public {@abstract}partial class {className} : {extends}{interfaceName}
     {{
         public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
-{instanceBaseDefinition}
+        {instanceBaseDefinition}
 
 {properties}
 
@@ -140,7 +140,7 @@ namespace {pd.Namespace}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
-{instanceBaseSetter}
+            {instanceBaseSetter}
 
 {configurationForAutoMapper}
         }}
