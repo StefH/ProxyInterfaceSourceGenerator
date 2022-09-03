@@ -13,7 +13,7 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
-    public partial class ClientObjectProxy : IClientObject
+    public abstract partial class ClientObjectProxy : IClientObject
     {
         public Microsoft.SharePoint.Client.ClientObject _Instance { get; }
         

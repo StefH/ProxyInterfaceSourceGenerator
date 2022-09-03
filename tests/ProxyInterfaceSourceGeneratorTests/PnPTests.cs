@@ -8,131 +8,130 @@ using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Source.PnP;
 using Xunit;
 
-namespace ProxyInterfaceSourceGeneratorTests
+namespace ProxyInterfaceSourceGeneratorTests;
+
+public class PnPTests
 {
-    public class PnPTests
+    private bool Write = true;
+
+    private readonly ProxyInterfaceCodeGenerator _sut;
+
+    public PnPTests()
     {
-        private bool Write = true;
+        _sut = new ProxyInterfaceCodeGenerator();
+    }
 
-        private readonly ProxyInterfaceCodeGenerator _sut;
-
-        public PnPTests()
+    [Fact]
+    public void GenerateFiles_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
         {
-            _sut = new ProxyInterfaceCodeGenerator();
-        }
+            "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
 
-        [Fact]
-        public void GenerateFiles_ForPnP_Should_GenerateCorrectFiles()
+            "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
+            "Microsoft.SharePoint.Client.SecurableObjectProxy.g.cs",
+            "Microsoft.SharePoint.Client.WebProxy.g.cs",
+            "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs",
+            "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
+        };
+
+        var pathClientObject = "./Source/PnP/IClientObject.cs";
+        var sourceFileClientObject = new SourceFile
         {
-            // Arrange
-            var fileNames = new[]
+            Path = pathClientObject,
+            Text = File.ReadAllText(pathClientObject),
+            AttributeToAddToInterface = new ExtraAttribute
             {
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject.g.cs",
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject.g.cs",
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
-                "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
-
-                "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
-                "Microsoft.SharePoint.Client.SecurableObjectProxy.g.cs",
-                "Microsoft.SharePoint.Client.WebProxy.g.cs",
-                "Microsoft.SharePoint.Client.ClientRuntimeContextProxy.g.cs",
-                "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
-            };
-
-            var pathClientObject = "./Source/PnP/IClientObject.cs";
-            var sourceFileClientObject = new SourceFile
-            {
-                Path = pathClientObject,
-                Text = File.ReadAllText(pathClientObject),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientObject)"
-                }
-            };
-
-            var pathSec = "./Source/PnP/ISecurableObject.cs";
-            var sourceFileSec = new SourceFile
-            {
-                Path = pathSec,
-                Text = File.ReadAllText(pathSec),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(SecurableObject)" // Only name, no namespace
-                }
-            };
-
-            var pathWeb = "./Source/PnP/IWeb.cs";
-            var sourceFileWeb = new SourceFile
-            {
-                Path = pathWeb,
-                Text = File.ReadAllText(pathWeb),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(Web)" // Only name, no namespace
-                }
-            };
-
-            var pathClientRuntimeContext = "./Source/Pnp/IClientRuntimeContext.cs";
-            var sourceFileClientRuntimeContext = new SourceFile
-            {
-                Path = pathClientRuntimeContext,
-                Text = File.ReadAllText(pathClientRuntimeContext),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientRuntimeContext)"
-                }
-            };
-
-            var pathClientContext = "./Source/PnP/IClientContext.cs";
-            var sourceFileClientContext = new SourceFile
-            {
-                Path = pathClientContext,
-                Text = File.ReadAllText(pathClientContext),
-                AttributeToAddToInterface = new ExtraAttribute
-                {
-                    Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = "typeof(ClientContext)" // Only name, no namespace
-                }
-            };
-
-            // Act
-            var result = _sut.Execute(new[]
-            {
-                sourceFileClientObject,
-                sourceFileSec,
-                sourceFileWeb,
-                sourceFileClientRuntimeContext,
-                sourceFileClientContext
-            });
-
-            // Assert
-            result.Valid.Should().BeTrue();
-            result.Files.Should().HaveCount(fileNames.Length + 1);
-
-            foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
-            {
-                var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
-                builder.Path.Should().EndWith(fileName.fileName);
-
-                if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-                builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientObject)"
             }
-        }
+        };
 
-        [Fact]
-        public void X()
+        var pathSec = "./Source/PnP/ISecurableObject.cs";
+        var sourceFileSec = new SourceFile
         {
-            var webMock = new Mock<IWeb>();
+            Path = pathSec,
+            Text = File.ReadAllText(pathSec),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(SecurableObject)" // Only name, no namespace
+            }
+        };
 
+        var pathWeb = "./Source/PnP/IWeb.cs";
+        var sourceFileWeb = new SourceFile
+        {
+            Path = pathWeb,
+            Text = File.ReadAllText(pathWeb),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(Web)" // Only name, no namespace
+            }
+        };
 
-            var ccMock = new Mock<IClientContext>();
-          //  ccMock.SetupGet(cc => cc.Web).Returns(webMock.Object);
+        var pathClientRuntimeContext = "./Source/Pnp/IClientRuntimeContext.cs";
+        var sourceFileClientRuntimeContext = new SourceFile
+        {
+            Path = pathClientRuntimeContext,
+            Text = File.ReadAllText(pathClientRuntimeContext),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(Microsoft.SharePoint.Client.ClientRuntimeContext)"
+            }
+        };
 
+        var pathClientContext = "./Source/PnP/IClientContext.cs";
+        var sourceFileClientContext = new SourceFile
+        {
+            Path = pathClientContext,
+            Text = File.ReadAllText(pathClientContext),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ClientContext)" // Only name, no namespace
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[]
+        {
+            sourceFileClientObject,
+            sourceFileSec,
+            sourceFileWeb,
+            sourceFileClientRuntimeContext,
+            sourceFileClientContext
+        });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+        {
+            var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+            builder.Path.Should().EndWith(fileName.fileName);
+
+            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
+    }
+
+    [Fact]
+    public void X()
+    {
+        var webMock = new Mock<IWeb>();
+
+
+        var ccMock = new Mock<IClientContext>();
+        //  ccMock.SetupGet(cc => cc.Web).Returns(webMock.Object);
+
     }
 }
