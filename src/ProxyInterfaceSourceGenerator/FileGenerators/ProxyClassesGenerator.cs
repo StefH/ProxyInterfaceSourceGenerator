@@ -80,12 +80,21 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string className,
         string constructorName)
     {
-        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
-        var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
-        var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
+        var firstExtends = extendsProxyClasses.FirstOrDefault();
+        var extends = string.Empty; //extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
+        var @base = string.Empty; //extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
+        //var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
 
-        var instanceBaseDefinitions = string.Join("\r\n", extendsProxyClasses.Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}"));
-        var instanceBaseSetters = string.Join("\r\n", extendsProxyClasses.Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;"));
+        var instanceBaseDefinition = string.Empty; //string.Join("\r\n", extendsProxyClasses.Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}"));
+        var instanceBaseSetter = string.Empty; //string.Join("\r\n", extendsProxyClasses.Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;"));
+
+        if (firstExtends is not null)
+        {
+            extends = $"{firstExtends.Namespace}.{firstExtends.ShortTypeName}Proxy, ";
+            @base = " : base(instance)";
+            instanceBaseDefinition = $"        public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
+            instanceBaseSetter = $"            _Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
+        }
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
@@ -120,7 +129,7 @@ namespace {pd.Namespace}
     public {@abstract}partial class {className} : {extends}{interfaceName}
     {{
         public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
-{instanceBaseDefinitions}
+{instanceBaseDefinition}
 
 {properties}
 
@@ -131,7 +140,7 @@ namespace {pd.Namespace}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
-{instanceBaseSetters}
+{instanceBaseSetter}
 
 {configurationForAutoMapper}
         }}
