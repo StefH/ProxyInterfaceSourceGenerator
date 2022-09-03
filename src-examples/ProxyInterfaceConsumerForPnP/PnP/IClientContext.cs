@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.SharePoint.Client;
 
@@ -17,8 +18,8 @@ namespace ProxyInterfaceConsumer.PnP
     {
         public void Test()
         {
-            var web = _mapper.Map<Web>(Web);
-            Load(web, w => w.Lists);
+            //var web = _mapper.Map<Web>(Web);
+            //Load(web, w => w.Lists);
 
             Load3(Web, w => w.Lists);
         }
@@ -31,12 +32,13 @@ namespace ProxyInterfaceConsumer.PnP
         //    _Instance.Load(clientObject_, retrievals_);
         //}
 
-        public void Load3<T>(T clientObject, params System.Linq.Expressions.Expression<System.Func<T, object>>[] retrievals)
-            where T : IClientObject
+        public void Load3(IWeb clientObject, params System.Linq.Expressions.Expression<System.Func<IWeb, object>>[] retrievals)
         {
-            ClientObject clientObject_ = _mapper.Map<ClientObject>(clientObject);
-            Expression<Func<ClientObject, object>>[] retrievals_ = _mapper.Map<Expression<Func<ClientObject, object>>[]>(retrievals);
-            _Instance.Load(clientObject_, retrievals_);
+            var clientObject_ = (WebProxy) clientObject;
+
+            //Expression<Func<WebProxy, object>>[] retrievals_ = _mapper.Map<Expression<Func<WebProxy, object>>[]>(retrievals);
+
+            Load(clientObject_._Instance, null);
         }
     }
 }
