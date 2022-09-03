@@ -83,12 +83,13 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-        var instanceBaseDefinition = extendsProxyClasses.Any() ?
-            $"public new {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : // Always add new here (to avoid problem with nested extends)
-            string.Empty;
-        var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
 
-        var @abstract = targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
+        var instanceBaseDefinitions = extendsProxyClasses
+            .Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}\r\n");
+        var instanceBaseSetters = extendsProxyClasses
+            .Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;\r\n");
+
+        var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
@@ -121,7 +122,7 @@ namespace {pd.Namespace}
     public {@abstract}partial class {className} : {extends}{interfaceName}
     {{
         public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
-        {instanceBaseDefinition}
+{instanceBaseDefinitions}
 
 {properties}
 
@@ -132,7 +133,7 @@ namespace {pd.Namespace}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
-            {instanceBaseSet}
+{instanceBaseSetters}
 
 {configurationForAutoMapper}
         }}

@@ -26,4 +26,9 @@ internal static class StringExtensions
             return result.ToString().Replace('-', '_');
         }
     }
+
+    public static string GetLastPart(this string fullTypeName)
+    {
+        return fullTypeName.Split('.').LastOrDefault() ?? fullTypeName;
+    }
 }
