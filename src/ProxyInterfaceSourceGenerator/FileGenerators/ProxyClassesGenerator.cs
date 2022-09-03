@@ -85,9 +85,9 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
 
         var instanceBaseDefinitions = extendsProxyClasses
-            .Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}\r\n");
+            .Select(x => $"        public {x.FullRawTypeName} _Instance{x.FullRawTypeName.GetLastPart()} {{ get; }}\r\n").ToArray();
         var instanceBaseSetters = extendsProxyClasses
-            .Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;\r\n");
+            .Select(x => $"            _Instance{x.FullRawTypeName.GetLastPart()} = instance;\r\n").ToArray();
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
