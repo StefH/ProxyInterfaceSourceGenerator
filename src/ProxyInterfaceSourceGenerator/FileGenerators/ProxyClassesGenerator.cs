@@ -55,6 +55,9 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
                 candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
                 if (candidate is not null)
                 {
+                    // Update the FullRawTypeName
+                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
+
                     extendsProxyClasses.Add(candidate);
                     break;
                 }
