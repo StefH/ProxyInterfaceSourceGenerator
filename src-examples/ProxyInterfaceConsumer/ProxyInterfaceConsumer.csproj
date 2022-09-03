@@ -28,6 +28,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="PnP\ISecurableObject.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="PnP\IClientObject.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
         <Compile Update="PnP\IWeb.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
