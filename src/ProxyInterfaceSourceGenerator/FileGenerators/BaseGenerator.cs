@@ -31,13 +31,13 @@ internal abstract class BaseGenerator
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
     {
-        proxyData = Context.CandidateInterfaces.Values.FirstOrDefault(x => x.FullRawTypeName == type);
+        proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullRawTypeName == type);
         if (proxyData != null)
         {
             return true;
         }
 
-        foreach (var ci in Context.CandidateInterfaces.Values)
+        foreach (var ci in Context.Candidates.Values)
         {
             foreach (var u in ci.Usings)
             {

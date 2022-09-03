@@ -16,7 +16,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
     public IEnumerable<FileData> GenerateFiles()
     {
-        foreach (var ci in Context.CandidateInterfaces)
+        foreach (var ci in Context.Candidates)
         {
             if (TryGenerateFile(ci.Value, out var file))
             {
@@ -39,12 +39,27 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
-        var extendsProxyClasses = targetClassSymbol.BaseTypes
-            .Join(
-                Context.CandidateInterfaces.Values,
-                namedTypeSymbol => namedTypeSymbol.ToString(),
-                proxyData => proxyData.FullRawTypeName, (_, proxyData) => proxyData
-            ).ToList();
+        var extendsProxyClasses = new List<ProxyData>();
+        foreach (var baseType in targetClassSymbol.BaseTypes)
+        {
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
+            if (candidate is not null)
+            {
+                extendsProxyClasses.Add(candidate);
+                break;
+            }
+
+            // Try to find with usings
+            foreach (var @using in pd.Usings)
+            {
+                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
+                if (candidate is not null)
+                {
+                    extendsProxyClasses.Add(candidate);
+                    break;
+                }
+            }
+        }
 
         fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
@@ -62,7 +77,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string className,
         string constructorName)
     {
-        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").LastOrDefault() ?? string.Empty;
+        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
         var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var instanceBaseDefinition = extendsProxyClasses.Any() ?
