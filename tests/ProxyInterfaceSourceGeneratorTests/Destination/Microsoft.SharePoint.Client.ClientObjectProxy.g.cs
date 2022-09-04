@@ -9,7 +9,6 @@
 
 #nullable enable
 using System;
-using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
@@ -18,7 +17,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         public Microsoft.SharePoint.Client.ClientObject _Instance { get; }
         
 
-        public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext Context { get => _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>(_Instance.Context); }
+        public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext Context { get => Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>(_Instance.Context); }
 
         public object Tag { get => _Instance.Tag; set => _Instance.Tag = value; }
 
@@ -28,7 +27,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public bool? ServerObjectIsNull { get => _Instance.ServerObjectIsNull; }
 
-        public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get => _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>(_Instance.TypedObject); }
+        public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get => Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>(_Instance.TypedObject); }
 
 
 
@@ -84,17 +83,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             _Instance = instance;
             
 
-            _mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientRuntimeContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>().ConstructUsing(instance_205293328 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_205293328));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, Microsoft.SharePoint.Client.ClientRuntimeContext>().ConstructUsing(proxy1345472640 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy1345472640)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>().ConstructUsing(instance_895746668 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_895746668));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, Microsoft.SharePoint.Client.ClientObject>().ConstructUsing(proxy1674261376 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy1674261376)._Instance);
-            }).CreateMapper();
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.ClientRuntimeContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>.NewConfig().ConstructUsing(instance_205293328 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_205293328));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, Microsoft.SharePoint.Client.ClientRuntimeContext>.NewConfig().MapWith(proxy1345472640 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy1345472640)._Instance);
+
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.ClientObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>.NewConfig().ConstructUsing(instance_895746668 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_895746668));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, Microsoft.SharePoint.Client.ClientObject>.NewConfig().MapWith(proxy1674261376 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy1674261376)._Instance);
+
 
         }
-
-        private readonly IMapper _mapper;
     }
 }
 #nullable disable

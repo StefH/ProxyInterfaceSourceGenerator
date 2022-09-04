@@ -3,8 +3,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
-using Mapster;
+//using Mapster;
 using Microsoft.SharePoint.Client;
+using Nelibur.ObjectMapper;
 
 namespace ProxyInterfaceConsumer.PnP
 {
@@ -149,14 +150,19 @@ namespace ProxyInterfaceConsumer.PnP
             //var web = _mapper.Map<Web>(Web);
             //Load(web, w => w.Lists);
 
-            TypeAdapterConfig<Web, IWeb>.NewConfig().ConstructUsing(instance_841809920 => new ProxyInterfaceConsumer.PnP.WebProxy(instance_841809920));
+            Mapster.TypeAdapterConfig<Web, IWeb>.NewConfig().ConstructUsing(instance_841809920 => new ProxyInterfaceConsumer.PnP.WebProxy(instance_841809920));
+            Mapster.TypeAdapterConfig<IWeb, Web>.NewConfig().MapWith(proxy1898650104 => ((ProxyInterfaceConsumer.PnP.WebProxy)proxy1898650104)._Instance);
 
-            TypeAdapterConfig<IWeb, Web>.NewConfig().MapWith(proxy1898650104 => ((ProxyInterfaceConsumer.PnP.WebProxy)proxy1898650104)._Instance);
 
-            var iweb =  _Instance.Web.Adapt<IWeb>();
-            var web = iweb.Adapt<Web>();
+            // Mapster.TypeAdapter.
+
+            var iweb = Mapster.TypeAdapter.Adapt<IWeb>(_Instance.Web);
+            var web = Mapster.TypeAdapter.Adapt<Web>(iweb);
 
             //var mapped = mapper.Map<ProxyInterfaceConsumer.PnP.IWeb>(_Instance.Web);
+
+            //Bind<TSource, TTarget>()
+           
 
             Load3(Web, w => w.Lists);
         }

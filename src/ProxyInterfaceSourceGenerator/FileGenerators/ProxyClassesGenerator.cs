@@ -102,13 +102,13 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForAutoMapper = string.Empty;
-        var privateAutoMapper = string.Empty;
-        var usingAutoMapper = string.Empty;
+        //var privateAutoMapper = string.Empty;
+        // var usingAutoMapper = string.Empty;
         if (Context.ReplacedTypes.Any())
         {
-            configurationForAutoMapper = GenerateMapperConfigurationForAutoMapper();
-            privateAutoMapper = GeneratePrivateAutoMapper();
-            usingAutoMapper = "using AutoMapper;";
+            configurationForAutoMapper = GenerateMapperConfigurationForMapster();
+            //privateAutoMapper = GeneratePrivateAutoMapper();
+            // usingAutoMapper = "using AutoMapper;";
         }
 
         return $@"//----------------------------------------------------------------------------------------
@@ -122,7 +122,6 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
 {(SupportsNullable ? "#nullable enable" : string.Empty)}
 using System;
-{usingAutoMapper}
 
 namespace {pd.Namespace}
 {{
@@ -144,8 +143,6 @@ namespace {pd.Namespace}
 
 {configurationForAutoMapper}
         }}
-
-{privateAutoMapper}
     }}
 }}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
@@ -188,8 +185,8 @@ namespace {pd.Namespace}
             string set;
             if (isReplaced)
             {
-                get = property.GetMethod != null ? $"get => _mapper.Map<{type}>({instancePropertyName}); " : string.Empty;
-                set = property.SetMethod != null ? $"set => {instancePropertyName} = _mapper.Map<{property.Type}>(value); " : string.Empty;
+                get = property.GetMethod != null ? $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); " : string.Empty;
             }
             else
             {
@@ -252,7 +249,7 @@ namespace {pd.Namespace}
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
-                        normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.GetSanitizedName()})";
+                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{ps.Type}>({ps.GetSanitizedName()})";
                     }
                 }
 
@@ -283,7 +280,7 @@ namespace {pd.Namespace}
                     var type = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        normalOrMap = $" = _mapper.Map<{type}>({ps.GetSanitizedName()}_)";
+                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()}_)";
                     }
                 }
 
@@ -294,7 +291,7 @@ namespace {pd.Namespace}
             {
                 if (returnIsReplaced)
                 {
-                    str.AppendLine($"            return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
+                    str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
                 }
                 else
                 {

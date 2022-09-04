@@ -10,7 +10,6 @@
 #nullable enable
 using System;
 
-
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class PersonExtendsProxy : IPersonExtends
@@ -122,8 +121,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
         }
-
-
     }
 }
 #nullable disable
