@@ -84,7 +84,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var extends = string.Empty;
         var @base = string.Empty;
         var @new = string.Empty;
-        var instanceBaseDefinition = string.Empty; 
+        var instanceBaseDefinition = string.Empty;
         var instanceBaseSetter = string.Empty;
 
         if (firstExtends is not null)
@@ -101,14 +101,10 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
-        var configurationForAutoMapper = string.Empty;
-        //var privateAutoMapper = string.Empty;
-        // var usingAutoMapper = string.Empty;
+        var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Any())
         {
-            configurationForAutoMapper = GenerateMapperConfigurationForMapster();
-            //privateAutoMapper = GeneratePrivateAutoMapper();
-            // usingAutoMapper = "using AutoMapper;";
+            configurationForMapster = GenerateMapperConfigurationForMapster();
         }
 
         return $@"//----------------------------------------------------------------------------------------
@@ -141,7 +137,7 @@ namespace {pd.Namespace}
             _Instance = instance;
             {instanceBaseSetter}
 
-{configurationForAutoMapper}
+{configurationForMapster}
         }}
     }}
 }}
