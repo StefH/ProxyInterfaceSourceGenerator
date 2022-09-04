@@ -12,6 +12,8 @@ public class Program
 
         cp.Load3(cp.Web, w => w.Lists, w => w.Language);
 
+        cp.Load4<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language);
+
         cp.ExecuteQuery();
     }
 }
