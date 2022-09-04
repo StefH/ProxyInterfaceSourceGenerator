@@ -63,10 +63,6 @@ namespace ProxyInterfaceConsumer.PnP
         {
             var clientObject_ = (WebProxy)clientObject;
 
-            //var whereExpression = filter.Convert(default(TDbEntity));
-
-            //Load(clientObject_._Instance, retrievals.Select(Converter<IWeb, Web>).ToArray());
-
             Load(clientObject_._Instance, retrievals.Select(MapMemberLambda<IWeb, Web>).ToArray());
         }
 
@@ -91,6 +87,8 @@ namespace ProxyInterfaceConsumer.PnP
             // recreate the expression
             return Expression.Lambda<Func<TTo, bool>>(body, parameter);
         }
+
+        
 
         static Expression<Func<TTarget, object>> MapMemberLambda<TSource, TTarget>(Expression<Func<TSource, object>> expression)
         {
