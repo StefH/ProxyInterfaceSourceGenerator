@@ -1,3 +1,6 @@
+# 0.0.23 (04 September 2022)
+- [#38](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/38) - Fixed generated code when a class extends multiple classes [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.22 (09 May 2022)
 - [#37](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/37) - Add support for indexers [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#13](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/13) - no support for indexers [bug]

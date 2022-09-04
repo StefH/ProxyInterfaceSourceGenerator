@@ -1,5 +1,4 @@
-# 0.0.22 (09 May 2022)
-- #37 Add support for indexers [enhancement]
-- #13 no support for indexers [bug]
+# 0.0.23 (04 September 2022)
+- #38 Fixed generated code when a class extends multiple classes [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
