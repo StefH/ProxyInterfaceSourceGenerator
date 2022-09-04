@@ -249,7 +249,7 @@ namespace {pd.Namespace}
                 }
                 else
                 {
-                    var type = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
                         normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.GetSanitizedName()})";
