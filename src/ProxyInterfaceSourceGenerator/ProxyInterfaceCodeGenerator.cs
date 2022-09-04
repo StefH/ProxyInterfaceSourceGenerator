@@ -63,7 +63,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         var context = new Context
         {
             GeneratorExecutionContext = ctx,
-            CandidateInterfaces = receiver.CandidateInterfaces
+            Candidates = receiver.CandidateInterfaces
         };
 
         var attributeData = _proxyAttributeGenerator.GenerateFile();
@@ -75,7 +75,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         var context = new Context
         {
             GeneratorExecutionContext = ctx,
-            CandidateInterfaces = receiver.CandidateInterfaces
+            Candidates = receiver.CandidateInterfaces
         };
 
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
@@ -90,7 +90,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         var context = new Context
         {
             GeneratorExecutionContext = ctx,
-            CandidateInterfaces = receiver.CandidateInterfaces
+            Candidates = receiver.CandidateInterfaces
         };
 
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);

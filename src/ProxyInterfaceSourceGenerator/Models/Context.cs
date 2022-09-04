@@ -9,7 +9,7 @@ internal record Context
 
     // public List<ContextData> GeneratedData { get; } = new List<ContextData>();
 
-    public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; init; } = default!;
+    public IDictionary<InterfaceDeclarationSyntax, ProxyData> Candidates { get; init; } = default!;
 
     public Dictionary<string, string> ReplacedTypes { get; } = new();
 }

@@ -18,7 +18,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 
     public IEnumerable<FileData> GenerateFiles()
     {
-        foreach (var ci in Context.CandidateInterfaces)
+        foreach (var ci in Context.Candidates)
         {
             if (TryGenerateFile(ci.Key, ci.Value, out var file))
             {

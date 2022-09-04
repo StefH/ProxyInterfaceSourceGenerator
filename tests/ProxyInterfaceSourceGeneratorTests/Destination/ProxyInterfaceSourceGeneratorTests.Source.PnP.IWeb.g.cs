@@ -18,6 +18,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         string AccessRequestSiteDescription { get; }
 
+        string Acronym { get; }
+
         Microsoft.SharePoint.Client.AlertCollection Alerts { get; }
 
         bool AllowAutomaticASPXPageIndexing { get; set; }
@@ -82,6 +84,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         string Description { get; set; }
 
+        string DescriptionForExistingLanguage { get; set; }
+
         Microsoft.SharePoint.Client.UserResource DescriptionResource { get; }
 
         System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> DescriptionTranslations { get; set; }
@@ -131,6 +135,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         Microsoft.SharePoint.ClientSideComponent.HostedAppsManager HostedApps { get; }
 
         System.Guid Id { get; }
+
+        bool IsEduClass { get; }
+
+        bool IsEduClassProvisionChecked { get; }
+
+        bool IsEduClassProvisionPending { get; }
 
         bool IsHomepageModernized { get; }
 
@@ -242,6 +252,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         string Title { get; set; }
 
+        string TitleForExistingLanguage { get; set; }
+
         Microsoft.SharePoint.Client.UserResource TitleResource { get; }
 
         System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> TitleTranslations { get; set; }
@@ -284,6 +296,32 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         void CreateDefaultAssociatedGroups(string userLogin, string userLogin2, string groupNameSeed);
 
+        Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
+
+        void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
+
+        Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
+
+        Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
+
+        Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size);
+
+        Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
+
+        Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken);
+
+        void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId);
+
+        Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs);
+
+        Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName);
+
+        Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId);
+
+        Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId);
+
+        Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid);
+
         Microsoft.SharePoint.Client.User GetUserById(int userId);
 
         Microsoft.SharePoint.Client.ClientResult<bool> EnsureTenantAppCatalog(string callerId);
@@ -310,29 +348,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         void DeleteAnonymousLinkForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
-        Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
+        Microsoft.SharePoint.Client.ListCollection GetLists(Microsoft.SharePoint.Client.GetListsParameters getListsParams);
 
-        void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
+        Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage);
 
-        Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
-
-        Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
-
-        Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size);
-
-        Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
-
-        Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken);
-
-        void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId);
-
-        Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs);
-
-        Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName);
-
-        Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId);
-
-        Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId);
+        Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog);
 
         Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItems(string pagingInfo, int rowLimit, bool isAscending, Microsoft.SharePoint.Client.RecycleBinOrderBy orderBy, Microsoft.SharePoint.Client.RecycleBinItemState itemState);
 
@@ -360,9 +380,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> GetSPAppContextAsStream();
 
-        Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage);
-
-        Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog);
+        void Update();
 
         Microsoft.SharePoint.Client.View GetViewFromUrl(string listUrl);
 
@@ -401,8 +419,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         void ApplyWebTemplate(string webTemplate);
 
         void DeleteObject();
-
-        void Update();
 
         Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo);
 

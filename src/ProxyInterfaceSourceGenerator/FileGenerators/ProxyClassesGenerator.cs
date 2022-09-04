@@ -16,7 +16,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
     public IEnumerable<FileData> GenerateFiles()
     {
-        foreach (var ci in Context.CandidateInterfaces)
+        foreach (var ci in Context.Candidates)
         {
             if (TryGenerateFile(ci.Value, out var file))
             {
@@ -39,12 +39,30 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
-        var extendsProxyClasses = targetClassSymbol.BaseTypes
-            .Join(
-                Context.CandidateInterfaces.Values,
-                namedTypeSymbol => namedTypeSymbol.ToString(),
-                proxyData => proxyData.FullRawTypeName, (_, proxyData) => proxyData
-            ).ToList();
+        var extendsProxyClasses = new List<ProxyData>();
+        foreach (var baseType in targetClassSymbol.BaseTypes)
+        {
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
+            if (candidate is not null)
+            {
+                extendsProxyClasses.Add(candidate);
+                break;
+            }
+
+            // Try to find with usings
+            foreach (var @using in pd.Usings)
+            {
+                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
+                if (candidate is not null)
+                {
+                    // Update the FullRawTypeName
+                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
+
+                    extendsProxyClasses.Add(candidate);
+                    break;
+                }
+            }
+        }
 
         fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
@@ -62,12 +80,23 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         string className,
         string constructorName)
     {
-        var extends = extendsProxyClasses.Select(e => $"{e.Namespace}.{e.ShortTypeName}Proxy, ").FirstOrDefault() ?? string.Empty;
-        var @base = extendsProxyClasses.Any() ? " : base(instance)" : string.Empty;
-        var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
-        var instanceBaseDefinition = extendsProxyClasses.Any() ? $"public {extendsProxyClasses[0].FullRawTypeName} _InstanceBase {{ get; }}\r\n" : string.Empty;
-        var instanceBaseSet = extendsProxyClasses.Any() ? "_InstanceBase = instance;" : string.Empty;
+        var firstExtends = extendsProxyClasses.FirstOrDefault();
+        var extends = string.Empty;
+        var @base = string.Empty;
+        var @new = string.Empty;
+        var instanceBaseDefinition = string.Empty; 
+        var instanceBaseSetter = string.Empty;
 
+        if (firstExtends is not null)
+        {
+            extends = $"{firstExtends.Namespace}.{firstExtends.ShortTypeName}Proxy, ";
+            @base = " : base(instance)";
+            @new = "new ";
+            instanceBaseDefinition = $"public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
+            instanceBaseSetter = $"_Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
+        }
+
+        var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
@@ -97,7 +126,7 @@ using System;
 
 namespace {pd.Namespace}
 {{
-    public partial class {className} : {extends}{interfaceName}
+    public {@abstract}partial class {className} : {extends}{interfaceName}
     {{
         public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
         {instanceBaseDefinition}
@@ -111,7 +140,7 @@ namespace {pd.Namespace}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
-            {instanceBaseSet}
+            {instanceBaseSetter}
 
 {configurationForAutoMapper}
         }}
@@ -220,7 +249,7 @@ namespace {pd.Namespace}
                 }
                 else
                 {
-                    var type = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
                         normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.GetSanitizedName()})";

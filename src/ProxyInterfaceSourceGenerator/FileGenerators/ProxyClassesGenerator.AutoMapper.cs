@@ -26,6 +26,7 @@ internal partial class ProxyClassesGenerator
 
             str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing({instance} => new {classNameProxy}({instance}));");
             str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing({proxy} => (({classNameProxy}) {proxy})._Instance);");
+            str.AppendLine();
         }
         str.AppendLine("            }).CreateMapper();");
 

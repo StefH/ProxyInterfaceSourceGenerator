@@ -77,7 +77,7 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
         {
             Namespace = ns,
             ShortInterfaceName = interfaceDeclarationSyntax.Identifier.ToString(),
-            FullInterfaceName = CreateFullBuilderClassName(ns, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
+            FullInterfaceName = CreateFullInterfaceName(ns, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
             FullRawTypeName = rawTypeName,
             ShortTypeName = ConvertTypeName(rawTypeName).Split('.').Last(),
             FullTypeName = ConvertTypeName(rawTypeName),
@@ -95,7 +95,7 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
     }
 
-    private static string CreateFullBuilderClassName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
+    private static string CreateFullInterfaceName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
     {
         return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
     }

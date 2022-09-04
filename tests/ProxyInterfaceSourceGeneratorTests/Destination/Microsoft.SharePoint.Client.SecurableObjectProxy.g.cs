@@ -13,46 +13,39 @@ using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
-    public partial class ClientContextProxy : ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy, IClientContext
+    public partial class SecurableObjectProxy : ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy, ISecurableObject
     {
-        public new Microsoft.SharePoint.Client.ClientContext _Instance { get; }
-        public Microsoft.SharePoint.Client.ClientRuntimeContext _InstanceClientRuntimeContext { get; }
+        public new Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
+        public Microsoft.SharePoint.Client.ClientObject _InstanceClientObject { get; }
 
-        public ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb Web { get => _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb>(_Instance.Web); }
+        public ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get => _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>(_Instance.FirstUniqueAncestorSecurableObject); }
 
-        public Microsoft.SharePoint.Client.Site Site { get => _Instance.Site; }
+        public bool HasUniqueRoleAssignments { get => _Instance.HasUniqueRoleAssignments; }
 
-        public Microsoft.SharePoint.Client.RequestResources RequestResources { get => _Instance.RequestResources; }
-
-        public System.Version ServerVersion { get => _Instance.ServerVersion; }
+        public Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get => _Instance.RoleAssignments; }
 
 
 
-        public Microsoft.SharePoint.Client.FormDigestInfo GetFormDigestDirect()
+        public virtual void ResetRoleInheritance()
         {
-            var result_333437737 = _Instance.GetFormDigestDirect();
-            return result_333437737;
+            _Instance.ResetRoleInheritance();
         }
 
-        public override void ExecuteQuery()
+        public virtual void BreakRoleInheritance(bool copyRoleAssignments, bool clearSubscopes)
         {
-            _Instance.ExecuteQuery();
-        }
-
-        public override System.Threading.Tasks.Task ExecuteQueryAsync()
-        {
-            var result_737681611 = _Instance.ExecuteQueryAsync();
-            return result_737681611;
+            bool copyRoleAssignments_ = copyRoleAssignments;
+            bool clearSubscopes_ = clearSubscopes;
+            _Instance.BreakRoleInheritance(copyRoleAssignments_, clearSubscopes_);
         }
 
 
 
 
 
-        public ClientContextProxy(Microsoft.SharePoint.Client.ClientContext instance) : base(instance)
+        public SecurableObjectProxy(Microsoft.SharePoint.Client.SecurableObject instance) : base(instance)
         {
             _Instance = instance;
-            _InstanceClientRuntimeContext = instance;
+            _InstanceClientObject = instance;
 
             _mapper = new MapperConfiguration(cfg =>
             {
@@ -62,10 +55,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
                 cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, Microsoft.SharePoint.Client.ClientObject>().ConstructUsing(proxy1674261376 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy1674261376)._Instance);
                 cfg.CreateMap<Microsoft.SharePoint.Client.SecurableObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>().ConstructUsing(instance592284880 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(instance592284880));
                 cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject, Microsoft.SharePoint.Client.SecurableObject>().ConstructUsing(proxy_300636294 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy) proxy_300636294)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext>().ConstructUsing(instance_1283184912 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(instance_1283184912));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext, Microsoft.SharePoint.Client.ClientContext>().ConstructUsing(proxy1267236400 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy) proxy1267236400)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.Web, ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb>().ConstructUsing(instance_1865313808 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.WebProxy(instance_1865313808));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb, Microsoft.SharePoint.Client.Web>().ConstructUsing(proxy2115366516 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.WebProxy) proxy2115366516)._Instance);
             }).CreateMapper();
 
         }
