@@ -92,3 +92,6 @@ IPerson p = new PersonProxy(new Person());
 p.Name = "test";
 p.HelloWorld("stef");
 ```
+
+# References
+- https://route2roslyn.netlify.app/symbols-for-dummies/
