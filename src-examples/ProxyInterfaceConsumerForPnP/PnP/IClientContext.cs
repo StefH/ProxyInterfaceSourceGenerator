@@ -31,10 +31,10 @@ namespace ProxyInterfaceConsumer.PnP
         {
             var clientObject_ = Mapster.TypeAdapter.Adapt<TDest>(clientObject);
 
-            Load(clientObject_, retrievals.Select(MapMemberLambda<TSource, TDest>).ToArray());
+            Load(clientObject_, retrievals.Select(MapExpression<TSource, TDest>).ToArray());
         }
 
-        private static Expression<Func<TTarget, object>> MapMemberLambda<TSource, TTarget>(Expression<Func<TSource, object>> expression)
+        private static Expression<Func<TTarget, object>> MapExpression<TSource, TTarget>(Expression<Func<TSource, object>> expression)
         {
             var parameterExpression = Expression.Parameter(typeof(TTarget));
 
