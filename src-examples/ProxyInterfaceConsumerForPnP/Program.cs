@@ -41,6 +41,8 @@ public class Program
 
             foreach (var list in cp.Web.Lists)
             {
+                
+
                 Console.WriteLine("  list : {0} {1}", list.Title, list.Author.Email);
             }
         }
