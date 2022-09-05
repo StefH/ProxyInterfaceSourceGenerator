@@ -1,19 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <OutputType>Exe</OutputType>
-        <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="IPersonTT.cs" />
-        <Compile Remove="PersonTT.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <!--<PackageReference Include="AutoMapper" Version="10.1.1" />-->
         <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
             <PrivateAssets>all</PrivateAssets>
@@ -22,6 +16,7 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.10.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0" />
         <PackageReference Include="PnP.Framework" Version="1.10.0" />
+        <PackageReference Include="TinyMapper" Version="3.0.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,21 +24,33 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="PnP\ISecurableObject.cs">
+        <Compile Update="Interfaces\ISecurableObject.cs">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientObject.cs">
+        <Compile Update="Interfaces\IClientObject.cs">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IWeb.cs">
+        <Compile Update="Interfaces\IListCollection.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Interfaces\IUser.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Interfaces\IWeb.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientContext.cs">
+        <Compile Update="Interfaces\IClientContext.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientRuntimeContext.cs">
+        <Compile Update="Interfaces\IClientRuntimeContext.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Test.pfx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

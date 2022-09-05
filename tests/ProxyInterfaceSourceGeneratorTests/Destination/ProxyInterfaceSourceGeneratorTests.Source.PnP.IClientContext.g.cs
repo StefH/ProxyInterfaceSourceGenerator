@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface IClientContext
     {
+        new Microsoft.SharePoint.Client.ClientContext _Instance { get; }
+
         ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb Web { get; }
 
         Microsoft.SharePoint.Client.Site Site { get; }

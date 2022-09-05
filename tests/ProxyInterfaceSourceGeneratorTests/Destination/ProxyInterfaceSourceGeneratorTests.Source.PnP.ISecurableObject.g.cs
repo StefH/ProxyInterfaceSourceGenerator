@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface ISecurableObject
     {
+        new Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
+
         ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get; }
 
         bool HasUniqueRoleAssignments { get; }

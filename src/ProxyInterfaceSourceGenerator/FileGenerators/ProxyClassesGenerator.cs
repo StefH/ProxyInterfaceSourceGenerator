@@ -39,30 +39,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
-        var extendsProxyClasses = new List<ProxyData>();
-        foreach (var baseType in targetClassSymbol.BaseTypes)
-        {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
-            if (candidate is not null)
-            {
-                extendsProxyClasses.Add(candidate);
-                break;
-            }
-
-            // Try to find with usings
-            foreach (var @using in pd.Usings)
-            {
-                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
-                if (candidate is not null)
-                {
-                    // Update the FullRawTypeName
-                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
-
-                    extendsProxyClasses.Add(candidate);
-                    break;
-                }
-            }
-        }
+        var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
         fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
@@ -75,7 +52,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     private string CreateProxyClassCode(
         ProxyData pd,
         ClassSymbol targetClassSymbol,
-        List<ProxyData> extendsProxyClasses,
+        IReadOnlyList<ProxyData> extendsProxyClasses,
         string interfaceName,
         string className,
         string constructorName)
@@ -84,7 +61,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var extends = string.Empty;
         var @base = string.Empty;
         var @new = string.Empty;
-        var instanceBaseDefinition = string.Empty; 
+        var instanceBaseDefinition = string.Empty;
         var instanceBaseSetter = string.Empty;
 
         if (firstExtends is not null)
@@ -98,17 +75,13 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
-        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
+        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
-        var configurationForAutoMapper = string.Empty;
-        var privateAutoMapper = string.Empty;
-        var usingAutoMapper = string.Empty;
+        var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Any())
         {
-            configurationForAutoMapper = GenerateMapperConfigurationForAutoMapper();
-            privateAutoMapper = GeneratePrivateAutoMapper();
-            usingAutoMapper = "using AutoMapper;";
+            configurationForMapster = GenerateMapperConfigurationForMapster();
         }
 
         return $@"//----------------------------------------------------------------------------------------
@@ -122,7 +95,6 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
 {(SupportsNullable ? "#nullable enable" : string.Empty)}
 using System;
-{usingAutoMapper}
 
 namespace {pd.Namespace}
 {{
@@ -142,10 +114,8 @@ namespace {pd.Namespace}
             _Instance = instance;
             {instanceBaseSetter}
 
-{configurationForAutoMapper}
+{configurationForMapster}
         }}
-
-{privateAutoMapper}
     }}
 }}
 {(SupportsNullable ? "#nullable disable" : string.Empty)}";
@@ -188,8 +158,8 @@ namespace {pd.Namespace}
             string set;
             if (isReplaced)
             {
-                get = property.GetMethod != null ? $"get => _mapper.Map<{type}>({instancePropertyName}); " : string.Empty;
-                set = property.SetMethod != null ? $"set => {instancePropertyName} = _mapper.Map<{property.Type}>(value); " : string.Empty;
+                get = property.GetMethod != null ? $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); " : string.Empty;
+                set = property.SetMethod != null ? $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); " : string.Empty;
             }
             else
             {
@@ -204,7 +174,7 @@ namespace {pd.Namespace}
         return str.ToString();
     }
 
-    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses, List<ProxyData> extendsProxyClasses)
+    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
@@ -252,7 +222,7 @@ namespace {pd.Namespace}
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
-                        normalOrMap = $" = _mapper.Map<{ps.Type}>({ps.GetSanitizedName()})";
+                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{ps.Type}>({ps.GetSanitizedName()})";
                     }
                 }
 
@@ -283,7 +253,7 @@ namespace {pd.Namespace}
                     var type = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        normalOrMap = $" = _mapper.Map<{type}>({ps.GetSanitizedName()}_)";
+                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()}_)";
                     }
                 }
 
@@ -294,7 +264,7 @@ namespace {pd.Namespace}
             {
                 if (returnIsReplaced)
                 {
-                    str.AppendLine($"            return _mapper.Map<{returnTypeAsString}>({alternateReturnVariableName});");
+                    str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
                 }
                 else
                 {

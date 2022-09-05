@@ -9,15 +9,13 @@
 
 #nullable enable
 using System;
-using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class PersonProxy : ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, IPerson
     {
         public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
-        public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceBase { get; }
-
+        public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
 
         public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
@@ -35,9 +33,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
         {
-            ProxyInterfaceSourceGeneratorTests.Source.Human h_ = _mapper.Map<ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
+            ProxyInterfaceSourceGeneratorTests.Source.Human h_ = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
             var result_907493286 = _Instance.AddHuman(h_);
-            return _mapper.Map<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
+            return Mapster.TypeAdapter.Adapt<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
         }
 
         public void Void()
@@ -153,17 +151,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;
-            _InstanceBase = instance;
+            _InstanceHuman = instance;
 
-            _mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>().ConstructUsing(instance_1903550791 => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance_1903550791));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>().ConstructUsing(proxy1075308949 => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1075308949)._Instance);
-            }).CreateMapper();
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>.NewConfig().ConstructUsing(instance_1903550791 => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance_1903550791));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>.NewConfig().MapWith(proxy1075308949 => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1075308949)._Instance);
+
 
         }
-
-        private readonly IMapper _mapper;
     }
 }
 #nullable disable

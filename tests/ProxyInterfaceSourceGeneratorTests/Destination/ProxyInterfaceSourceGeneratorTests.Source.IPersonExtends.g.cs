@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPersonExtends
     {
+        ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
+
         string StaticString { get; set; }
 
         string Name { get; set; }

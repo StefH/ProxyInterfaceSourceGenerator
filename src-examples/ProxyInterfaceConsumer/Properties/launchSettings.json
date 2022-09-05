@@ -1,8 +1,11 @@
 {
-  "profiles": {
-    "WSL": {
-      "commandName": "WSL2",
-      "distributionName": ""
+    "profiles": {
+        "WSL": {
+            "commandName": "WSL2",
+            "distributionName": ""
+        },
+        "ProxyInterfaceConsumer": {
+            "commandName": "Project"
+        }
     }
-  }
 }

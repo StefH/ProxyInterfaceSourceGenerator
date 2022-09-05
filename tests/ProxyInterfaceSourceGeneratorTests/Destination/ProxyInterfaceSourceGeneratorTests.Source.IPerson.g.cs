@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPerson
     {
+        new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+
         ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
 
         ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get; set; }

@@ -10,7 +10,6 @@
 #nullable enable
 using System;
 
-
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class HumanProxy : IHuman
@@ -35,8 +34,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
         }
-
-
     }
 }
 #nullable disable

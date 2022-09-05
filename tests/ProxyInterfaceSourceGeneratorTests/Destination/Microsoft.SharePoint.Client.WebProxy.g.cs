@@ -9,7 +9,6 @@
 
 #nullable enable
 using System;
-using AutoMapper;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
@@ -292,7 +291,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public System.Uri WebUrlFromPageUrlDirect(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, System.Uri pageFullUrl)
         {
-            Microsoft.SharePoint.Client.ClientContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientContext>(context);
+            Microsoft.SharePoint.Client.ClientContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientContext>(context);
             System.Uri pageFullUrl_ = pageFullUrl;
             var result__258107370 = Microsoft.SharePoint.Client.Web.WebUrlFromPageUrlDirect(context_, pageFullUrl_);
             return result__258107370;
@@ -300,7 +299,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public System.Uri WebUrlFromFolderUrlDirect(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, System.Uri folderFullUrl)
         {
-            Microsoft.SharePoint.Client.ClientContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientContext>(context);
+            Microsoft.SharePoint.Client.ClientContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientContext>(context);
             System.Uri folderFullUrl_ = folderFullUrl;
             var result_21992317 = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(context_, folderFullUrl_);
             return result_21992317;
@@ -330,7 +329,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             var result_2070260011 = Microsoft.SharePoint.Client.Web.CreateOrganizationSharingLink(context_, url_, isEditLink_);
@@ -339,7 +338,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
@@ -348,7 +347,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string fileUrl_ = fileUrl;
             var result_654626020 = Microsoft.SharePoint.Client.Web.GetSharingLinkKind(context_, fileUrl_);
             return result_654626020;
@@ -372,7 +371,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string pageFullUrl_ = pageFullUrl;
             var result__907059837 = Microsoft.SharePoint.Client.Web.GetWebUrlFromPageUrl(context_, pageFullUrl_);
             return result__907059837;
@@ -465,7 +464,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.SharingResult ShareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string roleValue, int groupId, bool propagateAcl, bool sendEmail, bool includeAnonymousLinkInEmail, string emailSubject, string emailBody, bool useSimplifiedRoles)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             string peoplePickerInput_ = peoplePickerInput;
             string roleValue_ = roleValue;
@@ -482,7 +481,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.SharingResult ForwardObjectLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string emailSubject, string emailBody)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             string peoplePickerInput_ = peoplePickerInput;
             string emailSubject_ = emailSubject;
@@ -493,7 +492,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.SharingResult UnshareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             var result__823224569 = Microsoft.SharePoint.Client.Web.UnshareObject(context_, url_);
             return result__823224569;
@@ -501,7 +500,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ObjectSharingSettings GetObjectSharingSettings(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string objectUrl, int groupId, bool useSimplifiedRoles)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string objectUrl_ = objectUrl;
             int groupId_ = groupId;
             bool useSimplifiedRoles_ = useSimplifiedRoles;
@@ -511,7 +510,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             var result__820192309 = Microsoft.SharePoint.Client.Web.CreateAnonymousLink(context_, url_, isEditLink_);
@@ -520,7 +519,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLinkWithExpiration(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, string expirationString)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             string expirationString_ = expirationString;
@@ -530,14 +529,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public void DeleteAllAnonymousLinksForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             Microsoft.SharePoint.Client.Web.DeleteAllAnonymousLinksForObject(context_, url_);
         }
 
         public void DeleteAnonymousLinkForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
@@ -695,7 +694,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string webFullUrl_ = webFullUrl;
             var result_2078170246 = Microsoft.SharePoint.Client.Web.GetDocumentLibraries(context_, webFullUrl_);
             return result_2078170246;
@@ -703,7 +702,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentAndMediaLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl, bool includePageLibraries)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string webFullUrl_ = webFullUrl;
             bool includePageLibraries_ = includePageLibraries;
             var result__431075153 = Microsoft.SharePoint.Client.Web.GetDocumentAndMediaLibraries(context_, webFullUrl_, includePageLibraries_);
@@ -712,7 +711,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl)
         {
-            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = _mapper.Map<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
             string webUrl_ = webUrl;
             var result_1125717726 = Microsoft.SharePoint.Client.Web.DefaultDocumentLibraryUrl(context_, webUrl_);
             return result_1125717726;
@@ -921,21 +920,20 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             _Instance = instance;
             _InstanceSecurableObject = instance;
 
-            _mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientRuntimeContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>().ConstructUsing(instance_205293328 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_205293328));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, Microsoft.SharePoint.Client.ClientRuntimeContext>().ConstructUsing(proxy1345472640 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy1345472640)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>().ConstructUsing(instance_895746668 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_895746668));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, Microsoft.SharePoint.Client.ClientObject>().ConstructUsing(proxy1674261376 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy1674261376)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.SecurableObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>().ConstructUsing(instance592284880 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(instance592284880));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject, Microsoft.SharePoint.Client.SecurableObject>().ConstructUsing(proxy_300636294 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy) proxy_300636294)._Instance);
-                cfg.CreateMap<Microsoft.SharePoint.Client.ClientContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext>().ConstructUsing(instance_1283184912 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(instance_1283184912));
-                cfg.CreateMap<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext, Microsoft.SharePoint.Client.ClientContext>().ConstructUsing(proxy1267236400 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy) proxy1267236400)._Instance);
-            }).CreateMapper();
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.ClientRuntimeContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>.NewConfig().ConstructUsing(instance_205293328 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_205293328));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, Microsoft.SharePoint.Client.ClientRuntimeContext>.NewConfig().MapWith(proxy1345472640 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy1345472640)._Instance);
+
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.ClientObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>.NewConfig().ConstructUsing(instance_895746668 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_895746668));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, Microsoft.SharePoint.Client.ClientObject>.NewConfig().MapWith(proxy1674261376 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy1674261376)._Instance);
+
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.SecurableObject, ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>.NewConfig().ConstructUsing(instance592284880 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(instance592284880));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject, Microsoft.SharePoint.Client.SecurableObject>.NewConfig().MapWith(proxy_300636294 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy) proxy_300636294)._Instance);
+
+            Mapster.TypeAdapterConfig<Microsoft.SharePoint.Client.ClientContext, ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext>.NewConfig().ConstructUsing(instance_1283184912 => new ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(instance_1283184912));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext, Microsoft.SharePoint.Client.ClientContext>.NewConfig().MapWith(proxy1267236400 => ((ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy) proxy1267236400)._Instance);
+
 
         }
-
-        private readonly IMapper _mapper;
     }
 }
 #nullable disable
