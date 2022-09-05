@@ -25,16 +25,23 @@ namespace ProxyInterfaceConsumer.PnP
             _Instance.Load<T>(clientObject_, retrievals_);
         }
 
-        public void Load4<TSource, TDest>(IClientObject clientObject, params Expression<Func<TSource, object>>[] retrievals)
+        public void Load4<TSource, TTarget>(IClientObject clientObject, params Expression<Func<TSource, object>>[] retrievals)
             where TSource : IClientObject
-            where TDest : ClientObject
+            where TTarget : ClientObject
         {
-            var clientObject_ = Mapster.TypeAdapter.Adapt<TDest>(clientObject);
+            TTarget clientObject_ = Mapster.TypeAdapter.Adapt<TTarget>(clientObject);
 
-            Load(clientObject_, retrievals.Select(MapExpression<TSource, TDest>).ToArray());
+            _Instance.Load(clientObject_, retrievals.Select(MapExpression<TSource, TTarget>).ToArray());
+        }
+
+        private T X<T, R>(R r)
+        {
+            return default(T)!;
         }
 
         private static Expression<Func<TTarget, object>> MapExpression<TSource, TTarget>(Expression<Func<TSource, object>> expression)
+            where TSource : IClientObject
+            where TTarget : ClientObject
         {
             var parameterExpression = Expression.Parameter(typeof(TTarget));
 
