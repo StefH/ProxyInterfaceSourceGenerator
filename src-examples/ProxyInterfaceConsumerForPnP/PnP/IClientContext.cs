@@ -25,14 +25,7 @@ namespace ProxyInterfaceConsumer.PnP
             _Instance.Load<T>(clientObject_, retrievals_);
         }
 
-        public void Load3(IWeb clientObject, params Expression<Func<IWeb, object>>[] retrievals)
-        {
-            var clientObject_ = (WebProxy)clientObject;
-
-            Load(clientObject_._Instance, retrievals.Select(MapMemberLambda<IWeb, Web>).ToArray());
-        }
-
-        public void Load4<TSource, TDest>(TSource clientObject, params Expression<Func<TSource, object>>[] retrievals)
+        public void Load4<TSource, TDest>(IClientObject clientObject, params Expression<Func<TSource, object>>[] retrievals)
             where TSource : IClientObject
             where TDest : ClientObject
         {
@@ -41,9 +34,9 @@ namespace ProxyInterfaceConsumer.PnP
             Load(clientObject_, retrievals.Select(MapMemberLambda<TSource, TDest>).ToArray());
         }
 
-        static Expression<Func<TTarget, object>> MapMemberLambda<TSource, TTarget>(Expression<Func<TSource, object>> expression)
+        private static Expression<Func<TTarget, object>> MapMemberLambda<TSource, TTarget>(Expression<Func<TSource, object>> expression)
         {
-            var parameterExpression = Expression.Parameter(typeof(TTarget), "x");
+            var parameterExpression = Expression.Parameter(typeof(TTarget));
 
             Expression memberAccessExpression;
             switch (expression.Body)

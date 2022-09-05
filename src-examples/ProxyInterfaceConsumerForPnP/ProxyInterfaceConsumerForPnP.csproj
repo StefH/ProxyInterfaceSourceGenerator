@@ -41,4 +41,10 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Test.pfx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
