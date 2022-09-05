@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <!--<PackageReference Include="AutoMapper" Version="10.1.1" />-->
         <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
             <PrivateAssets>all</PrivateAssets>
@@ -24,19 +24,25 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="PnP\ISecurableObject.cs">
+        <Compile Update="Interfaces\ISecurableObject.cs">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientObject.cs">
+        <Compile Update="Interfaces\IClientObject.cs">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IWeb.cs">
+        <Compile Update="Interfaces\IListCollection.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Interfaces\IUser.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Interfaces\IWeb.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientContext.cs">
+        <Compile Update="Interfaces\IClientContext.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="PnP\IClientRuntimeContext.cs">
+        <Compile Update="Interfaces\IClientRuntimeContext.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
     </ItemGroup>

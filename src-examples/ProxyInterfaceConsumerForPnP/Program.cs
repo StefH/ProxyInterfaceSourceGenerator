@@ -1,8 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
+using PnP.Core.Model.SharePoint;
 using PnP.Framework;
-using ProxyInterfaceConsumer.PnP;
+using ProxyInterfaceConsumerForPnP.Implementations;
+using ProxyInterfaceConsumerForPnP.Interfaces;
+using IWeb = ProxyInterfaceConsumerForPnP.Interfaces.IWeb;
 
 namespace ProxyInterfaceConsumerForPnP;
 
@@ -24,13 +27,22 @@ public class Program
 
             Console.WriteLine(clientContext.Web.Title);
 
-            var cp = new ClientContextProxy(clientContext);
+            IClientContext cp = new ClientContextProxy(clientContext);
 
-            cp.Load<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language);
+            cp.Load<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language, w => w.Author);
 
-            await cp.ExecuteQueryAsync();
+            await cp.ExecuteQueryRetryAsync();
 
-            Console.WriteLine(cp.Web.Title + ": " + cp.Web.Language);
+            Console.WriteLine(cp.Web.Title + "," + cp.Web.Language + "," + cp.Web.Author.Email);
+            foreach (var list in cp.Web.Lists)
+            {
+                Console.WriteLine("  list : {0}", list.Title);
+            }
+
+            foreach (var list in cp.Web.Lists)
+            {
+                Console.WriteLine("  list : {0} {1}", list.Title, list.Author.Email);
+            }
         }
         catch (Exception ex)
         {

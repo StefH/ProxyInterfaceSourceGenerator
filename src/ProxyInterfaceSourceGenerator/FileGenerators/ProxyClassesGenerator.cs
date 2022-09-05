@@ -39,30 +39,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
-        var extendsProxyClasses = new List<ProxyData>();
-        foreach (var baseType in targetClassSymbol.BaseTypes)
-        {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
-            if (candidate is not null)
-            {
-                extendsProxyClasses.Add(candidate);
-                break;
-            }
-
-            // Try to find with usings
-            foreach (var @using in pd.Usings)
-            {
-                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
-                if (candidate is not null)
-                {
-                    // Update the FullRawTypeName
-                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
-
-                    extendsProxyClasses.Add(candidate);
-                    break;
-                }
-            }
-        }
+        var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
         fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
@@ -75,7 +52,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     private string CreateProxyClassCode(
         ProxyData pd,
         ClassSymbol targetClassSymbol,
-        List<ProxyData> extendsProxyClasses,
+        IReadOnlyList<ProxyData> extendsProxyClasses,
         string interfaceName,
         string className,
         string constructorName)
@@ -98,7 +75,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
-        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses, extendsProxyClasses);
+        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
@@ -197,7 +174,7 @@ namespace {pd.Namespace}
         return str.ToString();
     }
 
-    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses, List<ProxyData> extendsProxyClasses)
+    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))

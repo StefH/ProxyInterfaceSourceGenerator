@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IHuman
     {
+        ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
+
         bool IsAlive { get; set; }
 
         string GetterOnly { get; }

@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface IClientRuntimeContext
     {
+        Microsoft.SharePoint.Client.ClientRuntimeContext _Instance { get; }
+
         string Url { get; }
 
         string ApplicationName { get; set; }

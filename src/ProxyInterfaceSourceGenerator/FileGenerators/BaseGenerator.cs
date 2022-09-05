@@ -219,4 +219,33 @@ internal abstract class BaseGenerator
 
         return methodParameters;
     }
+
+    protected IReadOnlyList<ProxyData> GetExtendsProxyData(ProxyData proxyData, ClassSymbol targetClassSymbol)
+    {
+        var extendsProxyClasses = new List<ProxyData>();
+        foreach (var baseType in targetClassSymbol.BaseTypes)
+        {
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
+            if (candidate is not null)
+            {
+                extendsProxyClasses.Add(candidate);
+                break;
+            }
+
+            // Try to find with usings
+            foreach (var @using in proxyData.Usings)
+            {
+                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
+                if (candidate is not null)
+                {
+                    // Update the FullRawTypeName
+                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
+
+                    extendsProxyClasses.Add(candidate);
+                    break;
+                }
+            }
+        }
+        return extendsProxyClasses;
+    }
 }
