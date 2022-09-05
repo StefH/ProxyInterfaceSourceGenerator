@@ -5,7 +5,6 @@ using PnP.Core.Model.SharePoint;
 using PnP.Framework;
 using ProxyInterfaceConsumerForPnP.Implementations;
 using ProxyInterfaceConsumerForPnP.Interfaces;
-using IWeb = ProxyInterfaceConsumerForPnP.Interfaces.IWeb;
 
 namespace ProxyInterfaceConsumerForPnP;
 

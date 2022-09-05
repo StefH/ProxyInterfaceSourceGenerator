@@ -1,3 +1,6 @@
+# 0.0.24 (05 September 2022)
+- [#39](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/39) - Use Mapster as mapper [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.23 (04 September 2022)
 - [#38](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/38) - Fixed generated code when a class extends multiple classes [bug] contributed by [StefH](https://github.com/StefH)
 
