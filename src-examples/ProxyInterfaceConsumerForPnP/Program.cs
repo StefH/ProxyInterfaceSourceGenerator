@@ -41,9 +41,14 @@ public class Program
 
             foreach (var list in cp.Web.Lists)
             {
-                
+                cp._Instance.Load(list, l => l.Author.Email);
+            }
+            await cp.ExecuteQueryRetryAsync();
 
-                Console.WriteLine("  list : {0} {1}", list.Title, list.Author.Email);
+            Console.WriteLine(new string('-', 80));
+            foreach (var list in cp.Web.Lists)
+            {
+                Console.WriteLine("  list : {0} '{1}'", list.Title, list.Author.Email);
             }
         }
         catch (Exception ex)
