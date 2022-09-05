@@ -26,7 +26,7 @@ public class Program
 
             var cp = new ClientContextProxy(clientContext);
 
-            cp.Load4<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language);
+            cp.Load<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language);
 
             await cp.ExecuteQueryAsync();
 
