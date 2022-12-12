@@ -3,9 +3,7 @@ using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using Moq;
 using ProxyInterfaceSourceGenerator;
-using ProxyInterfaceSourceGeneratorTests.Source.PnP;
 using Xunit;
 
 namespace ProxyInterfaceSourceGeneratorTests;
@@ -122,16 +120,5 @@ public class PnPTests
             if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
-    }
-
-    [Fact]
-    public void X()
-    {
-        var webMock = new Mock<IWeb>();
-
-
-        var ccMock = new Mock<IClientContext>();
-        //  ccMock.SetupGet(cc => cc.Web).Returns(webMock.Object);
-
     }
 }

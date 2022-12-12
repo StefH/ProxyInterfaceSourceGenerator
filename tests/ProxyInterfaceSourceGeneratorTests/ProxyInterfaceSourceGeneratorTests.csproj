@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Akka.Remote" Version="1.4.47" />
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="FluentAssertions" Version="6.7.0" />
         <PackageReference Include="Mapster" Version="7.3.0" />
@@ -41,6 +42,13 @@
         <Compile Update="Source\PnP\*.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
+        <Compile Update="Source\AkkaActor\*.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Destination\AkkaGenerated\" />
     </ItemGroup>
 
 </Project>
