@@ -155,17 +155,25 @@ using System;
                 overrideOrVirtual = "virtual ";
             }
 
+            var getIsPublic = property.GetMethod.IsPublic();
+            var setIsPublic = property.SetMethod.IsPublic();
+
+            if (!getIsPublic && !setIsPublic)
+            {
+                continue;
+            }
+
             string get;
             string set;
             if (isReplaced)
             {
-                get = property.GetMethod != null ? $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); " : string.Empty;
-                set = property.SetMethod != null ? $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); " : string.Empty;
+                get = getIsPublic ? $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); " : string.Empty;
+                set = setIsPublic ? $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); " : string.Empty;
             }
             else
             {
-                get = property.GetMethod != null ? $"get => {instancePropertyName}; " : string.Empty;
-                set = property.SetMethod != null ? $"set => {instancePropertyName} = value; " : string.Empty;
+                get = getIsPublic ? $"get => {instancePropertyName}; " : string.Empty;
+                set = setIsPublic ? $"set => {instancePropertyName} = value; " : string.Empty;
             }
 
             str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");

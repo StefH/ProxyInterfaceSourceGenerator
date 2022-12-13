@@ -96,9 +96,13 @@ using System;
         {
             var type = GetPropertyType(property, out var isReplaced);
 
-            (string propertyType, string? propertyName, string getSet) = isReplaced ?
-                property.ToPropertyDetails(type) :
-                property.ToPropertyDetails();
+            var getterSetter = isReplaced ? property.ToPropertyDetails(type) : property.ToPropertyDetails();
+            if (getterSetter is null)
+            {
+                continue;
+            }
+
+            var propertyName = getterSetter.Value.PropertyName;
 
             if (property.IsIndexer)
             {
@@ -106,7 +110,7 @@ using System;
                 propertyName = $"this[{string.Join(", ", methodParameters)}]";
             }
 
-            str.AppendLine($"        {propertyType} {propertyName} {getSet}");
+            str.AppendLine($"        {getterSetter.Value.PropertyType} {propertyName} {getterSetter.Value.GetSet}");
             str.AppendLine();
         }
 

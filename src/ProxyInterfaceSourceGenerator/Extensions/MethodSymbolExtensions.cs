@@ -7,6 +7,11 @@ internal static class MethodSymbolExtensions
     public static string GetMethodNameWithOptionalTypeParameters(this IMethodSymbol method) =>
         !method.IsGenericMethod ? method.Name : $"{method.Name}<{string.Join(", ", method.TypeParameters.Select(tp => tp.Name))}>";
 
+    public static bool IsPublic(this IMethodSymbol? methodSymbol)
+    {
+        return methodSymbol is { DeclaredAccessibility: Accessibility.Public };
+    }
+
     //public static string GetWhereStatement(this IMethodSymbol method) =>
     //    !method.IsGenericMethod ? string.Empty : string.Join("", method.TypeParameters.Select(tp => tp.GetWhereConstraints()));
 }
