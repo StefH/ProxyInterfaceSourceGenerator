@@ -15,15 +15,16 @@
         </PackageReference>
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.10.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0" />
-        <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.24">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
         <PackageReference Include="TinyMapper" Version="3.0.3" />
     </ItemGroup>
 
-    <!--<ItemGroup>
+    <ItemGroup>
+        <!--<PackageReference Include="ProxyInterfaceGenerator" Version="0.0.24">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>-->
+
         <ProjectReference Include="..\..\src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>-->
+    </ItemGroup>
 
 </Project>

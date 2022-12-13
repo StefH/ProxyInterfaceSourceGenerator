@@ -1,5 +1,3 @@
-using Xunit.Sdk;
-
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Human
