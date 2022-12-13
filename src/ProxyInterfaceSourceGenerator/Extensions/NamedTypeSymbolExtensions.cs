@@ -41,10 +41,8 @@ internal static class NamedTypeSymbolExtensions
         //    str.AppendFormat("<{0}>", string.Join(", ", namedTypeSymbol.TypeArguments.OfType<INamedTypeSymbol>().Select(typeArg => typeArg.GetFullType())));
         //}
 
-        return namedTypeSymbol.OriginalDefinition.ToString();// str.ToString();
+        return namedTypeSymbol.OriginalDefinition.ToString();
     }
-
-
 
     /// <summary>
     /// See https://stackoverflow.com/questions/24157101/roslyns-gettypebymetadataname-and-generic-types

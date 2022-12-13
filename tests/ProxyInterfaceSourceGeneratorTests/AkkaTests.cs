@@ -2,9 +2,9 @@ using System.IO;
 using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
+using CultureAwareTesting.xUnit;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
-using Xunit;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -19,12 +19,10 @@ public class AkkaTests
         _sut = new ProxyInterfaceCodeGenerator();
     }
 
-    [Fact]
+    [CulturedFact("sv-SE")]
     public void GenerateFiles_Should_GenerateCorrectFiles()
     {
         // Arrange
-        Akka.Actor.LocalActorRefProvider a;
-
         var fileNames = new[]
         {
             "ProxyInterfaceSourceGeneratorTests.Source.AkkaActor.ILocalActorRefProvider.g.cs",

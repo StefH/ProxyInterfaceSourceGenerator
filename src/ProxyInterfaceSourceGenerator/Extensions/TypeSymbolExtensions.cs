@@ -21,7 +21,7 @@ internal static class TypeSymbolExtensions
     }
 
     public static bool IsString(this ITypeSymbol ts) =>
-        ts.ToString() == "string" || ts.ToString() == "string?";
+        ts.ToString().ToLowerInvariant() == "string" || ts.ToString().ToLowerInvariant() == "string?";
 
     internal static bool IsClass(this ITypeSymbol ts) =>
         ts.IsReferenceType && ts.TypeKind == TypeKind.Class;
