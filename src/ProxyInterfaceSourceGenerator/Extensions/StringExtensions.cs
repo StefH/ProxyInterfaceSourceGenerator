@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class StringExtensions
@@ -23,7 +25,7 @@ internal static class StringExtensions
 
             int result = hash1 + hash2 * 1566083941;
 
-            return result.ToString().Replace('-', '_');
+            return result.ToString(CultureInfo.InvariantCulture).Replace('-', '_');
         }
     }
 
