@@ -10,13 +10,14 @@
 #nullable enable
 using System;
 
-
-    public partial class NoNamespaceProxy : INoNamespace
+namespace ProxyInterfaceSourceGeneratorTests.Source
+{
+    public partial class MixedVisibilityProxy : IMixedVisibility
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
+        public ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
         
 
-        public bool Test { get => _Instance.Test; set => _Instance.Test = value; }
+        public string Foo { get => _Instance.Foo; }
 
 
 
@@ -24,7 +25,7 @@ using System;
 
 
 
-        public NoNamespaceProxy(ProxyInterfaceSourceGeneratorTests.Source.NoNamespace instance)
+        public MixedVisibilityProxy(ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility instance)
         {
             _Instance = instance;
             
@@ -32,5 +33,5 @@ using System;
 
         }
     }
-
+}
 #nullable disable

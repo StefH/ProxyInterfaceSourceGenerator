@@ -57,7 +57,8 @@ internal static class MemberHelper
     private static IEnumerable<T> GetPublicMembers<T>(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
-        params Func<T, bool>[] filters) where T : ISymbol
+        params Func<T, bool>[] filters
+    ) where T : ISymbol
     {
         var membersQuery = classSymbol.Symbol.GetMembers().OfType<T>()
             .Where(m => m.DeclaredAccessibility == Accessibility.Public);
