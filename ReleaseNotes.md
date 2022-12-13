@@ -1,3 +1,7 @@
+# 0.0.25 (13 December 2022)
+- [#41](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/41) - Fixed GetDeterministicHashCodeAsString (use InvariantCulture) [bug] contributed by [StefH](https://github.com/StefH)
+- [#40](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/40) - Invalid code is generated for some locales (e.g. sv-ES) [bug]
+
 # 0.0.24 (05 September 2022)
 - [#39](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/39) - Use Mapster as mapper [enhancement] contributed by [StefH](https://github.com/StefH)
 
