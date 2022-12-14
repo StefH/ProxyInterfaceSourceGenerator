@@ -1,5 +1,7 @@
-# 0.0.25 (13 December 2022)
-- #41 Fixed GetDeterministicHashCodeAsString (use InvariantCulture) [bug]
-- #40 Invalid code is generated for some locales (e.g. sv-ES) [bug]
+# 0.0.26 (14 December 2022)
+- #46 Add support to generate code for interface without a namespace [enhancement]
+- #47 Only generate setters and getters for public properties [bug]
+- #42 Build error on missing namespace [bug]
+- #44 Build error on mixed visibility properties [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
