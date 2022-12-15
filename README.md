@@ -32,7 +32,7 @@ public sealed class Person
 And annotate this with `ProxyInterfaceGenerator.Proxy[...]` and with the Type which needs to be wrapped:
 
 ``` c#
-[ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Person))]
+[ProxyInterfaceGenerator.Proxy(typeof(Person))]
 public partial interface IPerson
 {
 }
@@ -42,7 +42,7 @@ public partial interface IPerson
 In case also want to proxy the properties/methods/events from the base class(es), use this:
 
 ``` c#
-[ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Person), true)] // 👈 Provide `true` as second parameter.
+[ProxyInterfaceGenerator.Proxy(typeof(Person), true)] // 👈 Provide `true` as second parameter.
 public partial interface IPerson
 {
 }
@@ -63,7 +63,7 @@ public partial interface IPerson
 ```
 
 #### :two: A Proxy class
-Which takes the external class in the constructor and wraps all properties and methods.
+Which takes the external class in the constructor and wraps all public properties, events and methods.
 
 ``` c#
 public class PersonProxy : IPerson
