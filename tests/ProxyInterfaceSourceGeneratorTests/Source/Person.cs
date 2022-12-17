@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         private readonly MyStruct[] _arr = new MyStruct[1];
 
+        [Display(Prompt = "MyStruct Indexer")]
         public MyStruct this[int i]
         {
             get { return _arr[i]; }
@@ -26,6 +28,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return new List<Human> { h, new Human { IsAlive = true } };
         }
 
+        [Display(ResourceType = typeof(PeriodicTimer))]
         public string Name { get; set; }
 
         public string? StringNullable { get; set; }
@@ -99,6 +102,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult(1);
         }
 
+        [Display(Name = "M3")]
         public Task<string?> Method3Async()
         {
             return Task.FromResult((string?)"");

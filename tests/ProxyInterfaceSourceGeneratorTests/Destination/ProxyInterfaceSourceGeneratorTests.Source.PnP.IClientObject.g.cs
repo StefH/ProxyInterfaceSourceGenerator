@@ -20,22 +20,29 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         object Tag { get; set; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         Microsoft.SharePoint.Client.ObjectPath Path { get; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string ObjectVersion { get; set; }
 
+        [Microsoft.SharePoint.Client.PseudoRemoteAttribute]
         bool? ServerObjectIsNull { get; }
 
         ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }
 
 
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void FromJson(Microsoft.SharePoint.Client.JsonReader reader);
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         bool CustomFromJson(Microsoft.SharePoint.Client.JsonReader reader);
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve();
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve(params string[] propertyNames);
 
         void RefreshLoad();

@@ -38,6 +38,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         int RequestTimeout { get; set; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         System.Collections.Generic.Dictionary<string, object> StaticObjects { get; }
 
         System.Version ServerSchemaVersion { get; }
@@ -60,8 +61,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         T CastTo<T>(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject;
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void AddQuery(Microsoft.SharePoint.Client.ClientAction query);
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void AddQueryIdAndResultObject(long id, object obj);
 
         object ParseObjectFromJsonString(string json);

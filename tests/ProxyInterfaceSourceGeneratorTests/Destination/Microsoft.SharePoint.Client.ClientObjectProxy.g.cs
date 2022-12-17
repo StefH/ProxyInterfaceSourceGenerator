@@ -21,22 +21,27 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public object Tag { get => _Instance.Tag; set => _Instance.Tag = value; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Microsoft.SharePoint.Client.ObjectPath Path { get => _Instance.Path; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ObjectVersion { get => _Instance.ObjectVersion; set => _Instance.ObjectVersion = value; }
 
+        [Microsoft.SharePoint.Client.PseudoRemoteAttribute]
         public bool? ServerObjectIsNull { get => _Instance.ServerObjectIsNull; }
 
         public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get => Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>(_Instance.TypedObject); }
 
 
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual void FromJson(Microsoft.SharePoint.Client.JsonReader reader)
         {
             Microsoft.SharePoint.Client.JsonReader reader_ = reader;
             _Instance.FromJson(reader_);
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual bool CustomFromJson(Microsoft.SharePoint.Client.JsonReader reader)
         {
             Microsoft.SharePoint.Client.JsonReader reader_ = reader;
@@ -44,11 +49,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__636829107;
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve()
         {
             _Instance.Retrieve();
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve(params string[] propertyNames)
         {
             string[] propertyNames_ = propertyNames;

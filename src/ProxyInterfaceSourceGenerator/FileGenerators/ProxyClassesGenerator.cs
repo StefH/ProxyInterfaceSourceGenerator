@@ -177,6 +177,11 @@ using System;
                 set = setIsPublic ? $"set => {instancePropertyName} = value; " : string.Empty;
             }
 
+            foreach (var attribute in property.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
             str.AppendLine();
         }
@@ -189,11 +194,6 @@ using System;
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
-            if (method.Name == "TryParse")
-            {
-                int y = 0;
-            }
-
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();
 
@@ -223,6 +223,11 @@ using System;
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
+            foreach (var attribute in method.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
@@ -247,9 +252,7 @@ using System;
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = !method.IsStatic ?
-                "_Instance" :
-                $"{targetClassSymbol.Symbol}";
+            string instance = !method.IsStatic ? "_Instance" : $"{targetClassSymbol.Symbol}";
 
             if (returnTypeAsString == "void")
             {
@@ -302,6 +305,12 @@ using System;
             var name = @event.Key.GetSanitizedName();
             var ps = @event.First().Parameters.First();
             var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+
+            foreach (var attribute in ps.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.Append($"        public event {type} {name} {{");
 
             if (@event.Any(e => e.MethodKind == MethodKind.EventAdd))

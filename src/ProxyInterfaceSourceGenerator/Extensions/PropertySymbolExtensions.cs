@@ -24,6 +24,4 @@ internal static class PropertySymbolExtensions
 
         return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
-
-
 }
