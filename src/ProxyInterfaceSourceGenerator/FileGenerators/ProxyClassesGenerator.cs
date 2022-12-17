@@ -189,11 +189,6 @@ using System;
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
-            if (method.Name == "TryParse")
-            {
-                int y = 0;
-            }
-
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();
 
@@ -223,6 +218,11 @@ using System;
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
+            foreach (var attribute in method.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
@@ -247,9 +247,7 @@ using System;
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = !method.IsStatic ?
-                "_Instance" :
-                $"{targetClassSymbol.Symbol}";
+            string instance = !method.IsStatic ? "_Instance" : $"{targetClassSymbol.Symbol}";
 
             if (returnTypeAsString == "void")
             {

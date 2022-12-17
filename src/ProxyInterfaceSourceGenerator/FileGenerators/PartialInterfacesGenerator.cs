@@ -125,6 +125,11 @@ using System;
             var methodParameters = GetMethodParameters(method.Parameters, true);
             var whereStatement = GetWhereStatementFromMethod(method);
 
+            foreach (var attribute in method.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
             str.AppendLine();
         }

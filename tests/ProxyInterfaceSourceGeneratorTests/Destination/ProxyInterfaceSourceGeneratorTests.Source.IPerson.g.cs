@@ -58,6 +58,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         System.Threading.Tasks.Task<int> Method2Async();
 
+        [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
         System.Threading.Tasks.Task<string?> Method3Async();
 
         void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken));

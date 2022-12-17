@@ -129,6 +129,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57677169;
         }
 
+        [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
         public System.Threading.Tasks.Task<string?> Method3Async()
         {
             var result__57684656 = _Instance.Method3Async();

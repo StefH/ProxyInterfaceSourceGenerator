@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,6 +100,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult(1);
         }
 
+        [Display(Name = "M3")]
         public Task<string?> Method3Async()
         {
             return Task.FromResult((string?)"");
