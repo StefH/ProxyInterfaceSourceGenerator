@@ -31,12 +31,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual void FromJson(Microsoft.SharePoint.Client.JsonReader reader)
         {
             Microsoft.SharePoint.Client.JsonReader reader_ = reader;
             _Instance.FromJson(reader_);
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual bool CustomFromJson(Microsoft.SharePoint.Client.JsonReader reader)
         {
             Microsoft.SharePoint.Client.JsonReader reader_ = reader;
@@ -44,11 +46,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__636829107;
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve()
         {
             _Instance.Retrieve();
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve(params string[] propertyNames)
         {
             string[] propertyNames_ = propertyNames;

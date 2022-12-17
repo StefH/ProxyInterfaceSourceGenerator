@@ -305,6 +305,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_21992317;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<bool> DoesUserHavePermissions(Microsoft.SharePoint.Client.BasePermissions permissionMask)
         {
             Microsoft.SharePoint.Client.BasePermissions permissionMask_ = permissionMask;
@@ -312,6 +313,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_563212462;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.BasePermissions> GetUserEffectivePermissions(string userName)
         {
             string userName_ = userName;
@@ -319,6 +321,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__615383406;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void CreateDefaultAssociatedGroups(string userLogin, string userLogin2, string groupNameSeed)
         {
             string userLogin_ = userLogin;
@@ -327,6 +330,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             _Instance.CreateDefaultAssociatedGroups(userLogin_, userLogin2_, groupNameSeed_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -336,6 +340,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_2070260011;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -345,6 +350,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             Microsoft.SharePoint.Client.Web.DestroyOrganizationSharingLink(context_, url_, isEditLink_, removeAssociatedSharingLinkGroup_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -353,6 +359,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_654626020;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl)
         {
             string linkUrl_ = linkUrl;
@@ -360,6 +367,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__2107757018;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size)
         {
             string fileName_ = fileName;
@@ -369,6 +377,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_384589064;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -377,6 +386,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__907059837;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken)
         {
             System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
@@ -385,12 +395,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__117534630;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId)
         {
             System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
             _Instance.UnregisterPushNotificationSubscriber(deviceAppInstanceId_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs)
         {
             string customArgs_ = customArgs;
@@ -398,6 +410,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_144086076;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName)
         {
             string userName_ = userName;
@@ -405,6 +418,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1280834962;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId)
         {
             System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
@@ -412,6 +426,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1309404561;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId)
         {
             System.Guid deviceAppInstanceId_ = deviceAppInstanceId;
@@ -419,6 +434,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1696633571;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid)
         {
             string puid_ = puid;
@@ -426,6 +442,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1448181221;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User GetUserById(int userId)
         {
             int userId_ = userId;
@@ -433,6 +450,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__963170767;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<bool> EnsureTenantAppCatalog(string callerId)
         {
             string callerId_ = callerId;
@@ -440,6 +458,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1044639826;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.ClientSideComponent.StorageEntity GetStorageEntity(string key)
         {
             string key_ = key;
@@ -447,6 +466,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1529029872;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void SetStorageEntity(string key, string value, string description, string comments)
         {
             string key_ = key;
@@ -456,12 +476,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             _Instance.SetStorageEntity(key_, value_, description_, comments_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void RemoveStorageEntity(string key)
         {
             string key_ = key;
             _Instance.RemoveStorageEntity(key_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SharingResult ShareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string roleValue, int groupId, bool propagateAcl, bool sendEmail, bool includeAnonymousLinkInEmail, string emailSubject, string emailBody, bool useSimplifiedRoles)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -479,6 +501,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_816157054;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SharingResult ForwardObjectLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string emailSubject, string emailBody)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -490,6 +513,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1822800612;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SharingResult UnshareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -498,6 +522,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__823224569;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ObjectSharingSettings GetObjectSharingSettings(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string objectUrl, int groupId, bool useSimplifiedRoles)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -508,6 +533,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__679475674;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -517,6 +543,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__820192309;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLinkWithExpiration(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, string expirationString)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -527,6 +554,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1044574026;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DeleteAllAnonymousLinksForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -534,6 +562,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             Microsoft.SharePoint.Client.Web.DeleteAllAnonymousLinksForObject(context_, url_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DeleteAnonymousLinkForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -543,6 +572,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             Microsoft.SharePoint.Client.Web.DeleteAnonymousLinkForObject(context_, url_, isEditLink_, removeAssociatedSharingLinkGroup_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListCollection GetLists(Microsoft.SharePoint.Client.GetListsParameters getListsParams)
         {
             Microsoft.SharePoint.Client.GetListsParameters getListsParams_ = getListsParams;
@@ -550,6 +580,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1293372807;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage)
         {
             uint lcid_ = lcid;
@@ -558,6 +589,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1052443476;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog)
         {
             int typeCatalog_ = typeCatalog;
@@ -565,6 +597,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1458409307;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItems(string pagingInfo, int rowLimit, bool isAscending, Microsoft.SharePoint.Client.RecycleBinOrderBy orderBy, Microsoft.SharePoint.Client.RecycleBinItemState itemState)
         {
             string pagingInfo_ = pagingInfo;
@@ -576,6 +609,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_694026616;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItemsByQueryInfo(Microsoft.SharePoint.Client.RecycleBinQueryInformation queryInfo)
         {
             Microsoft.SharePoint.Client.RecycleBinQueryInformation queryInfo_ = queryInfo;
@@ -583,6 +617,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1467955603;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ChangeCollection GetChanges(Microsoft.SharePoint.Client.ChangeQuery query)
         {
             Microsoft.SharePoint.Client.ChangeQuery query_ = query;
@@ -590,6 +625,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_536201347;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.List GetList(string strUrl)
         {
             string strUrl_ = strUrl;
@@ -597,6 +633,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1483657030;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.List GetListUsingPath(Microsoft.SharePoint.Client.ResourcePath path)
         {
             Microsoft.SharePoint.Client.ResourcePath path_ = path;
@@ -604,6 +641,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__2113955437;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListItem GetListItem(string strUrl)
         {
             string strUrl_ = strUrl;
@@ -611,6 +649,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_101515089;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListItem GetListItemUsingPath(Microsoft.SharePoint.Client.ResourcePath path)
         {
             Microsoft.SharePoint.Client.ResourcePath path_ = path;
@@ -618,6 +657,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__577192176;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListItem GetListItemByResourceId(string resourceId)
         {
             string resourceId_ = resourceId;
@@ -625,6 +665,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_569057021;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.BusinessData.MetadataModel.Entity GetEntity(string @namespace, string name)
         {
             string @namespace_ = @namespace;
@@ -633,6 +674,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_401289025;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalogForAppInstance(System.Guid appInstanceId)
         {
             System.Guid appInstanceId_ = appInstanceId;
@@ -640,12 +682,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1179378574;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalog()
         {
             var result__1128404427 = _Instance.GetAppBdcCatalog();
             return result__1128404427;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.WebCollection GetSubwebsForCurrentUser(Microsoft.SharePoint.Client.SubwebQuery query)
         {
             Microsoft.SharePoint.Client.SubwebQuery query_ = query;
@@ -653,17 +697,20 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__34039800;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> GetSPAppContextAsStream()
         {
             var result_127789125 = _Instance.GetSPAppContextAsStream();
             return result_127789125;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void Update()
         {
             _Instance.Update();
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.View GetViewFromUrl(string listUrl)
         {
             string listUrl_ = listUrl;
@@ -671,6 +718,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1074039380;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.View GetViewFromPath(Microsoft.SharePoint.Client.ResourcePath listPath)
         {
             Microsoft.SharePoint.Client.ResourcePath listPath_ = listPath;
@@ -678,6 +726,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1126862484;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByServerRelativeUrl(string serverRelativeUrl)
         {
             string serverRelativeUrl_ = serverRelativeUrl;
@@ -685,6 +734,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__979182843;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByServerRelativePath(Microsoft.SharePoint.Client.ResourcePath serverRelativePath)
         {
             Microsoft.SharePoint.Client.ResourcePath serverRelativePath_ = serverRelativePath;
@@ -692,6 +742,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1456830503;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -700,6 +751,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_2078170246;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentAndMediaLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl, bool includePageLibraries)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -709,6 +761,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__431075153;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl)
         {
             Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
@@ -717,12 +770,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1125717726;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.List DefaultDocumentLibrary()
         {
             var result_69743263 = _Instance.DefaultDocumentLibrary();
             return result_69743263;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileById(System.Guid uniqueId)
         {
             System.Guid uniqueId_ = uniqueId;
@@ -730,6 +785,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__223228596;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Folder GetFolderById(System.Guid uniqueId)
         {
             System.Guid uniqueId_ = uniqueId;
@@ -737,6 +793,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__2111623002;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByLinkingUrl(string linkingUrl)
         {
             string linkingUrl_ = linkingUrl;
@@ -744,6 +801,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__104450524;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByGuestUrl(string guestUrl)
         {
             string guestUrl_ = guestUrl;
@@ -751,6 +809,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1819257688;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByGuestUrlEnsureAccess(string guestUrl, bool ensureAccess)
         {
             string guestUrl_ = guestUrl;
@@ -759,6 +818,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__323239372;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByWOPIFrameUrl(string wopiFrameUrl)
         {
             string wopiFrameUrl_ = wopiFrameUrl;
@@ -766,6 +826,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1184208158;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.File GetFileByUrl(string fileUrl)
         {
             string fileUrl_ = fileUrl;
@@ -773,6 +834,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__84028506;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Folder GetFolderByServerRelativeUrl(string serverRelativeUrl)
         {
             string serverRelativeUrl_ = serverRelativeUrl;
@@ -780,6 +842,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1556909417;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Folder GetFolderByServerRelativePath(Microsoft.SharePoint.Client.ResourcePath serverRelativePath)
         {
             Microsoft.SharePoint.Client.ResourcePath serverRelativePath_ = serverRelativePath;
@@ -787,17 +850,20 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1812606997;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void ApplyWebTemplate(string webTemplate)
         {
             string webTemplate_ = webTemplate;
             _Instance.ApplyWebTemplate(webTemplate_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DeleteObject()
         {
             _Instance.DeleteObject();
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo)
         {
             bool includeODBSettings_ = includeODBSettings;
@@ -806,12 +872,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1488981072;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextCore()
         {
             var result_769613763 = _Instance.PageContextCore();
             return result_769613763;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AppInstance GetAppInstanceById(System.Guid appInstanceId)
         {
             System.Guid appInstanceId_ = appInstanceId;
@@ -819,6 +887,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__860011802;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientObjectList<Microsoft.SharePoint.Client.AppInstance> GetAppInstancesByProductId(System.Guid productId)
         {
             System.Guid productId_ = productId;
@@ -826,6 +895,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1349849408;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AppInstance LoadAndInstallAppInSpecifiedLocale(System.IO.Stream appPackageStream, int installationLocaleLCID)
         {
             System.IO.Stream appPackageStream_ = appPackageStream;
@@ -834,6 +904,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__860277814;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AppInstance LoadApp(System.IO.Stream appPackageStream, int installationLocaleLCID)
         {
             System.IO.Stream appPackageStream_ = appPackageStream;
@@ -842,6 +913,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1043610289;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ClientResult<System.Guid> AddPlaceholderUser(string listId, string placeholderText)
         {
             string listId_ = listId;
@@ -850,6 +922,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__256231457;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AppInstance LoadAndInstallApp(System.IO.Stream appPackageStream)
         {
             System.IO.Stream appPackageStream_ = appPackageStream;
@@ -857,35 +930,41 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1506697459;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void SetAccessRequestSiteDescriptionAndUpdate(string description)
         {
             string description_ = description;
             _Instance.SetAccessRequestSiteDescriptionAndUpdate(description_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void SetUseAccessRequestDefaultAndUpdate(bool useAccessRequestDefault)
         {
             bool useAccessRequestDefault_ = useAccessRequestDefault;
             _Instance.SetUseAccessRequestDefaultAndUpdate(useAccessRequestDefault_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void IncrementSiteClientTag()
         {
             _Instance.IncrementSiteClientTag();
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void AddSupportedUILanguage(int lcid)
         {
             int lcid_ = lcid;
             _Instance.AddSupportedUILanguage(lcid_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void RemoveSupportedUILanguage(int lcid)
         {
             int lcid_ = lcid;
             _Instance.RemoveSupportedUILanguage(lcid_);
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User EnsureUser(string logonName)
         {
             string logonName_ = logonName;
@@ -893,6 +972,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_1853915411;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User EnsureUserByObjectId(System.Guid objectId, System.Guid tenantId, Microsoft.SharePoint.Client.Utilities.PrincipalType principalType)
         {
             System.Guid objectId_ = objectId;
@@ -902,6 +982,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__1490083264;
         }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public void ApplyTheme(string colorPaletteUrl, string fontSchemeUrl, string backgroundImageUrl, bool shareGenerated)
         {
             string colorPaletteUrl_ = colorPaletteUrl;

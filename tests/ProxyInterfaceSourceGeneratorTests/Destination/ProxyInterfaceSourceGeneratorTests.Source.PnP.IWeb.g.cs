@@ -292,166 +292,247 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         System.Uri WebUrlFromFolderUrlDirect(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, System.Uri folderFullUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<bool> DoesUserHavePermissions(Microsoft.SharePoint.Client.BasePermissions permissionMask);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.BasePermissions> GetUserEffectivePermissions(string userName);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void CreateDefaultAssociatedGroups(string userLogin, string userLogin2, string groupNameSeed);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void DestroyOrganizationSharingLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, Microsoft.SharePoint.Client.Utilities.IconSize size);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(System.Guid deviceAppInstanceId, string serviceToken);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void UnregisterPushNotificationSubscriber(System.Guid deviceAppInstanceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(System.Guid deviceAppInstanceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(System.Guid deviceAppInstanceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.User GetUserById(int userId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<bool> EnsureTenantAppCatalog(string callerId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.ClientSideComponent.StorageEntity GetStorageEntity(string key);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void SetStorageEntity(string key, string value, string description, string comments);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void RemoveStorageEntity(string key);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.SharingResult ShareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string roleValue, int groupId, bool propagateAcl, bool sendEmail, bool includeAnonymousLinkInEmail, string emailSubject, string emailBody, bool useSimplifiedRoles);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.SharingResult ForwardObjectLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string emailSubject, string emailBody);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.SharingResult UnshareObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ObjectSharingSettings GetObjectSharingSettings(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string objectUrl, int groupId, bool useSimplifiedRoles);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLink(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLinkWithExpiration(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, string expirationString);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteAllAnonymousLinksForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteAnonymousLinkForObject(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ListCollection GetLists(Microsoft.SharePoint.Client.GetListsParameters getListsParams);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItems(string pagingInfo, int rowLimit, bool isAscending, Microsoft.SharePoint.Client.RecycleBinOrderBy orderBy, Microsoft.SharePoint.Client.RecycleBinItemState itemState);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItemsByQueryInfo(Microsoft.SharePoint.Client.RecycleBinQueryInformation queryInfo);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ChangeCollection GetChanges(Microsoft.SharePoint.Client.ChangeQuery query);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.List GetList(string strUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.List GetListUsingPath(Microsoft.SharePoint.Client.ResourcePath path);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ListItem GetListItem(string strUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ListItem GetListItemUsingPath(Microsoft.SharePoint.Client.ResourcePath path);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ListItem GetListItemByResourceId(string resourceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.BusinessData.MetadataModel.Entity GetEntity(string @namespace, string name);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalogForAppInstance(System.Guid appInstanceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalog();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.WebCollection GetSubwebsForCurrentUser(Microsoft.SharePoint.Client.SubwebQuery query);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> GetSPAppContextAsStream();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void Update();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.View GetViewFromUrl(string listUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.View GetViewFromPath(Microsoft.SharePoint.Client.ResourcePath listPath);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByServerRelativeUrl(string serverRelativeUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByServerRelativePath(Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         System.Collections.Generic.IList<Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentAndMediaLibraries(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl, bool includePageLibraries);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.List DefaultDocumentLibrary();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileById(System.Guid uniqueId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.Folder GetFolderById(System.Guid uniqueId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByLinkingUrl(string linkingUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByGuestUrl(string guestUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByGuestUrlEnsureAccess(string guestUrl, bool ensureAccess);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByWOPIFrameUrl(string wopiFrameUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.File GetFileByUrl(string fileUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.Folder GetFolderByServerRelativeUrl(string serverRelativeUrl);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.Folder GetFolderByServerRelativePath(Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void ApplyWebTemplate(string webTemplate);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteObject();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<System.IO.Stream> PageContextCore();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.AppInstance GetAppInstanceById(System.Guid appInstanceId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientObjectList<Microsoft.SharePoint.Client.AppInstance> GetAppInstancesByProductId(System.Guid productId);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.AppInstance LoadAndInstallAppInSpecifiedLocale(System.IO.Stream appPackageStream, int installationLocaleLCID);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.AppInstance LoadApp(System.IO.Stream appPackageStream, int installationLocaleLCID);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.ClientResult<System.Guid> AddPlaceholderUser(string listId, string placeholderText);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.AppInstance LoadAndInstallApp(System.IO.Stream appPackageStream);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void SetAccessRequestSiteDescriptionAndUpdate(string description);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void SetUseAccessRequestDefaultAndUpdate(bool useAccessRequestDefault);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void IncrementSiteClientTag();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void AddSupportedUILanguage(int lcid);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void RemoveSupportedUILanguage(int lcid);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.User EnsureUser(string logonName);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.User EnsureUserByObjectId(System.Guid objectId, System.Guid tenantId, Microsoft.SharePoint.Client.Utilities.PrincipalType principalType);
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void ApplyTheme(string colorPaletteUrl, string fontSchemeUrl, string backgroundImageUrl, bool shareGenerated);
 
 

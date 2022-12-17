@@ -30,12 +30,16 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void FromJson(Microsoft.SharePoint.Client.JsonReader reader);
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         bool CustomFromJson(Microsoft.SharePoint.Client.JsonReader reader);
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve();
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve(params string[] propertyNames);
 
         void RefreshLoad();

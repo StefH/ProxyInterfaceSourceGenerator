@@ -24,8 +24,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void ResetRoleInheritance();
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void BreakRoleInheritance(bool copyRoleAssignments, bool clearSubscopes);
 
 

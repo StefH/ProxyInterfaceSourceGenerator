@@ -6,7 +6,11 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class SymbolExtensions
 {
-    private static readonly string[] ExcludedAttributes = { InternalClassNames.NullableAttribute };
+    private static readonly string[] ExcludedAttributes =
+    {
+        InternalClassNames.AsyncStateMachineAttribute ,
+        InternalClassNames.NullableAttribute
+    };
 
     public static string GetAttributesPrefix(this ISymbol symbol)
     {
@@ -17,18 +21,11 @@ internal static class SymbolExtensions
 
     public static IReadOnlyList<string> GetAttributesAsList(this ISymbol symbol)
     {
-        var aa = symbol
+        return symbol
             .GetAttributes()
-            .Where(a => a.AttributeClass.IsPublic())
+            .Where(a => a.AttributeClass.IsPublic() && !ExcludedAttributes.Contains(a.AttributeClass?.ToString(), StringComparer.OrdinalIgnoreCase))
             .Select(a => $"[{a}]")
             .ToArray();
-
-        if (aa.Length > 0)
-        {
-            int yyy = 9;
-        }
-
-        return aa;
     }
 
     public static bool IsPublic(this ISymbol? symbol) =>

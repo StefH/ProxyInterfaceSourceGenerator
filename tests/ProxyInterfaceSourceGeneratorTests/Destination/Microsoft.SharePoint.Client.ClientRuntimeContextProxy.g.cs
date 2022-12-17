@@ -82,12 +82,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_366781530;
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void AddQuery(Microsoft.SharePoint.Client.ClientAction query)
         {
             Microsoft.SharePoint.Client.ClientAction query_ = query;
             _Instance.AddQuery(query_);
         }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void AddQueryIdAndResultObject(long id, object obj)
         {
             long id_ = id;
