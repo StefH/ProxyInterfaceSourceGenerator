@@ -7,7 +7,7 @@ internal static class MemberHelper
 {
     private static readonly string[] ExcludedMethods = { "ToString", "GetHashCode" };
 
-    public static IEnumerable<IPropertySymbol> GetPublicProperties(
+    public static IReadOnlyList<IPropertySymbol> GetPublicProperties(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         params Func<IPropertySymbol, bool>[] filters)
@@ -17,25 +17,28 @@ internal static class MemberHelper
             p => p.Kind == SymbolKind.Property
         };
 
-        return GetPublicMembers(classSymbol, proxyBaseClasses, allFilters.ToArray());
+        return GetPublicMembers(classSymbol, proxyBaseClasses, allFilters.ToArray()).ToArray();
     }
 
-    public static IEnumerable<IMethodSymbol> GetPublicMethods(
+    public static IReadOnlyList<IMethodSymbol> GetPublicMethods(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
     {
         filter ??= _ => true;
 
-        return GetPublicMembers(classSymbol,
-            proxyBaseClasses,
-            m => m.Kind == SymbolKind.Method,
-            m => m.MethodKind == MethodKind.Ordinary,
-            m => !ExcludedMethods.Contains(m.Name),
-            filter);
+        return
+            GetPublicMembers(
+                classSymbol,
+                proxyBaseClasses,
+                m => m.Kind == SymbolKind.Method,
+                m => m.MethodKind == MethodKind.Ordinary,
+                m => !ExcludedMethods.Contains(m.Name),
+                filter)
+            .ToArray();
     }
 
-    public static IEnumerable<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(
+    public static IReadOnlyList<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
@@ -48,13 +51,14 @@ internal static class MemberHelper
                 proxyBaseClasses,
                 m => m.MethodKind is MethodKind.EventAdd or MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
                 filter)
-            .GroupBy(e => e.AssociatedSymbol);
+            .GroupBy(e => e.AssociatedSymbol)
+            .ToArray();
 #pragma warning restore RS1024 // Compare symbols correctly
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
     }
 
     // TODO : do we need also to check for "SanitizedName()" here?
-    private static IEnumerable<T> GetPublicMembers<T>(
+    private static IReadOnlyList<T> GetPublicMembers<T>(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         params Func<T, bool>[] filters

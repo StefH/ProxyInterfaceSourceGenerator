@@ -135,13 +135,22 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken))
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken))
         {
             int i_ = i;
             string? appId_ = appId;
-            System.Collections.Generic.IReadOnlyDictionary<string, string> metadata_ = metadata;
+            System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata_ = metadata;
             System.Threading.CancellationToken token_ = token;
             _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
+        }
+
+        public bool TryParse(string s, out int? i)
+        {
+            string s_ = s;
+            int? i_;
+            var result__1226565302 = _Instance.TryParse(s_, out i_);
+            i = i_;
+            return result__1226565302;
         }
 
 

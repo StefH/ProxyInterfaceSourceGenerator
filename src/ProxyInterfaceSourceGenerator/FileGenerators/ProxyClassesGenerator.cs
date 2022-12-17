@@ -188,6 +188,11 @@ using System;
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
+            if (method.Name == "TryParse")
+            {
+                int y = 0;
+            }
+
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();
 

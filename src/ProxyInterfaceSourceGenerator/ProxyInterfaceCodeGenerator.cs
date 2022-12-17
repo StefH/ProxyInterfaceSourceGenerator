@@ -9,7 +9,12 @@ using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 namespace ProxyInterfaceSourceGenerator;
 
 [Generator]
-internal class ProxyInterfaceCodeGenerator : ISourceGenerator
+#if DEBUG
+public
+#else
+internal
+#endif
+class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
     private readonly ProxyAttributeGenerator _proxyAttributeGenerator = new ();
 
