@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class PersonExtends : Human
@@ -12,13 +9,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public static string StaticString { get; set; } = "500";
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public string? StringNullable { get; set; }
 
         public long? NullableLong { get; }
 
-        public object @object { get; set; }
+        public object @object { get; set; } = null!;
 
         public void Void()
         {
