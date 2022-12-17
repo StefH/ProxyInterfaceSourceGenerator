@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using ProxyInterfaceSourceGenerator.Builders;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
@@ -203,18 +204,18 @@ internal abstract class BaseGenerator
         return false;
     }
 
-    protected IList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameters, bool includeType)
+    protected IReadOnlyList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameterSymbols, bool includeType)
     {
         var methodParameters = new List<string>();
-        foreach (var ps in parameters)
+        foreach (var parameterSymbol in parameterSymbols)
         {
-            string t = string.Empty;
+            string? type = null;
             if (includeType)
             {
-                var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-                t = $"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} ";
+                type = parameterSymbol.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(parameterSymbol, out _) : parameterSymbol.Type.ToString();
             }
-            methodParameters.Add($"{t}{ps.GetSanitizedName()}{ps.GetDefaultValue()}");
+
+            methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
         }
 
         return methodParameters;

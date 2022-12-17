@@ -62,9 +62,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
 
-        bool TryParse(string s1, params int[]? ii);
+        bool TryParse(string s1, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
 
-        bool TryParse(string s2, out int? i);
+        bool TryParse(string s2, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i);
 
 
 

@@ -123,13 +123,6 @@ using System;
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
             var methodParameters = GetMethodParameters(method.Parameters, true);
-            //var methodParameters = new List<string>();
-            //foreach (var ps in method.Parameters)
-            //{
-            //    var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-            //    methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-            //}
-
             var whereStatement = GetWhereStatementFromMethod(method);
 
             str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
