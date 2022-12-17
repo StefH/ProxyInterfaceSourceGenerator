@@ -1,3 +1,7 @@
+# 0.0.27 (17 December 2022)
+- [#48](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/48) - Add support for parameter attributes [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#49](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/49) - Add support for property and method attributes [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.26 (14 December 2022)
 - [#46](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/46) - Add support to generate code for interface without a namespace [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#47](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/47) - Only generate setters and getters for public properties [bug] contributed by [StefH](https://github.com/StefH)
