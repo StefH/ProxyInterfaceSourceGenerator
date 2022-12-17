@@ -21,10 +21,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public object Tag { get => _Instance.Tag; set => _Instance.Tag = value; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Microsoft.SharePoint.Client.ObjectPath Path { get => _Instance.Path; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ObjectVersion { get => _Instance.ObjectVersion; set => _Instance.ObjectVersion = value; }
 
+        [Microsoft.SharePoint.Client.PseudoRemoteAttribute]
         public bool? ServerObjectIsNull { get => _Instance.ServerObjectIsNull; }
 
         public ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get => Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>(_Instance.TypedObject); }

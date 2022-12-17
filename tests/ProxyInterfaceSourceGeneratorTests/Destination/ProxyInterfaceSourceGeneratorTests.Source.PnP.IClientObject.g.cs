@@ -20,10 +20,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         object Tag { get; set; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         Microsoft.SharePoint.Client.ObjectPath Path { get; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string ObjectVersion { get; set; }
 
+        [Microsoft.SharePoint.Client.PseudoRemoteAttribute]
         bool? ServerObjectIsNull { get; }
 
         ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }

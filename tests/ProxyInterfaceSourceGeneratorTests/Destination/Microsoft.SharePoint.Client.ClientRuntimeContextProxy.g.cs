@@ -39,6 +39,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public int RequestTimeout { get => _Instance.RequestTimeout; set => _Instance.RequestTimeout = value; }
 
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.Dictionary<string, object> StaticObjects { get => _Instance.StaticObjects; }
 
         public System.Version ServerSchemaVersion { get => _Instance.ServerSchemaVersion; }

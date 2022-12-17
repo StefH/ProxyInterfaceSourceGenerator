@@ -110,6 +110,11 @@ using System;
                 propertyName = $"this[{string.Join(", ", methodParameters)}]";
             }
 
+            foreach (var attribute in property.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
             str.AppendLine($"        {getterSetter.Value.PropertyType} {propertyName} {getterSetter.Value.GetSet}");
             str.AppendLine();
         }
@@ -144,6 +149,12 @@ using System;
         {
             var ps = @event.First().Parameters.First();
             var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+
+            foreach (var attribute in ps.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+            
             str.AppendLine($"        event {type} {@event.Key.GetSanitizedName()};");
             str.AppendLine();
         }

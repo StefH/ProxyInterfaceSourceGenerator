@@ -17,10 +17,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
 
+        [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
         public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get => _Instance[i, s]; set => _Instance[i, s] = value; }
 
+        [System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(System.Threading.PeriodicTimer))]
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
         public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value; }

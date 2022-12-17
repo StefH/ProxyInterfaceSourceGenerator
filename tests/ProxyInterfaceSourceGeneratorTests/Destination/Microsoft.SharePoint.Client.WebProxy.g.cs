@@ -17,274 +17,409 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         public new Microsoft.SharePoint.Client.Web _Instance { get; }
         public Microsoft.SharePoint.Client.SecurableObject _InstanceSecurableObject { get; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string AccessRequestListUrl { get => _Instance.AccessRequestListUrl; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string AccessRequestSiteDescription { get => _Instance.AccessRequestSiteDescription; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string Acronym { get => _Instance.Acronym; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AlertCollection Alerts { get => _Instance.Alerts; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowAutomaticASPXPageIndexing { get => _Instance.AllowAutomaticASPXPageIndexing; set => _Instance.AllowAutomaticASPXPageIndexing = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowCreateDeclarativeWorkflowForCurrentUser { get => _Instance.AllowCreateDeclarativeWorkflowForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowDesignerForCurrentUser { get => _Instance.AllowDesignerForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowMasterPageEditingForCurrentUser { get => _Instance.AllowMasterPageEditingForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowRevertFromTemplateForCurrentUser { get => _Instance.AllowRevertFromTemplateForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowRssFeeds { get => _Instance.AllowRssFeeds; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowSaveDeclarativeWorkflowAsTemplateForCurrentUser { get => _Instance.AllowSaveDeclarativeWorkflowAsTemplateForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool AllowSavePublishDeclarativeWorkflowForCurrentUser { get => _Instance.AllowSavePublishDeclarativeWorkflowForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PropertyValues AllProperties { get => _Instance.AllProperties; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string AlternateCssUrl { get => _Instance.AlternateCssUrl; set => _Instance.AlternateCssUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Guid AppInstanceId { get => _Instance.AppInstanceId; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.AppTileCollection AppTiles { get => _Instance.AppTiles; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Group AssociatedMemberGroup { get => _Instance.AssociatedMemberGroup; set => _Instance.AssociatedMemberGroup = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Group AssociatedOwnerGroup { get => _Instance.AssociatedOwnerGroup; set => _Instance.AssociatedOwnerGroup = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Group AssociatedVisitorGroup { get => _Instance.AssociatedVisitorGroup; set => _Instance.AssociatedVisitorGroup = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User Author { get => _Instance.Author; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ContentTypeCollection AvailableContentTypes { get => _Instance.AvailableContentTypes; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FieldCollection AvailableFields { get => _Instance.AvailableFields; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ModernizeHomepageResult CanModernizeHomepage { get => _Instance.CanModernizeHomepage; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string ClassicWelcomePage { get => _Instance.ClassicWelcomePage; set => _Instance.ClassicWelcomePage = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool CommentsOnSitePagesDisabled { get => _Instance.CommentsOnSitePagesDisabled; set => _Instance.CommentsOnSitePagesDisabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public short Configuration { get => _Instance.Configuration; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool ContainsConfidentialInfo { get => _Instance.ContainsConfidentialInfo; set => _Instance.ContainsConfidentialInfo = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ContentTypeCollection ContentTypes { get => _Instance.ContentTypes; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.DateTime Created { get => _Instance.Created; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ChangeToken CurrentChangeToken { get => _Instance.CurrentChangeToken; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.User CurrentUser { get => _Instance.CurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string CustomMasterUrl { get => _Instance.CustomMasterUrl; set => _Instance.CustomMasterUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool CustomSiteActionsDisabled { get => _Instance.CustomSiteActionsDisabled; set => _Instance.CustomSiteActionsDisabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SPDataLeakagePreventionStatusInfo DataLeakagePreventionStatusInfo { get => _Instance.DataLeakagePreventionStatusInfo; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string Description { get => _Instance.Description; set => _Instance.Description = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string DescriptionForExistingLanguage { get => _Instance.DescriptionForExistingLanguage; set => _Instance.DescriptionForExistingLanguage = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.UserResource DescriptionResource { get => _Instance.DescriptionResource; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> DescriptionTranslations { get => _Instance.DescriptionTranslations; set => _Instance.DescriptionTranslations = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string DesignerDownloadUrlForCurrentUser { get => _Instance.DesignerDownloadUrlForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Guid DesignPackageId { get => _Instance.DesignPackageId; set => _Instance.DesignPackageId = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool DisableAppViews { get => _Instance.DisableAppViews; set => _Instance.DisableAppViews = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool DisableFlows { get => _Instance.DisableFlows; set => _Instance.DisableFlows = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool DisableRecommendedItems { get => _Instance.DisableRecommendedItems; set => _Instance.DisableRecommendedItems = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool DocumentLibraryCalloutOfficeWebAppPreviewersDisabled { get => _Instance.DocumentLibraryCalloutOfficeWebAppPreviewersDisabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.BasePermissions EffectiveBasePermissions { get => _Instance.EffectiveBasePermissions; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool EnableMinimalDownload { get => _Instance.EnableMinimalDownload; set => _Instance.EnableMinimalDownload = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.EventReceiverDefinitionCollection EventReceivers { get => _Instance.EventReceivers; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool ExcludeFromOfflineClient { get => _Instance.ExcludeFromOfflineClient; set => _Instance.ExcludeFromOfflineClient = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FeatureCollection Features { get => _Instance.Features; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FieldCollection Fields { get => _Instance.Fields; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FolderCollection Folders { get => _Instance.Folders; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FooterVariantThemeType FooterEmphasis { get => _Instance.FooterEmphasis; set => _Instance.FooterEmphasis = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool FooterEnabled { get => _Instance.FooterEnabled; set => _Instance.FooterEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.FooterLayoutType FooterLayout { get => _Instance.FooterLayout; set => _Instance.FooterLayout = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool HasWebTemplateExtension { get => _Instance.HasWebTemplateExtension; set => _Instance.HasWebTemplateExtension = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SPVariantThemeType HeaderEmphasis { get => _Instance.HeaderEmphasis; set => _Instance.HeaderEmphasis = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.HeaderLayoutType HeaderLayout { get => _Instance.HeaderLayout; set => _Instance.HeaderLayout = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool HideTitleInHeader { get => _Instance.HideTitleInHeader; set => _Instance.HideTitleInHeader = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool HorizontalQuickLaunch { get => _Instance.HorizontalQuickLaunch; set => _Instance.HorizontalQuickLaunch = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.ClientSideComponent.HostedAppsManager HostedApps { get => _Instance.HostedApps; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Guid Id { get => _Instance.Id; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsEduClass { get => _Instance.IsEduClass; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsEduClassProvisionChecked { get => _Instance.IsEduClassProvisionChecked; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsEduClassProvisionPending { get => _Instance.IsEduClassProvisionPending; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsHomepageModernized { get => _Instance.IsHomepageModernized; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsMultilingual { get => _Instance.IsMultilingual; set => _Instance.IsMultilingual = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsProvisioningComplete { get => _Instance.IsProvisioningComplete; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool IsRevertHomepageLinkHidden { get => _Instance.IsRevertHomepageLinkHidden; set => _Instance.IsRevertHomepageLinkHidden = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public uint Language { get => _Instance.Language; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.DateTime LastItemModifiedDate { get => _Instance.LastItemModifiedDate; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.DateTime LastItemUserModifiedDate { get => _Instance.LastItemUserModifiedDate; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListCollection Lists { get => _Instance.Lists; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ListTemplateCollection ListTemplates { get => _Instance.ListTemplates; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.LogoAlignment LogoAlignment { get => _Instance.LogoAlignment; set => _Instance.LogoAlignment = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string MasterUrl { get => _Instance.MasterUrl; set => _Instance.MasterUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool MegaMenuEnabled { get => _Instance.MegaMenuEnabled; set => _Instance.MegaMenuEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool MembersCanShare { get => _Instance.MembersCanShare; set => _Instance.MembersCanShare = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool NavAudienceTargetingEnabled { get => _Instance.NavAudienceTargetingEnabled; set => _Instance.NavAudienceTargetingEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Navigation Navigation { get => _Instance.Navigation; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool NextStepsFirstRunEnabled { get => _Instance.NextStepsFirstRunEnabled; set => _Instance.NextStepsFirstRunEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool NoCrawl { get => _Instance.NoCrawl; set => _Instance.NoCrawl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool NotificationsInOneDriveForBusinessEnabled { get => _Instance.NotificationsInOneDriveForBusinessEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool NotificationsInSharePointEnabled { get => _Instance.NotificationsInSharePointEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool ObjectCacheEnabled { get => _Instance.ObjectCacheEnabled; set => _Instance.ObjectCacheEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool OverwriteTranslationsOnChange { get => _Instance.OverwriteTranslationsOnChange; set => _Instance.OverwriteTranslationsOnChange = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.WebInformation ParentWeb { get => _Instance.ParentWeb; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ResourcePath ResourcePath { get => _Instance.ResourcePath; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool PreviewFeaturesEnabled { get => _Instance.PreviewFeaturesEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string PrimaryColor { get => _Instance.PrimaryColor; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.PushNotificationSubscriberCollection PushNotificationSubscribers { get => _Instance.PushNotificationSubscribers; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool QuickLaunchEnabled { get => _Instance.QuickLaunchEnabled; set => _Instance.QuickLaunchEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.RecycleBinItemCollection RecycleBin { get => _Instance.RecycleBin; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool RecycleBinEnabled { get => _Instance.RecycleBinEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.RegionalSettings RegionalSettings { get => _Instance.RegionalSettings; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string RequestAccessEmail { get => _Instance.RequestAccessEmail; set => _Instance.RequestAccessEmail = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.RoleDefinitionCollection RoleDefinitions { get => _Instance.RoleDefinitions; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Folder RootFolder { get => _Instance.RootFolder; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool SaveSiteAsTemplateEnabled { get => _Instance.SaveSiteAsTemplateEnabled; set => _Instance.SaveSiteAsTemplateEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SearchBoxInNavBarType SearchBoxInNavBar { get => _Instance.SearchBoxInNavBar; set => _Instance.SearchBoxInNavBar = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string SearchBoxPlaceholderText { get => _Instance.SearchBoxPlaceholderText; set => _Instance.SearchBoxPlaceholderText = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SearchScopeType SearchScope { get => _Instance.SearchScope; set => _Instance.SearchScope = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ResourcePath ServerRelativePath { get => _Instance.ServerRelativePath; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string ServerRelativeUrl { get => _Instance.ServerRelativeUrl; set => _Instance.ServerRelativeUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool ShowUrlStructureForCurrentUser { get => _Instance.ShowUrlStructureForCurrentUser; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Marketplace.CorporateCuratedGallery.SiteCollectionCorporateCatalogAccessor SiteCollectionAppCatalog { get => _Instance.SiteCollectionAppCatalog; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.GroupCollection SiteGroups { get => _Instance.SiteGroups; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string SiteLogoDescription { get => _Instance.SiteLogoDescription; set => _Instance.SiteLogoDescription = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string SiteLogoUrl { get => _Instance.SiteLogoUrl; set => _Instance.SiteLogoUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.List SiteUserInfoList { get => _Instance.SiteUserInfoList; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.UserCollection SiteUsers { get => _Instance.SiteUsers; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Collections.Generic.IEnumerable<int> SupportedUILanguageIds { get => _Instance.SupportedUILanguageIds; set => _Instance.SupportedUILanguageIds = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool SyndicationEnabled { get => _Instance.SyndicationEnabled; set => _Instance.SyndicationEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.SharingState TenantAdminMembersCanShare { get => _Instance.TenantAdminMembersCanShare; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Marketplace.CorporateCuratedGallery.TenantCorporateCatalogAccessor TenantAppCatalog { get => _Instance.TenantAppCatalog; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool TenantTagPolicyEnabled { get => _Instance.TenantTagPolicyEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string ThemedCssFolderUrl { get => _Instance.ThemedCssFolderUrl; set => _Instance.ThemedCssFolderUrl = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.ThemeInfo ThemeInfo { get => _Instance.ThemeInfo; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool ThirdPartyMdmEnabled { get => _Instance.ThirdPartyMdmEnabled; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string Title { get => _Instance.Title; set => _Instance.Title = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string TitleForExistingLanguage { get => _Instance.TitleForExistingLanguage; set => _Instance.TitleForExistingLanguage = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.UserResource TitleResource { get => _Instance.TitleResource; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public System.Collections.Generic.IEnumerable<Microsoft.SharePoint.Client.SPResourceEntry> TitleTranslations { get => _Instance.TitleTranslations; set => _Instance.TitleTranslations = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool TreeViewEnabled { get => _Instance.TreeViewEnabled; set => _Instance.TreeViewEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public int UIVersion { get => _Instance.UIVersion; set => _Instance.UIVersion = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool UIVersionConfigurationEnabled { get => _Instance.UIVersionConfigurationEnabled; set => _Instance.UIVersionConfigurationEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string Url { get => _Instance.Url; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool UseAccessRequestDefault { get => _Instance.UseAccessRequestDefault; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.UserCustomActionCollection UserCustomActions { get => _Instance.UserCustomActions; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.WebCollection Webs { get => _Instance.Webs; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string WebTemplate { get => _Instance.WebTemplate; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string WebTemplateConfiguration { get => _Instance.WebTemplateConfiguration; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool WebTemplatesGalleryFirstRunEnabled { get => _Instance.WebTemplatesGalleryFirstRunEnabled; set => _Instance.WebTemplatesGalleryFirstRunEnabled = value; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public string WelcomePage { get => _Instance.WelcomePage; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Workflow.WorkflowAssociationCollection WorkflowAssociations { get => _Instance.WorkflowAssociations; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         public Microsoft.SharePoint.Client.Workflow.WorkflowTemplateCollection WorkflowTemplates { get => _Instance.WorkflowTemplates; }
 
 

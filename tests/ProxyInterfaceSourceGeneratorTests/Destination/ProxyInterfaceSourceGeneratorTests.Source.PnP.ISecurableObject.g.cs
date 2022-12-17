@@ -16,10 +16,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
     {
         new Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         bool HasUniqueRoleAssignments { get; }
 
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get; }
 
 
