@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using ProxyInterfaceSourceGenerator.Builders;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
@@ -188,15 +189,20 @@ using System;
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
+            if (method.Name == "TryParse")
+            {
+                int y = 0;
+            }
+
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();
 
-            foreach (var ps in method.Parameters)
+            foreach (var parameterSymbol in method.Parameters)
             {
-                var type = GetParameterType(ps, out _);
+                var type = GetParameterType(parameterSymbol, out _);
 
-                methodParameters.Add($"{ps.GetParamsPrefix()}{ps.GetRefPrefix()}{type} {ps.GetSanitizedName()}{ps.GetDefaultValue()}");
-                invokeParameters.Add($"{ps.GetRefPrefix()}{ps.GetSanitizedName()}_");
+                methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
+                invokeParameters.Add($"{parameterSymbol.GetRefPrefix()}{parameterSymbol.GetSanitizedName()}_");
             }
 
             string overrideOrVirtual = string.Empty;

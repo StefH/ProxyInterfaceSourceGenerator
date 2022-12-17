@@ -60,7 +60,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
+        void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
+
+        bool TryParse(string s1, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
+
+        bool TryParse(string s2, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i);
 
 
 

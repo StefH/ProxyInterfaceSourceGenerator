@@ -1,5 +1,3 @@
-using System.IO;
-using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using CultureAwareTesting.xUnit;

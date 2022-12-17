@@ -1,5 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using ProxyInterfaceSourceGenerator.Constants;
 using ProxyInterfaceSourceGenerator.Enums;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
@@ -7,6 +8,16 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 internal static class ParameterSymbolExtensions
 {
     private const string ParameterValueNull = "null";
+
+    public static string GetAttributesPrefix(this IParameterSymbol ps)
+    {
+        var attributes = ps.GetAttributes()
+            .Where(a => !string.Equals(a.AttributeClass?.GetFullType(), InternalClassNames.NullableAttribute, StringComparison.OrdinalIgnoreCase))
+            .Select(a => $"[{a}]")
+            .ToArray();
+
+        return attributes.Any() ? $"{string.Join(" ", attributes)} " : string.Empty;
+    }
 
     public static string GetRefPrefix(this IParameterSymbol ps)
     {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -103,8 +104,20 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult((string?)"");
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken token = default)
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string>? metadata = null, CancellationToken token = default)
         {
+        }
+
+        public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
+        {
+            ii = null;
+            return false;
+        }
+
+        public bool TryParse(string s2, [NotNullWhen(true)] out int? i)
+        {
+            i = 4;
+            return true;
         }
     }
 }
