@@ -6,16 +6,15 @@ namespace ProxyInterfaceSourceGenerator.Builders;
 
 internal static class MethodParameterBuilder
 {
-    public static string Build(IParameterSymbol parameterSymbol, string type)
+    public static string BuildForClass(IParameterSymbol parameterSymbol, string type)
     {
-        var a = parameterSymbol.GetAttributes();
-
         var stringBuilder = new StringBuilder();
-        stringBuilder.Append(parameterSymbol.GetParamsPrefix());
-        stringBuilder.Append(parameterSymbol.GetRefPrefix());
-        stringBuilder.AppendFormat("{0} ", type);
-        stringBuilder.Append(parameterSymbol.GetSanitizedName());
-        stringBuilder.Append(parameterSymbol.GetDefaultValue());
+        stringBuilder.Append(parameterSymbol.GetAttributesPrefix()); // "" or [NotNullWhen(true)]
+        stringBuilder.Append(parameterSymbol.GetParamsPrefix()); // "" or "params "
+        stringBuilder.Append(parameterSymbol.GetRefPrefix()); // "" or "out "
+        stringBuilder.AppendFormat("{0} ", type); // string or another type
+        stringBuilder.Append(parameterSymbol.GetSanitizedName()); // "s" or "i" or ...
+        stringBuilder.Append(parameterSymbol.GetDefaultValue()); // "" or the value
 
         return stringBuilder.ToString();
     }

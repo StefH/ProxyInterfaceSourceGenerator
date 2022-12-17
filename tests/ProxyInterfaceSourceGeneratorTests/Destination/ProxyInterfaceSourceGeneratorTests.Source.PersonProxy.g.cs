@@ -144,11 +144,19 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
         }
 
-        public bool TryParse(string s, out int? i)
+        public bool TryParse(string s1, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii)
         {
-            string s_ = s;
+            string s1_ = s1;
+            int[]? ii_ = ii;
+            var result__1226565302 = _Instance.TryParse(s1_, ii_);
+            return result__1226565302;
+        }
+
+        public bool TryParse(string s2, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i)
+        {
+            string s2_ = s2;
             int? i_;
-            var result__1226565302 = _Instance.TryParse(s_, out i_);
+            var result__1226565302 = _Instance.TryParse(s2_, out i_);
             i = i_;
             return result__1226565302;
         }
