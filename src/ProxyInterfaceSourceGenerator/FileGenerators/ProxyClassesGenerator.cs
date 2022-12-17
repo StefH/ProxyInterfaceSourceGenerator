@@ -201,7 +201,7 @@ using System;
             {
                 var type = GetParameterType(parameterSymbol, out _);
 
-                methodParameters.Add(MethodParameterBuilder.BuildForClass(parameterSymbol, type));
+                methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
                 invokeParameters.Add($"{parameterSymbol.GetRefPrefix()}{parameterSymbol.GetSanitizedName()}_");
             }
 

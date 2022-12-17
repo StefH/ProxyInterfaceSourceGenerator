@@ -6,7 +6,7 @@ namespace ProxyInterfaceSourceGenerator.Builders;
 
 internal static class MethodParameterBuilder
 {
-    public static string BuildForClass(IParameterSymbol parameterSymbol, string type)
+    public static string Build(IParameterSymbol parameterSymbol, string type)
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append(parameterSymbol.GetAttributesPrefix()); // "" or [NotNullWhen(true)]
