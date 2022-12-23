@@ -53,4 +53,13 @@
       <Folder Include="Destination\AkkaGenerated\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Source\Generic.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Source\IGeneric.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
+    </ItemGroup>
+
 </Project>
