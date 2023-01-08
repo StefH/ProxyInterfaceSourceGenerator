@@ -20,6 +20,33 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
 
+        //public static implicit operator OperatorTest(string name)
+        //{
+        //    return new()
+        //    {
+        //        Name = name
+        //    };
+        //}
+
+        //// Operator : explicit
+        //public static explicit operator string(OperatorTest test)
+        //{
+        //    return test.Name;
+        //}
+
+        public static implicit operator OperatorTestProxy(string name)
+        {
+            string name_ = name;
+            var result_739966559 = name_;
+            return result_739966559;
+        }
+
+        public static explicit operator string(OperatorTestProxy test)
+        {
+            ProxyInterfaceSourceGeneratorTests.Source.OperatorTest test_ = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.OperatorTest>(test);
+            var result_1539960534 = ProxyInterfaceSourceGeneratorTests.Source.OperatorTest.op_Explicit(test_);
+            return test;
+        }
 
 
 
@@ -29,6 +56,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
+
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.OperatorTest, ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest>.NewConfig().ConstructUsing(instance_2027465479 => new ProxyInterfaceSourceGeneratorTests.Source.OperatorTestProxy(instance_2027465479));
+            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest, ProxyInterfaceSourceGeneratorTests.Source.OperatorTest>.NewConfig().MapWith(proxy_1194698219 => ((ProxyInterfaceSourceGeneratorTests.Source.OperatorTestProxy) proxy_1194698219)._Instance);
 
 
         }

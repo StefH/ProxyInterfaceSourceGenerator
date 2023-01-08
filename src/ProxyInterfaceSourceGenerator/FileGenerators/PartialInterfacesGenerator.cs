@@ -125,7 +125,10 @@ using System;
     private string GenerateMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
+        var methods = MemberHelper.GetPublicMethodsAndOperators(targetClassSymbol, proxyBaseClasses)
+            .Where(m => m.MethodKind == MethodKind.Ordinary)
+            .ToArray();
+        foreach (var method in methods)
         {
             var methodParameters = GetMethodParameters(method.Parameters, true);
             var whereStatement = GetWhereStatementFromMethod(method);

@@ -20,7 +20,7 @@ internal static class MemberHelper
         return GetPublicMembers(classSymbol, proxyBaseClasses, allFilters.ToArray()).ToArray();
     }
 
-    public static IReadOnlyList<IMethodSymbol> GetPublicMethods(
+    public static IReadOnlyList<IMethodSymbol> GetPublicMethodsAndOperators(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
@@ -32,7 +32,7 @@ internal static class MemberHelper
                 classSymbol,
                 proxyBaseClasses,
                 m => m.Kind == SymbolKind.Method,
-                m => m.MethodKind == MethodKind.Ordinary,
+                m => m.MethodKind is MethodKind.Ordinary or MethodKind.Conversion,
                 m => !ExcludedMethods.Contains(m.Name),
                 filter)
             .ToArray();
@@ -47,7 +47,8 @@ internal static class MemberHelper
 
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
 #pragma warning disable RS1024 // Compare symbols correctly
-        return GetPublicMembers(classSymbol,
+        return GetPublicMembers(
+                classSymbol,
                 proxyBaseClasses,
                 m => m.MethodKind is MethodKind.EventAdd or MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
                 filter)
