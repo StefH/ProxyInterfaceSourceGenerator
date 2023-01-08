@@ -328,4 +328,36 @@ using System;
 
         return str.ToString();
     }
+
+    private string GenerateOperators(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    {
+        var str = new StringBuilder();
+        foreach (var @event in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyBaseClasses))
+        {
+            var name = @event.Key.GetSanitizedName();
+            var ps = @event.First().Parameters.First();
+            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+
+            foreach (var attribute in ps.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
+            str.Append($"        public event {type} {name} {{");
+
+            if (@event.Any(e => e.MethodKind == MethodKind.EventAdd))
+            {
+                str.Append($" add {{ _Instance.{name} += value; }}");
+            }
+            if (@event.Any(e => e.MethodKind == MethodKind.EventRemove))
+            {
+                str.Append($" remove {{ _Instance.{name} -= value; }}");
+            }
+
+            str.AppendLine(" }");
+            str.AppendLine();
+        }
+
+        return str.ToString();
+    }
 }

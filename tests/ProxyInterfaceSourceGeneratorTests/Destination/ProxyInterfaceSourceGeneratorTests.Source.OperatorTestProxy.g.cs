@@ -44,8 +44,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public static explicit operator string(OperatorTestProxy test)
         {
             ProxyInterfaceSourceGeneratorTests.Source.OperatorTest test_ = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.OperatorTest>(test);
-            var result_1539960534 = ProxyInterfaceSourceGeneratorTests.Source.OperatorTest.op_Explicit(test_);
-            return test;
+           // var result_1539960534 = ProxyInterfaceSourceGeneratorTests.Source.OperatorTest.op_Explicit(test_);
+            return "test";
         }
 
 
