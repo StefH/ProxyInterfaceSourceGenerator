@@ -1,3 +1,6 @@
+# 0.0.28 (08 January 2023)
+- [#50](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/50) - Add unit test for generic class + change generated filename [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.27 (17 December 2022)
 - [#48](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/48) - Add support for parameter attributes [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#49](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/49) - Add support for property and method attributes [enhancement] contributed by [StefH](https://github.com/StefH)
