@@ -1,5 +1,3 @@
-using System.IO;
-using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
@@ -21,9 +19,7 @@ namespace ProxyInterfaceSourceGeneratorTests
 
             var pp = new PersonProxy(new Person());
 
-            var h = pp.AddHuman(new HumanProxy(new Human()));
-
-            int x = 0;
+            _ = pp.AddHuman(new HumanProxy(new Human()));
         }
 
         [Fact]
@@ -48,6 +44,48 @@ namespace ProxyInterfaceSourceGeneratorTests
             // Assert
             result.Valid.Should().BeTrue();
             result.Files.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GenerateFiles_ForGenericType_Should_GenerateCorrectFiles()
+        {
+            // Arrange
+            var fileNames = new[]
+            {
+                "ProxyInterfaceSourceGeneratorTests.Source.IGeneric.g.cs",
+                "ProxyInterfaceSourceGeneratorTests.Source.Generic_T__1Proxy.g.cs"
+            };
+
+            var path = "./Source/IGeneric.cs";
+            var sourceFile = new SourceFile
+            {
+                Path = path,
+                Text = File.ReadAllText(path),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Generic<>)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[]
+            {
+                sourceFile
+            });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(fileNames.Length + 1);
+
+            foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+            {
+                var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+                builder.Path.Should().EndWith(fileName.fileName);
+
+                if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+                builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            }
         }
 
         [Fact]

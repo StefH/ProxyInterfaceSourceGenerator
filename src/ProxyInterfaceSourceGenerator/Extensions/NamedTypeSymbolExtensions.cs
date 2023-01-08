@@ -28,7 +28,7 @@ internal static class NamedTypeSymbolExtensions
         var typeName = namedTypeSymbol.GetFullType();
         return !(typeName.Contains('<') && typeName.Contains('>')) ?
             typeName :
-            $"{typeName.Replace('.', '_').Replace('<', '_').Replace('>', '_').Replace(", ", "-")}_{typeName.Count(c => c == ',') + 1}";
+            $"{typeName.Replace('<', '_').Replace('>', '_').Replace(", ", "-")}_{typeName.Count(c => c == ',') + 1}";
     }
 
     public static string GetFullType(this INamedTypeSymbol namedTypeSymbol)
