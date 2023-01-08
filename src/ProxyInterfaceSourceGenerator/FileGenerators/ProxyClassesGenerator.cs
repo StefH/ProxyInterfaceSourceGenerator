@@ -78,7 +78,6 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
-        var operators = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Any())
@@ -193,7 +192,7 @@ using System;
     private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var method in MemberHelper.GetPublicMethodsAndOperators(targetClassSymbol, proxyBaseClasses))
+        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();
@@ -220,7 +219,7 @@ using System;
                 overrideOrVirtual = "virtual ";
             }
 
-            //string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
+            string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -229,27 +228,7 @@ using System;
                 str.AppendLine($"        {attribute}");
             }
 
-            string returnTypeAsString;
-            bool returnIsReplaced;
-            switch (method.MethodKind)
-            {
-                case MethodKind.Ordinary:
-                    returnTypeAsString = GetReplacedType(method.ReturnType, out returnIsReplaced);
-                    str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
-                    break;
-
-                case MethodKind.Conversion:
-                    returnTypeAsString = targetClassSymbol.Symbol.ResolveProxyClassName();
-                    returnIsReplaced = false;
-
-                    var operatorType = method.Name.Replace("op_", string.Empty).ToLowerInvariant();
-                    str.AppendLine($"        public static {operatorType} operator {returnTypeAsString}({string.Join(", ", methodParameters)})");
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
-
+            str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {

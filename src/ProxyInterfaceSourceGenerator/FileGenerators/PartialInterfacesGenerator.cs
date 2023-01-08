@@ -125,10 +125,7 @@ using System;
     private string GenerateMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        var methods = MemberHelper.GetPublicMethodsAndOperators(targetClassSymbol, proxyBaseClasses)
-            .Where(m => m.MethodKind == MethodKind.Ordinary)
-            .ToArray();
-        foreach (var method in methods)
+        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
         {
             var methodParameters = GetMethodParameters(method.Parameters, true);
             var whereStatement = GetWhereStatementFromMethod(method);
@@ -157,7 +154,7 @@ using System;
             {
                 str.AppendLine($"        {attribute}");
             }
-            
+
             str.AppendLine($"        event {type} {@event.Key.GetSanitizedName()};");
             str.AppendLine();
         }

@@ -20,7 +20,7 @@ internal static class MemberHelper
         return GetPublicMembers(classSymbol, proxyBaseClasses, allFilters.ToArray()).ToArray();
     }
 
-    public static IReadOnlyList<IMethodSymbol> GetPublicMethodsAndOperators(
+    public static IReadOnlyList<IMethodSymbol> GetPublicMethods(
         ClassSymbol classSymbol,
         bool proxyBaseClasses,
         Func<IMethodSymbol, bool>? filter = null)
@@ -32,10 +32,28 @@ internal static class MemberHelper
                 classSymbol,
                 proxyBaseClasses,
                 m => m.Kind == SymbolKind.Method,
-                m => m.MethodKind is MethodKind.Ordinary or MethodKind.Conversion,
+                m => m.MethodKind == MethodKind.Ordinary,
                 m => !ExcludedMethods.Contains(m.Name),
                 filter)
             .ToArray();
+    }
+
+    public static IReadOnlyList<IMethodSymbol> GetPublicStaticOperators(
+        ClassSymbol classSymbol,
+        bool proxyBaseClasses,
+        Func<IMethodSymbol, bool>? filter = null)
+    {
+        filter ??= _ => true;
+
+        return
+            GetPublicMembers(
+                    classSymbol,
+                    proxyBaseClasses,
+                    m => m.Kind == SymbolKind.Method,
+                    m => m.MethodKind == MethodKind.Conversion,
+                    m => !ExcludedMethods.Contains(m.Name),
+                    filter)
+                .ToArray();
     }
 
     public static IReadOnlyList<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(
