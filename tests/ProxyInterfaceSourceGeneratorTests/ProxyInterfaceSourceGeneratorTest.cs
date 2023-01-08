@@ -89,6 +89,48 @@ namespace ProxyInterfaceSourceGeneratorTests
         }
 
         [Fact]
+        public void GenerateFiles_ForClassWithOperator_Should_GenerateCorrectFiles()
+        {
+            // Arrange
+            var fileNames = new[]
+            {
+                "ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest.g.cs",
+                "ProxyInterfaceSourceGeneratorTests.Source.OperatorTestProxy.g.cs"
+            };
+
+            var path = "./Source/IOperatorTest.cs";
+            var sourceFile = new SourceFile
+            {
+                Path = path,
+                Text = File.ReadAllText(path),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.OperatorTest)"
+                }
+            };
+
+            // Act
+            var result = _sut.Execute(new[]
+            {
+                sourceFile
+            });
+
+            // Assert
+            result.Valid.Should().BeTrue();
+            result.Files.Should().HaveCount(fileNames.Length + 1);
+
+            foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+            {
+                var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+                builder.Path.Should().EndWith(fileName.fileName);
+
+                if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+                builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            }
+        }
+
+        [Fact]
         public void GenerateFiles_When_NoNamespace_Should_GenerateCorrectFiles()
         {
             // Arrange
