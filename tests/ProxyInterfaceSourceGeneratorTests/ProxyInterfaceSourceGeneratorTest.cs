@@ -128,6 +128,22 @@ namespace ProxyInterfaceSourceGeneratorTests
                 if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
                 builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
             }
+
+            var name = "stef";
+            var operatorTest = new OperatorTest
+            {
+                Name = name
+            };
+            string name1 = (string) operatorTest;
+            name1.Should().Be(name);
+
+            var p = new OperatorTestProxy(operatorTest);
+            string name2 = (string)p;
+            name2.Should().Be(name);
+
+            var p2 = (OperatorTestProxy)"x";
+            
+            
         }
 
         [Fact]

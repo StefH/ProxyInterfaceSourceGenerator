@@ -20,10 +20,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-        ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest op_Implicit(string name);
-
-        string op_Explicit(ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest test);
-
 
 
 

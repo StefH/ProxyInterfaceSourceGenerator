@@ -78,11 +78,13 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
+        var operators = MemberHelper.GetPublicStaticOperators(targetClassSymbol, pd.ProxyBaseClasses);
+        var operatorsAsString = GenerateOperators(operators, targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
-        if (Context.ReplacedTypes.Any())
+        if (Context.ReplacedTypes.Any() || operators.Any())
         {
-            configurationForMapster = GenerateMapperConfigurationForMapster();
+            configurationForMapster = GenerateMapperConfigurationForMapster(operators.Any());
         }
 
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(pd.Namespace);
@@ -110,6 +112,8 @@ using System;
 {methods}
 
 {events}
+
+{operatorsAsString}
 
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
@@ -329,32 +333,43 @@ using System;
         return str.ToString();
     }
 
-    private string GenerateOperators(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GenerateOperators(IReadOnlyList<IMethodSymbol> operators, ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var @event in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyBaseClasses))
+        foreach (var @operator in operators)
         {
-            var name = @event.Key.GetSanitizedName();
-            var ps = @event.First().Parameters.First();
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
-
-            foreach (var attribute in ps.GetAttributesAsList())
+            foreach (var attribute in @operator.GetAttributesAsList())
             {
                 str.AppendLine($"        {attribute}");
             }
 
-            str.Append($"        public event {type} {name} {{");
+            
+            var parameter = @operator.Parameters.First();
+            var proxyClassName = targetClassSymbol.Symbol.ResolveProxyClassName();
+            var varNameAsString = $"{@operator.GetSanitizedName()}_";
 
-            if (@event.Any(e => e.MethodKind == MethodKind.EventAdd))
+            var operatorType = @operator.Name.ToLowerInvariant().Replace("op_", string.Empty);
+            if (operatorType == "explicit")
             {
-                str.Append($" add {{ _Instance.{name} += value; }}");
+                var returnTypeAsString = GetReplacedType(@operator.ReturnType, out _);
+
+                str.AppendLine($"       public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
+                str.AppendLine(@"       {");
+                str.AppendLine($"           var {varNameAsString} = Mapster.TypeAdapter.Adapt<{targetClassSymbol.Symbol.Name}>({parameter.Name});");
+                str.AppendLine($"           return ({returnTypeAsString}) {varNameAsString};");
+                str.AppendLine(@"       }");
             }
-            if (@event.Any(e => e.MethodKind == MethodKind.EventRemove))
+            else
             {
-                str.Append($" remove {{ _Instance.{name} -= value; }}");
+                var returnTypeAsString = GetReplacedType(parameter.Type, out _);
+
+                str.AppendLine($"       public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
+                str.AppendLine(@"       {");
+                str.AppendLine($"           var {varNameAsString} = {parameter.Name};");
+                str.AppendLine($"           return ({proxyClassName}) {varNameAsString};");
+                str.AppendLine(@"       }");
             }
 
-            str.AppendLine(" }");
             str.AppendLine();
         }
 

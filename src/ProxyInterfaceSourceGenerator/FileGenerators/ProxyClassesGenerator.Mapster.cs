@@ -5,7 +5,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal partial class ProxyClassesGenerator
 {
-    private string GenerateMapperConfigurationForMapster()
+    private string GenerateMapperConfigurationForMapster(bool anyOperators)
     {
         var str = new StringBuilder();
 
@@ -19,6 +19,12 @@ internal partial class ProxyClassesGenerator
 
             str.AppendLine($"            Mapster.TypeAdapterConfig<{replacedType.Key}, {replacedType.Value}>.NewConfig().ConstructUsing({instance} => new {classNameProxy}({instance}));");
             str.AppendLine($"            Mapster.TypeAdapterConfig<{replacedType.Value}, {replacedType.Key}>.NewConfig().MapWith({proxy} => (({classNameProxy}) {proxy})._Instance);");
+
+            if (anyOperators)
+            {
+                str.AppendLine($"            Mapster.TypeAdapterConfig<{classNameProxy}, {replacedType.Key}>.NewConfig().MapWith({proxy} => (({classNameProxy}) {proxy})._Instance);");
+            }
+
             str.AppendLine();
         }
 
