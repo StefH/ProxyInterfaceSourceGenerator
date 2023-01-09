@@ -46,6 +46,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+
+
         public SecurableObjectProxy(Microsoft.SharePoint.Client.SecurableObject instance) : base(instance)
         {
             _Instance = instance;

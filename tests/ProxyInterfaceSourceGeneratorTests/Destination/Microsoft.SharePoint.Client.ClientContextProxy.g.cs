@@ -48,6 +48,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+
+
         public ClientContextProxy(Microsoft.SharePoint.Client.ClientContext instance) : base(instance)
         {
             _Instance = instance;
