@@ -1131,6 +1131,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
 
 
+
+
         public WebProxy(Microsoft.SharePoint.Client.Web instance) : base(instance)
         {
             _Instance = instance;

@@ -78,6 +78,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
+        var operators = GenerateOperators(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Any())
@@ -110,6 +111,8 @@ using System;
 {methods}
 
 {events}
+
+{operators}
 
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
@@ -323,6 +326,45 @@ using System;
             }
 
             str.AppendLine(" }");
+            str.AppendLine();
+        }
+
+        return str.ToString();
+    }
+
+    private string GenerateOperators(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    {
+        var str = new StringBuilder();
+        foreach (var @operator in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyBaseClasses))
+        {
+            foreach (var attribute in @operator.GetAttributesAsList())
+            {
+                str.AppendLine($"        {attribute}");
+            }
+
+            var parameter = @operator.Parameters.First();
+            var proxyClassName = targetClassSymbol.Symbol.ResolveProxyClassName();
+
+            var operatorType = @operator.Name.ToLowerInvariant().Replace("op_", string.Empty);
+            if (operatorType == "explicit")
+            {
+                var returnTypeAsString = GetReplacedType(@operator.ReturnType, out _);
+
+                str.AppendLine($"        public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            return ({returnTypeAsString}) {parameter.Name}._Instance;");
+                str.AppendLine(@"        }");
+            }
+            else
+            {
+                var returnTypeAsString = GetReplacedType(parameter.Type, out _);
+
+                str.AppendLine($"        public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            return new {proxyClassName}(({targetClassSymbol.Symbol.Name}) {parameter.Name});");
+                str.AppendLine(@"        }");
+            }
+
             str.AppendLine();
         }
 

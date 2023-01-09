@@ -114,6 +114,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+
+
         public PersonExtendsProxy(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends instance)
         {
             _Instance = instance;

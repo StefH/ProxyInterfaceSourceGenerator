@@ -154,7 +154,7 @@ using System;
             {
                 str.AppendLine($"        {attribute}");
             }
-            
+
             str.AppendLine($"        event {type} {@event.Key.GetSanitizedName()};");
             str.AppendLine();
         }

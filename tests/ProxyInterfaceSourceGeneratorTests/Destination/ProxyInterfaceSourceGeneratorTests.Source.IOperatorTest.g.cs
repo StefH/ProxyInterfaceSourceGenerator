@@ -10,29 +10,21 @@
 #nullable enable
 using System;
 
-
-    public partial class NoNamespaceProxy : INoNamespace
+namespace ProxyInterfaceSourceGeneratorTests.Source
+{
+    public partial interface IOperatorTest
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
-        
+        ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
 
-        public bool Test { get => _Instance.Test; set => _Instance.Test = value; }
+        string Name { get; set; }
 
-
-
+        int? Id { get; set; }
 
 
 
 
 
 
-        public NoNamespaceProxy(ProxyInterfaceSourceGeneratorTests.Source.NoNamespace instance)
-        {
-            _Instance = instance;
-            
-
-
-        }
     }
-
+}
 #nullable disable

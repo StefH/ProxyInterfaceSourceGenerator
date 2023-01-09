@@ -27,6 +27,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+
+
         public HumanProxy(ProxyInterfaceSourceGeneratorTests.Source.Human instance)
         {
             _Instance = instance;

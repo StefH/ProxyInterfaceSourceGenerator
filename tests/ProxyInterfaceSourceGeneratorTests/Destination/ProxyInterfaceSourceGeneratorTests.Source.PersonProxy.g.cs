@@ -168,6 +168,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+
+
         public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;

@@ -25,6 +25,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+
+
         public MixedVisibilityProxy(ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility instance)
         {
             _Instance = instance;
