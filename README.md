@@ -1,7 +1,12 @@
 # ProxyInterfaceGenerator
-
 This project uses Source Generation to generate an interface and a Proxy class for classes.
 This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.
+
+It supports:
+- properties
+- methods
+- events
+- implicit and explicit operators
 
 ## Install
 [![NuGet Badge](https://buildstats.info/nuget/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
