@@ -1,4 +1,4 @@
-# 0.0.28 (08 January 2023)
-- #50 Add unit test for generic class + change generated filename [enhancement]
+# 0.0.29 (09 January 2023)
+- #51 Add support for implicit and explicit operators [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md

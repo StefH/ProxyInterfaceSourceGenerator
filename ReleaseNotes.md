@@ -1,3 +1,6 @@
+# 0.0.29 (09 January 2023)
+- [#51](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/51) - Add support for implicit and explicit operators [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.28 (08 January 2023)
 - [#50](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/50) - Add unit test for generic class + change generated filename [enhancement] contributed by [StefH](https://github.com/StefH)
 
