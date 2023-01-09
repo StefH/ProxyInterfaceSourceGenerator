@@ -19,6 +19,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
+        public int? Id { get => _Instance.Id; set => _Instance.Id = value; }
+
 
 
 
@@ -27,13 +29,22 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public static implicit operator OperatorTestProxy(string name)
         {
-            var instance = (OperatorTest) name;
-            return new OperatorTestProxy(instance);
+            return new OperatorTestProxy((OperatorTest) name);
+        }
+
+        public static implicit operator OperatorTestProxy(int? id)
+        {
+            return new OperatorTestProxy((OperatorTest) id);
         }
 
         public static explicit operator string(OperatorTestProxy test)
         {
             return (string) test._Instance;
+        }
+
+        public static explicit operator int?(OperatorTestProxy test)
+        {
+            return (int?) test._Instance;
         }
 
 

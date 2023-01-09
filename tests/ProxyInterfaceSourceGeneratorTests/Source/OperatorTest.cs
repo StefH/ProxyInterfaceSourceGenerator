@@ -4,6 +4,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public string Name { get; set; } = null!;
 
+        public int? Id { get; set; }
+
         // Operator : implicit
         public static implicit operator OperatorTest(string name)
         {
@@ -12,11 +14,24 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
                 Name = name
             };
         }
+        
+        public static implicit operator OperatorTest(int? id)
+        {
+            return new()
+            {
+                Id = id
+            };
+        }
 
         // Operator : explicit
         public static explicit operator string(OperatorTest test)
         {
             return test.Name;
+        }
+
+        public static explicit operator int?(OperatorTest test)
+        {
+            return test.Id;
         }
     }
 

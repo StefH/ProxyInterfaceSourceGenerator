@@ -361,8 +361,7 @@ using System;
 
                 str.AppendLine($"        public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
                 str.AppendLine(@"        {");
-                str.AppendLine($"            var instance = ({targetClassSymbol.Symbol.Name}) {parameter.Name};");
-                str.AppendLine($"            return new {proxyClassName}(instance);");
+                str.AppendLine($"            return new {proxyClassName}(({targetClassSymbol.Symbol.Name}) {parameter.Name});");
                 str.AppendLine(@"        }");
             }
 
