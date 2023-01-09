@@ -24,6 +24,8 @@ using System;
 
 
 
+
+
         public NoNamespaceProxy(ProxyInterfaceSourceGeneratorTests.Source.NoNamespace instance)
         {
             _Instance = instance;

@@ -30,6 +30,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+
+
         public GenericProxy(ProxyInterfaceSourceGeneratorTests.Source.Generic<T> instance)
         {
             _Instance = instance;
