@@ -78,13 +78,12 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
         var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
         var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
-        var operators = MemberHelper.GetPublicStaticOperators(targetClassSymbol, pd.ProxyBaseClasses);
-        var operatorsAsString = GenerateOperators(operators, targetClassSymbol, pd.ProxyBaseClasses);
+        var operators = GenerateOperators(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
-        if (Context.ReplacedTypes.Any() || operators.Any())
+        if (Context.ReplacedTypes.Any())
         {
-            configurationForMapster = GenerateMapperConfigurationForMapster(operators.Any());
+            configurationForMapster = GenerateMapperConfigurationForMapster();
         }
 
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(pd.Namespace);
@@ -113,7 +112,7 @@ using System;
 
 {events}
 
-{operatorsAsString}
+{operators}
 
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
@@ -333,41 +332,38 @@ using System;
         return str.ToString();
     }
 
-    private string GenerateOperators(IReadOnlyList<IMethodSymbol> operators, ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GenerateOperators(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var @operator in operators)
+        foreach (var @operator in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyBaseClasses))
         {
             foreach (var attribute in @operator.GetAttributesAsList())
             {
                 str.AppendLine($"        {attribute}");
             }
 
-            
             var parameter = @operator.Parameters.First();
             var proxyClassName = targetClassSymbol.Symbol.ResolveProxyClassName();
-            var varNameAsString = $"{@operator.GetSanitizedName()}_";
 
             var operatorType = @operator.Name.ToLowerInvariant().Replace("op_", string.Empty);
             if (operatorType == "explicit")
             {
                 var returnTypeAsString = GetReplacedType(@operator.ReturnType, out _);
 
-                str.AppendLine($"       public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
-                str.AppendLine(@"       {");
-                str.AppendLine($"           var {varNameAsString} = Mapster.TypeAdapter.Adapt<{targetClassSymbol.Symbol.Name}>({parameter.Name});");
-                str.AppendLine($"           return ({returnTypeAsString}) {varNameAsString};");
-                str.AppendLine(@"       }");
+                str.AppendLine($"        public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            return ({returnTypeAsString}) {parameter.Name}._Instance;");
+                str.AppendLine(@"        }");
             }
             else
             {
                 var returnTypeAsString = GetReplacedType(parameter.Type, out _);
 
-                str.AppendLine($"       public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
-                str.AppendLine(@"       {");
-                str.AppendLine($"           var {varNameAsString} = {parameter.Name};");
-                str.AppendLine($"           return ({proxyClassName}) {varNameAsString};");
-                str.AppendLine(@"       }");
+                str.AppendLine($"        public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            var instance = ({targetClassSymbol.Symbol.Name}) {parameter.Name};");
+                str.AppendLine($"            return new {proxyClassName}(instance);");
+                str.AppendLine(@"        }");
             }
 
             str.AppendLine();

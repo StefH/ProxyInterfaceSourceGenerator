@@ -132,6 +132,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 
 
 
+
+
         public LocalActorRefProviderProxy(Akka.Actor.LocalActorRefProvider instance)
         {
             _Instance = instance;

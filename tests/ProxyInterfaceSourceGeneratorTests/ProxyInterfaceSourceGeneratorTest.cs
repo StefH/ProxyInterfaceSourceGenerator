@@ -141,9 +141,8 @@ namespace ProxyInterfaceSourceGeneratorTests
             string name2 = (string)p;
             name2.Should().Be(name);
 
-            var p2 = (OperatorTestProxy)"x";
-            
-            
+            var p2 = (OperatorTestProxy)name;
+            p2.Should().BeEquivalentTo(new OperatorTestProxy(operatorTest));
         }
 
         [Fact]

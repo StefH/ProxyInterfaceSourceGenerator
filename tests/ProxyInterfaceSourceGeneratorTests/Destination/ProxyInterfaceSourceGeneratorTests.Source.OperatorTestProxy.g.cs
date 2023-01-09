@@ -25,17 +25,16 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-       public static implicit operator OperatorTestProxy(string name)
-       {
-           var op_Implicit_ = name;
-           return (OperatorTestProxy) op_Implicit_;
-       }
+        public static implicit operator OperatorTestProxy(string name)
+        {
+            var instance = (OperatorTest) name;
+            return new OperatorTestProxy(instance);
+        }
 
-       public static explicit operator string(OperatorTestProxy test)
-       {
-           var op_Explicit_ = Mapster.TypeAdapter.Adapt<OperatorTest>(test);
-           return (string) op_Explicit_;
-       }
+        public static explicit operator string(OperatorTestProxy test)
+        {
+            return (string) test._Instance;
+        }
 
 
 
