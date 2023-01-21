@@ -222,7 +222,7 @@ using System;
                 overrideOrVirtual = "virtual ";
             }
 
-            string returnTypeAsString = GetReplacedType(method.ReturnType, out var returnIsReplaced);
+            string returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -348,7 +348,7 @@ using System;
             var operatorType = @operator.Name.ToLowerInvariant().Replace("op_", string.Empty);
             if (operatorType == "explicit")
             {
-                var returnTypeAsString = GetReplacedType(@operator.ReturnType, out _);
+                var returnTypeAsString = GetReplacedTypeAsString(@operator.ReturnType, out _);
 
                 str.AppendLine($"        public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
                 str.AppendLine(@"        {");
@@ -357,7 +357,7 @@ using System;
             }
             else
             {
-                var returnTypeAsString = GetReplacedType(parameter.Type, out _);
+                var returnTypeAsString = GetReplacedTypeAsString(parameter.Type, out _);
 
                 str.AppendLine($"        public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
                 str.AppendLine(@"        {");

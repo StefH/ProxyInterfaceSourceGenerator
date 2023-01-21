@@ -22,12 +22,12 @@ internal abstract class BaseGenerator
 
     protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
     {
-        return GetReplacedType(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, out isReplaced);
     }
 
     protected string GetParameterType(IParameterSymbol property, out bool isReplaced)
     {
-        return GetReplacedType(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, out isReplaced);
     }
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
@@ -112,7 +112,7 @@ internal abstract class BaseGenerator
         {
             if (replaceIt)
             {
-                constraints.Add(GetReplacedType(namedTypeSymbol, out _));
+                constraints.Add(GetReplacedTypeAsString(namedTypeSymbol, out _));
             }
             else
             {
@@ -136,7 +136,7 @@ internal abstract class BaseGenerator
         return false;
     }
 
-    protected string GetReplacedType(ITypeSymbol typeSymbol, out bool isReplaced)
+    protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out bool isReplaced)
     {
         isReplaced = false;
 
@@ -153,30 +153,39 @@ internal abstract class BaseGenerator
             return existing.FullInterfaceName;
         }
 
-        if (typeSymbol is INamedTypeSymbol namedTypedSymbol)
+        ITypeSymbol[] typeArguments;
+        if (typeSymbol is INamedTypeSymbol namedTypedSymbol1)
         {
-            var propertyTypeAsStringToBeModified = typeSymbolAsString;
-            foreach (var typeArgument in namedTypedSymbol.TypeArguments)
-            {
-                var typeArgumentAsString = typeArgument.ToString();
-
-                if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
-                {
-                    isReplaced = true;
-
-                    if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
-                    {
-                        Context.ReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
-                    }
-
-                    propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
-                }
-            }
-
-            return propertyTypeAsStringToBeModified;
+            typeArguments = namedTypedSymbol1.TypeArguments.ToArray();
+        }
+        else if (typeSymbol is IArrayTypeSymbol arrayTypeSymbol)
+        {
+            typeArguments = new[] { arrayTypeSymbol.ElementType };
+        }
+        else
+        {
+            return typeSymbolAsString;
         }
 
-        return typeSymbolAsString;
+        var propertyTypeAsStringToBeModified = typeSymbolAsString;
+        foreach (var typeArgument in typeArguments)
+        {
+            var typeArgumentAsString = typeArgument.ToString();
+
+            if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
+            {
+                isReplaced = true;
+
+                if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+                {
+                    Context.ReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                }
+
+                propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+            }
+        }
+
+        return propertyTypeAsStringToBeModified;
     }
 
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
