@@ -1,4 +1,5 @@
-# 0.0.29 (09 January 2023)
-- #51 Add support for implicit and explicit operators [enhancement]
+# 0.0.30 (23 January 2023)
+- #53 Return correct type (interfacve) for array [bug]
+- #52 Proxied array return types are left as is, and do not return their proxied type [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
