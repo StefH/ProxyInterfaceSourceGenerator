@@ -135,7 +135,7 @@ using System;
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        {GetReplacedType(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
+            str.AppendLine($"        {GetReplacedTypeAsString(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
             str.AppendLine();
         }
 
