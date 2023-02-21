@@ -263,6 +263,7 @@ internal abstract class BaseGenerator
 
     /// <summary>
     /// Issue 54
+    /// double[*,*] --> double[,]
     /// </summary>
     protected static string FixType(string type)
     {
