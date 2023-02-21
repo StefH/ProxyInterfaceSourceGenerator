@@ -9,7 +9,7 @@ internal static class MethodParameterBuilder
     public static string Build(IParameterSymbol parameterSymbol, string? type)
     {
         var stringBuilder = new StringBuilder();
-        if (type is { })
+        if (type is not null)
         {
             stringBuilder.Append(parameterSymbol.GetAttributesPrefix()); // "" or [NotNullWhen(true)]
             stringBuilder.Append(parameterSymbol.GetParamsPrefix()); // "" or "params "

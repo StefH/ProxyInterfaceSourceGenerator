@@ -85,6 +85,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             b = 1;
         }
 
+        public void Out_MultiDimensionIssue54(out double[,] x)
+        {
+            x = new double[0, 0];
+        }
+
         public bool Generic2<T1, T2>(int x, T1 t1, T2 t2)
             where T1 : struct
             where T2 : class, new()

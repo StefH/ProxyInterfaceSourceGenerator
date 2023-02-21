@@ -11,6 +11,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal abstract class BaseGenerator
 {
+    private const string Star = "*";
+
     protected readonly Context Context;
     protected readonly bool SupportsNullable;
 
@@ -150,7 +152,7 @@ internal abstract class BaseGenerator
             }
 
             isReplaced = true;
-            return existing.FullInterfaceName;
+            return FixType(existing.FullInterfaceName);
         }
 
         ITypeSymbol[] typeArguments;
@@ -164,7 +166,7 @@ internal abstract class BaseGenerator
         }
         else
         {
-            return typeSymbolAsString;
+            return FixType(typeSymbolAsString);
         }
 
         var propertyTypeAsStringToBeModified = typeSymbolAsString;
@@ -185,7 +187,7 @@ internal abstract class BaseGenerator
             }
         }
 
-        return propertyTypeAsStringToBeModified;
+        return FixType(propertyTypeAsStringToBeModified);
     }
 
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
@@ -257,5 +259,13 @@ internal abstract class BaseGenerator
             }
         }
         return extendsProxyClasses;
+    }
+
+    /// <summary>
+    /// Issue 54
+    /// </summary>
+    private static string FixType(string type)
+    {
+        return type.Replace(Star, string.Empty);
     }
 }
