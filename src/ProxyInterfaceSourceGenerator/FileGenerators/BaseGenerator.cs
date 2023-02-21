@@ -264,7 +264,7 @@ internal abstract class BaseGenerator
     /// <summary>
     /// Issue 54
     /// </summary>
-    private static string FixType(string type)
+    protected static string FixType(string type)
     {
         return type.Replace(Star, string.Empty);
     }

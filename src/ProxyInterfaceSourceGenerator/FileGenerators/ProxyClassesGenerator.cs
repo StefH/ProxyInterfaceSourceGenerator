@@ -235,6 +235,7 @@ using System;
             str.AppendLine("        {");
             foreach (var ps in method.Parameters)
             {
+                var type = FixType(ps.Type.ToString());
                 string normalOrMap = $" = {ps.GetSanitizedName()}";
                 if (ps.RefKind == RefKind.Out)
                 {
@@ -245,11 +246,11 @@ using System;
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
-                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{ps.Type}>({ps.GetSanitizedName()})";
+                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()})";
                     }
                 }
 
-                str.AppendLine($"            {ps.Type} {ps.GetSanitizedName()}_{normalOrMap};");
+                str.AppendLine($"            {type} {ps.GetSanitizedName()}_{normalOrMap};");
             }
 
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
