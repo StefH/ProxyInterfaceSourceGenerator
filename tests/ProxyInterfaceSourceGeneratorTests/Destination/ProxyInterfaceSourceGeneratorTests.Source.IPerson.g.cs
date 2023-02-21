@@ -54,6 +54,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         void In_Out_Ref1(in int a, out int b, ref int c);
 
+        double[,] Out_MultiDimensionIssue54(out double[,] x);
+
         bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new();
 
         System.Threading.Tasks.Task Method1Async();
