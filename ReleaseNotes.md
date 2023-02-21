@@ -1,3 +1,7 @@
+# 0.0.31 (21 February 2023)
+- [#55](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/55) - Fixed multi-dimension argument / return type [bug] contributed by [StefH](https://github.com/StefH)
+- [#54](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/54) - 2D arrays as inputs to a method generate interfaces with incorrect asterisks in their array definitions [bug]
+
 # 0.0.30 (23 January 2023)
 - [#53](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/53) - Return correct type (interfacve) for array [bug] contributed by [StefH](https://github.com/StefH)
 - [#52](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/52) - Proxied array return types are left as is, and do not return their proxied type [bug]
