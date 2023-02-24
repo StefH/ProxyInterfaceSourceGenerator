@@ -1,4 +1,4 @@
-﻿[
+[
   {
     HintName: ProxyInterfaceGenerator.ProxyAttribute.g.cs,
     Source:
@@ -20,11 +20,13 @@ namespace ProxyInterfaceGenerator
     {
         public Type Type { get; }
         public bool ProxyBaseClasses { get; }
+        public string ProxyAccessModifier { get; }
 
-        public ProxyAttribute(Type type, bool proxyBaseClasses = false)
+        public ProxyAttribute(Type type, bool proxyBaseClasses = false, string proxyAccessModifier = "public")
         {
             Type = type;
             ProxyBaseClasses = proxyBaseClasses;
+            ProxyAccessModifier = proxyAccessModifier;
         }
     }
 }
@@ -80,7 +82,7 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class FooProxy : IFoo
+    internal partial class FooProxy : IFoo
     {
         public ProxyInterfaceSourceGeneratorTests.Source.Foo _Instance { get; }
         

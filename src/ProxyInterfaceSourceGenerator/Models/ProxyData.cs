@@ -17,4 +17,6 @@ internal class ProxyData
     public List<string> Usings { get; init; }
 
     public bool ProxyBaseClasses { get; init; }
+
+    public string ProxyAccessModifier { get; init; }
 }

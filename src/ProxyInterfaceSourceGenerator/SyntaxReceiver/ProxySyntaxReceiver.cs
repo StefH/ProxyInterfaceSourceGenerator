@@ -73,6 +73,16 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             proxyBaseClasses = false;
         }
 
+        string proxyAccessModifier;
+        try
+        {
+            proxyAccessModifier = ((LiteralExpressionSyntax)argumentList.Arguments[2].Expression).Token.ValueText;
+        }
+        catch
+        {
+            proxyAccessModifier = "public";
+        }
+
         data = new ProxyData
         {
             Namespace = ns,
@@ -82,7 +92,8 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             ShortTypeName = ConvertTypeName(rawTypeName).Split('.').Last(),
             FullTypeName = ConvertTypeName(rawTypeName),
             Usings = usings,
-            ProxyBaseClasses = proxyBaseClasses
+            ProxyBaseClasses = proxyBaseClasses,
+            ProxyAccessModifier = proxyAccessModifier
         };
 
         return true;

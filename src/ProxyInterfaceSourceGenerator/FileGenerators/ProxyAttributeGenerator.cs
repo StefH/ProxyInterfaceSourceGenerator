@@ -26,11 +26,13 @@ namespace ProxyInterfaceGenerator
     {{
         public Type Type {{ get; }}
         public bool ProxyBaseClasses {{ get; }}
+        public string ProxyAccessModifier {{ get; }}
 
-        public {ClassName}(Type type, bool proxyBaseClasses = false)
+        public {ClassName}(Type type, bool proxyBaseClasses = false, string proxyAccessModifier = ""public"")
         {{
             Type = type;
             ProxyBaseClasses = proxyBaseClasses;
+            ProxyAccessModifier = proxyAccessModifier;
         }}
     }}
 }}");

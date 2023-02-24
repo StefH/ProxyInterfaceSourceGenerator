@@ -67,7 +67,12 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo)"
+                ArgumentList = new[]
+                {
+                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo)",
+                    "false",
+                    "\"internal\""
+                }
             }
         };
 
