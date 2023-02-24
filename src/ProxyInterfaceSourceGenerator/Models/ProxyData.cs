@@ -1,3 +1,5 @@
+using ProxyInterfaceSourceGenerator.Types;
+
 namespace ProxyInterfaceSourceGenerator.Models;
 
 internal class ProxyData
@@ -17,4 +19,6 @@ internal class ProxyData
     public List<string> Usings { get; init; }
 
     public bool ProxyBaseClasses { get; init; }
+
+    public ProxyInterfaceGeneratorAccessibility Accessibility { get; init; }
 }
