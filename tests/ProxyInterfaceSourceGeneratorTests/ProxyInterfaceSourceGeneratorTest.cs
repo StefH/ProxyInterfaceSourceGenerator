@@ -318,6 +318,49 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Fact]
+    public void GenerateFiles_ForSingleClass_AsInternal_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.ITestClassInternal.g.cs";
+        var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.TestClassInternalProxy.g.cs";
+
+        var path = "./Source/ITestClassInternal.cs";
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = new[] { "typeof(ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal)", "ProxyClassAccessibility.Internal" }
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[] { sourceFile });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(3);
+
+        // Assert interface
+        var @interface = result.Files[1].SyntaxTree;
+        @interface.FilePath.Should().EndWith(interfaceFilename);
+
+        var interfaceCode = @interface.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
+        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+
+        // Assert Proxy
+        var proxyClass = result.Files[2].SyntaxTree;
+        proxyClass.FilePath.Should().EndWith(proxyClassFilename);
+
+        var proxyCode = proxyClass.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
+        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+    }
+
+    [Fact]
     public void GenerateFiles_ForTwoClasses_Should_GenerateCorrectFiles()
     {
         // Arrange
@@ -398,6 +441,4 @@ public class ProxyInterfaceSourceGeneratorTest
         if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
         proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
     }
-
-
 }

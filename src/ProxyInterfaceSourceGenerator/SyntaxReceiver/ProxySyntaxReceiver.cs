@@ -31,19 +31,14 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             return false;
         }
 
-        var attributeLists = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString())));
-        if (attributeLists is null)
+        var attributeList = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString())));
+        if (attributeList is null)
         {
             // InterfaceDeclarationSyntax should have the correct attribute
             return false;
         }
 
-        var argumentList = attributeLists.Attributes.FirstOrDefault()?.ArgumentList;
-        if (argumentList is null)
-        {
-            return false;
-        }
-
+       
         var usings = new List<string>();
 
         string ns = interfaceDeclarationSyntax.GetNamespace();
@@ -60,29 +55,21 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             }
         }
 
-        var typeSyntax = ((TypeOfExpressionSyntax)argumentList.Arguments[0].Expression).Type;
-        string rawTypeName = typeSyntax.ToString();
+        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList);
 
-        bool proxyBaseClasses;
-        try
-        {
-            proxyBaseClasses = bool.Parse(((LiteralExpressionSyntax)argumentList.Arguments[1].Expression).ToString());
-        }
-        catch
-        {
-            proxyBaseClasses = false;
-        }
-
+        var rawTypeNameAsString = fluentBuilderAttributeArguments.RawTypeName;
+        
         data = new ProxyData
         {
             Namespace = ns,
             ShortInterfaceName = interfaceDeclarationSyntax.Identifier.ToString(),
             FullInterfaceName = CreateFullInterfaceName(ns, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
-            FullRawTypeName = rawTypeName,
-            ShortTypeName = ConvertTypeName(rawTypeName).Split('.').Last(),
-            FullTypeName = ConvertTypeName(rawTypeName),
+            FullRawTypeName = rawTypeNameAsString,
+            ShortTypeName = ConvertTypeName(rawTypeNameAsString).Split('.').Last(),
+            FullTypeName = ConvertTypeName(rawTypeNameAsString),
             Usings = usings,
-            ProxyBaseClasses = proxyBaseClasses
+            ProxyBaseClasses = fluentBuilderAttributeArguments.ProxyBaseClasses,
+            Accessibility = fluentBuilderAttributeArguments.Accessibility
         };
 
         return true;
