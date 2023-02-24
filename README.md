@@ -53,6 +53,15 @@ public partial interface IPerson
 }
 ```
 
+#### ProxyClassAccessibility
+By default, the generated Proxy class is `public`. If you want to create the Proxy class as `internal`, use the following:
+
+``` c#
+[ProxyInterfaceGenerator.Proxy(typeof(Person), ProxyClassAccessibility.Internal)] // 👈 Provide `ProxyClassAccessibility.Internal` as second parameter.
+public partial interface IPerson
+{
+}
+```
 
 ### When the code is compiled, this source generator creates the following
 
@@ -71,6 +80,7 @@ public partial interface IPerson
 Which takes the external class in the constructor and wraps all public properties, events and methods.
 
 ``` c#
+// ⭐
 public class PersonProxy : IPerson
 {
     public Person _Instance { get; }
@@ -90,6 +100,8 @@ public class PersonProxy : IPerson
     }
 }
 ```
+
+:star: By default the accessibility from the generated Proxy class is `public`.
 
 ### :three: Use it
 ``` c#

@@ -1,3 +1,7 @@
+# 0.0.32 (24 February 2023)
+- [#58](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/58) - Add support for public and internal ProxyClass [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#56](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/56) - Internal proxies/Proxy factory [enhancement]
+
 # 0.0.31 (21 February 2023)
 - [#55](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/55) - Fixed multi-dimension argument / return type [bug] contributed by [StefH](https://github.com/StefH)
 - [#54](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/54) - 2D arrays as inputs to a method generate interfaces with incorrect asterisks in their array definitions [bug]

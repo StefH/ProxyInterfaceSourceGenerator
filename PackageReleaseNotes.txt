@@ -1,5 +1,5 @@
-# 0.0.31 (21 February 2023)
-- #55 Fixed multi-dimension argument / return type [bug]
-- #54 2D arrays as inputs to a method generate interfaces with incorrect asterisks in their array definitions [bug]
+# 0.0.32 (24 February 2023)
+- #58 Add support for public and internal ProxyClass [enhancement]
+- #56 Internal proxies/Proxy factory [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
