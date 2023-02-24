@@ -26,21 +26,21 @@ namespace ProxyInterfaceGenerator
     {{
         public Type Type {{ get; }}
         public bool ProxyBaseClasses {{ get; }}
-        public ProxyInterfaceGeneratorAccessibility Accessibility {{ get; }}
+        public ProxyClassAccessibility Accessibility {{ get; }}
 
-        public {ClassName}(Type type) : this(type, false, ProxyInterfaceGeneratorAccessibility.Public)
+        public {ClassName}(Type type) : this(type, false, ProxyClassAccessibility.Public)
         {{
         }}
 
-        public {ClassName}(Type type, bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyInterfaceGeneratorAccessibility.Public)
+        public {ClassName}(Type type, bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyClassAccessibility.Public)
         {{
         }}
 
-        public {ClassName}(Type type, ProxyInterfaceGeneratorAccessibility accessibility) : this(type, false, accessibility)
+        public {ClassName}(Type type, ProxyClassAccessibility accessibility) : this(type, false, accessibility)
         {{
         }}
 
-        public {ClassName}(Type type, bool proxyBaseClasses, ProxyInterfaceGeneratorAccessibility accessibility)
+        public {ClassName}(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility)
         {{
             Type = type;
             ProxyBaseClasses = proxyBaseClasses;
@@ -49,9 +49,10 @@ namespace ProxyInterfaceGenerator
     }}
 
     [Flags]
-    internal enum ProxyInterfaceGeneratorAccessibility
+    internal enum ProxyClassAccessibility
     {{
         Public = 0,
+
         Internal = 1
     }}
 }}");

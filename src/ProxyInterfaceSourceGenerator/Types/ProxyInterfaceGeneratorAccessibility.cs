@@ -1,7 +1,7 @@
 namespace ProxyInterfaceSourceGenerator.Types;
 
 [Flags]
-internal enum ProxyInterfaceGeneratorAccessibility
+internal enum ProxyClassAccessibility
 {
     Public = 0,
 

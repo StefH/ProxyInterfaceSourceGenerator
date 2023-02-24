@@ -10,6 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Verify.SourceGenerators" Version="2.0.1" />
+        <PackageReference Include="Verify.Xunit" Version="19.6.0" />
         <PackageReference Include="Akka.Remote" Version="1.4.47" />
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="CultureAwareTesting.xUnit" Version="0.0.1" />

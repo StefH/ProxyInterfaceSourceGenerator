@@ -32,7 +32,7 @@ internal static class AttributeArgumentListParser
                 continue;
             }
 
-            if (TryParseAsEnum<ProxyInterfaceGeneratorAccessibility>(argument.Expression, out var accessibility))
+            if (TryParseAsEnum<ProxyClassAccessibility>(argument.Expression, out var accessibility))
             {
                 result = result with { Accessibility = accessibility };
             }
