@@ -49,7 +49,7 @@ namespace ProxyInterfaceGenerator
     }}
 
     [Flags]
-    internal enum ProxyClassAccessibility
+    public enum ProxyClassAccessibility
     {{
         Public = 0,
 
