@@ -9,47 +9,27 @@ internal static class AttributeArgumentListParser
 {
     public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList)
     {
-        var result = new ProxyInterfaceGeneratorAttributeArguments();
-
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 3)
         {
             throw new ArgumentException("The ProxyAttribute requires 1, 2 or 3 arguments.");
         }
 
-        if (argumentList.Arguments.Count == 1)
+        ProxyInterfaceGeneratorAttributeArguments result;
+        if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue))
         {
-            //if (TryParseAsBoolean(argumentList.Arguments[0].Expression, out var handleBaseClasses))
-            //{
-            //    return result with { HandleBaseClasses = handleBaseClasses };
-            //}
-
-            if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue))
-            {
-                return result with { RawTypeName = rawTypeValue };
-            }
-
-            //if (TryParseAsEnum<ProxyInterfaceGeneratorAccessibility>(argumentList.Arguments[0].Expression, out var accessibility))
-            //{
-            //    return result with { Accessibility = accessibility };
-            //}
-
-            throw new ArgumentException("When the ProxyAttribute is used with 1 argument, the only argument should be a Type.");
+            result = new ProxyInterfaceGeneratorAttributeArguments(rawTypeValue);
+        }
+        else
+        {
+            throw new ArgumentException("The first argument from the ProxyAttribute should be a Type.");
         }
 
-        foreach (var argument in argumentList.Arguments)
+        foreach (var argument in argumentList.Arguments.Skip(1))
         {
-            if (TryParseAsType(argument.Expression, out var rawTypeValue))
-            {
-                result = result with { RawTypeName = rawTypeValue };
-            }
-            else
-            {
-                throw new ArgumentException("When the ProxyAttribute is used with multiple arguments, the first argument should be a Type.");
-            }
-
             if (TryParseAsBoolean(argument.Expression, out var proxyBaseClasses))
             {
                 result = result with { ProxyBaseClasses = proxyBaseClasses };
+                continue;
             }
 
             if (TryParseAsEnum<ProxyInterfaceGeneratorAccessibility>(argument.Expression, out var accessibility))
@@ -90,6 +70,13 @@ internal static class AttributeArgumentListParser
     private static bool TryParseAsEnum<TEnum>(ExpressionSyntax expressionSyntax, out TEnum value)
         where TEnum : struct
     {
-        return Enum.TryParse(expressionSyntax.ToString().Substring(typeof(TEnum).Name.Length + 1), out value);
+        var enumAsString = expressionSyntax.ToString();
+        if (enumAsString.Length > typeof(TEnum).Name.Length && Enum.TryParse(expressionSyntax.ToString().Substring(typeof(TEnum).Name.Length + 1), out value))
+        {
+            return true;
+        }
+
+        value = default;
+        return false;
     }
 }

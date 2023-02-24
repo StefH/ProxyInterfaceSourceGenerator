@@ -398,6 +398,4 @@ public class ProxyInterfaceSourceGeneratorTest
         if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
         proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
     }
-
-
 }

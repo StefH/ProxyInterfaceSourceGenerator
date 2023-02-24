@@ -20,12 +20,33 @@ namespace ProxyInterfaceGenerator
     {
         public Type Type { get; }
         public bool ProxyBaseClasses { get; }
+        public ProxyInterfaceGeneratorAccessibility Accessibility { get; }
 
-        public ProxyAttribute(Type type, bool proxyBaseClasses = false)
+        public ProxyAttribute(Type type) : this(type, false, ProxyInterfaceGeneratorAccessibility.Public)
+        {
+        }
+
+        public ProxyAttribute(Type type, bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyInterfaceGeneratorAccessibility.Public)
+        {
+        }
+
+        public ProxyAttribute(Type type, ProxyInterfaceGeneratorAccessibility accessibility) : this(type, false, accessibility)
+        {
+        }
+
+        public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyInterfaceGeneratorAccessibility accessibility)
         {
             Type = type;
             ProxyBaseClasses = proxyBaseClasses;
+            Accessibility = accessibility;
         }
+    }
+
+    [Flags]
+    internal enum ProxyInterfaceGeneratorAccessibility
+    {
+        Public = 0,
+        Internal = 1
     }
 }
   },

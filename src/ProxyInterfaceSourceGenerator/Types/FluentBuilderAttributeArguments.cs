@@ -1,9 +1,7 @@
 namespace ProxyInterfaceSourceGenerator.Types;
 
-internal record ProxyInterfaceGeneratorAttributeArguments
+internal record ProxyInterfaceGeneratorAttributeArguments(string RawTypeName)
 {
-    public string RawTypeName { get; set; } = null!;
-
     public bool ProxyBaseClasses { get; set; }
 
     public ProxyInterfaceGeneratorAccessibility Accessibility { get; set; }
