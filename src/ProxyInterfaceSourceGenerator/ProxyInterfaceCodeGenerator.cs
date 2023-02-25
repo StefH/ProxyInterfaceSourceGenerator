@@ -16,7 +16,7 @@ internal
 #endif
 class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
-    private readonly ProxyAttributeGenerator _proxyAttributeGenerator = new ();
+    private readonly ExtraFilesGenerator _proxyAttributeGenerator = new ();
 
     public void Initialize(GeneratorInitializationContext context)
     {

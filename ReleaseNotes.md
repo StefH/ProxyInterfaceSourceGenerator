@@ -1,4 +1,4 @@
-# 0.0.33 (24 February 2023)
+# 0.0.34 (25 February 2023)
 - [#58](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/58) - Add support for public and internal ProxyClass [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#56](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/56) - Internal proxies/Proxy factory [enhancement]
 
