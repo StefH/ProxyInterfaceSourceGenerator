@@ -103,10 +103,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
         {
-            int a_ = a;
             int b_;
-            int c_ = c;
-            _Instance.In_Out_Ref1(in a_, out b_, ref c_);
+            _Instance.In_Out_Ref1(in a, out b_, ref c);
             b = b_;
         }
 

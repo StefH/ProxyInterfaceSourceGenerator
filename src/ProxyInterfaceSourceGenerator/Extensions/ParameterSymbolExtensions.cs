@@ -8,7 +8,12 @@ internal static class ParameterSymbolExtensions
 {
     private const string ParameterValueNull = "null";
 
-    public static string GetRefPrefix(this IParameterSymbol ps)
+    public static bool IsRef(this IParameterSymbol ps)
+    {
+        return ps.RefKind is RefKind.Ref or RefKind.RefReadOnly;
+    }
+
+    public static string GetRefKindPrefix(this IParameterSymbol ps)
     {
         return ps.RefKind switch
         {

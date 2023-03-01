@@ -273,7 +273,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_ForSingleClass_Should_GenerateCorrectFiles()
     {
         // Arrange
-        var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
+        var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
         var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs";
         var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
 
@@ -364,7 +364,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_ForTwoClasses_Should_GenerateCorrectFiles()
     {
         // Arrange
-        var attributeFilename = "ProxyInterfaceGenerator.ProxyAttribute.g.cs";
+        var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
         var interfaceHumanFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHuman.g.cs";
         var proxyClassHumanFilename = "ProxyInterfaceSourceGeneratorTests.Source.HumanProxy.g.cs";
         var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
@@ -440,5 +440,12 @@ public class ProxyInterfaceSourceGeneratorTest
         var proxyCode = proxyClassPerson.ToString();
         if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
         proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
+
+        var personProxy = new PersonProxy(new Person());
+
+        int c = 100;
+        personProxy.In_Out_Ref1(1, out var b, ref c);
+
+        c.Should().Be(101);
     }
 }
