@@ -83,6 +83,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public void In_Out_Ref1(in int a, out int b, ref int c)
         {
             b = 1;
+            c++;
         }
 
         public double[,] Out_MultiDimensionIssue54(out double[,] x)

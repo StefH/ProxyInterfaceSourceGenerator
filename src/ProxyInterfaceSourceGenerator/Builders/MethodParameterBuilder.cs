@@ -13,7 +13,7 @@ internal static class MethodParameterBuilder
         {
             stringBuilder.Append(parameterSymbol.GetAttributesPrefix()); // "" or [NotNullWhen(true)]
             stringBuilder.Append(parameterSymbol.GetParamsPrefix()); // "" or "params "
-            stringBuilder.Append(parameterSymbol.GetRefPrefix()); // "" or "out "
+            stringBuilder.Append(parameterSymbol.GetRefKindPrefix()); // "" or "out "
             stringBuilder.AppendFormat("{0} ", type); // string or another type
         }
         

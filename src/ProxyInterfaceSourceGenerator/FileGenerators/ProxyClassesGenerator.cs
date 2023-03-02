@@ -208,7 +208,9 @@ using System;
                 var type = GetParameterType(parameterSymbol, out _);
 
                 methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
-                invokeParameters.Add($"{parameterSymbol.GetRefPrefix()}{parameterSymbol.GetSanitizedName()}_");
+
+                // Do not add the '_' for a 'ref' parameter.
+                invokeParameters.Add($"{parameterSymbol.GetRefKindPrefix()}{parameterSymbol.GetSanitizedName()}{(!parameterSymbol.IsRef()).IIf("_")}");
             }
 
             string overrideOrVirtual = string.Empty;
@@ -235,8 +237,9 @@ using System;
             }
 
             str.AppendLine($"        public {overrideOrVirtual}{returnTypeAsString} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement}");
-            str.AppendLine("        {");
-            foreach (var ps in method.Parameters)
+            str.AppendLine(@"        {");
+
+            foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
                 var type = FixType(ps.Type.ToString());
                 string normalOrMap = $" = {ps.GetSanitizedName()}";
