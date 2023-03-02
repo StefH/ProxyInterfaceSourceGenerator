@@ -1,3 +1,7 @@
+# 0.0.35 (02 March 2023)
+- [#61](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/61) - Fix &quot;ref&quot; parameter [bug] contributed by [StefH](https://github.com/StefH)
+- [#60](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/60) - Parameters passed in with Keyword &quot;ref&quot; are proxied such that they are no longer updated by reference [bug]
+
 # 0.0.34 (25 February 2023)
 - [#58](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/58) - Add support for public and internal ProxyClass [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#56](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/56) - Internal proxies/Proxy factory [enhancement]
