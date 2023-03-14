@@ -1,6 +1,6 @@
 namespace ProxyInterfaceConsumer.Http
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(System.Net.Http.HttpClient, true))]
+    [ProxyInterfaceGenerator.Proxy(typeof(System.Net.Http.HttpClient), true)]
     public partial interface IHttpClient : IHttpMessageInvoker
     {
         
