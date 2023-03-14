@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     internal partial class TestClassInternalProxy : ITestClassInternal
     {
+        public static implicit operator TestClassInternalProxy(ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal value) => new TestClassInternalProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal(TestClassInternalProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal _Instance { get; }
         
 

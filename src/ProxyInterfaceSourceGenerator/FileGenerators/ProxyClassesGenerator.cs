@@ -91,7 +91,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var accessibility = (pd.Accessibility == ProxyClassAccessibility.Internal).IIf("internal", "public");
 
-        var implicitOperator1 = $"public static implicit operator {className}({targetClassSymbol.Symbol} value) => new PersonProxy({className});";
+        var implicitOperator1 = $"public static implicit operator {className}({targetClassSymbol.Symbol} value) => new {className}(value);";
         var implicitOperator2 = $"public static implicit operator {targetClassSymbol.Symbol}({className} @this) => @this;";
 
         return $@"//----------------------------------------------------------------------------------------

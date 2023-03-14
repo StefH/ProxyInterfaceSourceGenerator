@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class OperatorTestProxy : IOperatorTest
     {
+        public static implicit operator OperatorTestProxy(ProxyInterfaceSourceGeneratorTests.Source.OperatorTest value) => new OperatorTestProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.OperatorTest(OperatorTestProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
         
 

@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class ClientObjectProxy : IClientObject
     {
+        public static implicit operator ClientObjectProxy(Microsoft.SharePoint.Client.ClientObject value) => new ClientObjectProxy(value);
+
+        public static implicit operator Microsoft.SharePoint.Client.ClientObject(ClientObjectProxy @this) => @this;
+
         public Microsoft.SharePoint.Client.ClientObject _Instance { get; }
         
 

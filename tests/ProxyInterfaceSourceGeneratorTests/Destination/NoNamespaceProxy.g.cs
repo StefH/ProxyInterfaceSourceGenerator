@@ -13,6 +13,10 @@ using System;
 
     public partial class NoNamespaceProxy : INoNamespace
     {
+        public static implicit operator NoNamespaceProxy(ProxyInterfaceSourceGeneratorTests.Source.NoNamespace value) => new NoNamespaceProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.NoNamespace(NoNamespaceProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
         
 

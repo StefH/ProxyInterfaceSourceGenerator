@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class ClientContextProxy : ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy, IClientContext
     {
+        public static implicit operator ClientContextProxy(Microsoft.SharePoint.Client.ClientContext value) => new ClientContextProxy(value);
+
+        public static implicit operator Microsoft.SharePoint.Client.ClientContext(ClientContextProxy @this) => @this;
+
         public new Microsoft.SharePoint.Client.ClientContext _Instance { get; }
         public Microsoft.SharePoint.Client.ClientRuntimeContext _InstanceClientRuntimeContext { get; }
 

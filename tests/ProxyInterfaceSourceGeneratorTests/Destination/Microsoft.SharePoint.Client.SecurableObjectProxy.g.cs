@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class SecurableObjectProxy : ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy, ISecurableObject
     {
+        public static implicit operator SecurableObjectProxy(Microsoft.SharePoint.Client.SecurableObject value) => new SecurableObjectProxy(value);
+
+        public static implicit operator Microsoft.SharePoint.Client.SecurableObject(SecurableObjectProxy @this) => @this;
+
         public new Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
         public Microsoft.SharePoint.Client.ClientObject _InstanceClientObject { get; }
 

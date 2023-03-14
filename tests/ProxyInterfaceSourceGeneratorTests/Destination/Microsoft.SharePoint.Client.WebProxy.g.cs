@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class WebProxy : ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy, IWeb
     {
+        public static implicit operator WebProxy(Microsoft.SharePoint.Client.Web value) => new WebProxy(value);
+
+        public static implicit operator Microsoft.SharePoint.Client.Web(WebProxy @this) => @this;
+
         public new Microsoft.SharePoint.Client.Web _Instance { get; }
         public Microsoft.SharePoint.Client.SecurableObject _InstanceSecurableObject { get; }
 

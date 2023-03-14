@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class HumanProxy : IHuman
     {
+        public static implicit operator HumanProxy(ProxyInterfaceSourceGeneratorTests.Source.Human value) => new HumanProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.Human(HumanProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
         
 

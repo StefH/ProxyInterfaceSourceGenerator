@@ -9,7 +9,6 @@
 
 #nullable enable
 using System;
-using AnyOfTypes;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
@@ -17,7 +16,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public static implicit operator PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person value) => new PersonProxy(value);
 
-        public static implicit operator Person(PersonProxy @this) => @this;
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.Person(PersonProxy @this) => @this;
 
         public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }

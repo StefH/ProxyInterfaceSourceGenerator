@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 {
     public partial class LocalActorRefProviderProxy : ILocalActorRefProvider
     {
+        public static implicit operator LocalActorRefProviderProxy(Akka.Actor.LocalActorRefProvider value) => new LocalActorRefProviderProxy(value);
+
+        public static implicit operator Akka.Actor.LocalActorRefProvider(LocalActorRefProviderProxy @this) => @this;
+
         public Akka.Actor.LocalActorRefProvider _Instance { get; }
         
 

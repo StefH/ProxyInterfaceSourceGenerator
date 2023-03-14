@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class GenericProxy<T> : IGeneric<T>
     {
+        public static implicit operator GenericProxy<T>(ProxyInterfaceSourceGeneratorTests.Source.Generic<T> value) => new GenericProxy<T>(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.Generic<T>(GenericProxy<T> @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
         
 

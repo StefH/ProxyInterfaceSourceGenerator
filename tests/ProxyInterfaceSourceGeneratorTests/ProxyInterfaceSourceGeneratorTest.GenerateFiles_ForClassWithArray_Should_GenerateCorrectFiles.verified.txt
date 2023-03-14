@@ -104,6 +104,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class FooProxy : IFoo
     {
+        public static implicit operator FooProxy(ProxyInterfaceSourceGeneratorTests.Source.Foo value) => new FooProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.Foo(FooProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.Foo _Instance { get; }
         
 

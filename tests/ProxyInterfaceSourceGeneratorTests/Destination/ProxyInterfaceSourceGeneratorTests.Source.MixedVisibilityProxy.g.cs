@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class MixedVisibilityProxy : IMixedVisibility
     {
+        public static implicit operator MixedVisibilityProxy(ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility value) => new MixedVisibilityProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility(MixedVisibilityProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
         
 

@@ -14,6 +14,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class PersonExtendsProxy : IPersonExtends
     {
+        public static implicit operator PersonExtendsProxy(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends value) => new PersonExtendsProxy(value);
+
+        public static implicit operator ProxyInterfaceSourceGeneratorTests.Source.PersonExtends(PersonExtendsProxy @this) => @this;
+
         public ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
         
 
