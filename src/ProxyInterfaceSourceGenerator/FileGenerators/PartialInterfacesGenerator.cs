@@ -84,8 +84,7 @@ using System;
 
 {GenerateEvents(classSymbol, proxyData.ProxyBaseClasses)}
     }}
-{namespaceEnd}
-{(SupportsNullable ? "#nullable disable" : string.Empty)}";
+{namespaceEnd}";
     }
 
     private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

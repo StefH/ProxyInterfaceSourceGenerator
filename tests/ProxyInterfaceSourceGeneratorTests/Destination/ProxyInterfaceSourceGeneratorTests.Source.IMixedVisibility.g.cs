@@ -25,4 +25,3 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
     }
 }
-#nullable disable

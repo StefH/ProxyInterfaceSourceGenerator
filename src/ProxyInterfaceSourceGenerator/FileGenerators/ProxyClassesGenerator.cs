@@ -125,8 +125,7 @@ using System;
 {configurationForMapster}
         }}
     }}
-{namespaceEnd}
-{(SupportsNullable ? "#nullable disable" : string.Empty)}";
+{namespaceEnd}";
     }
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
