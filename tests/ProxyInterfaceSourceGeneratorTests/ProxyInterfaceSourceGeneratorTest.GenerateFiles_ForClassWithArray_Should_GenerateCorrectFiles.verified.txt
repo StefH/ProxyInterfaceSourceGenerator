@@ -83,6 +83,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
     }
 }
+#nullable restore
   },
   {
     HintName: ProxyInterfaceSourceGeneratorTests.Source.FooProxy.g.cs,
@@ -134,5 +135,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
     }
 }
+#nullable restore
   }
 ]
