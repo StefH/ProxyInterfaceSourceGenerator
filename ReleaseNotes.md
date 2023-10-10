@@ -1,3 +1,7 @@
+# 0.0.36 (10 October 2023)
+- [#62](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/62) - Add test for HttpClient [test] contributed by [StefH](https://github.com/StefH)
+- [#65](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/65) - Change &quot;nullable disable&quot; to &quot;nullable restore&quot; [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.35 (02 March 2023)
 - [#61](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/61) - Fix &quot;ref&quot; parameter [bug] contributed by [StefH](https://github.com/StefH)
 - [#60](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/60) - Parameters passed in with Keyword &quot;ref&quot; are proxied such that they are no longer updated by reference [bug]
@@ -73,6 +77,7 @@
 
 # 0.0.12 (01 February 2022)
 - [#27](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/27) - ProxyBaseClasses [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#5](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/5) - generated code is not valid when there is no namespace (foreign class is in root scope) [test]
 
 # 0.0.11 (10 August 2021)
 - [#26](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/26) - Update filename for generated interface files + set DevelopmentDependency to true for the project [enhancement] contributed by [StefH](https://github.com/StefH)
