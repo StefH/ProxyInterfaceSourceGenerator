@@ -73,4 +73,4 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 
     }
 }
-#nullable disable
+#nullable restore

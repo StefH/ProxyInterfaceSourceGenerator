@@ -10,8 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Verify.SourceGenerators" Version="2.0.1" />
-        <PackageReference Include="Verify.Xunit" Version="19.6.0" />
         <PackageReference Include="Akka.Remote" Version="1.4.47" />
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="CultureAwareTesting.xUnit" Version="0.0.1" />
@@ -54,16 +52,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Destination\AkkaGenerated\" />
+        <Folder Include="Destination\AkkaGenerated\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Source\Generic.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-      <Compile Update="Source\IGeneric.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
+        <Compile Update="Source\Generic.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Source\IGeneric.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-# 0.0.35 (02 March 2023)
-- #61 Fix &quot;ref&quot; parameter [bug]
-- #60 Parameters passed in with Keyword &quot;ref&quot; are proxied such that they are no longer updated by reference [bug]
+# 0.0.36 (10 October 2023)
+- #62 Add test for HttpClient [test]
+- #65 Change &quot;nullable disable&quot; to &quot;nullable restore&quot; [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md

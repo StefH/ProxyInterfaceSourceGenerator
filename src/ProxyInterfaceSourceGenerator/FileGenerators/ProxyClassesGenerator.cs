@@ -133,7 +133,7 @@ using System;
         }}
     }}
 {namespaceEnd}
-{SupportsNullable.IIf("#nullable disable")}";
+{SupportsNullable.IIf("#nullable restore")}";
     }
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
