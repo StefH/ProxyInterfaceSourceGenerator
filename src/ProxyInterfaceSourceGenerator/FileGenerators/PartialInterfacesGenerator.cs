@@ -70,7 +70,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
-{(SupportsNullable ? "#nullable enable" : string.Empty)}
+{SupportsNullable.IIf("#nullable enable")}
 using System;
 
 {namespaceStart}
@@ -85,7 +85,7 @@ using System;
 {GenerateEvents(classSymbol, proxyData.ProxyBaseClasses)}
     }}
 {namespaceEnd}
-{(SupportsNullable ? "#nullable disable" : string.Empty)}";
+{SupportsNullable.IIf("#nullable restore")}";
     }
 
     private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

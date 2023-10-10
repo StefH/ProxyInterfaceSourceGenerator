@@ -1,4 +1,4 @@
-﻿[
+[
   {
     HintName: ProxyInterfaceGenerator.Extra.g.cs,
     Source:
@@ -83,7 +83,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
     }
 }
-#nullable disable
+#nullable restore
   },
   {
     HintName: ProxyInterfaceSourceGeneratorTests.Source.FooProxy.g.cs,
@@ -135,6 +135,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
     }
 }
-#nullable disable
+#nullable restore
   }
 ]

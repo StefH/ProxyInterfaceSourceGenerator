@@ -100,7 +100,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
-{(SupportsNullable ? "#nullable enable" : string.Empty)}
+{SupportsNullable.IIf("#nullable enable")}
 using System;
 
 {namespaceStart}
@@ -126,7 +126,7 @@ using System;
         }}
     }}
 {namespaceEnd}
-{(SupportsNullable ? "#nullable disable" : string.Empty)}";
+{SupportsNullable.IIf("#nullable restore")}";
     }
 
     private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

@@ -56,4 +56,4 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
     }
 }
-#nullable disable
+#nullable restore
