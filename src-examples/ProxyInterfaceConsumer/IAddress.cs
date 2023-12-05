@@ -1,5 +1,3 @@
-using DifferentNamespace;
-
 namespace ProxyInterfaceConsumer
 {
     [ProxyInterfaceGenerator.Proxy(typeof(Address))]

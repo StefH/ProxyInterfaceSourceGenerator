@@ -23,6 +23,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
+        public void Dispose()
+        {
+            _Instance.Dispose();
+        }
+
 
 
 

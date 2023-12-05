@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DifferentNamespace;
 
 namespace ProxyInterfaceConsumer
 {
@@ -71,12 +70,12 @@ namespace ProxyInterfaceConsumer
             c++;
         }
 
-        public int In_Out_Ref2(in Address a, out Address b, ref Address c)
-        {
-            b = new Address();
-            c.HouseNumber = 11;
-            return 404;
-        }
+        //public int In_Out_Ref2(in Address a, out Address b, ref Address c)
+        //{
+        //    b = new Address();
+        //    c.HouseNumber = 11;
+        //    return 404;
+        //}
 
         public void Void()
         {

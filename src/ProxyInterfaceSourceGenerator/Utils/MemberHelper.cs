@@ -92,7 +92,7 @@ internal static class MemberHelper
         }
 
         var ownMembers = membersQuery.ToList();
-        var ownPropertyNames = ownMembers.Select(x => x.Name);
+        var ownMemberNames = ownMembers.Select(x => x.Name);
 
         if (!proxyBaseClasses)
         {
@@ -106,7 +106,7 @@ internal static class MemberHelper
         {
             var baseMembers = baseType.GetMembers().OfType<T>()
                 .Where(m => m.DeclaredAccessibility == Accessibility.Public)
-                .Where(x => !ownPropertyNames.Contains(x.Name));
+                .Where(x => !ownMemberNames.Contains(x.Name));
 
             foreach (var filter in filters)
             {

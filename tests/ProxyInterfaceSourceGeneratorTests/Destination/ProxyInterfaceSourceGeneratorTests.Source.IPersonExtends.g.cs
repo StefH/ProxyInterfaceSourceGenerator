@@ -54,6 +54,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         System.Threading.Tasks.Task<string?> Method3Async();
 
+        void Dispose();
+
 
 
 

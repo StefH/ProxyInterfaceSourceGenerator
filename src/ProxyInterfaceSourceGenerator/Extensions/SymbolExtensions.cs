@@ -1,6 +1,5 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using ProxyInterfaceSourceGenerator.Constants;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
 
@@ -8,8 +7,9 @@ internal static class SymbolExtensions
 {
     private static readonly string[] ExcludedAttributes =
     {
-        InternalClassNames.AsyncStateMachineAttribute ,
-        InternalClassNames.NullableAttribute
+        "System.Runtime.CompilerServices.NullableAttribute",
+        "System.Runtime.CompilerServices.NullableContextAttribute",
+        "System.Runtime.CompilerServices.AsyncStateMachineAttribute"
     };
 
     public static string GetAttributesPrefix(this ISymbol symbol)

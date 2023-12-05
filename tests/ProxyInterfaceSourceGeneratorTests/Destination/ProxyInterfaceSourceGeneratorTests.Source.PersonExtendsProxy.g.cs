@@ -108,6 +108,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
+        public void Dispose()
+        {
+            _Instance.Dispose();
+        }
+
 
 
 
