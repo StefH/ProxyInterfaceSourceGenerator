@@ -14,9 +14,9 @@
         <PackageTags>HttpClient;interface;IHttpClient;Proxy;HttpClientProxy</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <!--<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>-->
-        <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceGenerator/src/IHttpClient</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator/src/IHttpClient</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator/src/IHttpClient</RepositoryUrl>
+        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator/src/IHttpClient</RepositoryUrl>
         <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
         <PackageIcon>ihttpclient-icon.png</PackageIcon>
         <!--<IncludeBuildOutput>false</IncludeBuildOutput>

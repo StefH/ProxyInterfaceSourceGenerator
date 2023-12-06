@@ -14,9 +14,9 @@
         <PackageTags>class;interface;proxy;SourceGenerator;Analyzer;Generation;Generate;wrap</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>
-        <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceGenerator</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator</RepositoryUrl>
+        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator</RepositoryUrl>
         <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeBuildOutput>false</IncludeBuildOutput>
