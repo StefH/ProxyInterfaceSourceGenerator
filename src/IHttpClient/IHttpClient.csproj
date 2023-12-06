@@ -16,7 +16,7 @@
         <!--<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>-->
         <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceGenerator/src/IHttpClient</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator</RepositoryUrl>
+        <RepositoryUrl>https://github.com/StefH/ProxyInterfaceGenerator/src/IHttpClient</RepositoryUrl>
         <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
         <PackageIcon>ihttpclient-icon.png</PackageIcon>
         <!--<IncludeBuildOutput>false</IncludeBuildOutput>
