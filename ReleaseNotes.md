@@ -1,3 +1,6 @@
+# 0.0.37 (06 December 2023)
+- [#66](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/66) - Exclude System.Runtime.CompilerServices.NullableContextAttribute [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.36 (10 October 2023)
 - [#62](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/62) - Add test for HttpClient [test] contributed by [StefH](https://github.com/StefH)
 - [#65](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/65) - Change &quot;nullable disable&quot; to &quot;nullable restore&quot; [bug] contributed by [StefH](https://github.com/StefH)
