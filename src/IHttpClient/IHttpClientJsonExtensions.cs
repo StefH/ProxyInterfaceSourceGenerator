@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
@@ -7,9 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
-namespace System.Net.Http;
+namespace System.Net.Http.Json;
 
-public static class IHttpClientExtensions
+/// <inheritdoc cref="HttpClientJsonExtensions"/>
+public static class IHttpClientJsonExtensions
 {
     #region PostAsJsonAsync
     public static Task<HttpResponseMessage> PostAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
@@ -40,6 +40,72 @@ public static class IHttpClientExtensions
     public static Task<HttpResponseMessage> PostAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, JsonTypeInfo<TValue> jsonTypeInfo, CancellationToken cancellationToken = default)
     {
         return client._Instance.PostAsJsonAsync(requestUri, value, jsonTypeInfo, cancellationToken);
+    }
+    #endregion
+
+#if NET7_0_OR_GREATER
+    #region PatchAsJsonAsync
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, options, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, options, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, CancellationToken cancellationToken)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, CancellationToken cancellationToken)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, JsonTypeInfo<TValue> jsonTypeInfo, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, jsonTypeInfo, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, JsonTypeInfo<TValue> jsonTypeInfo, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PatchAsJsonAsync(requestUri, value, jsonTypeInfo, cancellationToken);
+    }
+#endregion
+#endif
+    
+    #region PutAsJsonAsync
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, options, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, options, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, CancellationToken cancellationToken)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, CancellationToken cancellationToken)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, TValue value, JsonTypeInfo<TValue> jsonTypeInfo, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, jsonTypeInfo, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> PutAsJsonAsync<TValue>(this IHttpClient client, Uri? requestUri, TValue value, JsonTypeInfo<TValue> jsonTypeInfo, CancellationToken cancellationToken = default)
+    {
+        return client._Instance.PutAsJsonAsync(requestUri, value, jsonTypeInfo, cancellationToken);
     }
     #endregion
 
