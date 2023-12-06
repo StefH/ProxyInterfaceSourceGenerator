@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IHttpClient\IHttpClient.csproj" />
+    <!--<ProjectReference Include="..\..\src\IHttpClient\IHttpClient.csproj" />-->
   </ItemGroup>
 
 </Project>
