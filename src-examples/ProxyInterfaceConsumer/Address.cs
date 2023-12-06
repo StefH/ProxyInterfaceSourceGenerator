@@ -1,6 +1,6 @@
 using System;
 
-namespace DifferentNamespace
+namespace ProxyInterfaceConsumer
 {
     public class Address
     {

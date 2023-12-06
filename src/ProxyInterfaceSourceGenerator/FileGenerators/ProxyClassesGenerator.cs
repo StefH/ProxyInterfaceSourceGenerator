@@ -198,7 +198,10 @@ using System;
     private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
+
+        var methods = MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses);
+
+        foreach (var method in methods)
         {
             var methodParameters = new List<string>();
             var invokeParameters = new List<string>();

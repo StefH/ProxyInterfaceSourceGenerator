@@ -12,15 +12,16 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IHuman
+    public partial interface IHttpMessageInvoker
     {
-        ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
-
-        bool IsAlive { get; set; }
-
-        string GetterOnly { get; }
+        System.Net.Http.HttpMessageInvoker _Instance { get; }
 
 
+
+        [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
+        System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
+
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
 
         void Dispose();
 

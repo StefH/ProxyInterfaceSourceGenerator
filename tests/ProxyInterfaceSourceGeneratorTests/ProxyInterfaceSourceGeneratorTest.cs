@@ -448,4 +448,86 @@ public class ProxyInterfaceSourceGeneratorTest
 
         c.Should().Be(101);
     }
+
+    [Fact]
+    public void GenerateFiles_HttpClient()
+    {
+        // Arrange
+        var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
+        var interfaceIHttpClientFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHttpClient.g.cs";
+        var proxyClassIHttpClientFilename = "System.Net.Http.HttpClientProxy.g.cs";
+        var interfaceIHttpMessageInvokerFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker.g.cs";
+        var proxyClassIHttpMessageInvokerFilename = "System.Net.Http.HttpMessageInvokerProxy.g.cs";
+
+        var pathIHttpClient = "./Source/IHttpClient.cs";
+        var sourceFileIHttpClient = new SourceFile
+        {
+            Path = pathIHttpClient,
+            Text = File.ReadAllText(pathIHttpClient),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(System.Net.Http.HttpClient)"
+            }
+        };
+
+        var pathIHttpMessageInvoker = "./Source/IHttpMessageInvoker.cs";
+        var sourceFileIHttpMessageInvoker = new SourceFile
+        {
+            Path = pathIHttpMessageInvoker,
+            Text = File.ReadAllText(pathIHttpMessageInvoker),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(System.Net.Http.HttpMessageInvoker)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[] { sourceFileIHttpClient, sourceFileIHttpMessageInvoker });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(5);
+
+        // Assert attribute
+        var attribute = result.Files[0].SyntaxTree;
+        attribute.FilePath.Should().EndWith(attributeFilename);
+
+
+        // Assert interface IHttpClient
+        var interfaceIHttpClient = result.Files[1].SyntaxTree;
+        interfaceIHttpClient.FilePath.Should().EndWith(interfaceIHttpClientFilename);
+
+        var interfaceCodeIHttpClient = interfaceIHttpClient.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpClientFilename}", interfaceCodeIHttpClient);
+        interfaceCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpClientFilename}"));
+
+
+        // Assert interface IHttpMessageInvoker
+        var interfaceIMessageInvoker = result.Files[2].SyntaxTree;
+        interfaceIMessageInvoker.FilePath.Should().EndWith(interfaceIHttpMessageInvokerFilename);
+
+        var interfaceCodeIMessageInvoker = interfaceIMessageInvoker.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}", interfaceCodeIMessageInvoker);
+        interfaceCodeIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}"));
+
+
+        // Assert Proxy IHttpClient
+        var proxyClassIHttpClient = result.Files[3].SyntaxTree;
+        proxyClassIHttpClient.FilePath.Should().EndWith(proxyClassIHttpClientFilename);
+
+        var proxyCodeIHttpClient = proxyClassIHttpClient.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpClientFilename}", proxyCodeIHttpClient);
+        proxyCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpClientFilename}"));
+
+
+        // Assert Proxy IHttpMessageInvoker
+        var proxyClassIMessageInvoker = result.Files[4].SyntaxTree;
+        proxyClassIMessageInvoker.FilePath.Should().EndWith(proxyClassIHttpMessageInvokerFilename);
+
+        var proxyIMessageInvoker = proxyClassIMessageInvoker.ToString();
+        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}", proxyIMessageInvoker);
+        proxyIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}"));
+    }
 }
