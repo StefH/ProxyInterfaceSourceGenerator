@@ -17,7 +17,7 @@
         <PackageProjectUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator/src/IHttpClient</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/StefH/ProxyInterfaceSourceGenerator/src/IHttpClient</RepositoryUrl>
-        <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <PackageIcon>ihttpclient-icon.png</PackageIcon>
         <!--<IncludeBuildOutput>false</IncludeBuildOutput>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
@@ -33,7 +33,7 @@
 
     <ItemGroup>
         <None Include="../../resources/ihttpclient-icon.png" Pack="true" PackagePath="" />
-        <None Include="PackageReadme.md" Pack="true" PackagePath="" />
+        <None Include="Readme.md" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'net6.0' ">
