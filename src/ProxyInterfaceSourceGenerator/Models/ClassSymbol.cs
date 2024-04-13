@@ -6,6 +6,6 @@ internal record ClassSymbol(INamedTypeSymbol Symbol, List<INamedTypeSymbol> Base
 {
     public override string ToString()
     {
-        return Symbol.ToString();
+        return Symbol.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -6,26 +7,40 @@ using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
-internal class ProxySyntaxReceiver : ISyntaxReceiver
+internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
-    private static readonly string[] Modifiers = { "public", "partial" };
     private static readonly string[] GenerateProxyAttributes = { "ProxyInterfaceGenerator.Proxy", "Proxy" };
-
+    private static readonly string[] Modifiers = { "public", "partial" };
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
-    public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
+    public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
     {
-        if (syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax && TryGet(interfaceDeclarationSyntax, out var data))
+        var syntaxNode = context.Node;
+        var semanticModel = context.SemanticModel;
+
+        if (syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax && TryGet(interfaceDeclarationSyntax, out var data, semanticModel!))
         {
             CandidateInterfaces.Add(interfaceDeclarationSyntax, data);
         }
     }
 
-    private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data)
+    private static string ConvertTypeName(string typeName)
+    {
+        return !(typeName.Contains('<') && typeName.Contains('>')) ?
+            typeName :
+            $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
+    }
+
+    private static string CreateFullInterfaceName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
+    {
+        return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
+    }
+
+    private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data, SemanticModel semanticModel)
     {
         data = null;
 
-        if (interfaceDeclarationSyntax.Modifiers.Select(m => m.ToString()).Except(Modifiers).Count() != 0)
+        if (interfaceDeclarationSyntax.Modifiers.Select(m => m.ToString()).Except(Modifiers).Any())
         {
             // InterfaceDeclarationSyntax should be "public" and "partial"
             return false;
@@ -55,35 +70,32 @@ internal class ProxySyntaxReceiver : ISyntaxReceiver
             }
         }
 
-        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList);
+        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
 
         var rawTypeNameAsString = fluentBuilderAttributeArguments.RawTypeName;
-        
-        data = new ProxyData
+        var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"global::{ns}";
+        var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}." ;
+        var shortTypeName = rawTypeNameAsString;
+        const string globalPrefix = "global::";
+        if (shortTypeName.StartsWith(globalPrefix, StringComparison.InvariantCulture))
         {
-            Namespace = ns,
-            ShortInterfaceName = interfaceDeclarationSyntax.Identifier.ToString(),
-            FullInterfaceName = CreateFullInterfaceName(ns, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
-            FullRawTypeName = rawTypeNameAsString,
-            ShortTypeName = ConvertTypeName(rawTypeNameAsString).Split('.').Last(),
-            FullTypeName = ConvertTypeName(rawTypeNameAsString),
-            Usings = usings,
-            ProxyBaseClasses = fluentBuilderAttributeArguments.ProxyBaseClasses,
-            Accessibility = fluentBuilderAttributeArguments.Accessibility
-        };
+            shortTypeName = shortTypeName.Substring(globalPrefix.Length);
+        }
+        shortTypeName = ConvertTypeName(shortTypeName).Split('.').Last();
+
+        data = new ProxyData(
+            @namespace: ns,
+            namespaceDot: namespaceDot,
+            shortInterfaceName:  interfaceDeclarationSyntax.Identifier.ToString(),
+            fullInterfaceName: CreateFullInterfaceName(globalNamespace, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
+            fullRawTypeName: rawTypeNameAsString,
+            shortTypeName: shortTypeName,
+            fullTypeName: ConvertTypeName(rawTypeNameAsString),
+            usings: usings,
+            proxyBaseClasses: fluentBuilderAttributeArguments.ProxyBaseClasses,
+            accessibility: fluentBuilderAttributeArguments.Accessibility
+        );
 
         return true;
-    }
-
-    private static string ConvertTypeName(string typeName)
-    {
-        return !(typeName.Contains('<') && typeName.Contains('>')) ?
-            typeName :
-            $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
-    }
-
-    private static string CreateFullInterfaceName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
-    {
-        return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
     }
 }

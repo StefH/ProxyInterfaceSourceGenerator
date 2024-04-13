@@ -68,7 +68,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         if (firstExtends is not null)
         {
-            extends = $"{firstExtends.Namespace}.{firstExtends.ShortTypeName}Proxy, ";
+            extends = $"{firstExtends.NamespaceDot}{firstExtends.ShortTypeName}Proxy, ";
             @base = " : base(instance)";
             @new = "new ";
             instanceBaseDefinition = $"public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
@@ -106,17 +106,12 @@ using System;
 {namespaceStart}
     {accessibility} {@abstract}partial class {className} : {extends}{interfaceName}
     {{
-        public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
+        public {@new}{targetClassSymbol} _Instance {{ get; }}
         {instanceBaseDefinition}
-
-{properties}
-
-{methods}
-
-{events}
-
-{operators}
-
+{events +
+properties +
+methods +
+operators}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
@@ -244,7 +239,7 @@ using System;
 
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
-                var type = FixType(ps.Type.ToString());
+                var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
                 string normalOrMap = $" = {ps.GetSanitizedName()}";
                 if (ps.RefKind == RefKind.Out)
                 {
@@ -265,7 +260,7 @@ using System;
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = !method.IsStatic ? "_Instance" : $"{targetClassSymbol.Symbol}";
+            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat) : "_Instance";
 
             if (returnTypeAsString == "void")
             {

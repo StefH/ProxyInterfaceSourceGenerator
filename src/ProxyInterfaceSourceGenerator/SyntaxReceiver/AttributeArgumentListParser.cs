@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Types;
@@ -7,7 +9,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
-    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList)
+    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
     {
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 3)
         {
@@ -15,7 +17,7 @@ internal static class AttributeArgumentListParser
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue))
+        if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue, semanticModel))
         {
             result = new ProxyInterfaceGeneratorAttributeArguments(rawTypeValue);
         }
@@ -54,13 +56,15 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, [NotNullWhen(true)] out string? rawTypeName)
+    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, [NotNullWhen(true)] out string? rawTypeName, SemanticModel semanticModel)
     {
         rawTypeName = null;
 
         if (expressionSyntax is TypeOfExpressionSyntax typeOfExpressionSyntax)
         {
-            rawTypeName = typeOfExpressionSyntax.Type.ToString();
+            var typeInfo = semanticModel.GetTypeInfo(typeOfExpressionSyntax.Type);
+            var typeSymbol = typeInfo.Type;
+            rawTypeName = typeSymbol!.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);
             return true;
         }
 

@@ -12,7 +12,7 @@ internal partial class ProxyClassesGenerator
         foreach (var replacedType in Context.ReplacedTypes)
         {
             TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
-            var classNameProxy = $"{fullTypeName!.Namespace}.{fullTypeName.ShortTypeName}Proxy";
+            var classNameProxy = $"global::{fullTypeName!.NamespaceDot}{fullTypeName!.ShortTypeName}Proxy";
 
             var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
             var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
