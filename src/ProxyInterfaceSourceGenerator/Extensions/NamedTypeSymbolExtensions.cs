@@ -66,8 +66,7 @@ internal static class NamedTypeSymbolExtensions
         //Members implemented by us or base classes should go here.
         var publicMembers = symbol.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public).ToList();
         //Direct interfaces, recursive interfaces or base class interfaces should go here.
-        var interfaces = new List<INamedTypeSymbol>();
-        interfaces.AddRange(symbol.Interfaces);
+        var interfaces = new List<INamedTypeSymbol>(symbol.Interfaces);
         var baseType = symbol.BaseType;
         while (proxyBaseClasses && baseType != null && baseType.SpecialType != SpecialType.System_Object)
         {
@@ -88,6 +87,7 @@ internal static class NamedTypeSymbolExtensions
                 if (!publicMembers.Contains(implementation!))
                 {
                     isRealized = false;
+                    break;
                 }
             }
             if (isRealized)

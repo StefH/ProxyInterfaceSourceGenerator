@@ -60,9 +60,8 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
         var extendsProxyClasses = GetExtendsProxyData(proxyData, classSymbol);
         ImplementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
-        IEnumerable<string> implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat));
-        var implements = string.Join(", ", implementedInterfacesNames);
-        implements = string.IsNullOrEmpty(implements) ? string.Empty : $" : {implements}";
+        var implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat));
+        var implements = implementedInterfacesNames.Any() ? $" : {string.Join(", ", implementedInterfacesNames)}" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(ns);
 
@@ -103,11 +102,9 @@ using System;
             {
                 hashSet.Add(member.Name);
             }
-
         }
         //Member is not already implemented in another interface.
-        bool func(T t) => !hashSet.Contains(t.Name);
-        return func;
+        return (T t) => !hashSet.Contains(t.Name);
     }
 
     private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
