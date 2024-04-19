@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <IsPackable>false</IsPackable>
-        <LangVersion>10.0</LangVersion>
+        <LangVersion>12.0</LangVersion>
         <Nullable>enable</Nullable>
         <Configurations>Debug;Release;DebugAttach</Configurations>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -52,10 +52,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Destination\AkkaGenerated\" />
-    </ItemGroup>
-
-    <ItemGroup>
+        <Compile Update="Source\Disposable\*.cs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
         <Compile Update="Source\Generic.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
