@@ -46,5 +46,4 @@ internal class ProxyData
     public bool ProxyBaseClasses { get; init; }
 
     public ProxyClassAccessibility Accessibility { get; init; }
-
 }

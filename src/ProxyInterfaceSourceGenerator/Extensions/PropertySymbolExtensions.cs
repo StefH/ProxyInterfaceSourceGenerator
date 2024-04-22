@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.FileGenerators;
 
@@ -22,7 +21,7 @@ internal static class PropertySymbolExtensions
         var get = getIsPublic ? "get; " : string.Empty;
         var set = setIsPublic ? "set; " : string.Empty;
 
-        var type = !string.IsNullOrEmpty(overrideType) ? overrideType 
+        var type = !string.IsNullOrEmpty(overrideType) ? overrideType
             : BaseGenerator.FixType(property.Type.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat), property.NullableAnnotation);
 
         return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");

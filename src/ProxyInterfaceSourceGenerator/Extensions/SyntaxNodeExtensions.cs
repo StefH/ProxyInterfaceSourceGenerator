@@ -70,7 +70,7 @@ internal static class SyntaxNodeExtensions
             // We have a namespace. Use that as the type
             nameSpace = namespaceParent.Name.ToString();
 
-            // Keep moving "out" of the namespace declarations until we 
+            // Keep moving "out" of the namespace declarations until we
             // run out of nested namespace declarations
             while (true)
             {

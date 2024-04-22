@@ -178,7 +178,6 @@ internal abstract class BaseGenerator
             }
         }
 
-
         return FixType(propertyTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
     }
 
@@ -193,8 +192,6 @@ internal abstract class BaseGenerator
 
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
         var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
-
-
 
         if (symbol is not null && symbol.TypeKind == kind)
         {

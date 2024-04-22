@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -53,7 +52,6 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             return false;
         }
 
-       
         var usings = new List<string>();
 
         string ns = interfaceDeclarationSyntax.GetNamespace();
@@ -74,7 +72,7 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 
         var rawTypeNameAsString = fluentBuilderAttributeArguments.RawTypeName;
         var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"global::{ns}";
-        var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}." ;
+        var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}.";
         var shortTypeName = rawTypeNameAsString;
         const string globalPrefix = "global::";
         if (shortTypeName.StartsWith(globalPrefix, StringComparison.InvariantCulture))
@@ -86,7 +84,7 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         data = new ProxyData(
             @namespace: ns,
             namespaceDot: namespaceDot,
-            shortInterfaceName:  interfaceDeclarationSyntax.Identifier.ToString(),
+            shortInterfaceName: interfaceDeclarationSyntax.Identifier.ToString(),
             fullInterfaceName: CreateFullInterfaceName(globalNamespace, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
             fullRawTypeName: rawTypeNameAsString,
             shortTypeName: shortTypeName,
