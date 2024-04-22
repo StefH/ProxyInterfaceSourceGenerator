@@ -15,7 +15,7 @@ public class InheritedInterfaceTests
     private const string OutputPath = "../../../Destination/Disposable/";
     private readonly ProxyInterfaceCodeGenerator _sut;
 
-    public InheritedInterfaceTests(ITestOutputHelper output)
+    public InheritedInterfaceTests()
     {
         if (!Directory.Exists(OutputPath))
         {
