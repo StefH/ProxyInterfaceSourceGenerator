@@ -33,7 +33,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-        public System.Threading.Tasks.Task<string> GetStringAsync(string? requestUri)
+        public System.Threading.Tasks.Task<string> GetStringAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri)
         {
             string? requestUri_ = requestUri;
             var result_1347886741 = _Instance.GetStringAsync(requestUri_);
@@ -47,7 +47,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1347886741;
         }
 
-        public System.Threading.Tasks.Task<string> GetStringAsync(string? requestUri, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<string> GetStringAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Threading.CancellationToken cancellationToken_ = cancellationToken;
@@ -63,7 +63,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1347886741;
         }
 
-        public System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(string? requestUri)
+        public System.Threading.Tasks.Task<byte[]> GetByteArrayAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri)
         {
             string? requestUri_ = requestUri;
             var result__1359336953 = _Instance.GetByteArrayAsync(requestUri_);
@@ -77,7 +77,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1359336953;
         }
 
-        public System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(string? requestUri, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<byte[]> GetByteArrayAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Threading.CancellationToken cancellationToken_ = cancellationToken;
@@ -93,14 +93,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1359336953;
         }
 
-        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(string? requestUri)
+        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri)
         {
             string? requestUri_ = requestUri;
             var result_355326142 = _Instance.GetStreamAsync(requestUri_);
             return result_355326142;
         }
 
-        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(string? requestUri, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Threading.CancellationToken cancellationToken_ = cancellationToken;
@@ -123,7 +123,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_355326142;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri)
         {
             string? requestUri_ = requestUri;
             var result_1805284658 = _Instance.GetAsync(requestUri_);
@@ -137,7 +137,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1805284658;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Net.Http.HttpCompletionOption completionOption)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpCompletionOption completionOption)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpCompletionOption completionOption_ = completionOption;
@@ -153,7 +153,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1805284658;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Threading.CancellationToken cancellationToken_ = cancellationToken;
@@ -169,7 +169,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1805284658;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpCompletionOption completionOption_ = completionOption;
@@ -187,7 +187,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_1805284658;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(string? requestUri, System.Net.Http.HttpContent? content)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -203,7 +203,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1705712948;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -221,7 +221,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1705712948;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(string? requestUri, System.Net.Http.HttpContent? content)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -237,7 +237,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_182918739;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -255,7 +255,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_182918739;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(string? requestUri, System.Net.Http.HttpContent? content)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -271,7 +271,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_910894592;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Net.Http.HttpContent? content_ = content;
@@ -289,7 +289,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_910894592;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(string? requestUri)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri)
         {
             string? requestUri_ = requestUri;
             var result_534537427 = _Instance.DeleteAsync(requestUri_);
@@ -303,7 +303,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_534537427;
         }
 
-        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(string? requestUri, System.Threading.CancellationToken cancellationToken)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken)
         {
             string? requestUri_ = requestUri;
             System.Threading.CancellationToken cancellationToken_ = cancellationToken;
