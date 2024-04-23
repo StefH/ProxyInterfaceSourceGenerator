@@ -27,23 +27,23 @@ internal class ProxyData
         Accessibility = accessibility;
     }
 
-    public string Namespace { get; init; }
+    public string Namespace { get; }
 
-    public string NamespaceDot { get; init; }
+    public string NamespaceDot { get; }
 
-    public string ShortInterfaceName { get; init; }
+    public string ShortInterfaceName { get; }
 
-    public string FullInterfaceName { get; init; }
+    public string FullInterfaceName { get; }
 
-    public string FullRawTypeName { get; init; }
+    public string FullRawTypeName { get; }
 
-    public string ShortTypeName { get; init; }
+    public string ShortTypeName { get; }
 
-    public string FullTypeName { get; init; }
+    public string FullTypeName { get; }
 
-    public List<string> Usings { get; init; }
+    public List<string> Usings { get; }
 
-    public bool ProxyBaseClasses { get; init; }
+    public bool ProxyBaseClasses { get; }
 
-    public ProxyClassAccessibility Accessibility { get; init; }
+    public ProxyClassAccessibility Accessibility { get; }
 }
