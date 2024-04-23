@@ -60,4 +60,41 @@ internal static class NamedTypeSymbolExtensions
             $"{namedTypeSymbol}Proxy" :
             $"{namedTypeSymbol}Proxy<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>";
     }
+
+    public static List<INamedTypeSymbol> ResolveImplementedInterfaces(this INamedTypeSymbol symbol, bool proxyBaseClasses)
+    {
+        //Members implemented by us or base classes should go here.
+        var publicMembers = symbol.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public).ToList();
+        //Direct interfaces, recursive interfaces or base class interfaces should go here.
+        var interfaces = new List<INamedTypeSymbol>(symbol.Interfaces);
+        var baseType = symbol.BaseType;
+        while (proxyBaseClasses && baseType != null && baseType.SpecialType != SpecialType.System_Object)
+        {
+            publicMembers.AddRange(baseType.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public));
+            interfaces.AddRange(baseType.Interfaces);
+            baseType = baseType.BaseType;
+        }
+
+        //Filter explicitly implemented interfaces.
+        var realizedInterfaces = new List<INamedTypeSymbol>();
+        foreach (var iface in interfaces)
+        {
+            var isRealized = true;
+            var allMembers = iface.AllInterfaces.Aggregate(iface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
+            foreach (var member in allMembers)
+            {
+                var implementation = symbol.FindImplementationForInterfaceMember(member);
+                if (!publicMembers.Contains(implementation!))
+                {
+                    isRealized = false;
+                    break;
+                }
+            }
+            if (isRealized)
+            {
+                realizedInterfaces.Add(iface);
+            }
+        }
+        return realizedInterfaces;
+    }
 }
