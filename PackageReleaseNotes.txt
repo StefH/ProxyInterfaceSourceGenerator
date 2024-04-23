@@ -1,4 +1,4 @@
-# 0.0.37 (06 December 2023)
-- #66 Exclude System.Runtime.CompilerServices.NullableContextAttribute [enhancement]
+# 0.0.38 (23 April 2024)
+- #67 Do not redefine interfaces. [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md

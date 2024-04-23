@@ -82,7 +82,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var operators = GenerateOperators(targetClassSymbol, pd.ProxyBaseClasses);
 
         var configurationForMapster = string.Empty;
-        if (Context.ReplacedTypes.Any())
+        if (Context.ReplacedTypes.Count > 0)
         {
             configurationForMapster = GenerateMapperConfigurationForMapster();
         }

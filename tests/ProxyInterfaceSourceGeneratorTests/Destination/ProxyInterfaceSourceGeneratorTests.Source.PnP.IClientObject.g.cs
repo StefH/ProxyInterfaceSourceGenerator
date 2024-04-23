@@ -12,7 +12,7 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
-    public partial interface IClientObject
+    public partial interface IClientObject : global::Microsoft.SharePoint.Client.IFromJson
     {
         Microsoft.SharePoint.Client.ClientObject _Instance { get; }
 
@@ -32,12 +32,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }
 
 
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        void FromJson(Microsoft.SharePoint.Client.JsonReader reader);
-
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        bool CustomFromJson(Microsoft.SharePoint.Client.JsonReader reader);
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve();

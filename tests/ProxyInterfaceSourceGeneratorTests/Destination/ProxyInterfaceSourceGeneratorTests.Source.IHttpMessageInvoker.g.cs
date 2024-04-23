@@ -12,7 +12,7 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IHttpMessageInvoker
+    public partial interface IHttpMessageInvoker : global::System.IDisposable
     {
         System.Net.Http.HttpMessageInvoker _Instance { get; }
 
@@ -22,8 +22,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
-
-        void Dispose();
 
 
 

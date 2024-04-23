@@ -11,6 +11,7 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 {
+    private IReadOnlyCollection<INamedTypeSymbol> ImplementedInterfaces = new List<INamedTypeSymbol>();
     public PartialInterfacesGenerator(Context context, bool supportsNullable) :
         base(context, supportsNullable)
     {
@@ -58,6 +59,9 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
         ProxyData proxyData)
     {
         var extendsProxyClasses = GetExtendsProxyData(proxyData, classSymbol);
+        ImplementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
+        var implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat));
+        var implements = implementedInterfacesNames.Any() ? $" : {string.Join(", ", implementedInterfacesNames)}" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(ns);
         var events = GenerateEvents(classSymbol, proxyData.ProxyBaseClasses);
@@ -78,7 +82,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 using System;
 
 {namespaceStart}
-    public partial interface {interfaceName}
+    public partial interface {interfaceName}{implements}
     {{
         {@new}{classSymbol} _Instance {{ get; }}
 
@@ -90,11 +94,26 @@ methods}
 {SupportsNullable.IIf("#nullable restore")}";
     }
 
+    private Func<T, bool> InterfaceFilter<T>() where T : ISymbol
+    {
+        var hashSet = new HashSet<string>();
+        foreach (var iface in ImplementedInterfaces)
+        {
+            var members = iface.AllInterfaces.Aggregate(iface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
+            foreach (var member in members)
+            {
+                hashSet.Add(member.Name);
+            }
+        }
+        //Member is not already implemented in another interface.
+        return (T t) => !hashSet.Contains(t.Name);
+    }
+
     private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
 
-        foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
+        foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses, InterfaceFilter<IPropertySymbol>()))
         {
             var type = GetPropertyType(property, out var isReplaced);
 
@@ -126,7 +145,7 @@ methods}
     private string GenerateMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses))
+        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses, InterfaceFilter<IMethodSymbol>()))
         {
             var methodParameters = GetMethodParameters(method.Parameters, true);
             var whereStatement = GetWhereStatementFromMethod(method);
@@ -146,7 +165,7 @@ methods}
     private string GenerateEvents(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
     {
         var str = new StringBuilder();
-        foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyBaseClasses))
+        foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyBaseClasses, InterfaceFilter<IMethodSymbol>()))
         {
             var ps = @event.First().Parameters.First();
             var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();

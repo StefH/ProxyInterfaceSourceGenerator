@@ -32,75 +32,75 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
 
 
-        System.Threading.Tasks.Task<string> GetStringAsync(string? requestUri);
+        System.Threading.Tasks.Task<string> GetStringAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri);
 
         System.Threading.Tasks.Task<string> GetStringAsync(System.Uri? requestUri);
 
-        System.Threading.Tasks.Task<string> GetStringAsync(string? requestUri, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<string> GetStringAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<string> GetStringAsync(System.Uri? requestUri, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(string? requestUri);
+        System.Threading.Tasks.Task<byte[]> GetByteArrayAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri);
 
         System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(System.Uri? requestUri);
 
-        System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(string? requestUri, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<byte[]> GetByteArrayAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<byte[]> GetByteArrayAsync(System.Uri? requestUri, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(string? requestUri);
+        System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri);
 
-        System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(string? requestUri, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Uri? requestUri);
 
         System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Uri? requestUri, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(System.Uri? requestUri);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Net.Http.HttpCompletionOption completionOption);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpCompletionOption completionOption);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(System.Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(System.Uri? requestUri, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetAsync(System.Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(string? requestUri, System.Net.Http.HttpContent? content);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(string? requestUri, System.Net.Http.HttpContent? content);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PutAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(string? requestUri, System.Net.Http.HttpContent? content);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PatchAsync(System.Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(string? requestUri);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(System.Uri? requestUri);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(string? requestUri, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync([System.Diagnostics.CodeAnalysis.StringSyntaxAttribute("Uri")] string? requestUri, System.Threading.CancellationToken cancellationToken);
 
         System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> DeleteAsync(System.Uri? requestUri, System.Threading.CancellationToken cancellationToken);
 
