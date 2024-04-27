@@ -226,7 +226,7 @@ internal abstract class BaseGenerator
                 }
                 else
                 {
-                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString());
+                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString(), parameterSymbol.NullableAnnotation);
                 }
             }
 
