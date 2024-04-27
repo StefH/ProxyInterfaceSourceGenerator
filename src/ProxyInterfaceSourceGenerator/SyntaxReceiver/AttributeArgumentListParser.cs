@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Types;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
@@ -64,7 +65,8 @@ internal static class AttributeArgumentListParser
         {
             var typeInfo = semanticModel.GetTypeInfo(typeOfExpressionSyntax.Type);
             var typeSymbol = typeInfo.Type;
-            rawTypeName = typeSymbol!.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);
+            rawTypeName = typeSymbol!.ToFullyQualifiedDisplayString();
+
             return true;
         }
 

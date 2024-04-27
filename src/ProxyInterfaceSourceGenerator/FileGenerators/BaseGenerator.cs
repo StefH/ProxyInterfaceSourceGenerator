@@ -132,7 +132,7 @@ internal abstract class BaseGenerator
     {
         isReplaced = false;
 
-        var typeSymbolAsString = typeSymbol.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);
+        var typeSymbolAsString = typeSymbol.ToFullyQualifiedDisplayString();
         var nullableTypeSymbolAsString = typeSymbol.ToDisplayString(NullableFlowState.None, NullableDisplayFormat);
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
@@ -163,7 +163,7 @@ internal abstract class BaseGenerator
         var propertyTypeAsStringToBeModified = nullableTypeSymbolAsString;
         foreach (var typeArgument in typeArguments)
         {
-            var typeArgumentAsString = typeArgument.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);
+            var typeArgumentAsString = typeArgument.ToFullyQualifiedDisplayString();
 
             if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
             {
@@ -226,7 +226,7 @@ internal abstract class BaseGenerator
                 }
                 else
                 {
-                    type = FixType(parameterSymbol.Type.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat), parameterSymbol.NullableAnnotation);
+                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString());
                 }
             }
 
@@ -241,7 +241,7 @@ internal abstract class BaseGenerator
         var extendsProxyClasses = new List<ProxyData>();
         foreach (var baseType in targetClassSymbol.BaseTypes)
         {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat));
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToFullyQualifiedDisplayString());
             if (candidate is not null)
             {
                 extendsProxyClasses.Add(candidate);
@@ -255,7 +255,7 @@ internal abstract class BaseGenerator
     {
         if (nullableAnnotation == NullableAnnotation.Annotated && !type.EndsWith("?", StringComparison.Ordinal))
         {
-            type = $"{type}?";
+            return $"{type}?";
         }
         return type;
     }

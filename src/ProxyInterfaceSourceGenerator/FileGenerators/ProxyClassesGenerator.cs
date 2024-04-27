@@ -260,7 +260,7 @@ operators}
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat) : "_Instance";
+            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
 
             if (returnTypeAsString == "void")
             {

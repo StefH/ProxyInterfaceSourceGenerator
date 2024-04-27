@@ -60,7 +60,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
     {
         var extendsProxyClasses = GetExtendsProxyData(proxyData, classSymbol);
         ImplementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
-        var implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat));
+        var implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToFullyQualifiedDisplayString());
         var implements = implementedInterfacesNames.Any() ? $" : {string.Join(", ", implementedInterfacesNames)}" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(ns);
