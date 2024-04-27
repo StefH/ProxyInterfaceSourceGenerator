@@ -37,7 +37,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
             return false;
         }
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
@@ -45,7 +45,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
         var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
 
         fileData = new FileData(
-            $"{sourceInterfaceSymbol.Symbol.GetFileName()}.g.cs",
+            $"{sourceInterfaceSymbol.Symbol.GetFullMetadataName()}.g.cs",
             CreatePartialInterfaceCode(pd.Namespace, targetClassSymbol, interfaceName, pd)
         );
 

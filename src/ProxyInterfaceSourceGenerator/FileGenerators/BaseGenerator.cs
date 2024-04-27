@@ -32,7 +32,7 @@ internal abstract class BaseGenerator
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
     {
-        proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullRawTypeName == type);
+        proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullQualifiedTypeName == type);
         return proxyData != null;
     }
 
@@ -241,7 +241,7 @@ internal abstract class BaseGenerator
         var extendsProxyClasses = new List<ProxyData>();
         foreach (var baseType in targetClassSymbol.BaseTypes)
         {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToFullyQualifiedDisplayString());
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullQualifiedTypeName == baseType.ToFullyQualifiedDisplayString());
             if (candidate is not null)
             {
                 extendsProxyClasses.Add(candidate);

@@ -8,9 +8,9 @@ internal class ProxyData
                      string namespaceDot,
                      string shortInterfaceName,
                      string fullInterfaceName,
-                     string fullRawTypeName,
-                     string shortTypeName,
-                     string fullTypeName,
+                     string fullQualifiedTypeName,
+                     string shortMetadataTypeName,
+                     string fullMetadataTypeName,
                      List<string> usings,
                      bool proxyBaseClasses,
                      ProxyClassAccessibility accessibility)
@@ -19,9 +19,9 @@ internal class ProxyData
         NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));
         ShortInterfaceName = shortInterfaceName ?? throw new ArgumentNullException(nameof(shortInterfaceName));
         FullInterfaceName = fullInterfaceName ?? throw new ArgumentNullException(nameof(fullInterfaceName));
-        FullRawTypeName = fullRawTypeName ?? throw new ArgumentNullException(nameof(fullRawTypeName));
-        ShortTypeName = shortTypeName ?? throw new ArgumentNullException(nameof(shortTypeName));
-        FullTypeName = fullTypeName ?? throw new ArgumentNullException(nameof(fullTypeName));
+        FullQualifiedTypeName = fullQualifiedTypeName ?? throw new ArgumentNullException(nameof(fullQualifiedTypeName));
+        ShortMetadataName = shortMetadataTypeName ?? throw new ArgumentNullException(nameof(shortMetadataTypeName));
+        FullMetadataTypeName = fullMetadataTypeName ?? throw new ArgumentNullException(nameof(fullMetadataTypeName));
         Usings = usings ?? throw new ArgumentNullException(nameof(usings));
         ProxyBaseClasses = proxyBaseClasses;
         Accessibility = accessibility;
@@ -35,11 +35,11 @@ internal class ProxyData
 
     public string FullInterfaceName { get; }
 
-    public string FullRawTypeName { get; }
+    public string FullQualifiedTypeName { get; }
 
-    public string ShortTypeName { get; }
+    public string ShortMetadataName { get; }
 
-    public string FullTypeName { get; }
+    public string FullMetadataTypeName { get; }
 
     public List<string> Usings { get; }
 

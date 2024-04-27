@@ -93,7 +93,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var fileNames = new[]
         {
             "ProxyInterfaceSourceGeneratorTests.Source.IGeneric.g.cs",
-            "ProxyInterfaceSourceGeneratorTests.Source.Generic_T__1Proxy.g.cs"
+            "ProxyInterfaceSourceGeneratorTests.Source.Generic`1Proxy.g.cs"
         };
 
         var path = "./Source/IGeneric.cs";
@@ -105,6 +105,48 @@ public class ProxyInterfaceSourceGeneratorTest
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
                 ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Generic<>)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[]
+        {
+            sourceFile
+        });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+        {
+            var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+            builder.Path.Should().EndWith(fileName.fileName);
+
+            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+        }
+    }
+
+    [Fact]
+    public void GenerateFiles_ForÜberGenericType_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.IÜberGeneric.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric`3Proxy.g.cs"
+        };
+
+        var path = "./Source/IÜberGeneric.cs";
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric<>)"
             }
         };
 

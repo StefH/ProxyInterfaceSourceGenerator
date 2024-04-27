@@ -12,129 +12,121 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 {
-    public partial class LocalActorRefProviderProxy : ILocalActorRefProvider
+    public partial class LocalActorRefProviderProxy : global::ProxyInterfaceSourceGeneratorTests.Source.AkkaActor.ILocalActorRefProvider
     {
-        public Akka.Actor.LocalActorRefProvider _Instance { get; }
+        public global::Akka.Actor.LocalActorRefProvider _Instance { get; }
         
+        public global::Akka.Actor.IActorRef DeadLetters { get => _Instance.DeadLetters; }
 
-        public Akka.Actor.IActorRef DeadLetters { get => _Instance.DeadLetters; }
+        public global::Akka.Actor.IActorRef IgnoreRef { get => _Instance.IgnoreRef; }
 
-        public Akka.Actor.IActorRef IgnoreRef { get => _Instance.IgnoreRef; }
+        public global::Akka.Actor.Deployer Deployer { get => _Instance.Deployer; }
 
-        public Akka.Actor.Deployer Deployer { get => _Instance.Deployer; }
+        public global::Akka.Actor.IInternalActorRef RootGuardian { get => _Instance.RootGuardian; }
 
-        public Akka.Actor.IInternalActorRef RootGuardian { get => _Instance.RootGuardian; }
+        public global::Akka.Actor.ActorPath RootPath { get => _Instance.RootPath; }
 
-        public Akka.Actor.ActorPath RootPath { get => _Instance.RootPath; }
+        public global::Akka.Actor.Settings Settings { get => _Instance.Settings; }
 
-        public Akka.Actor.Settings Settings { get => _Instance.Settings; }
+        public global::Akka.Actor.LocalActorRef SystemGuardian { get => _Instance.SystemGuardian; }
 
-        public Akka.Actor.LocalActorRef SystemGuardian { get => _Instance.SystemGuardian; }
+        public global::Akka.Actor.IInternalActorRef TempContainer { get => _Instance.TempContainer; }
 
-        public Akka.Actor.IInternalActorRef TempContainer { get => _Instance.TempContainer; }
+        public global::System.Threading.Tasks.Task TerminationTask { get => _Instance.TerminationTask; }
 
-        public System.Threading.Tasks.Task TerminationTask { get => _Instance.TerminationTask; }
+        public global::Akka.Actor.LocalActorRef Guardian { get => _Instance.Guardian; }
 
-        public Akka.Actor.LocalActorRef Guardian { get => _Instance.Guardian; }
+        public global::Akka.Event.EventStream EventStream { get => _Instance.EventStream; }
 
-        public Akka.Event.EventStream EventStream { get => _Instance.EventStream; }
+        public global::Akka.Actor.Address DefaultAddress { get => _Instance.DefaultAddress; }
 
-        public Akka.Actor.Address DefaultAddress { get => _Instance.DefaultAddress; }
+        public global::Akka.Serialization.Information SerializationInformation { get => _Instance.SerializationInformation; }
 
-        public Akka.Serialization.Information SerializationInformation { get => _Instance.SerializationInformation; }
+        public global::Akka.Event.ILoggingAdapter Log { get => _Instance.Log; }
 
-        public Akka.Event.ILoggingAdapter Log { get => _Instance.Log; }
-
-
-
-        public Akka.Actor.ActorPath TempPath()
+        public global::Akka.Actor.ActorPath TempPath()
         {
             var result_690338229 = _Instance.TempPath();
             return result_690338229;
         }
 
-        public void RegisterExtraName(string name, Akka.Actor.IInternalActorRef actor)
+        public void RegisterExtraName(string name, global::Akka.Actor.IInternalActorRef actor)
         {
             string name_ = name;
-            Akka.Actor.IInternalActorRef actor_ = actor;
+            global::Akka.Actor.IInternalActorRef actor_ = actor;
             _Instance.RegisterExtraName(name_, actor_);
         }
 
-        public Akka.Actor.IActorRef RootGuardianAt(Akka.Actor.Address address)
+        public global::Akka.Actor.IActorRef RootGuardianAt(global::Akka.Actor.Address address)
         {
-            Akka.Actor.Address address_ = address;
+            global::Akka.Actor.Address address_ = address;
             var result__1703611252 = _Instance.RootGuardianAt(address_);
             return result__1703611252;
         }
 
-        public void RegisterTempActor(Akka.Actor.IInternalActorRef actorRef, Akka.Actor.ActorPath path)
+        public void RegisterTempActor(global::Akka.Actor.IInternalActorRef actorRef, global::Akka.Actor.ActorPath path)
         {
-            Akka.Actor.IInternalActorRef actorRef_ = actorRef;
-            Akka.Actor.ActorPath path_ = path;
+            global::Akka.Actor.IInternalActorRef actorRef_ = actorRef;
+            global::Akka.Actor.ActorPath path_ = path;
             _Instance.RegisterTempActor(actorRef_, path_);
         }
 
-        public void UnregisterTempActor(Akka.Actor.ActorPath path)
+        public void UnregisterTempActor(global::Akka.Actor.ActorPath path)
         {
-            Akka.Actor.ActorPath path_ = path;
+            global::Akka.Actor.ActorPath path_ = path;
             _Instance.UnregisterTempActor(path_);
         }
 
-        public Akka.Actor.FutureActorRef<T> CreateFutureRef<T>(System.Threading.Tasks.TaskCompletionSource<T> tcs)
+        public global::Akka.Actor.FutureActorRef<T> CreateFutureRef<T>(global::System.Threading.Tasks.TaskCompletionSource<T> tcs)
         {
-            System.Threading.Tasks.TaskCompletionSource<T> tcs_ = tcs;
+            global::System.Threading.Tasks.TaskCompletionSource<T> tcs_ = tcs;
             var result_1137255884 = _Instance.CreateFutureRef<T>(tcs_);
             return result_1137255884;
         }
 
-        public void Init(Akka.Actor.Internal.ActorSystemImpl system)
+        public void Init(global::Akka.Actor.Internal.ActorSystemImpl system)
         {
-            Akka.Actor.Internal.ActorSystemImpl system_ = system;
+            global::Akka.Actor.Internal.ActorSystemImpl system_ = system;
             _Instance.Init(system_);
         }
 
-        public Akka.Actor.IActorRef ResolveActorRef(string path)
+        public global::Akka.Actor.IActorRef ResolveActorRef(string path)
         {
             string path_ = path;
             var result_1085051580 = _Instance.ResolveActorRef(path_);
             return result_1085051580;
         }
 
-        public Akka.Actor.IActorRef ResolveActorRef(Akka.Actor.ActorPath path)
+        public global::Akka.Actor.IActorRef ResolveActorRef(global::Akka.Actor.ActorPath path)
         {
-            Akka.Actor.ActorPath path_ = path;
+            global::Akka.Actor.ActorPath path_ = path;
             var result_1085051580 = _Instance.ResolveActorRef(path_);
             return result_1085051580;
         }
 
-        public Akka.Actor.IInternalActorRef ActorOf(Akka.Actor.Internal.ActorSystemImpl system, Akka.Actor.Props props, Akka.Actor.IInternalActorRef supervisor, Akka.Actor.ActorPath path, bool systemService, Akka.Actor.Deploy deploy, bool lookupDeploy, bool @async)
+        public global::Akka.Actor.IInternalActorRef ActorOf(global::Akka.Actor.Internal.ActorSystemImpl system, global::Akka.Actor.Props props, global::Akka.Actor.IInternalActorRef supervisor, global::Akka.Actor.ActorPath path, bool systemService, global::Akka.Actor.Deploy deploy, bool lookupDeploy, bool @async)
         {
-            Akka.Actor.Internal.ActorSystemImpl system_ = system;
-            Akka.Actor.Props props_ = props;
-            Akka.Actor.IInternalActorRef supervisor_ = supervisor;
-            Akka.Actor.ActorPath path_ = path;
+            global::Akka.Actor.Internal.ActorSystemImpl system_ = system;
+            global::Akka.Actor.Props props_ = props;
+            global::Akka.Actor.IInternalActorRef supervisor_ = supervisor;
+            global::Akka.Actor.ActorPath path_ = path;
             bool systemService_ = systemService;
-            Akka.Actor.Deploy deploy_ = deploy;
+            global::Akka.Actor.Deploy deploy_ = deploy;
             bool lookupDeploy_ = lookupDeploy;
             bool @async_ = @async;
             var result_540498530 = _Instance.ActorOf(system_, props_, supervisor_, path_, systemService_, deploy_, lookupDeploy_, @async_);
             return result_540498530;
         }
 
-        public Akka.Actor.Address GetExternalAddressFor(Akka.Actor.Address address)
+        public global::Akka.Actor.Address GetExternalAddressFor(global::Akka.Actor.Address address)
         {
-            Akka.Actor.Address address_ = address;
+            global::Akka.Actor.Address address_ = address;
             var result_1116520814 = _Instance.GetExternalAddressFor(address_);
             return result_1116520814;
         }
 
 
-
-
-
-
-
-        public LocalActorRefProviderProxy(Akka.Actor.LocalActorRefProvider instance)
+        public LocalActorRefProviderProxy(global::Akka.Actor.LocalActorRefProvider instance)
         {
             _Instance = instance;
             

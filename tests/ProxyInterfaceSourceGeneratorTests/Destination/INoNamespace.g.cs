@@ -13,13 +13,9 @@ using System;
 
     public partial interface INoNamespace
     {
-        ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
 
         bool Test { get; set; }
-
-
-
-
 
 
     }

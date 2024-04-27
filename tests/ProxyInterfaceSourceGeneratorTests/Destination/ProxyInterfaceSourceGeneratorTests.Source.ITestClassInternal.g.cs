@@ -14,13 +14,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface ITestClassInternal
     {
-        ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal _Instance { get; }
 
         bool Test { get; set; }
-
-
-
-
 
 
     }

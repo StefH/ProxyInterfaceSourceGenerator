@@ -12,33 +12,15 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class GenericProxy<T> : IGeneric<T>
+    public partial interface IÜberGeneric<T1, TKey, KAi>
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
-        
+        global::ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric<T1, TKey, KAi> _Instance { get; }
 
+        T1 Test(T1 value);
 
+        KAi Test(KAi value);
 
-        public T Test(T value)
-        {
-            T value_ = value;
-            var result__1701808026 = _Instance.Test(value_);
-            return result__1701808026;
-        }
-
-
-
-
-
-
-
-        public GenericProxy(ProxyInterfaceSourceGeneratorTests.Source.Generic<T> instance)
-        {
-            _Instance = instance;
-            
-
-
-        }
+        TKey Test(TKey value);
     }
 }
 #nullable restore

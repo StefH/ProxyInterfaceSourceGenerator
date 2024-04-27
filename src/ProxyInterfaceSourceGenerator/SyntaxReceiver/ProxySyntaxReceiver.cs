@@ -24,13 +24,6 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         }
     }
 
-    private static string ConvertTypeName(string typeName)
-    {
-        return !(typeName.Contains('<') && typeName.Contains('>')) ?
-            typeName :
-            $"{typeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(",", string.Empty).Trim()}`{typeName.Count(c => c == ',') + 1}";
-    }
-
     private static string CreateFullInterfaceName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
     {
         return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
@@ -70,24 +63,18 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 
         var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
 
-        var rawTypeNameAsString = fluentBuilderAttributeArguments.RawTypeName;
+        var metadataName = fluentBuilderAttributeArguments.MetadataName;
         var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";
         var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}.";
-        var shortTypeName = rawTypeNameAsString;
-        if (shortTypeName.StartsWith(GlobalPrefix, StringComparison.InvariantCulture))
-        {
-            shortTypeName = shortTypeName.Substring(GlobalPrefix.Length);
-        }
-        shortTypeName = ConvertTypeName(shortTypeName).Split('.').Last();
 
         data = new ProxyData(
             @namespace: ns,
             namespaceDot: namespaceDot,
             shortInterfaceName: interfaceDeclarationSyntax.Identifier.ToString(),
             fullInterfaceName: CreateFullInterfaceName(globalNamespace, interfaceDeclarationSyntax), // $"{ns}.{interfaceDeclarationSyntax.Identifier}",
-            fullRawTypeName: rawTypeNameAsString,
-            shortTypeName: shortTypeName,
-            fullTypeName: ConvertTypeName(rawTypeNameAsString),
+            fullQualifiedTypeName: fluentBuilderAttributeArguments.FullyQualifiedDisplayString,
+            fullMetadataTypeName: metadataName,
+            shortMetadataTypeName: metadataName.Split('.').Last(),
             usings: usings,
             proxyBaseClasses: fluentBuilderAttributeArguments.ProxyBaseClasses,
             accessibility: fluentBuilderAttributeArguments.Accessibility

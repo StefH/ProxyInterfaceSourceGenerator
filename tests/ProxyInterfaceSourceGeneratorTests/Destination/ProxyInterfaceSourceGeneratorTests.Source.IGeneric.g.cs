@@ -14,15 +14,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IGeneric<T>
     {
-        ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
-
-
+        global::ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
 
         T Test(T value);
-
-
-
-
     }
 }
 #nullable restore

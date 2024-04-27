@@ -14,19 +14,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 {
     public partial interface ILocalActorRefProvider : global::Akka.Actor.IActorRefProvider
     {
-        Akka.Actor.LocalActorRefProvider _Instance { get; }
+        global::Akka.Actor.LocalActorRefProvider _Instance { get; }
 
-        Akka.Event.EventStream EventStream { get; }
+        global::Akka.Event.EventStream EventStream { get; }
 
-        Akka.Event.ILoggingAdapter Log { get; }
+        global::Akka.Event.ILoggingAdapter Log { get; }
 
-
-
-        void RegisterExtraName(string name, Akka.Actor.IInternalActorRef actor);
-
-
-
-
+        void RegisterExtraName(string name, global::Akka.Actor.IInternalActorRef actor);
     }
 }
 #nullable restore

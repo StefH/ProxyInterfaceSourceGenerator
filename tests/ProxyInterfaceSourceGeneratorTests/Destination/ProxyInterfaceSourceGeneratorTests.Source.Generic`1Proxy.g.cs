@@ -12,14 +12,19 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class MixedVisibilityProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IMixedVisibility
+    public partial class GenericProxy<T> : global::ProxyInterfaceSourceGeneratorTests.Source.IGeneric<T>
     {
-        public global::ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
         
-        public string Foo { get => _Instance.Foo; }
+        public T Test(T value)
+        {
+            T value_ = value;
+            var result__1701808026 = _Instance.Test(value_);
+            return result__1701808026;
+        }
 
 
-        public MixedVisibilityProxy(global::ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility instance)
+        public GenericProxy(global::ProxyInterfaceSourceGeneratorTests.Source.Generic<T> instance)
         {
             _Instance = instance;
             

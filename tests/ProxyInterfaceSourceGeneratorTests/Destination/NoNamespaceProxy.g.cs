@@ -13,20 +13,12 @@ using System;
 
     public partial class NoNamespaceProxy : INoNamespace
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.NoNamespace _Instance { get; }
         
-
         public bool Test { get => _Instance.Test; set => _Instance.Test = value; }
 
 
-
-
-
-
-
-
-
-        public NoNamespaceProxy(ProxyInterfaceSourceGeneratorTests.Source.NoNamespace instance)
+        public NoNamespaceProxy(global::ProxyInterfaceSourceGeneratorTests.Source.NoNamespace instance)
         {
             _Instance = instance;
             

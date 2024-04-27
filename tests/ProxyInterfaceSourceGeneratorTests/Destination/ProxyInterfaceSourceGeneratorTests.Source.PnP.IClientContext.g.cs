@@ -14,27 +14,21 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface IClientContext
     {
-        new Microsoft.SharePoint.Client.ClientContext _Instance { get; }
+        new global::Microsoft.SharePoint.Client.ClientContext _Instance { get; }
 
-        ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb Web { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb Web { get; }
 
-        Microsoft.SharePoint.Client.Site Site { get; }
+        global::Microsoft.SharePoint.Client.Site Site { get; }
 
-        Microsoft.SharePoint.Client.RequestResources RequestResources { get; }
+        global::Microsoft.SharePoint.Client.RequestResources RequestResources { get; }
 
-        System.Version ServerVersion { get; }
+        global::System.Version ServerVersion { get; }
 
-
-
-        Microsoft.SharePoint.Client.FormDigestInfo GetFormDigestDirect();
+        global::Microsoft.SharePoint.Client.FormDigestInfo GetFormDigestDirect();
 
         void ExecuteQuery();
 
-        System.Threading.Tasks.Task ExecuteQueryAsync();
-
-
-
-
+        global::System.Threading.Tasks.Task ExecuteQueryAsync();
     }
 }
 #nullable restore

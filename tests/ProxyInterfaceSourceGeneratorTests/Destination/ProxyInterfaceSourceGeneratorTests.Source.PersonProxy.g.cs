@@ -12,15 +12,14 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class PersonProxy : ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, IPerson
+    public partial class PersonProxy : global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, global::ProxyInterfaceSourceGeneratorTests.Source.IPerson
     {
-        public new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
-        public ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
-
+        public new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
-        public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
-        public ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get => _Instance[i, s]; set => _Instance[i, s] = value; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get => _Instance[i, s]; set => _Instance[i, s] = value; }
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(System.Threading.PeriodicTimer))]
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
@@ -31,13 +30,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public object @object { get => _Instance.@object; set => _Instance.@object = value; }
 
-
-
-        public System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
+        public global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
         {
-            ProxyInterfaceSourceGeneratorTests.Source.Human h_ = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human h_ = Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human>(h);
             var result_907493286 = _Instance.AddHuman(h_);
-            return Mapster.TypeAdapter.Adapt<System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
+            return Mapster.TypeAdapter.Adapt<global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(result_907493286);
         }
 
         public void Void()
@@ -125,31 +122,31 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_542538942;
         }
 
-        public System.Threading.Tasks.Task Method1Async()
+        public global::System.Threading.Tasks.Task Method1Async()
         {
             var result__57678382 = _Instance.Method1Async();
             return result__57678382;
         }
 
-        public System.Threading.Tasks.Task<int> Method2Async()
+        public global::System.Threading.Tasks.Task<int> Method2Async()
         {
             var result__57677169 = _Instance.Method2Async();
             return result__57677169;
         }
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
-        public System.Threading.Tasks.Task<string?> Method3Async()
+        public global::System.Threading.Tasks.Task<string?> Method3Async()
         {
             var result__57684656 = _Instance.Method3Async();
             return result__57684656;
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken))
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(System.Threading.CancellationToken))
         {
             int i_ = i;
             string? appId_ = appId;
-            System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata_ = metadata;
-            System.Threading.CancellationToken token_ = token;
+            global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata_ = metadata;
+            global::System.Threading.CancellationToken token_ = token;
             _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
         }
 
@@ -171,18 +168,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-
-
-
-
-
-        public PersonProxy(ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
+        public PersonProxy(global::ProxyInterfaceSourceGeneratorTests.Source.Person instance) : base(instance)
         {
             _Instance = instance;
             _InstanceHuman = instance;
 
-            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.Human, ProxyInterfaceSourceGeneratorTests.Source.IHuman>.NewConfig().ConstructUsing(instance_1903550791 => new ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance_1903550791));
-            Mapster.TypeAdapterConfig<ProxyInterfaceSourceGeneratorTests.Source.IHuman, ProxyInterfaceSourceGeneratorTests.Source.Human>.NewConfig().MapWith(proxy1075308949 => ((ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1075308949)._Instance);
+            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.Human, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>.NewConfig().ConstructUsing(instance2145588841 => new global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance2145588841));
+            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman, global::ProxyInterfaceSourceGeneratorTests.Source.Human>.NewConfig().MapWith(proxy1567394325 => ((global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1567394325)._Instance);
 
 
         }

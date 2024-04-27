@@ -12,16 +12,13 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class HumanProxy : IHuman
+    public partial class HumanProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IHuman
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
         
-
         public bool IsAlive { get => _Instance.IsAlive; set => _Instance.IsAlive = value; }
 
         public string GetterOnly { get => _Instance.GetterOnly; }
-
-
 
         public void Dispose()
         {
@@ -29,12 +26,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-
-
-
-
-
-        public HumanProxy(ProxyInterfaceSourceGeneratorTests.Source.Human instance)
+        public HumanProxy(global::ProxyInterfaceSourceGeneratorTests.Source.Human instance)
         {
             _Instance = instance;
             

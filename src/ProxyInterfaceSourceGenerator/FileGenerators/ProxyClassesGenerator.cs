@@ -32,19 +32,19 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         fileData = default;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
 
-        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.FullInterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
         var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
         fileData = new FileData(
-            $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
+            $"{targetClassSymbol.Symbol.GetFullMetadataName()}Proxy.g.cs",
             CreateProxyClassCode(pd, targetClassSymbol, extendsProxyClasses, interfaceName, className, constructorName)
         );
 
@@ -68,11 +68,11 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         if (firstExtends is not null)
         {
-            extends = $"{firstExtends.NamespaceDot}{firstExtends.ShortTypeName}Proxy, ";
+            extends = $"global::{firstExtends.NamespaceDot}{firstExtends.ShortMetadataName}Proxy, ";
             @base = " : base(instance)";
             @new = "new ";
-            instanceBaseDefinition = $"public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
-            instanceBaseSetter = $"_Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
+            instanceBaseDefinition = $"public {firstExtends.FullQualifiedTypeName} _Instance{firstExtends.FullQualifiedTypeName.GetLastPart()} {{ get; }}";
+            instanceBaseSetter = $"_Instance{firstExtends.FullQualifiedTypeName.GetLastPart()} = instance;";
         }
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;

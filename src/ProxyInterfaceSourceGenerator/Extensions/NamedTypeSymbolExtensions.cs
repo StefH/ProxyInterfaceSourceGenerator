@@ -23,14 +23,6 @@ internal static class NamedTypeSymbolExtensions
         return types;
     }
 
-    public static string GetFileName(this INamedTypeSymbol namedTypeSymbol)
-    {
-        var typeName = namedTypeSymbol.GetFullType();
-        return !(typeName.Contains('<') && typeName.Contains('>')) ?
-            typeName :
-            $"{typeName.Replace('<', '_').Replace('>', '_').Replace(", ", "-")}_{typeName.Count(c => c == ',') + 1}";
-    }
-
     public static string GetFullType(this INamedTypeSymbol namedTypeSymbol)
     {
         // https://www.codeproject.com/Articles/861548/Roslyn-Code-Analysis-in-Easy-Samples-Part

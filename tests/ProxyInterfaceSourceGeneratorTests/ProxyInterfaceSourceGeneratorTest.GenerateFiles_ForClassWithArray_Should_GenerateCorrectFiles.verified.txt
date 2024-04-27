@@ -96,7 +96,7 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class FooProxy : IFoo
+    public partial class FooProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IFoo
     {
         public global::ProxyInterfaceSourceGeneratorTests.Source.Foo _Instance { get; }
         

@@ -14,12 +14,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPerson
     {
-        new ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
+        new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
-        ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
 
-        ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get; set; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get; set; }
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(System.Threading.PeriodicTimer))]
         string Name { get; set; }
@@ -30,9 +30,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         object @object { get; set; }
 
-
-
-        System.Collections.Generic.IList<ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(ProxyInterfaceSourceGeneratorTests.Source.IHuman h);
+        global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h);
 
         void Void();
 
@@ -58,22 +56,18 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new();
 
-        System.Threading.Tasks.Task Method1Async();
+        global::System.Threading.Tasks.Task Method1Async();
 
-        System.Threading.Tasks.Task<int> Method2Async();
+        global::System.Threading.Tasks.Task<int> Method2Async();
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
-        System.Threading.Tasks.Task<string?> Method3Async();
+        global::System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
+        void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
 
         bool TryParse(string s1, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
 
         bool TryParse(string s2, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i);
-
-
-
-
     }
 }
 #nullable restore

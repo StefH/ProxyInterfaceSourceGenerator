@@ -14,18 +14,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IHttpMessageInvoker : global::System.IDisposable
     {
-        System.Net.Http.HttpMessageInvoker _Instance { get; }
-
-
+        global::System.Net.Http.HttpMessageInvoker _Instance { get; }
 
         [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
-        System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
+        global::System.Net.Http.HttpResponseMessage Send(global::System.Net.Http.HttpRequestMessage request, global::System.Threading.CancellationToken cancellationToken);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
-
-
-
-
+        global::System.Threading.Tasks.Task<global::System.Net.Http.HttpResponseMessage> SendAsync(global::System.Net.Http.HttpRequestMessage request, global::System.Threading.CancellationToken cancellationToken);
     }
 }
 #nullable restore

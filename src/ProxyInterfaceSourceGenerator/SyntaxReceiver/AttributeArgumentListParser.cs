@@ -1,10 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Types;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
@@ -18,9 +18,9 @@ internal static class AttributeArgumentListParser
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var rawTypeValue))
+        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var fullyQualifiedDisplayString, out var metadataName))
         {
-            result = new ProxyInterfaceGeneratorAttributeArguments(rawTypeValue);
+            result = new ProxyInterfaceGeneratorAttributeArguments(fullyQualifiedDisplayString, metadataName);
         }
         else
         {
@@ -57,15 +57,17 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? rawTypeName)
+    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? fullyQualifiedDisplayString, [NotNullWhen(true)] out string? metadataName)
     {
-        rawTypeName = null;
+        fullyQualifiedDisplayString = null;
+        metadataName = null;
 
         if (expressionSyntax is TypeOfExpressionSyntax typeOfExpressionSyntax)
         {
             var typeInfo = semanticModel.GetTypeInfo(typeOfExpressionSyntax.Type);
-            var typeSymbol = typeInfo.Type;
-            rawTypeName = typeSymbol!.ToFullyQualifiedDisplayString();
+            var typeSymbol = typeInfo.Type!;
+            metadataName = typeSymbol.GetFullMetadataName();
+            fullyQualifiedDisplayString = typeSymbol.ToFullyQualifiedDisplayString();
 
             return true;
         }

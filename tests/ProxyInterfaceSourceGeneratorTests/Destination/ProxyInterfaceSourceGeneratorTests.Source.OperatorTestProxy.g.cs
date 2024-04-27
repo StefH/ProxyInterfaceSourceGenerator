@@ -12,20 +12,13 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class OperatorTestProxy : IOperatorTest
+    public partial class OperatorTestProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
         
-
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
         public int? Id { get => _Instance.Id; set => _Instance.Id = value; }
-
-
-
-
-
-
 
         public static implicit operator OperatorTestProxy(string name)
         {
@@ -48,8 +41,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-
-        public OperatorTestProxy(ProxyInterfaceSourceGeneratorTests.Source.OperatorTest instance)
+        public OperatorTestProxy(global::ProxyInterfaceSourceGeneratorTests.Source.OperatorTest instance)
         {
             _Instance = instance;
             
