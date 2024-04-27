@@ -18,7 +18,7 @@ internal static class AttributeArgumentListParser
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue, semanticModel))
+        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var rawTypeValue))
         {
             result = new ProxyInterfaceGeneratorAttributeArguments(rawTypeValue);
         }
@@ -57,7 +57,7 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, [NotNullWhen(true)] out string? rawTypeName, SemanticModel semanticModel)
+    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? rawTypeName)
     {
         rawTypeName = null;
 

@@ -8,6 +8,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
+    private const string GlobalPrefix = "global::";
     private static readonly string[] GenerateProxyAttributes = { "ProxyInterfaceGenerator.Proxy", "Proxy" };
     private static readonly string[] Modifiers = { "public", "partial" };
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
@@ -34,7 +35,6 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
     {
         return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
     }
-
     private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data, SemanticModel semanticModel)
     {
         data = null;
@@ -71,13 +71,12 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
 
         var rawTypeNameAsString = fluentBuilderAttributeArguments.RawTypeName;
-        var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"global::{ns}";
+        var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";
         var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}.";
         var shortTypeName = rawTypeNameAsString;
-        const string globalPrefix = "global::";
-        if (shortTypeName.StartsWith(globalPrefix, StringComparison.InvariantCulture))
+        if (shortTypeName.StartsWith(GlobalPrefix, StringComparison.InvariantCulture))
         {
-            shortTypeName = shortTypeName.Substring(globalPrefix.Length);
+            shortTypeName = shortTypeName.Substring(GlobalPrefix.Length);
         }
         shortTypeName = ConvertTypeName(shortTypeName).Split('.').Last();
 
