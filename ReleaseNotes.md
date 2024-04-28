@@ -1,3 +1,8 @@
+# 0.1.0 (28 April 2024)
+- [#68](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/68) - Use fully qualified names to reduce namespace clashes. [bug] contributed by [Fieslix](https://github.com/Fieslix)
+- [#70](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/70) - Add tests for interfaces with same name but different namespace [test] contributed by [StefH](https://github.com/StefH)
+- [#69](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/69) - output filename clash in case with multiple interfaces with same name but different namespace [bug]
+
 # 0.0.38 (23 April 2024)
 - [#67](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/67) - Do not redefine interfaces. [enhancement] contributed by [Fieslix](https://github.com/Fieslix)
 
