@@ -12,7 +12,10 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="12.0.1" />
         <PackageReference Include="Mapster" Version="7.3.0" />
-        <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.32" />
+        <PackageReference Include="ProxyInterfaceGenerator" Version="0.0.38">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
 </Project>

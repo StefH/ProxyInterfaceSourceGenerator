@@ -4,6 +4,26 @@ namespace ProxyInterfaceSourceGenerator.Models;
 
 internal class ProxyData
 {
+    public string Namespace { get; }
+
+    public string NamespaceDot { get; }
+
+    public string ShortInterfaceName { get; }
+
+    public string FullInterfaceName { get; }
+
+    public string FullQualifiedTypeName { get; }
+
+    public string ShortMetadataName { get; }
+
+    public string FullMetadataTypeName { get; }
+
+    public List<string> Usings { get; }
+
+    public bool ProxyBaseClasses { get; }
+
+    public ProxyClassAccessibility Accessibility { get; }
+
     public ProxyData(string @namespace,
                      string namespaceDot,
                      string shortInterfaceName,
@@ -26,24 +46,4 @@ internal class ProxyData
         ProxyBaseClasses = proxyBaseClasses;
         Accessibility = accessibility;
     }
-
-    public string Namespace { get; }
-
-    public string NamespaceDot { get; }
-
-    public string ShortInterfaceName { get; }
-
-    public string FullInterfaceName { get; }
-
-    public string FullQualifiedTypeName { get; }
-
-    public string ShortMetadataName { get; }
-
-    public string FullMetadataTypeName { get; }
-
-    public List<string> Usings { get; }
-
-    public bool ProxyBaseClasses { get; }
-
-    public ProxyClassAccessibility Accessibility { get; }
 }

@@ -11,9 +11,9 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 {
-    private IReadOnlyCollection<INamedTypeSymbol> ImplementedInterfaces = new List<INamedTypeSymbol>();
-    public PartialInterfacesGenerator(Context context, bool supportsNullable) :
-        base(context, supportsNullable)
+    private IReadOnlyCollection<INamedTypeSymbol> _implementedInterfaces = new List<INamedTypeSymbol>();
+
+    public PartialInterfacesGenerator(Context context, bool supportsNullable) : base(context, supportsNullable)
     {
     }
 
@@ -59,8 +59,8 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
         ProxyData proxyData)
     {
         var extendsProxyClasses = GetExtendsProxyData(proxyData, classSymbol);
-        ImplementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
-        var implementedInterfacesNames = ImplementedInterfaces.Select(i => i.ToFullyQualifiedDisplayString());
+        _implementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
+        var implementedInterfacesNames = _implementedInterfaces.Select(i => i.ToFullyQualifiedDisplayString()).ToArray();
         var implements = implementedInterfacesNames.Any() ? $" : {string.Join(", ", implementedInterfacesNames)}" : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(ns);
@@ -96,16 +96,17 @@ methods}
     private Func<T, bool> InterfaceFilter<T>() where T : ISymbol
     {
         var hashSet = new HashSet<string>();
-        foreach (var iface in ImplementedInterfaces)
+        foreach (var @interface in _implementedInterfaces)
         {
-            var members = iface.AllInterfaces.Aggregate(iface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
+            var members = @interface.AllInterfaces.Aggregate(@interface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
             foreach (var member in members)
             {
                 hashSet.Add(member.Name);
             }
         }
-        //Member is not already implemented in another interface.
-        return (T t) => !hashSet.Contains(t.Name);
+
+        // Member is not already implemented in another interface.
+        return t => !hashSet.Contains(t.Name);
     }
 
     private string GenerateProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)

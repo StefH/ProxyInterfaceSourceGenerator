@@ -30,7 +30,7 @@ internal static class SymbolExtensions
     }
 
     //https://stackoverflow.com/questions/27105909/get-fully-qualified-metadata-name-in-roslyn
-    public static string GetFullMetadataName(this ISymbol s)
+    public static string GetFullMetadataName(this ISymbol? s)
     {
         if (s == null || IsRootNamespace(s))
         {
@@ -69,9 +69,6 @@ internal static class SymbolExtensions
     public static bool IsPublic(this ISymbol? symbol) =>
         symbol is { DeclaredAccessibility: Accessibility.Public };
 
-    private static bool IsRootNamespace(ISymbol symbol)
-    {
-        INamespaceSymbol s = null;
-        return ((s = symbol as INamespaceSymbol) != null) && s.IsGlobalNamespace;
-    }
+    private static bool IsRootNamespace(ISymbol symbol) =>
+        symbol is INamespaceSymbol { IsGlobalNamespace: true };
 }
