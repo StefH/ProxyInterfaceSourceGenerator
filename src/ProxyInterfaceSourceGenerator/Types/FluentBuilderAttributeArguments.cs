@@ -1,6 +1,6 @@
 namespace ProxyInterfaceSourceGenerator.Types;
 
-internal record ProxyInterfaceGeneratorAttributeArguments(string RawTypeName)
+internal record ProxyInterfaceGeneratorAttributeArguments(string FullyQualifiedDisplayString, string MetadataName)
 {
     public bool ProxyBaseClasses { get; set; }
 

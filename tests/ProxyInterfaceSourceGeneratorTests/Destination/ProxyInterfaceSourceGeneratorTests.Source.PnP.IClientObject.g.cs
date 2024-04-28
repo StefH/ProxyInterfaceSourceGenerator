@@ -14,14 +14,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface IClientObject : global::Microsoft.SharePoint.Client.IFromJson
     {
-        Microsoft.SharePoint.Client.ClientObject _Instance { get; }
+        global::Microsoft.SharePoint.Client.ClientObject _Instance { get; }
 
-        ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext Context { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext Context { get; }
 
         object Tag { get; set; }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        Microsoft.SharePoint.Client.ObjectPath Path { get; }
+        global::Microsoft.SharePoint.Client.ObjectPath Path { get; }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string ObjectVersion { get; set; }
@@ -29,9 +29,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.PseudoRemoteAttribute]
         bool? ServerObjectIsNull { get; }
 
-        ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }
-
-
+        global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve();
@@ -44,10 +42,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         bool IsPropertyAvailable(string propertyName);
 
         bool IsObjectPropertyInstantiated(string propertyName);
-
-
-
-
     }
 }
 #nullable restore

@@ -32,19 +32,19 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     {
         fileData = default;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullTypeName, pd.Usings, out var targetClassSymbol))
+        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
         {
             return false;
         }
 
-        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.FullInterfaceName);
         var className = targetClassSymbol.Symbol.ResolveProxyClassName();
         var constructorName = $"{targetClassSymbol.Symbol.Name}Proxy";
 
         var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
         fileData = new FileData(
-            $"{targetClassSymbol.Symbol.GetFileName()}Proxy.g.cs",
+            $"{targetClassSymbol.Symbol.GetFullMetadataName()}Proxy.g.cs",
             CreateProxyClassCode(pd, targetClassSymbol, extendsProxyClasses, interfaceName, className, constructorName)
         );
 
@@ -68,11 +68,11 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         if (firstExtends is not null)
         {
-            extends = $"{firstExtends.Namespace}.{firstExtends.ShortTypeName}Proxy, ";
+            extends = $"global::{firstExtends.NamespaceDot}{firstExtends.ShortMetadataName}Proxy, ";
             @base = " : base(instance)";
             @new = "new ";
-            instanceBaseDefinition = $"public {firstExtends.FullRawTypeName} _Instance{firstExtends.FullRawTypeName.GetLastPart()} {{ get; }}";
-            instanceBaseSetter = $"_Instance{firstExtends.FullRawTypeName.GetLastPart()} = instance;";
+            instanceBaseDefinition = $"public {firstExtends.FullQualifiedTypeName} _Instance{firstExtends.FullQualifiedTypeName.GetLastPart()} {{ get; }}";
+            instanceBaseSetter = $"_Instance{firstExtends.FullQualifiedTypeName.GetLastPart()} = instance;";
         }
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
@@ -106,17 +106,12 @@ using System;
 {namespaceStart}
     {accessibility} {@abstract}partial class {className} : {extends}{interfaceName}
     {{
-        public {@new}{targetClassSymbol.Symbol} _Instance {{ get; }}
+        public {@new}{targetClassSymbol} _Instance {{ get; }}
         {instanceBaseDefinition}
-
-{properties}
-
-{methods}
-
-{events}
-
-{operators}
-
+{events +
+properties +
+methods +
+operators}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
@@ -244,7 +239,7 @@ using System;
 
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
-                var type = FixType(ps.Type.ToString());
+                var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
                 string normalOrMap = $" = {ps.GetSanitizedName()}";
                 if (ps.RefKind == RefKind.Out)
                 {
@@ -265,7 +260,7 @@ using System;
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = !method.IsStatic ? "_Instance" : $"{targetClassSymbol.Symbol}";
+            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
 
             if (returnTypeAsString == "void")
             {

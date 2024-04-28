@@ -12,22 +12,14 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    internal partial class TestClassInternalProxy : ITestClassInternal
+    internal partial class TestClassInternalProxy : global::ProxyInterfaceSourceGeneratorTests.Source.ITestClassInternal
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal _Instance { get; }
         
-
         public bool Test { get => _Instance.Test; set => _Instance.Test = value; }
 
 
-
-
-
-
-
-
-
-        public TestClassInternalProxy(ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal instance)
+        public TestClassInternalProxy(global::ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal instance)
         {
             _Instance = instance;
             

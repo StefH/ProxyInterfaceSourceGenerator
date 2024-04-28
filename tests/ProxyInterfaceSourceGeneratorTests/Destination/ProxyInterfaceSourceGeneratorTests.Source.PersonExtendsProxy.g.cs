@@ -12,11 +12,10 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class PersonExtendsProxy : IPersonExtends
+    public partial class PersonExtendsProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends
     {
-        public ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
         
-
         public string StaticString { get => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString; set => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString = value; }
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
@@ -31,13 +30,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public string GetterOnly { get => _Instance.GetterOnly; }
 
-
-
         public string StaticMethod(int x, string y)
         {
             int x_ = x;
             string y_ = y;
-            var result__1647028461 = ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticMethod(x_, y_);
+            var result__1647028461 = global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticMethod(x_, y_);
             return result__1647028461;
         }
 
@@ -90,19 +87,19 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result_542538942;
         }
 
-        public System.Threading.Tasks.Task Method1Async()
+        public global::System.Threading.Tasks.Task Method1Async()
         {
             var result__57678382 = _Instance.Method1Async();
             return result__57678382;
         }
 
-        public System.Threading.Tasks.Task<int> Method2Async()
+        public global::System.Threading.Tasks.Task<int> Method2Async()
         {
             var result__57677169 = _Instance.Method2Async();
             return result__57677169;
         }
 
-        public System.Threading.Tasks.Task<string?> Method3Async()
+        public global::System.Threading.Tasks.Task<string?> Method3Async()
         {
             var result__57684656 = _Instance.Method3Async();
             return result__57684656;
@@ -114,12 +111,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-
-
-
-
-
-        public PersonExtendsProxy(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends instance)
+        public PersonExtendsProxy(global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends instance)
         {
             _Instance = instance;
             

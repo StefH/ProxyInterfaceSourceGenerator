@@ -4,21 +4,46 @@ namespace ProxyInterfaceSourceGenerator.Models;
 
 internal class ProxyData
 {
-    public string Namespace { get; init; }
+    public ProxyData(string @namespace,
+                     string namespaceDot,
+                     string shortInterfaceName,
+                     string fullInterfaceName,
+                     string fullQualifiedTypeName,
+                     string shortMetadataTypeName,
+                     string fullMetadataTypeName,
+                     List<string> usings,
+                     bool proxyBaseClasses,
+                     ProxyClassAccessibility accessibility)
+    {
+        Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
+        NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));
+        ShortInterfaceName = shortInterfaceName ?? throw new ArgumentNullException(nameof(shortInterfaceName));
+        FullInterfaceName = fullInterfaceName ?? throw new ArgumentNullException(nameof(fullInterfaceName));
+        FullQualifiedTypeName = fullQualifiedTypeName ?? throw new ArgumentNullException(nameof(fullQualifiedTypeName));
+        ShortMetadataName = shortMetadataTypeName ?? throw new ArgumentNullException(nameof(shortMetadataTypeName));
+        FullMetadataTypeName = fullMetadataTypeName ?? throw new ArgumentNullException(nameof(fullMetadataTypeName));
+        Usings = usings ?? throw new ArgumentNullException(nameof(usings));
+        ProxyBaseClasses = proxyBaseClasses;
+        Accessibility = accessibility;
+    }
 
-    public string ShortInterfaceName { get; init; }
+    public string Namespace { get; }
 
-    public string FullInterfaceName { get; init; }
+    public string NamespaceDot { get; }
 
-    public string FullRawTypeName { get; set; }
+    public string ShortInterfaceName { get; }
 
-    public string ShortTypeName { get; init; }
+    public string FullInterfaceName { get; }
 
-    public string FullTypeName { get; init; }
+    public string FullQualifiedTypeName { get; }
 
-    public List<string> Usings { get; init; }
+    public string ShortMetadataName { get; }
 
-    public bool ProxyBaseClasses { get; init; }
+    public string FullMetadataTypeName { get; }
 
-    public ProxyClassAccessibility Accessibility { get; init; }
+    public List<string> Usings { get; }
+
+    public bool ProxyBaseClasses { get; }
+
+    public ProxyClassAccessibility Accessibility { get; }
 }

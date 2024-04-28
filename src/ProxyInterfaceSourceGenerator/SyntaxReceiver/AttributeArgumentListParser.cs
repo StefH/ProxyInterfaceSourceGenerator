@@ -1,13 +1,16 @@
-using System.Diagnostics.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Types;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
-    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList)
+    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
     {
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 3)
         {
@@ -15,9 +18,9 @@ internal static class AttributeArgumentListParser
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, out var rawTypeValue))
+        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var fullyQualifiedDisplayString, out var metadataName))
         {
-            result = new ProxyInterfaceGeneratorAttributeArguments(rawTypeValue);
+            result = new ProxyInterfaceGeneratorAttributeArguments(fullyQualifiedDisplayString, metadataName);
         }
         else
         {
@@ -54,13 +57,18 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, [NotNullWhen(true)] out string? rawTypeName)
+    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? fullyQualifiedDisplayString, [NotNullWhen(true)] out string? metadataName)
     {
-        rawTypeName = null;
+        fullyQualifiedDisplayString = null;
+        metadataName = null;
 
         if (expressionSyntax is TypeOfExpressionSyntax typeOfExpressionSyntax)
         {
-            rawTypeName = typeOfExpressionSyntax.Type.ToString();
+            var typeInfo = semanticModel.GetTypeInfo(typeOfExpressionSyntax.Type);
+            var typeSymbol = typeInfo.Type!;
+            metadataName = typeSymbol.GetFullMetadataName();
+            fullyQualifiedDisplayString = typeSymbol.ToFullyQualifiedDisplayString();
+
             return true;
         }
 

@@ -14,15 +14,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IOperatorTest
     {
-        ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
 
         string Name { get; set; }
 
         int? Id { get; set; }
-
-
-
-
 
 
     }

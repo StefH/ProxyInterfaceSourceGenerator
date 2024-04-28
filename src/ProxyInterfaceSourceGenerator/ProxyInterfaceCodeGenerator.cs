@@ -16,7 +16,7 @@ internal
 #endif
 class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
-    private readonly ExtraFilesGenerator _proxyAttributeGenerator = new ();
+    private readonly ExtraFilesGenerator _proxyAttributeGenerator = new();
 
     public void Initialize(GeneratorInitializationContext context)
     {
@@ -26,7 +26,6 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
             System.Diagnostics.Debugger.Launch();
         }
 #endif
-
         context.RegisterForSyntaxNotifications(() => new ProxySyntaxReceiver());
     }
 
@@ -39,7 +38,7 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
                 throw new NotSupportedException("Only C# is supported.");
             }
 
-            if (context.SyntaxReceiver is not ProxySyntaxReceiver receiver)
+            if (context.SyntaxContextReceiver is not ProxySyntaxReceiver receiver)
             {
                 throw new NotSupportedException($"Only {nameof(ProxySyntaxReceiver)} is supported.");
             }

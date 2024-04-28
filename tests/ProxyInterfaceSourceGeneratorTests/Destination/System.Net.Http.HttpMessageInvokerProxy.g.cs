@@ -12,26 +12,23 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial class HttpMessageInvokerProxy : IHttpMessageInvoker
+    public partial class HttpMessageInvokerProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker
     {
-        public System.Net.Http.HttpMessageInvoker _Instance { get; }
+        public global::System.Net.Http.HttpMessageInvoker _Instance { get; }
         
-
-
-
         [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
-        public virtual System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        public virtual global::System.Net.Http.HttpResponseMessage Send(global::System.Net.Http.HttpRequestMessage request, global::System.Threading.CancellationToken cancellationToken)
         {
-            System.Net.Http.HttpRequestMessage request_ = request;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Net.Http.HttpRequestMessage request_ = request;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result__989347188 = _Instance.Send(request_, cancellationToken_);
             return result__989347188;
         }
 
-        public virtual System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        public virtual global::System.Threading.Tasks.Task<global::System.Net.Http.HttpResponseMessage> SendAsync(global::System.Net.Http.HttpRequestMessage request, global::System.Threading.CancellationToken cancellationToken)
         {
-            System.Net.Http.HttpRequestMessage request_ = request;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Net.Http.HttpRequestMessage request_ = request;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result__1161702976 = _Instance.SendAsync(request_, cancellationToken_);
             return result__1161702976;
         }
@@ -42,12 +39,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
 
-
-
-
-
-
-        public HttpMessageInvokerProxy(System.Net.Http.HttpMessageInvoker instance)
+        public HttpMessageInvokerProxy(global::System.Net.Http.HttpMessageInvoker instance)
         {
             _Instance = instance;
             

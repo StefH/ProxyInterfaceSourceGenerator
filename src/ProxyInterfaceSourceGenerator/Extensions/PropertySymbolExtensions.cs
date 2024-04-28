@@ -1,5 +1,6 @@
 using Microsoft.CodeAnalysis;
 using ProxyInterfaceSourceGenerator.Enums;
+using ProxyInterfaceSourceGenerator.FileGenerators;
 
 namespace ProxyInterfaceSourceGenerator.Extensions;
 
@@ -20,7 +21,8 @@ internal static class PropertySymbolExtensions
         var get = getIsPublic ? "get; " : string.Empty;
         var set = setIsPublic ? "set; " : string.Empty;
 
-        var type = !string.IsNullOrEmpty(overrideType) ? overrideType : $"{property.Type}";
+        var type = !string.IsNullOrEmpty(overrideType) ? overrideType
+            : BaseGenerator.FixType(property.Type.ToFullyQualifiedDisplayString(), property.NullableAnnotation);
 
         return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");
     }

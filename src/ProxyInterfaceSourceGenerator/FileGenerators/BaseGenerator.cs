@@ -11,8 +11,6 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal abstract class BaseGenerator
 {
-    private const string Star = "*";
-
     protected readonly Context Context;
     protected readonly bool SupportsNullable;
 
@@ -34,25 +32,8 @@ internal abstract class BaseGenerator
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
     {
-        proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullRawTypeName == type);
-        if (proxyData != null)
-        {
-            return true;
-        }
-
-        foreach (var ci in Context.Candidates.Values)
-        {
-            foreach (var u in ci.Usings)
-            {
-                if ($"{u}.{ci.FullRawTypeName}" == type)
-                {
-                    proxyData = ci;
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullQualifiedTypeName == type);
+        return proxyData != null;
     }
 
     protected string GetWhereStatementFromMethod(IMethodSymbol method)
@@ -128,7 +109,7 @@ internal abstract class BaseGenerator
             constraints.Add("new()");
         }
 
-        if (constraints.Any())
+        if (constraints.Count > 0)
         {
             constraint = new(typeParameterSymbol.Name, constraints);
             return true;
@@ -138,11 +119,21 @@ internal abstract class BaseGenerator
         return false;
     }
 
+    internal readonly SymbolDisplayFormat NullableDisplayFormat = new SymbolDisplayFormat(
+                globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Included,
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+                miscellaneousOptions:
+                    SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers |
+                    SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
+                    SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
     protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out bool isReplaced)
     {
         isReplaced = false;
 
-        var typeSymbolAsString = typeSymbol.ToString();
+        var typeSymbolAsString = typeSymbol.ToFullyQualifiedDisplayString();
+        var nullableTypeSymbolAsString = typeSymbol.ToDisplayString(NullableFlowState.None, NullableDisplayFormat);
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
@@ -152,7 +143,7 @@ internal abstract class BaseGenerator
             }
 
             isReplaced = true;
-            return FixType(existing.FullInterfaceName);
+            return FixType(existing.FullInterfaceName, typeSymbol.NullableAnnotation);
         }
 
         ITypeSymbol[] typeArguments;
@@ -166,13 +157,13 @@ internal abstract class BaseGenerator
         }
         else
         {
-            return FixType(typeSymbolAsString);
+            return FixType(typeSymbolAsString, typeSymbol.NullableAnnotation);
         }
 
-        var propertyTypeAsStringToBeModified = typeSymbolAsString;
+        var propertyTypeAsStringToBeModified = nullableTypeSymbolAsString;
         foreach (var typeArgument in typeArguments)
         {
-            var typeArgumentAsString = typeArgument.ToString();
+            var typeArgumentAsString = typeArgument.ToFullyQualifiedDisplayString();
 
             if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
             {
@@ -187,15 +178,21 @@ internal abstract class BaseGenerator
             }
         }
 
-        return FixType(propertyTypeAsStringToBeModified);
+        return FixType(propertyTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
     }
 
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
     {
         classSymbol = default;
+        const string globalPrefix = "global::";
+        if (name.StartsWith(globalPrefix, StringComparison.Ordinal))
+        {
+            name = name.Substring(globalPrefix.Length);
+        }
 
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.
         var symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(name);
+
         if (symbol is not null && symbol.TypeKind == kind)
         {
             classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
@@ -223,7 +220,14 @@ internal abstract class BaseGenerator
             string? type = null;
             if (includeType)
             {
-                type = parameterSymbol.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(parameterSymbol, out _) : parameterSymbol.Type.ToString();
+                if (parameterSymbol.GetTypeEnum() == TypeEnum.Complex)
+                {
+                    type = GetParameterType(parameterSymbol, out _);
+                }
+                else
+                {
+                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString(), parameterSymbol.NullableAnnotation);
+                }
             }
 
             methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
@@ -237,36 +241,22 @@ internal abstract class BaseGenerator
         var extendsProxyClasses = new List<ProxyData>();
         foreach (var baseType in targetClassSymbol.BaseTypes)
         {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullRawTypeName == baseType.ToString());
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullQualifiedTypeName == baseType.ToFullyQualifiedDisplayString());
             if (candidate is not null)
             {
                 extendsProxyClasses.Add(candidate);
                 break;
             }
-
-            // Try to find with usings
-            foreach (var @using in proxyData.Usings)
-            {
-                candidate = Context.Candidates.Values.FirstOrDefault(ci => $"{@using}.{ci.FullRawTypeName}" == baseType.ToString());
-                if (candidate is not null)
-                {
-                    // Update the FullRawTypeName
-                    candidate.FullRawTypeName = $"{@using}.{candidate.FullRawTypeName}";
-
-                    extendsProxyClasses.Add(candidate);
-                    break;
-                }
-            }
         }
         return extendsProxyClasses;
     }
 
-    /// <summary>
-    /// Issue 54
-    /// double[*,*] --> double[,]
-    /// </summary>
-    protected static string FixType(string type)
+    internal static string FixType(string type, NullableAnnotation nullableAnnotation)
     {
-        return type.Replace(Star, string.Empty);
+        if (nullableAnnotation == NullableAnnotation.Annotated && !type.EndsWith("?", StringComparison.Ordinal))
+        {
+            return $"{type}?";
+        }
+        return type;
     }
 }

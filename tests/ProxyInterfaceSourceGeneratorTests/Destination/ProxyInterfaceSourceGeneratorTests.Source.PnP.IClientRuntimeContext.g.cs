@@ -14,7 +14,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface IClientRuntimeContext : global::System.IDisposable
     {
-        Microsoft.SharePoint.Client.ClientRuntimeContext _Instance { get; }
+        global::Microsoft.SharePoint.Client.ClientRuntimeContext _Instance { get; }
+
+        event global::System.EventHandler<global::Microsoft.SharePoint.Client.WebRequestEventArgs> ExecutingWebRequest;
 
         string Url { get; }
 
@@ -26,11 +28,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         bool ValidateOnClient { get; set; }
 
-        System.Net.ICredentials Credentials { get; set; }
+        global::System.Net.ICredentials Credentials { get; set; }
 
-        Microsoft.SharePoint.Client.WebRequestExecutorFactory WebRequestExecutorFactory { get; set; }
+        global::Microsoft.SharePoint.Client.WebRequestExecutorFactory WebRequestExecutorFactory { get; set; }
 
-        Microsoft.SharePoint.Client.ClientRequest PendingRequest { get; }
+        global::Microsoft.SharePoint.Client.ClientRequest PendingRequest { get; }
 
         bool HasPendingRequest { get; }
 
@@ -39,49 +41,41 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         int RequestTimeout { get; set; }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        System.Collections.Generic.Dictionary<string, object> StaticObjects { get; }
+        global::System.Collections.Generic.Dictionary<string, object> StaticObjects { get; }
 
-        System.Version ServerSchemaVersion { get; }
+        global::System.Version ServerSchemaVersion { get; }
 
-        System.Version ServerLibraryVersion { get; }
+        global::System.Version ServerLibraryVersion { get; }
 
-        System.Version RequestSchemaVersion { get; set; }
+        global::System.Version RequestSchemaVersion { get; set; }
 
         string TraceCorrelationId { get; set; }
 
-
-
         void ExecuteQuery();
 
-        void RetryQuery(Microsoft.SharePoint.Client.ClientRequest request);
+        void RetryQuery(global::Microsoft.SharePoint.Client.ClientRequest request);
 
-        System.Threading.Tasks.Task ExecuteQueryAsync();
+        global::System.Threading.Tasks.Task ExecuteQueryAsync();
 
-        System.Threading.Tasks.Task RetryQueryAsync(Microsoft.SharePoint.Client.ClientRequest request);
+        global::System.Threading.Tasks.Task RetryQueryAsync(global::Microsoft.SharePoint.Client.ClientRequest request);
 
-        T CastTo<T>(ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject;
+        T CastTo<T>(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject obj) where T : Microsoft.SharePoint.Client.ClientObject;
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        void AddQuery(Microsoft.SharePoint.Client.ClientAction query);
+        void AddQuery(global::Microsoft.SharePoint.Client.ClientAction query);
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         void AddQueryIdAndResultObject(long id, object obj);
 
         object ParseObjectFromJsonString(string json);
 
-        void AddClientTypeAssembly(System.Reflection.Assembly @assembly);
+        void AddClientTypeAssembly(global::System.Reflection.Assembly @assembly);
 
-        void Load<T>(T clientObject, params System.Linq.Expressions.Expression<System.Func<T, object>>[] retrievals) where T : Microsoft.SharePoint.Client.ClientObject;
+        void Load<T>(T clientObject, params global::System.Linq.Expressions.Expression<global::System.Func<T, object>>[] retrievals) where T : Microsoft.SharePoint.Client.ClientObject;
 
-        System.Collections.Generic.IEnumerable<T> LoadQuery<T>(Microsoft.SharePoint.Client.ClientObjectCollection<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject;
+        global::System.Collections.Generic.IEnumerable<T> LoadQuery<T>(global::Microsoft.SharePoint.Client.ClientObjectCollection<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject;
 
-        System.Collections.Generic.IEnumerable<T> LoadQuery<T>(System.Linq.IQueryable<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject;
-
-
-
-        event System.EventHandler<Microsoft.SharePoint.Client.WebRequestEventArgs> ExecutingWebRequest;
-
-
+        global::System.Collections.Generic.IEnumerable<T> LoadQuery<T>(global::System.Linq.IQueryable<T> clientObjects) where T : Microsoft.SharePoint.Client.ClientObject;
     }
 }
 #nullable restore

@@ -14,28 +14,22 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial interface ISecurableObject
     {
-        new Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
+        new global::Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
-        ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         bool HasUniqueRoleAssignments { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
-        Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get; }
-
-
+        global::Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         void ResetRoleInheritance();
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         void BreakRoleInheritance(bool copyRoleAssignments, bool clearSubscopes);
-
-
-
-
     }
 }
 #nullable restore

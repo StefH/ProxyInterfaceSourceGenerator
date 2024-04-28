@@ -14,13 +14,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IMixedVisibility
     {
-        ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
 
         string Foo { get; }
-
-
-
-
 
 
     }

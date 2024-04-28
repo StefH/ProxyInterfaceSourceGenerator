@@ -14,7 +14,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial interface IPersonExtends
     {
-        ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
 
         string StaticString { get; set; }
 
@@ -29,8 +29,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         bool IsAlive { get; set; }
 
         string GetterOnly { get; }
-
-
 
         string StaticMethod(int x, string y);
 
@@ -48,17 +46,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new();
 
-        System.Threading.Tasks.Task Method1Async();
+        global::System.Threading.Tasks.Task Method1Async();
 
-        System.Threading.Tasks.Task<int> Method2Async();
+        global::System.Threading.Tasks.Task<int> Method2Async();
 
-        System.Threading.Tasks.Task<string?> Method3Async();
+        global::System.Threading.Tasks.Task<string?> Method3Async();
 
         void Dispose();
-
-
-
-
     }
 }
 #nullable restore
