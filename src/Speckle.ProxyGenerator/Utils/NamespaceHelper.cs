@@ -6,8 +6,7 @@ internal static class NamespaceBuilder
     {
         var namespaceDefined = !string.IsNullOrEmpty(ns);
 
-        return
-        (
+        return (
             namespaceDefined ? $"namespace {ns}\r\n{{" : string.Empty,
             namespaceDefined ? "}" : string.Empty
         );

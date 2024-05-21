@@ -11,10 +11,7 @@ namespace ProxyInterfaceConsumer;
 
 public class Program
 {
-    private static JsonSerializerOptions JsonSerializerOptions = new ()
-    {
-        WriteIndented = true
-    };
+    private static JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true };
 
     public static async Task Main()
     {
@@ -24,7 +21,10 @@ public class Program
         var result = await ph.GetAsync("https://www.google.nl");
         var todo = await ph.GetFromJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos/1");
 
-        var postResult = await h.PostAsJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos", new Todo { Id = 123 });
+        var postResult = await h.PostAsJsonAsync<Todo>(
+            "https://jsonplaceholder.typicode.com/todos",
+            new Todo { Id = 123 }
+        );
 
         var t = new TestProxy(new Test());
 
@@ -41,9 +41,7 @@ public class Program
 
         var ap = new AddressProxy(new Address { HouseNumber = 42 });
         ap.HouseNumber = -1;
-        ap.MyEvent += delegate (object x, EventArgs a)
-        {
-        };
+        ap.MyEvent += delegate(object x, EventArgs a) { };
 
         IPerson p = new PersonProxy(new Person());
         p.Name = "test";
@@ -93,11 +91,7 @@ public sealed class Clazz
 }
 
 [ProxyInterfaceGenerator.Proxy(typeof(Test))]
-public partial interface ITest
-{
-}
+public partial interface ITest { }
 
 [ProxyInterfaceGenerator.Proxy(typeof(Clazz))]
-public partial interface IClazz
-{
-}
+public partial interface IClazz { }

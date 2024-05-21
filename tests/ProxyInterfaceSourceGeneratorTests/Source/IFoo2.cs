@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IFoo2
-    {
-    }
+    public partial interface IFoo2 { }
 }

@@ -1,8 +1,6 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
-    public partial interface IClientRuntimeContext
-    {
-    }
+    public partial interface IClientRuntimeContext { }
 }
 
 namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
@@ -22,6 +20,5 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         //{
         //    var x = CastTo2<ClientObjectProxy>(new ClientObjectProxy(default));
         //}
-
     }
 }

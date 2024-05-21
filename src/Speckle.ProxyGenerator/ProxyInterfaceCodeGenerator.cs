@@ -40,7 +40,9 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
 
             if (context.SyntaxContextReceiver is not ProxySyntaxReceiver receiver)
             {
-                throw new NotSupportedException($"Only {nameof(ProxySyntaxReceiver)} is supported.");
+                throw new NotSupportedException(
+                    $"Only {nameof(ProxySyntaxReceiver)} is supported."
+                );
             }
 
             // https://github.com/reactiveui/refit/blob/main/InterfaceStubGenerator.Core/InterfaceStubGenerator.cs
@@ -58,7 +60,8 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
 
     private void GenerateError(GeneratorExecutionContext context, Exception exception)
     {
-        var message = $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n[Exception]\r\n{exception}\r\n\r\n[StackTrace]\r\n{exception.StackTrace}*/";
+        var message =
+            $"/*\r\n{nameof(ProxyInterfaceCodeGenerator)}\r\n\r\n[Exception]\r\n{exception}\r\n\r\n[StackTrace]\r\n{exception.StackTrace}*/";
         context.AddSource("Error.g", SourceText.From(message, Encoding.UTF8));
     }
 
@@ -71,10 +74,17 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var attributeData = _proxyAttributeGenerator.GenerateFile();
-        context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+        context.GeneratorExecutionContext.AddSource(
+            attributeData.FileName,
+            SourceText.From(attributeData.Text, Encoding.UTF8)
+        );
     }
 
-    private static void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private static void GeneratePartialInterfaces(
+        GeneratorExecutionContext ctx,
+        ProxySyntaxReceiver receiver,
+        bool supportsNullable
+    )
     {
         var context = new Context
         {
@@ -85,11 +95,18 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
         foreach (var (fileName, text) in partialInterfacesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            context.GeneratorExecutionContext.AddSource(
+                fileName,
+                SourceText.From(text, Encoding.UTF8)
+            );
         }
     }
 
-    private static void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private static void GenerateProxyClasses(
+        GeneratorExecutionContext ctx,
+        ProxySyntaxReceiver receiver,
+        bool supportsNullable
+    )
     {
         var context = new Context
         {
@@ -100,7 +117,10 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
         foreach (var (fileName, text) in proxyClassesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            context.GeneratorExecutionContext.AddSource(
+                fileName,
+                SourceText.From(text, Encoding.UTF8)
+            );
         }
     }
 }

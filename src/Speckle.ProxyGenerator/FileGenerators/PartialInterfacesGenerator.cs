@@ -11,11 +11,11 @@ namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 {
-    private IReadOnlyCollection<INamedTypeSymbol> _implementedInterfaces = new List<INamedTypeSymbol>();
+    private IReadOnlyCollection<INamedTypeSymbol> _implementedInterfaces =
+        new List<INamedTypeSymbol>();
 
-    public PartialInterfacesGenerator(Context context, bool supportsNullable) : base(context, supportsNullable)
-    {
-    }
+    public PartialInterfacesGenerator(Context context, bool supportsNullable)
+        : base(context, supportsNullable) { }
 
     public IEnumerable<FileData> GenerateFiles()
     {
@@ -28,21 +28,42 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
         }
     }
 
-    private bool TryGenerateFile(InterfaceDeclarationSyntax ci, ProxyData pd, [NotNullWhen(true)] out FileData? fileData)
+    private bool TryGenerateFile(
+        InterfaceDeclarationSyntax ci,
+        ProxyData pd,
+        [NotNullWhen(true)] out FileData? fileData
+    )
     {
         fileData = default;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Interface, ci.Identifier.ToString(), pd.Usings, out var sourceInterfaceSymbol))
+        if (
+            !TryGetNamedTypeSymbolByFullName(
+                TypeKind.Interface,
+                ci.Identifier.ToString(),
+                pd.Usings,
+                out var sourceInterfaceSymbol
+            )
+        )
         {
             return false;
         }
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
+        if (
+            !TryGetNamedTypeSymbolByFullName(
+                TypeKind.Class,
+                pd.FullMetadataTypeName,
+                pd.Usings,
+                out var targetClassSymbol
+            )
+        )
         {
             return false;
         }
 
-        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
+        var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(
+            targetClassSymbol.Symbol,
+            pd.ShortInterfaceName
+        );
 
         fileData = new FileData(
             $"{sourceInterfaceSymbol.Symbol.GetFullMetadataName()}.g.cs",
@@ -56,12 +77,19 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
         string ns,
         ClassSymbol classSymbol,
         string interfaceName,
-        ProxyData proxyData)
+        ProxyData proxyData
+    )
     {
         var extendsProxyClasses = GetExtendsProxyData(proxyData, classSymbol);
-        _implementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(proxyData.ProxyBaseClasses);
-        var implementedInterfacesNames = _implementedInterfaces.Select(i => i.ToFullyQualifiedDisplayString()).ToArray();
-        var implements = implementedInterfacesNames.Any() ? $" : {string.Join(", ", implementedInterfacesNames)}" : string.Empty;
+        _implementedInterfaces = classSymbol.Symbol.ResolveImplementedInterfaces(
+            proxyData.ProxyBaseClasses
+        );
+        var implementedInterfacesNames = _implementedInterfaces
+            .Select(i => i.ToFullyQualifiedDisplayString())
+            .ToArray();
+        var implements = implementedInterfacesNames.Any()
+            ? $" : {string.Join(", ", implementedInterfacesNames)}"
+            : string.Empty;
         var @new = extendsProxyClasses.Any() ? "new " : string.Empty;
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(ns);
         var events = GenerateEvents(classSymbol, proxyData);
@@ -93,12 +121,16 @@ methods}
 {SupportsNullable.IIf("#nullable restore")}";
     }
 
-    private Func<T, bool> InterfaceFilter<T>() where T : ISymbol
+    private Func<T, bool> InterfaceFilter<T>()
+        where T : ISymbol
     {
         var hashSet = new HashSet<string>();
         foreach (var @interface in _implementedInterfaces)
         {
-            var members = @interface.AllInterfaces.Aggregate(@interface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
+            var members = @interface.AllInterfaces.Aggregate(
+                @interface.GetMembers(),
+                (xs, x) => xs.AddRange(x.GetMembers())
+            );
             foreach (var member in members)
             {
                 hashSet.Add(member.Name);
@@ -113,11 +145,19 @@ methods}
     {
         var str = new StringBuilder();
 
-        foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData, InterfaceFilter<IPropertySymbol>()))
+        foreach (
+            var property in MemberHelper.GetPublicProperties(
+                targetClassSymbol,
+                proxyData,
+                InterfaceFilter<IPropertySymbol>()
+            )
+        )
         {
             var type = GetPropertyType(property, out var isReplaced);
 
-            var getterSetter = isReplaced ? property.ToPropertyDetails(type) : property.ToPropertyDetails();
+            var getterSetter = isReplaced
+                ? property.ToPropertyDetails(type)
+                : property.ToPropertyDetails();
             if (getterSetter is null)
             {
                 continue;
@@ -136,7 +176,9 @@ methods}
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        {getterSetter.Value.PropertyType} {propertyName} {getterSetter.Value.GetSet}");
+            str.AppendLine(
+                $"        {getterSetter.Value.PropertyType} {propertyName} {getterSetter.Value.GetSet}"
+            );
             str.AppendLine();
         }
         return str.ToString();
@@ -145,7 +187,13 @@ methods}
     private string GenerateMethods(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
-        foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyData, InterfaceFilter<IMethodSymbol>()))
+        foreach (
+            var method in MemberHelper.GetPublicMethods(
+                targetClassSymbol,
+                proxyData,
+                InterfaceFilter<IMethodSymbol>()
+            )
+        )
         {
             var methodParameters = GetMethodParameters(method.Parameters, true);
             var whereStatement = GetWhereStatementFromMethod(method);
@@ -155,7 +203,9 @@ methods}
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        {GetReplacedTypeAsString(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
+            str.AppendLine(
+                $"        {GetReplacedTypeAsString(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};"
+            );
             str.AppendLine();
         }
 
@@ -165,10 +215,19 @@ methods}
     private string GenerateEvents(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
-        foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyData, InterfaceFilter<IMethodSymbol>()))
+        foreach (
+            var @event in MemberHelper.GetPublicEvents(
+                targetClassSymbol,
+                proxyData,
+                InterfaceFilter<IMethodSymbol>()
+            )
+        )
         {
             var ps = @event.First().Parameters.First();
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            var type =
+                ps.GetTypeEnum() == TypeEnum.Complex
+                    ? GetParameterType(ps, out _)
+                    : ps.Type.ToString();
 
             foreach (var attribute in ps.GetAttributesAsList())
             {

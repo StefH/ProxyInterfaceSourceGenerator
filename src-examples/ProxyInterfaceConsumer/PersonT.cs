@@ -1,6 +1,7 @@
 namespace ProxyInterfaceConsumer
 {
-    public class PersonT<T> where T : struct
+    public class PersonT<T>
+        where T : struct
     {
         public T TVal { get; set; }
 

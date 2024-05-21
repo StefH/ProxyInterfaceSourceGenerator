@@ -30,7 +30,6 @@ public class PnPTests
             "ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb.g.cs",
             "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext.g.cs",
             "ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext.g.cs",
-
             "Microsoft.SharePoint.Client.ClientObjectProxy.g.cs",
             "Microsoft.SharePoint.Client.SecurableObjectProxy.g.cs",
             "Microsoft.SharePoint.Client.WebProxy.g.cs",
@@ -99,14 +98,16 @@ public class PnPTests
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFileClientObject,
-            sourceFileSec,
-            sourceFileWeb,
-            sourceFileClientRuntimeContext,
-            sourceFileClientContext
-        });
+        var result = _sut.Execute(
+            new[]
+            {
+                sourceFileClientObject,
+                sourceFileSec,
+                sourceFileWeb,
+                sourceFileClientRuntimeContext,
+                sourceFileClientContext
+            }
+        );
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -117,7 +118,8 @@ public class PnPTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
     }

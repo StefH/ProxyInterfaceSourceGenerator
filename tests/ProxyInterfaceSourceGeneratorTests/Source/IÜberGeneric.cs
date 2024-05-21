@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public interface IÜberGeneric
-    {
-    }
+    public interface IÜberGeneric { }
 }

@@ -24,7 +24,8 @@ internal static class ParameterSymbolExtensions
         };
     }
 
-    public static string GetParamsPrefix(this IParameterSymbol ps) => ps.IsParams ? "params " : string.Empty;
+    public static string GetParamsPrefix(this IParameterSymbol ps) =>
+        ps.IsParams ? "params " : string.Empty;
 
     public static string GetDefaultValue(this IParameterSymbol ps)
     {
@@ -44,7 +45,8 @@ internal static class ParameterSymbolExtensions
             else
             {
                 defaultValue = ps.Type.IsReferenceType
-                    ? ParameterValueNull : // The parameter is a ReferenceType, so use "null".
+                    ? ParameterValueNull
+                    : // The parameter is a ReferenceType, so use "null".
                     $"default({ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
             }
         }

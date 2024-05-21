@@ -16,7 +16,7 @@ internal static class MethodParameterBuilder
             stringBuilder.Append(parameterSymbol.GetRefKindPrefix()); // "" or "out "
             stringBuilder.AppendFormat("{0} ", type); // string or another type
         }
-        
+
         stringBuilder.Append(parameterSymbol.GetSanitizedName()); // "s" or "i" or ...
         stringBuilder.Append(parameterSymbol.GetDefaultValue()); // "" or the value
 

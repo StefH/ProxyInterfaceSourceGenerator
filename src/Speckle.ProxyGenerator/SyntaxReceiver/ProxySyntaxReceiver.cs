@@ -9,26 +9,44 @@ namespace Speckle.ProxyGenerator.SyntaxReceiver;
 internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
     private const string GlobalPrefix = "global::";
-    private static readonly string[] GenerateProxyAttributes = ["ProxyInterfaceGenerator.Proxy", "Proxy"];
+    private static readonly string[] GenerateProxyAttributes =
+    [
+        "ProxyInterfaceGenerator.Proxy",
+        "Proxy"
+    ];
     private static readonly string[] Modifiers = ["public", "partial"];
-    public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
+    public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } =
+        new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
     public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
     {
         var syntaxNode = context.Node;
         var semanticModel = context.SemanticModel;
 
-        if (syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax && TryGet(interfaceDeclarationSyntax, out var data, semanticModel!))
+        if (
+            syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax
+            && TryGet(interfaceDeclarationSyntax, out var data, semanticModel!)
+        )
         {
             CandidateInterfaces.Add(interfaceDeclarationSyntax, data);
         }
     }
 
-    private static string CreateFullInterfaceName(string ns, BaseTypeDeclarationSyntax classDeclarationSyntax)
+    private static string CreateFullInterfaceName(
+        string ns,
+        BaseTypeDeclarationSyntax classDeclarationSyntax
+    )
     {
-        return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
+        return !string.IsNullOrEmpty(ns)
+            ? $"{ns}.{classDeclarationSyntax.Identifier}"
+            : classDeclarationSyntax.Identifier.ToString();
     }
-    private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data, SemanticModel semanticModel)
+
+    private static bool TryGet(
+        InterfaceDeclarationSyntax interfaceDeclarationSyntax,
+        [NotNullWhen(true)] out ProxyData? data,
+        SemanticModel semanticModel
+    )
     {
         data = null;
 
@@ -38,7 +56,9 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             return false;
         }
 
-        var attributeList = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString())));
+        var attributeList = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x =>
+            x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString()))
+        );
         if (attributeList is null)
         {
             // InterfaceDeclarationSyntax should have the correct attribute
@@ -61,7 +81,10 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             }
         }
 
-        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
+        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(
+            attributeList.Attributes.FirstOrDefault()?.ArgumentList,
+            semanticModel
+        );
 
         var metadataName = fluentBuilderAttributeArguments.MetadataName;
         var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";

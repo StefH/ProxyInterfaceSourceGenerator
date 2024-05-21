@@ -10,7 +10,8 @@ internal static class MemberHelper
     public static IReadOnlyList<IPropertySymbol> GetPublicProperties(
         ClassSymbol classSymbol,
         ProxyData proxyData,
-        params Func<IPropertySymbol, bool>[] filters)
+        params Func<IPropertySymbol, bool>[] filters
+    )
     {
         var allFilters = new List<Func<IPropertySymbol, bool>>(filters)
         {
@@ -23,43 +24,46 @@ internal static class MemberHelper
     public static IReadOnlyList<IMethodSymbol> GetPublicMethods(
         ClassSymbol classSymbol,
         ProxyData proxyData,
-        Func<IMethodSymbol, bool>? filter = null)
+        Func<IMethodSymbol, bool>? filter = null
+    )
     {
         filter ??= _ => true;
 
-        return
-            GetPublicMembers(
+        return GetPublicMembers(
                 classSymbol,
                 proxyData,
                 m => m.Kind == SymbolKind.Method,
                 m => m.MethodKind == MethodKind.Ordinary,
                 m => !ExcludedMethods.Contains(m.Name),
-                filter)
+                filter
+            )
             .ToArray();
     }
 
     public static IReadOnlyList<IMethodSymbol> GetPublicStaticOperators(
         ClassSymbol classSymbol,
         ProxyData proxyData,
-        Func<IMethodSymbol, bool>? filter = null)
+        Func<IMethodSymbol, bool>? filter = null
+    )
     {
         filter ??= _ => true;
 
-        return
-            GetPublicMembers(
-                    classSymbol,
-                    proxyData,
-                    m => m.Kind == SymbolKind.Method,
-                    m => m.MethodKind == MethodKind.Conversion,
-                    m => !ExcludedMethods.Contains(m.Name),
-                    filter)
-                .ToArray();
+        return GetPublicMembers(
+                classSymbol,
+                proxyData,
+                m => m.Kind == SymbolKind.Method,
+                m => m.MethodKind == MethodKind.Conversion,
+                m => !ExcludedMethods.Contains(m.Name),
+                filter
+            )
+            .ToArray();
     }
 
     public static IReadOnlyList<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(
         ClassSymbol classSymbol,
         ProxyData proxyData,
-        Func<IMethodSymbol, bool>? filter = null)
+        Func<IMethodSymbol, bool>? filter = null
+    )
     {
         filter ??= _ => true;
 
@@ -68,8 +72,13 @@ internal static class MemberHelper
         return GetPublicMembers(
                 classSymbol,
                 proxyData,
-                m => m.MethodKind is MethodKind.EventAdd or MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
-                filter)
+                m =>
+                    m.MethodKind
+                        is MethodKind.EventAdd
+                            or MethodKind.EventRemove /* || m.MethodKind == MethodKind.EventRaise*/
+                ,
+                filter
+            )
             .GroupBy(e => e.AssociatedSymbol)
             .ToArray();
 #pragma warning restore RS1024 // Compare symbols correctly
@@ -81,9 +90,12 @@ internal static class MemberHelper
         ClassSymbol classSymbol,
         ProxyData proxyData,
         params Func<T, bool>[] filters
-    ) where T : ISymbol
+    )
+        where T : ISymbol
     {
-        var membersQuery = classSymbol.Symbol.GetMembers().OfType<T>()
+        var membersQuery = classSymbol
+            .Symbol.GetMembers()
+            .OfType<T>()
             .Where(m => m.DeclaredAccessibility == Accessibility.Public);
 
         var f = filters.ToList();
@@ -106,7 +118,9 @@ internal static class MemberHelper
 
         while (baseType != null && baseType.SpecialType != SpecialType.System_Object)
         {
-            var baseMembers = baseType.GetMembers().OfType<T>()
+            var baseMembers = baseType
+                .GetMembers()
+                .OfType<T>()
                 .Where(m => m.DeclaredAccessibility == Accessibility.Public)
                 .Where(x => !ownMemberNames.Contains(x.Name));
 

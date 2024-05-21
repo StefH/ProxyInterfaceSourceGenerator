@@ -9,7 +9,10 @@ namespace Speckle.ProxyGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
-    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
+    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(
+        AttributeArgumentListSyntax? argumentList,
+        SemanticModel semanticModel
+    )
     {
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
         {
@@ -17,13 +20,25 @@ internal static class AttributeArgumentListParser
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var fullyQualifiedDisplayString, out var metadataName))
+        if (
+            TryParseAsType(
+                argumentList.Arguments[0].Expression,
+                semanticModel,
+                out var fullyQualifiedDisplayString,
+                out var metadataName
+            )
+        )
         {
-            result = new ProxyInterfaceGeneratorAttributeArguments(fullyQualifiedDisplayString, metadataName);
+            result = new ProxyInterfaceGeneratorAttributeArguments(
+                fullyQualifiedDisplayString,
+                metadataName
+            );
         }
         else
         {
-            throw new ArgumentException("The first argument from the ProxyAttribute should be a Type.");
+            throw new ArgumentException(
+                "The first argument from the ProxyAttribute should be a Type."
+            );
         }
 
         foreach (var argument in argumentList.Arguments.Skip(1))
@@ -61,7 +76,12 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? fullyQualifiedDisplayString, [NotNullWhen(true)] out string? metadataName)
+    private static bool TryParseAsType(
+        ExpressionSyntax expressionSyntax,
+        SemanticModel semanticModel,
+        [NotNullWhen(true)] out string? fullyQualifiedDisplayString,
+        [NotNullWhen(true)] out string? metadataName
+    )
     {
         fullyQualifiedDisplayString = null;
         metadataName = null;
@@ -83,7 +103,13 @@ internal static class AttributeArgumentListParser
         where TEnum : struct
     {
         var enumAsString = expressionSyntax.ToString();
-        if (enumAsString.Length > typeof(TEnum).Name.Length && Enum.TryParse(expressionSyntax.ToString().Substring(typeof(TEnum).Name.Length + 1), out value))
+        if (
+            enumAsString.Length > typeof(TEnum).Name.Length
+            && Enum.TryParse(
+                expressionSyntax.ToString().Substring(typeof(TEnum).Name.Length + 1),
+                out value
+            )
+        )
         {
             return true;
         }
@@ -94,10 +120,15 @@ internal static class AttributeArgumentListParser
 
     private static bool TryParseAsStringArray(ExpressionSyntax expressionSyntax, out string[] value)
     {
-        if (expressionSyntax is ImplicitArrayCreationExpressionSyntax lmplicitArrayCreationExpressionSyntax)
+        if (
+            expressionSyntax
+            is ImplicitArrayCreationExpressionSyntax lmplicitArrayCreationExpressionSyntax
+        )
         {
             var strings = new List<string>();
-            foreach (var expression in lmplicitArrayCreationExpressionSyntax.Initializer.Expressions)
+            foreach (
+                var expression in lmplicitArrayCreationExpressionSyntax.Initializer.Expressions
+            )
             {
                 if (expression.GetFirstToken().Value is string s)
                 {

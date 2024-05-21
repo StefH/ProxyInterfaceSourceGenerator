@@ -4,6 +4,4 @@ using Akka.Remote;
 
 [ProxyInterfaceGenerator.Proxy(typeof(AddressUid))]
 // ReSharper disable once CheckNamespace
-public partial interface IAddressUid
-{
-}
+public partial interface IAddressUid { }

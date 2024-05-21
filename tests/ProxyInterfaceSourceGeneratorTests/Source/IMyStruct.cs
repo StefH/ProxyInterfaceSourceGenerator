@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IMyStruct
-    {
-    }
+    public partial interface IMyStruct { }
 }

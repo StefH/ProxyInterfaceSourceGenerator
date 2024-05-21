@@ -1,5 +1,3 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
-public partial interface IHttpClient : IHttpMessageInvoker
-{
-}
+public partial interface IHttpClient : IHttpMessageInvoker { }

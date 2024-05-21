@@ -25,7 +25,8 @@ internal class ProxyData
     public ProxyClassAccessibility Accessibility { get; }
     public string[] MembersToIgnore { get; }
 
-    public ProxyData(string @namespace,
+    public ProxyData(
+        string @namespace,
         string namespaceDot,
         string shortInterfaceName,
         string fullInterfaceName,
@@ -34,15 +35,22 @@ internal class ProxyData
         string fullMetadataTypeName,
         List<string> usings,
         bool proxyBaseClasses,
-        ProxyClassAccessibility accessibility, string[] membersToIgnore)
+        ProxyClassAccessibility accessibility,
+        string[] membersToIgnore
+    )
     {
         Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
         NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));
-        ShortInterfaceName = shortInterfaceName ?? throw new ArgumentNullException(nameof(shortInterfaceName));
-        FullInterfaceName = fullInterfaceName ?? throw new ArgumentNullException(nameof(fullInterfaceName));
-        FullQualifiedTypeName = fullQualifiedTypeName ?? throw new ArgumentNullException(nameof(fullQualifiedTypeName));
-        ShortMetadataName = shortMetadataTypeName ?? throw new ArgumentNullException(nameof(shortMetadataTypeName));
-        FullMetadataTypeName = fullMetadataTypeName ?? throw new ArgumentNullException(nameof(fullMetadataTypeName));
+        ShortInterfaceName =
+            shortInterfaceName ?? throw new ArgumentNullException(nameof(shortInterfaceName));
+        FullInterfaceName =
+            fullInterfaceName ?? throw new ArgumentNullException(nameof(fullInterfaceName));
+        FullQualifiedTypeName =
+            fullQualifiedTypeName ?? throw new ArgumentNullException(nameof(fullQualifiedTypeName));
+        ShortMetadataName =
+            shortMetadataTypeName ?? throw new ArgumentNullException(nameof(shortMetadataTypeName));
+        FullMetadataTypeName =
+            fullMetadataTypeName ?? throw new ArgumentNullException(nameof(fullMetadataTypeName));
         Usings = usings ?? throw new ArgumentNullException(nameof(usings));
         ProxyBaseClasses = proxyBaseClasses;
         Accessibility = accessibility;

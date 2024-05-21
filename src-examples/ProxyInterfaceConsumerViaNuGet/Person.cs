@@ -10,37 +10,37 @@ namespace ProxyInterfaceConsumer
         public int Id { get; }
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public object @object { get; set; }= null!;
+        public object @object { get; set; } = null!;
 
         public long? NullableLong { get; }
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public string Name { get; set; }= null!;
+        public string Name { get; set; } = null!;
 
         public string? StringNullable { get; set; }
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public Address Address { get; set; }= null!;
+        public Address Address { get; set; } = null!;
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public List<Address> AddressesLIst { get; set; }= null!;
+        public List<Address> AddressesLIst { get; set; } = null!;
 
-        public Dictionary<string, Address> AddressesDict { get; set; } = new Dictionary<string, Address>();
-        public Dictionary<Address, Address> AddressesDict2 { get; set; } = new Dictionary<Address, Address>();
+        public Dictionary<string, Address> AddressesDict { get; set; } =
+            new Dictionary<string, Address>();
+        public Dictionary<Address, Address> AddressesDict2 { get; set; } =
+            new Dictionary<Address, Address>();
 
         public E E { get; set; }
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public IMyInterface MyInterface { get; set; }= null!;
+        public IMyInterface MyInterface { get; set; } = null!;
 
         public string Add(string s, string @string)
         {
             return s + @string;
         }
 
-        public void AddWithParams(params string[] values)
-        {
-        }
+        public void AddWithParams(params string[] values) { }
 
         public Address AddAddress(Address a)
         {
@@ -49,9 +49,7 @@ namespace ProxyInterfaceConsumer
             return a;
         }
 
-        public void AddAddresses(params Address[] addresses)
-        {
-        }
+        public void AddAddresses(params Address[] addresses) { }
 
         public void In_Out_Ref1(in int a, out int b, ref int c)
         {
@@ -64,9 +62,7 @@ namespace ProxyInterfaceConsumer
             return 404;
         }
 
-        public void Void()
-        {
-        }
+        public void Void() { }
 
         public Task Method1Async()
         {

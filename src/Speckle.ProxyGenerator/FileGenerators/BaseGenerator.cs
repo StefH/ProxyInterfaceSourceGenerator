@@ -30,7 +30,10 @@ internal abstract class BaseGenerator
         return GetReplacedTypeAsString(property.Type, out isReplaced);
     }
 
-    protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
+    protected bool TryFindProxyDataByTypeName(
+        string type,
+        [NotNullWhen(true)] out ProxyData? proxyData
+    )
     {
         proxyData = Context.Candidates.Values.FirstOrDefault(x => x.FullQualifiedTypeName == type);
         return proxyData != null;
@@ -55,16 +58,23 @@ internal abstract class BaseGenerator
         return string.Concat(list);
     }
 
-    protected string ResolveInterfaceNameWithOptionalTypeConstraints(INamedTypeSymbol namedTypeSymbol, string interfaceName)
+    protected string ResolveInterfaceNameWithOptionalTypeConstraints(
+        INamedTypeSymbol namedTypeSymbol,
+        string interfaceName
+    )
     {
         if (!namedTypeSymbol.IsGenericType)
         {
             return interfaceName;
         }
 
-        var str = new StringBuilder($"{interfaceName}<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>");
+        var str = new StringBuilder(
+            $"{interfaceName}<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>"
+        );
 
-        foreach (var typeParameterSymbol in namedTypeSymbol.TypeArguments.OfType<ITypeParameterSymbol>())
+        foreach (
+            var typeParameterSymbol in namedTypeSymbol.TypeArguments.OfType<ITypeParameterSymbol>()
+        )
         {
             if (TryGetWhereConstraints(typeParameterSymbol, false, out var constraint))
             {
@@ -78,7 +88,11 @@ internal abstract class BaseGenerator
     /// <summary>
     /// https://www.codeproject.com/Articles/871704/Roslyn-Code-Analysis-in-Easy-Samples-Part-2
     /// </summary>
-    public bool TryGetWhereConstraints(ITypeParameterSymbol typeParameterSymbol, bool replaceIt, [NotNullWhen(true)] out ConstraintInfo? constraint)
+    public bool TryGetWhereConstraints(
+        ITypeParameterSymbol typeParameterSymbol,
+        bool replaceIt,
+        [NotNullWhen(true)] out ConstraintInfo? constraint
+    )
     {
         var constraints = new List<string>();
         if (typeParameterSymbol.HasReferenceTypeConstraint)
@@ -91,7 +105,9 @@ internal abstract class BaseGenerator
             constraints.Add("struct");
         }
 
-        foreach (var namedTypeSymbol in typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>())
+        foreach (
+            var namedTypeSymbol in typeParameterSymbol.ConstraintTypes.OfType<INamedTypeSymbol>()
+        )
         {
             if (replaceIt)
             {
@@ -120,20 +136,23 @@ internal abstract class BaseGenerator
     }
 
     internal readonly SymbolDisplayFormat NullableDisplayFormat = new SymbolDisplayFormat(
-                globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Included,
-                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
-                miscellaneousOptions:
-                    SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers |
-                    SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
-                    SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+        globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Included,
+        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+        genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+        miscellaneousOptions: SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers
+            | SymbolDisplayMiscellaneousOptions.UseSpecialTypes
+            | SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier
+    );
 
     protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out bool isReplaced)
     {
         isReplaced = false;
 
         var typeSymbolAsString = typeSymbol.ToFullyQualifiedDisplayString();
-        var nullableTypeSymbolAsString = typeSymbol.ToDisplayString(NullableFlowState.None, NullableDisplayFormat);
+        var nullableTypeSymbolAsString = typeSymbol.ToDisplayString(
+            NullableFlowState.None,
+            NullableDisplayFormat
+        );
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
@@ -171,17 +190,28 @@ internal abstract class BaseGenerator
 
                 if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
                 {
-                    Context.ReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                    Context.ReplacedTypes.Add(
+                        typeArgumentAsString,
+                        existingTypeArgument.FullInterfaceName
+                    );
                 }
 
-                propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(
+                    typeArgumentAsString,
+                    existingTypeArgument.FullInterfaceName
+                );
             }
         }
 
         return FixType(propertyTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
     }
 
-    protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
+    protected bool TryGetNamedTypeSymbolByFullName(
+        TypeKind kind,
+        string name,
+        IEnumerable<string> usings,
+        [NotNullWhen(true)] out ClassSymbol? classSymbol
+    )
     {
         classSymbol = default;
         const string globalPrefix = "global::";
@@ -195,16 +225,26 @@ internal abstract class BaseGenerator
 
         if (symbol is not null && symbol.TypeKind == kind)
         {
-            classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+            classSymbol = new ClassSymbol(
+                symbol,
+                symbol.GetBaseTypes(),
+                symbol.AllInterfaces.ToList()
+            );
             return true;
         }
 
         foreach (var @using in usings)
         {
-            symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName($"{@using}.{name}");
+            symbol = Context.GeneratorExecutionContext.Compilation.GetTypeByMetadataName(
+                $"{@using}.{name}"
+            );
             if (symbol is not null && symbol.TypeKind == kind)
             {
-                classSymbol = new ClassSymbol(symbol, symbol.GetBaseTypes(), symbol.AllInterfaces.ToList());
+                classSymbol = new ClassSymbol(
+                    symbol,
+                    symbol.GetBaseTypes(),
+                    symbol.AllInterfaces.ToList()
+                );
                 return true;
             }
         }
@@ -212,7 +252,10 @@ internal abstract class BaseGenerator
         return false;
     }
 
-    protected IReadOnlyList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameterSymbols, bool includeType)
+    protected IReadOnlyList<string> GetMethodParameters(
+        ImmutableArray<IParameterSymbol> parameterSymbols,
+        bool includeType
+    )
     {
         var methodParameters = new List<string>();
         foreach (var parameterSymbol in parameterSymbols)
@@ -226,7 +269,10 @@ internal abstract class BaseGenerator
                 }
                 else
                 {
-                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString(), parameterSymbol.NullableAnnotation);
+                    type = FixType(
+                        parameterSymbol.Type.ToFullyQualifiedDisplayString(),
+                        parameterSymbol.NullableAnnotation
+                    );
                 }
             }
 
@@ -236,12 +282,17 @@ internal abstract class BaseGenerator
         return methodParameters;
     }
 
-    protected IReadOnlyList<ProxyData> GetExtendsProxyData(ProxyData proxyData, ClassSymbol targetClassSymbol)
+    protected IReadOnlyList<ProxyData> GetExtendsProxyData(
+        ProxyData proxyData,
+        ClassSymbol targetClassSymbol
+    )
     {
         var extendsProxyClasses = new List<ProxyData>();
         foreach (var baseType in targetClassSymbol.BaseTypes)
         {
-            var candidate = Context.Candidates.Values.FirstOrDefault(ci => ci.FullQualifiedTypeName == baseType.ToFullyQualifiedDisplayString());
+            var candidate = Context.Candidates.Values.FirstOrDefault(ci =>
+                ci.FullQualifiedTypeName == baseType.ToFullyQualifiedDisplayString()
+            );
             if (candidate is not null)
             {
                 extendsProxyClasses.Add(candidate);
@@ -253,7 +304,10 @@ internal abstract class BaseGenerator
 
     internal static string FixType(string type, NullableAnnotation nullableAnnotation)
     {
-        if (nullableAnnotation == NullableAnnotation.Annotated && !type.EndsWith("?", StringComparison.Ordinal))
+        if (
+            nullableAnnotation == NullableAnnotation.Annotated
+            && !type.EndsWith("?", StringComparison.Ordinal)
+        )
         {
             return $"{type}?";
         }

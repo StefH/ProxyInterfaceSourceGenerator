@@ -25,23 +25,25 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public IList<Human> AddHuman(Human h)
         {
-            return new List<Human> { h, new Human { IsAlive = true } };
+            return new List<Human>
+            {
+                h,
+                new Human { IsAlive = true }
+            };
         }
 
         [Display(ResourceType = typeof(PeriodicTimer))]
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public string Name { get; set; }= null!;
+        public string Name { get; set; } = null!;
 
         public string? StringNullable { get; set; }
 
         public long? NullableLong { get; }
 
         [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
-        public object @object { get; set; }= null!;
+        public object @object { get; set; } = null!;
 
-        public void Void()
-        {
-        }
+        public void Void() { }
 
         public string HelloWorld(string name)
         {
@@ -68,9 +70,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return $"Hello {ch} !";
         }
 
-        public void WithParams(params string[] values)
-        {
-        }
+        public void WithParams(params string[] values) { }
 
         public string Add(string s, string @string)
         {
@@ -117,11 +117,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult((string?)"");
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string>? metadata = null, CancellationToken token = default)
-        {
-        }
+        public void CreateInvokeHttpClient(
+            int i = 5,
+            string? appId = null,
+            IReadOnlyDictionary<string, string>? metadata = null,
+            CancellationToken token = default
+        ) { }
 
-        public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
+        public bool TryParse(string s1, [NotNullWhen(true)] params int[]? ii)
         {
             ii = null;
             return false;

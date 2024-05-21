@@ -1,8 +1,5 @@
 namespace ProxyInterfaceConsumerForPnP.Interfaces
 {
     [ProxyInterfaceGenerator.Proxy(typeof(Microsoft.SharePoint.Client.ClientRuntimeContext))]
-    public partial interface IClientRuntimeContext
-    {
-       
-    }
+    public partial interface IClientRuntimeContext { }
 }

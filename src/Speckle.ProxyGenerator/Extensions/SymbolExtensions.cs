@@ -17,7 +17,13 @@ internal static class SymbolExtensions
     {
         return symbol
             .GetAttributes()
-            .Where(a => a.AttributeClass.IsPublic() && !ExcludedAttributes.Contains(a.AttributeClass?.ToString(), StringComparer.OrdinalIgnoreCase))
+            .Where(a =>
+                a.AttributeClass.IsPublic()
+                && !ExcludedAttributes.Contains(
+                    a.AttributeClass?.ToString(),
+                    StringComparer.OrdinalIgnoreCase
+                )
+            )
             .Select(a => $"[{a}]")
             .ToArray();
     }
@@ -53,7 +59,10 @@ internal static class SymbolExtensions
                 sb.Insert(0, '.');
             }
 
-            sb.Insert(0, s.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+            sb.Insert(
+                0,
+                s.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
+            );
             s = s.ContainingSymbol;
         }
 
@@ -64,7 +73,8 @@ internal static class SymbolExtensions
         symbol.IsKeywordOrReserved() ? $"@{symbol.Name}" : symbol.Name;
 
     public static bool IsKeywordOrReserved(this ISymbol symbol) =>
-        SyntaxFacts.GetKeywordKind(symbol.Name) != SyntaxKind.None || SyntaxFacts.GetContextualKeywordKind(symbol.Name) != SyntaxKind.None;
+        SyntaxFacts.GetKeywordKind(symbol.Name) != SyntaxKind.None
+        || SyntaxFacts.GetContextualKeywordKind(symbol.Name) != SyntaxKind.None;
 
     public static bool IsPublic(this ISymbol? symbol) =>
         symbol is { DeclaredAccessibility: Accessibility.Public };

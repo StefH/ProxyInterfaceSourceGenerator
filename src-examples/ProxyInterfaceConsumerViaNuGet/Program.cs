@@ -5,10 +5,7 @@ namespace ProxyInterfaceConsumer
 {
     class Program
     {
-        private static JsonSerializerOptions JsonSerializerOptions = new ()
-        {
-            WriteIndented = true
-        };
+        private static JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true };
 
         static void Main(string[] args)
         {

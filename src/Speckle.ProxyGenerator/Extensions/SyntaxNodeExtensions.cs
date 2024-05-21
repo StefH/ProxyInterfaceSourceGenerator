@@ -7,7 +7,11 @@ namespace Speckle.ProxyGenerator.Extensions;
 internal static class SyntaxNodeExtensions
 {
     // https://stackoverflow.com/questions/20458457/getting-class-fullname-including-namespace-from-roslyn-classdeclarationsyntax
-    public static bool TryGetParentSyntax<T>(this SyntaxNode? syntaxNode, [NotNullWhen(true)] out T? result) where T : SyntaxNode
+    public static bool TryGetParentSyntax<T>(
+        this SyntaxNode? syntaxNode,
+        [NotNullWhen(true)] out T? result
+    )
+        where T : SyntaxNode
     {
         result = null;
 
@@ -57,9 +61,11 @@ internal static class SyntaxNodeExtensions
 
         // Keep moving "out" of nested classes etc until we get to a namespace
         // or until we run out of parents
-        while (potentialNamespaceParent != null &&
-               potentialNamespaceParent is not NamespaceDeclarationSyntax
-               && potentialNamespaceParent is not FileScopedNamespaceDeclarationSyntax)
+        while (
+            potentialNamespaceParent != null
+            && potentialNamespaceParent is not NamespaceDeclarationSyntax
+            && potentialNamespaceParent is not FileScopedNamespaceDeclarationSyntax
+        )
         {
             potentialNamespaceParent = potentialNamespaceParent.Parent;
         }

@@ -19,13 +19,20 @@ internal partial class ProxyClassesGenerator
         foreach (var replacedType in Context.ReplacedTypes)
         {
             TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
-            var classNameProxy = $"{fullTypeName!.NamespaceDot}{fullTypeName.ShortMetadataName}Proxy";
+            var classNameProxy =
+                $"{fullTypeName!.NamespaceDot}{fullTypeName.ShortMetadataName}Proxy";
 
-            var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
-            var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
+            var instance =
+                $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
+            var proxy =
+                $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
 
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing({instance} => new {classNameProxy}({instance}));");
-            str.AppendLine($"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing({proxy} => (({classNameProxy}) {proxy})._Instance);");
+            str.AppendLine(
+                $"                cfg.CreateMap<{replacedType.Key}, {replacedType.Value}>().ConstructUsing({instance} => new {classNameProxy}({instance}));"
+            );
+            str.AppendLine(
+                $"                cfg.CreateMap<{replacedType.Value}, {replacedType.Key}>().ConstructUsing({proxy} => (({classNameProxy}) {proxy})._Instance);"
+            );
             str.AppendLine();
         }
         str.AppendLine("            }).CreateMapper();");

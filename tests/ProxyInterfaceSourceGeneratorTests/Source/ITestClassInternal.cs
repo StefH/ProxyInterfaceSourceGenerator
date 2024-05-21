@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface ITestClassInternal
-    {
-    }
+    public partial interface ITestClassInternal { }
 }

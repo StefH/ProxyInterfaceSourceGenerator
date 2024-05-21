@@ -41,22 +41,34 @@ internal static class NamedTypeSymbolExtensions
     /// </summary>
     public static string ResolveProxyClassName(this INamedTypeSymbol namedTypeSymbol)
     {
-        return !namedTypeSymbol.IsGenericType ?
-            $"{namedTypeSymbol.Name}Proxy" :
-            $"{namedTypeSymbol.Name}Proxy<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>";
+        return !namedTypeSymbol.IsGenericType
+            ? $"{namedTypeSymbol.Name}Proxy"
+            : $"{namedTypeSymbol.Name}Proxy<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(ta => ta.Name))}>";
     }
 
-    public static List<INamedTypeSymbol> ResolveImplementedInterfaces(this INamedTypeSymbol symbol, bool proxyBaseClasses)
+    public static List<INamedTypeSymbol> ResolveImplementedInterfaces(
+        this INamedTypeSymbol symbol,
+        bool proxyBaseClasses
+    )
     {
         // Members implemented by us or base classes should go here.
-        var publicMembers = symbol.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public).ToList();
+        var publicMembers = symbol
+            .GetMembers()
+            .Where(m => m.DeclaredAccessibility == Accessibility.Public)
+            .ToList();
 
         // Direct interfaces, recursive interfaces or base class interfaces should go here.
         var interfaces = new List<INamedTypeSymbol>(symbol.Interfaces);
         var baseType = symbol.BaseType;
-        while (proxyBaseClasses && baseType != null && baseType.SpecialType != SpecialType.System_Object)
+        while (
+            proxyBaseClasses
+            && baseType != null
+            && baseType.SpecialType != SpecialType.System_Object
+        )
         {
-            publicMembers.AddRange(baseType.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public));
+            publicMembers.AddRange(
+                baseType.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public)
+            );
             interfaces.AddRange(baseType.Interfaces);
             baseType = baseType.BaseType;
         }
@@ -66,7 +78,10 @@ internal static class NamedTypeSymbolExtensions
         foreach (var @interface in interfaces)
         {
             var isRealized = true;
-            var allMembers = @interface.AllInterfaces.Aggregate(@interface.GetMembers(), (xs, x) => xs.AddRange(x.GetMembers()));
+            var allMembers = @interface.AllInterfaces.Aggregate(
+                @interface.GetMembers(),
+                (xs, x) => xs.AddRange(x.GetMembers())
+            );
             foreach (var member in allMembers)
             {
                 var implementation = symbol.FindImplementationForInterfaceMember(member);

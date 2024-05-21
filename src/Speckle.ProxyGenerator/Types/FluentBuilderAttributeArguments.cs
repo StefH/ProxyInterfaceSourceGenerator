@@ -1,6 +1,9 @@
 namespace Speckle.ProxyGenerator.Types;
 
-internal record ProxyInterfaceGeneratorAttributeArguments(string FullyQualifiedDisplayString, string MetadataName)
+internal record ProxyInterfaceGeneratorAttributeArguments(
+    string FullyQualifiedDisplayString,
+    string MetadataName
+)
 {
     public bool ProxyBaseClasses { get; set; }
 
