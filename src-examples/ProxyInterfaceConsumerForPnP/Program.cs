@@ -28,7 +28,7 @@ public class Program
 
             IClientContext cp = new ClientContextProxy(clientContext);
 
-            cp.Load<IWeb, Web>(cp.Web, w => w.Lists, w => w.Language, w => w.Author);
+            cp.Load<ProxyInterfaceConsumerForPnP.Interfaces.IWeb, Web>(cp.Web, w => w.Lists, w => w.Language, w => w.Author);
 
             await cp.ExecuteQueryRetryAsync();
 

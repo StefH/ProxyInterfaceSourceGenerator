@@ -23,17 +23,18 @@ internal class ProxyData
     public bool ProxyBaseClasses { get; }
 
     public ProxyClassAccessibility Accessibility { get; }
+    public string[] MembersToIgnore { get; }
 
     public ProxyData(string @namespace,
-                     string namespaceDot,
-                     string shortInterfaceName,
-                     string fullInterfaceName,
-                     string fullQualifiedTypeName,
-                     string shortMetadataTypeName,
-                     string fullMetadataTypeName,
-                     List<string> usings,
-                     bool proxyBaseClasses,
-                     ProxyClassAccessibility accessibility)
+        string namespaceDot,
+        string shortInterfaceName,
+        string fullInterfaceName,
+        string fullQualifiedTypeName,
+        string shortMetadataTypeName,
+        string fullMetadataTypeName,
+        List<string> usings,
+        bool proxyBaseClasses,
+        ProxyClassAccessibility accessibility, string[] membersToIgnore)
     {
         Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
         NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));
@@ -45,5 +46,6 @@ internal class ProxyData
         Usings = usings ?? throw new ArgumentNullException(nameof(usings));
         ProxyBaseClasses = proxyBaseClasses;
         Accessibility = accessibility;
+        MembersToIgnore = membersToIgnore;
     }
 }

@@ -12,9 +12,9 @@ internal static class AttributeArgumentListParser
 {
     public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
     {
-        if (argumentList is null || argumentList.Arguments.Count is < 1 or > 3)
+        if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
         {
-            throw new ArgumentException("The ProxyAttribute requires 1, 2 or 3 arguments.");
+            throw new ArgumentException("The ProxyAttribute requires 1, 2, 3 or 4 arguments.");
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
@@ -29,6 +29,11 @@ internal static class AttributeArgumentListParser
 
         foreach (var argument in argumentList.Arguments.Skip(1))
         {
+            if (TryParseAsStringArray(argument.Expression, out var membersToIgnore))
+            {
+                result = result with { MembersToIgnore = membersToIgnore };
+                continue;
+            }
             if (TryParseAsBoolean(argument.Expression, out var proxyBaseClasses))
             {
                 result = result with { ProxyBaseClasses = proxyBaseClasses };
@@ -85,6 +90,25 @@ internal static class AttributeArgumentListParser
         }
 
         value = default;
+        return false;
+    }
+
+    private static bool TryParseAsStringArray(ExpressionSyntax expressionSyntax, out string[] value)
+    {
+        if (expressionSyntax is ImplicitArrayCreationExpressionSyntax lmplicitArrayCreationExpressionSyntax)
+        {
+            var strings = new List<string>();
+            foreach (var expression in lmplicitArrayCreationExpressionSyntax.Initializer.Expressions)
+            {
+                if (expression.GetFirstToken().Value is string s)
+                {
+                    strings.Add(s);
+                }
+            }
+            value = strings.ToArray();
+            return true;
+        }
+        value = Array.Empty<string>();
         return false;
     }
 }

@@ -77,7 +77,8 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             shortMetadataTypeName: metadataName.Split('.').Last(),
             usings: usings,
             proxyBaseClasses: fluentBuilderAttributeArguments.ProxyBaseClasses,
-            accessibility: fluentBuilderAttributeArguments.Accessibility
+            accessibility: fluentBuilderAttributeArguments.Accessibility,
+            membersToIgnore: fluentBuilderAttributeArguments.MembersToIgnore
         );
 
         return true;

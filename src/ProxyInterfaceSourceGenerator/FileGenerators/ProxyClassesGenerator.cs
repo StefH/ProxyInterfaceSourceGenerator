@@ -76,10 +76,10 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         }
 
         var @abstract = string.Empty; // targetClassSymbol.Symbol.IsAbstract ? "abstract " : string.Empty;
-        var properties = GeneratePublicProperties(targetClassSymbol, pd.ProxyBaseClasses);
-        var methods = GeneratePublicMethods(targetClassSymbol, pd.ProxyBaseClasses);
-        var events = GenerateEvents(targetClassSymbol, pd.ProxyBaseClasses);
-        var operators = GenerateOperators(targetClassSymbol, pd.ProxyBaseClasses);
+        var properties = GeneratePublicProperties(targetClassSymbol, pd);
+        var methods = GeneratePublicMethods(targetClassSymbol, pd);
+        var events = GenerateEvents(targetClassSymbol, pd);
+        var operators = GenerateOperators(targetClassSymbol, pd);
 
         var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Count > 0)
@@ -124,11 +124,11 @@ operators}
 {SupportsNullable.IIf("#nullable restore")}";
     }
 
-    private string GeneratePublicProperties(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GeneratePublicProperties(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
 
-        foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyBaseClasses))
+        foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData))
         {
             var type = GetPropertyType(property, out var isReplaced);
 
@@ -190,11 +190,11 @@ operators}
         return str.ToString();
     }
 
-    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GeneratePublicMethods(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
 
-        var methods = MemberHelper.GetPublicMethods(targetClassSymbol, proxyBaseClasses);
+        var methods = MemberHelper.GetPublicMethods(targetClassSymbol, proxyData);
 
         foreach (var method in methods)
         {
@@ -305,10 +305,10 @@ operators}
         return str.ToString();
     }
 
-    private string GenerateEvents(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GenerateEvents(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
-        foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyBaseClasses))
+        foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyData))
         {
             var name = @event.Key.GetSanitizedName();
             var ps = @event.First().Parameters.First();
@@ -337,14 +337,19 @@ operators}
         return str.ToString();
     }
 
-    private string GenerateOperators(ClassSymbol targetClassSymbol, bool proxyBaseClasses)
+    private string GenerateOperators(ClassSymbol targetClassSymbol, ProxyData proxyData)
     {
         var str = new StringBuilder();
-        foreach (var @operator in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyBaseClasses))
+        foreach (var @operator in MemberHelper.GetPublicStaticOperators(targetClassSymbol, proxyData))
         {
             foreach (var attribute in @operator.GetAttributesAsList())
             {
                 str.AppendLine($"        {attribute}");
+            }
+
+            if (!@operator.Parameters.Any())
+            {
+                continue;
             }
 
             var parameter = @operator.Parameters.First();
