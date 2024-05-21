@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace ProxyInterfaceConsumer
@@ -8,24 +9,29 @@ namespace ProxyInterfaceConsumer
         private int PrivateId { get; }
         public int Id { get; }
 
-        public object @object { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public object @object { get; set; }= null!;
 
         public long? NullableLong { get; }
 
-        public string Name { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public string Name { get; set; }= null!;
 
         public string? StringNullable { get; set; }
 
-        public Address Address { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public Address Address { get; set; }= null!;
 
-        public List<Address> AddressesList { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public List<Address> AddressesList { get; set; }= null!;
 
         public Dictionary<string, Address> AddressesDict { get; set; } = new Dictionary<string, Address>();
         public Dictionary<Address, Address> AddressesDict2 { get; set; } = new Dictionary<Address, Address>();
 
         public E E { get; set; }
 
-        public IMyInterface MyInterface { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public IMyInterface MyInterface { get; set; }= null!;
 
         public bool TMethod<T1, T2>(int x, T1 t1, T2 t2)
             where T1 : struct

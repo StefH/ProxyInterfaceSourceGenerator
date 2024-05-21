@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -65,9 +66,10 @@ public class Test
 {
     public int Id { get; set; }
 
-    public Clazz C { get; }
+    [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+    public Clazz C { get; } = null!;
 
-    public IList<Clazz> Cs { get; set; }
+    public IList<Clazz> Cs { get; set; } = new List<Clazz>();
 
     public int AddString(string s)
     {
@@ -87,7 +89,7 @@ public class Test
 
 public sealed class Clazz
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
 
 [ProxyInterfaceGenerator.Proxy(typeof(Test))]

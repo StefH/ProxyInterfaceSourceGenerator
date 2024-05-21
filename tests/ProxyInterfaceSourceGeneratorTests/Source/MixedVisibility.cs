@@ -1,6 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
 public class MixedVisibility
 {
-    public string Foo { get; protected set; } //<- this will generate bad code
+    [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+    public string Foo { get; protected set; } = null!;//<- this will generate bad code
 }

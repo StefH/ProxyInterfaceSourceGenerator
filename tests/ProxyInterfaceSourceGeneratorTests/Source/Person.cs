@@ -29,13 +29,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         }
 
         [Display(ResourceType = typeof(PeriodicTimer))]
-        public string Name { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public string Name { get; set; }= null!;
 
         public string? StringNullable { get; set; }
 
         public long? NullableLong { get; }
 
-        public object @object { get; set; }
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public object @object { get; set; }= null!;
 
         public void Void()
         {

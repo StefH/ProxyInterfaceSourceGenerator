@@ -1,0 +1,34 @@
+name: "Deploy to Nuget.org"
+
+on:
+  workflow_dispatch:
+    
+jobs: 
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Restore dependencies
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore  
+        
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal
+
+      - name: Pack
+        run: dotnet pack --no-build --configuration Release Speckle.InterfaceGenerator/Speckle.InterfaceGenerator.csproj --output .
+                
+      - name: Push to nuget.org
+        run: dotnet nuget push *.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{secrets.CONNECTORS_NUGET_TOKEN }} --skip-duplicate

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ProxyInterfaceConsumer
 {
@@ -6,7 +7,8 @@ namespace ProxyInterfaceConsumer
     {
         public int HouseNumber { get; set; }
 
-        public event EventHandler<EventArgs> MyEvent;
+        [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+        public event EventHandler<EventArgs> MyEvent = null!;
         public int Weird { get; set; }
         public int Weird2()
         {

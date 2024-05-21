@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
 public class Foo
@@ -17,7 +19,8 @@ public class Foo
     //    return new Foo();
     //}
 
-    public Foo[] Foos { get; set; }
+    [SuppressMessage("ReSharper", "NullableWarningSuppressionIsUsed")]
+    public Foo[] Foos { get; set; } = null!;
 
     public Foo[] DoSomethingAndGetAnArrayOfFoos()
     {
