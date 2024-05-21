@@ -14,7 +14,7 @@ internal static class AttributeArgumentListParser
     {
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
         {
-            throw new ArgumentException("The ProxyAttribute requires 1, 2 or 3 arguments.");
+            throw new ArgumentException("The ProxyAttribute requires 1, 2, 3 or 4 arguments.");
         }
 
         ProxyInterfaceGeneratorAttributeArguments result;
