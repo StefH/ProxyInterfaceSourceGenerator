@@ -108,7 +108,7 @@ public class ProxyInterfaceSourceGeneratorTest
                 ArgumentList = new []
                 {
                     "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)", "false", "ProxyClassAccessibility.Public",
-                    "new []{\"Weird\"}"
+                    "new []{\"Weird\",\"NotHere\"}"
                 }
             }
         };

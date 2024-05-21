@@ -81,6 +81,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         global::ProxyInterfaceSourceGeneratorTests.Source.IFoo2[] Foos { get; set; }
 
         global::ProxyInterfaceSourceGeneratorTests.Source.IFoo2[] DoSomethingAndGetAnArrayOfFoos();
+
+        int Weird2();
     }
 }
 #nullable restore
@@ -112,6 +114,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             var result_1603865878 = _Instance.DoSomethingAndGetAnArrayOfFoos();
             return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo2[]>(result_1603865878);
+        }
+
+        public int Weird2()
+        {
+            var result__1602200929 = _Instance.Weird2();
+            return result__1602200929;
         }
 
 

@@ -23,6 +23,11 @@ public class Foo2
     {
         return new[] { new Foo2() };
     }
+    public int Weird { get; set; }
+    public int Weird2()
+    {
+        return 0;
+    }
 
     //public List<Foo> DoSomethingAndGetAListOfFoos()
     //{

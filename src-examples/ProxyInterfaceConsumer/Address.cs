@@ -8,5 +8,9 @@ namespace ProxyInterfaceConsumer
 
         public event EventHandler<EventArgs> MyEvent;
         public int Weird { get; set; }
+        public int Weird2()
+        {
+            return 0;
+        }
     }
 }
