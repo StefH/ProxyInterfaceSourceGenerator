@@ -12,7 +12,7 @@ internal static class AttributeArgumentListParser
 {
     public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
     {
-        if (argumentList is null || argumentList.Arguments.Count is < 1 or > 3)
+        if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
         {
             throw new ArgumentException("The ProxyAttribute requires 1, 2 or 3 arguments.");
         }

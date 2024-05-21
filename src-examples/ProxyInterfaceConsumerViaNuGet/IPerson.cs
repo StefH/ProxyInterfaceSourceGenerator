@@ -1,6 +1,8 @@
+using ProxyInterfaceGenerator;
+
 namespace ProxyInterfaceConsumer
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(ProxyInterfaceConsumer.Person), ProxyClassAccessibility.Internal))]
+    [Proxy(typeof(Person), ProxyClassAccessibility.Internal)]
     public partial interface IPerson
     {
     }

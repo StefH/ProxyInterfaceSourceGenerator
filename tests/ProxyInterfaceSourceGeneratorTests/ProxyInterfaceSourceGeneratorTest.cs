@@ -86,6 +86,44 @@ public class ProxyInterfaceSourceGeneratorTest
         return Verify(results);
     }
 
+
+    [Fact]
+    public Task GenerateFiles_ForClassWithIgnores()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.IFoo2.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.Foo2Proxy.g.cs"
+        };
+
+        var path = "./Source/IFoo2.cs";
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[]
+        {
+            sourceFile
+        });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        // Verify
+        var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
+        return Verify(results);
+    }
+
     [Fact]
     public void GenerateFiles_ForGenericType_Should_GenerateCorrectFiles()
     {
