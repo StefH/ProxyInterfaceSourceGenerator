@@ -1,8 +1,8 @@
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Enums;
-using ProxyInterfaceSourceGenerator.FileGenerators;
+using Speckle.ProxyGenerator.Enums;
+using Speckle.ProxyGenerator.FileGenerators;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class PropertySymbolExtensions
 {

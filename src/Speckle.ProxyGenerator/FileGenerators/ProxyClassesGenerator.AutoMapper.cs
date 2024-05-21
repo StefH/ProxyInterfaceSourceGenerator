@@ -1,7 +1,7 @@
 using System.Text;
-using ProxyInterfaceSourceGenerator.Extensions;
+using Speckle.ProxyGenerator.Extensions;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators;
+namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal partial class ProxyClassesGenerator
 {

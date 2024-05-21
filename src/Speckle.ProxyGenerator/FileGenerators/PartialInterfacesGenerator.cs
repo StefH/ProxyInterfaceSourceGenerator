@@ -2,12 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ProxyInterfaceSourceGenerator.Enums;
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Models;
-using ProxyInterfaceSourceGenerator.Utils;
+using Speckle.ProxyGenerator.Enums;
+using Speckle.ProxyGenerator.Extensions;
+using Speckle.ProxyGenerator.Models;
+using Speckle.ProxyGenerator.Utils;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators;
+namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 {

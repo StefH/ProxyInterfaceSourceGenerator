@@ -1,4 +1,4 @@
-namespace ProxyInterfaceSourceGenerator.Models;
+namespace Speckle.ProxyGenerator.Models;
 
 internal record ConstraintInfo(string Type, List<string> Items)
 {

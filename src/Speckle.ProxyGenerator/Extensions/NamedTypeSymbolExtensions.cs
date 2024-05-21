@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class NamedTypeSymbolExtensions
 {

@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace ProxyInterfaceSourceGenerator.Models;
+namespace Speckle.ProxyGenerator.Models;
 
 internal record ClassSymbol(INamedTypeSymbol Symbol, List<INamedTypeSymbol> BaseTypes, List<INamedTypeSymbol> Interfaces)
 {

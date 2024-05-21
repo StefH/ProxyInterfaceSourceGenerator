@@ -2,7 +2,7 @@ using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using CultureAwareTesting.xUnit;
 using FluentAssertions;
-using ProxyInterfaceSourceGenerator;
+using Speckle.ProxyGenerator;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 

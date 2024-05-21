@@ -2,8 +2,8 @@ using System.Runtime.CompilerServices;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Source;
+using Speckle.ProxyGenerator;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 

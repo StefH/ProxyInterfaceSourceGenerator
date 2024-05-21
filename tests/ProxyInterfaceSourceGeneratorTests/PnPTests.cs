@@ -3,7 +3,7 @@ using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using ProxyInterfaceSourceGenerator;
+using Speckle.ProxyGenerator;
 using Xunit;
 
 namespace ProxyInterfaceSourceGeneratorTests;

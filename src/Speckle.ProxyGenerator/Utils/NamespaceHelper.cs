@@ -1,4 +1,4 @@
-namespace ProxyInterfaceSourceGenerator.Utils;
+namespace Speckle.ProxyGenerator.Utils;
 
 internal static class NamespaceBuilder
 {

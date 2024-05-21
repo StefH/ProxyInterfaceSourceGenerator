@@ -1,11 +1,11 @@
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Models;
+using Speckle.ProxyGenerator.Models;
 
-namespace ProxyInterfaceSourceGenerator.Utils;
+namespace Speckle.ProxyGenerator.Utils;
 
 internal static class MemberHelper
 {
-    private static readonly string[] ExcludedMethods = { "ToString", "GetHashCode" };
+    private static readonly string[] ExcludedMethods = ["ToString", "GetHashCode"];
 
     public static IReadOnlyList<IPropertySymbol> GetPublicProperties(
         ClassSymbol classSymbol,

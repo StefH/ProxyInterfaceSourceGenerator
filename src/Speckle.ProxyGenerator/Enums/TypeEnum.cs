@@ -1,4 +1,4 @@
-namespace ProxyInterfaceSourceGenerator.Enums;
+namespace Speckle.ProxyGenerator.Enums;
 
 internal enum TypeEnum
 {

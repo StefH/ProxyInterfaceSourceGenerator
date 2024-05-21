@@ -1,8 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Diagnostics.CodeAnalysis;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class SyntaxNodeExtensions
 {

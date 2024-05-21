@@ -1,17 +1,17 @@
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Text;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class SymbolExtensions
 {
     private static readonly string[] ExcludedAttributes =
-    {
+    [
         "System.Runtime.CompilerServices.NullableAttribute",
         "System.Runtime.CompilerServices.NullableContextAttribute",
         "System.Runtime.CompilerServices.AsyncStateMachineAttribute"
-    };
+    ];
 
     public static IReadOnlyList<string> GetAttributesAsList(this ISymbol symbol)
     {

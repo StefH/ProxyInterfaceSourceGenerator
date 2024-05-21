@@ -1,8 +1,8 @@
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Extensions;
+using Speckle.ProxyGenerator.Extensions;
 
-namespace ProxyInterfaceSourceGenerator.Builders;
+namespace Speckle.ProxyGenerator.Builders;
 
 internal static class MethodParameterBuilder
 {

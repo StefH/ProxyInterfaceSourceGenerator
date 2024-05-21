@@ -3,8 +3,8 @@ using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Source.Disposable;
+using Speckle.ProxyGenerator;
 using Xunit.Abstractions;
 
 namespace ProxyInterfaceSourceGeneratorTests;

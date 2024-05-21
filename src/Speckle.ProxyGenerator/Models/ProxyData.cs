@@ -1,6 +1,6 @@
-using ProxyInterfaceSourceGenerator.Types;
+using Speckle.ProxyGenerator.Types;
 
-namespace ProxyInterfaceSourceGenerator.Models;
+namespace Speckle.ProxyGenerator.Models;
 
 internal class ProxyData
 {

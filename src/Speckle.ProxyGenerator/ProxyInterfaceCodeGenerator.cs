@@ -2,11 +2,11 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using ProxyInterfaceSourceGenerator.FileGenerators;
-using ProxyInterfaceSourceGenerator.Models;
-using ProxyInterfaceSourceGenerator.SyntaxReceiver;
+using Speckle.ProxyGenerator.FileGenerators;
+using Speckle.ProxyGenerator.Models;
+using Speckle.ProxyGenerator.SyntaxReceiver;
 
-namespace ProxyInterfaceSourceGenerator;
+namespace Speckle.ProxyGenerator;
 
 [Generator]
 #if DEBUG

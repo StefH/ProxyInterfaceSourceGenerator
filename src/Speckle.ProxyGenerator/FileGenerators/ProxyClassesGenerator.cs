@@ -1,14 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Builders;
-using ProxyInterfaceSourceGenerator.Enums;
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Models;
-using ProxyInterfaceSourceGenerator.Types;
-using ProxyInterfaceSourceGenerator.Utils;
+using Speckle.ProxyGenerator.Builders;
+using Speckle.ProxyGenerator.Enums;
+using Speckle.ProxyGenerator.Extensions;
+using Speckle.ProxyGenerator.Models;
+using Speckle.ProxyGenerator.Types;
+using Speckle.ProxyGenerator.Utils;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators;
+namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 {
@@ -215,7 +215,7 @@ operators}
             if (method.IsOverride && method.OverriddenMethod != null)
             {
                 var baseType = method.OverriddenMethod.ContainingType.GetFullType();
-                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, Enumerable.Empty<string>(), out _))
+                if (TryGetNamedTypeSymbolByFullName(TypeKind.Class, baseType, [], out _))
                 {
                     overrideOrVirtual = "override ";
                 }

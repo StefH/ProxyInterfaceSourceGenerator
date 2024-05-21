@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace ProxyInterfaceSourceGenerator.Models;
+namespace Speckle.ProxyGenerator.Models;
 
 internal record Context
 {

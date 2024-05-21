@@ -1,12 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Types;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+using Speckle.ProxyGenerator.Extensions;
+using Speckle.ProxyGenerator.Types;
 
-namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
+namespace Speckle.ProxyGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
@@ -108,7 +107,7 @@ internal static class AttributeArgumentListParser
             value = strings.ToArray();
             return true;
         }
-        value = Array.Empty<string>();
+        value = [];
         return false;
     }
 }

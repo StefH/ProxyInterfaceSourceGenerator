@@ -1,16 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Models;
+using Speckle.ProxyGenerator.Extensions;
+using Speckle.ProxyGenerator.Models;
 
-namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
+namespace Speckle.ProxyGenerator.SyntaxReceiver;
 
 internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
     private const string GlobalPrefix = "global::";
-    private static readonly string[] GenerateProxyAttributes = { "ProxyInterfaceGenerator.Proxy", "Proxy" };
-    private static readonly string[] Modifiers = { "public", "partial" };
+    private static readonly string[] GenerateProxyAttributes = ["ProxyInterfaceGenerator.Proxy", "Proxy"];
+    private static readonly string[] Modifiers = ["public", "partial"];
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
     public void OnVisitSyntaxNode(GeneratorSyntaxContext context)

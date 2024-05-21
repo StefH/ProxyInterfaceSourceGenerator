@@ -1,6 +1,6 @@
-using ProxyInterfaceSourceGenerator.Models;
+using Speckle.ProxyGenerator.Models;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators;
+namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal interface IFileGenerator
 {

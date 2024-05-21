@@ -2,12 +2,12 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Builders;
-using ProxyInterfaceSourceGenerator.Enums;
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Models;
+using Speckle.ProxyGenerator.Builders;
+using Speckle.ProxyGenerator.Enums;
+using Speckle.ProxyGenerator.Extensions;
+using Speckle.ProxyGenerator.Models;
 
-namespace ProxyInterfaceSourceGenerator.FileGenerators;
+namespace Speckle.ProxyGenerator.FileGenerators;
 
 internal abstract class BaseGenerator
 {
@@ -153,7 +153,7 @@ internal abstract class BaseGenerator
         }
         else if (typeSymbol is IArrayTypeSymbol arrayTypeSymbol)
         {
-            typeArguments = new[] { arrayTypeSymbol.ElementType };
+            typeArguments = [arrayTypeSymbol.ElementType];
         }
         else
         {

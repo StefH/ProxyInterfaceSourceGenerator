@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
-using ProxyInterfaceSourceGenerator.Enums;
+using Speckle.ProxyGenerator.Enums;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class TypeSymbolExtensions
 {

@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace ProxyInterfaceSourceGenerator.Extensions;
+namespace Speckle.ProxyGenerator.Extensions;
 
 internal static class StringExtensions
 {
