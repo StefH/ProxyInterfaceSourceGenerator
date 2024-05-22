@@ -93,12 +93,12 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsStringArray(ExpressionSyntax expressionSyntax, out string[] value)
+    private static bool TryParseAsStringArray(ExpressionSyntax expressionSyntax, [NotNullWhen(true)] out string[] value)
     {
-        if (expressionSyntax is ImplicitArrayCreationExpressionSyntax lmplicitArrayCreationExpressionSyntax)
+        if (expressionSyntax is ImplicitArrayCreationExpressionSyntax implicitArrayCreationExpressionSyntax)
         {
             var strings = new List<string>();
-            foreach (var expression in lmplicitArrayCreationExpressionSyntax.Initializer.Expressions)
+            foreach (var expression in implicitArrayCreationExpressionSyntax.Initializer.Expressions)
             {
                 if (expression.GetFirstToken().Value is string s)
                 {
@@ -108,7 +108,8 @@ internal static class AttributeArgumentListParser
             value = strings.ToArray();
             return true;
         }
-        value = Array.Empty<string>();
+
+        value = default;
         return false;
     }
 }

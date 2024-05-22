@@ -34,7 +34,8 @@ internal class ProxyData
         string fullMetadataTypeName,
         List<string> usings,
         bool proxyBaseClasses,
-        ProxyClassAccessibility accessibility, string[] membersToIgnore)
+        ProxyClassAccessibility accessibility,
+        string[] membersToIgnore)
     {
         Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
         NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));

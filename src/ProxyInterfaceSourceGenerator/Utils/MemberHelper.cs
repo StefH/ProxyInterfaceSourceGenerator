@@ -86,9 +86,9 @@ internal static class MemberHelper
         var membersQuery = classSymbol.Symbol.GetMembers().OfType<T>()
             .Where(m => m.DeclaredAccessibility == Accessibility.Public);
 
-        var f = filters.ToList();
-        f.Add(x => !proxyData.MembersToIgnore.Contains(x.Name));
-        foreach (var filter in f)
+        var allFilters = filters.ToList();
+        allFilters.Add(x => !proxyData.MembersToIgnore.Contains(x.Name));
+        foreach (var filter in allFilters)
         {
             membersQuery = membersQuery.Where(filter);
         }
