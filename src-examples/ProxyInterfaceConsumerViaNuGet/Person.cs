@@ -52,7 +52,7 @@ namespace ProxyInterfaceConsumer
             b = 1;
         }
 
-        public int In_Out_Ref2(in Address a, out Address b, ref Address c)
+        public int In_Out_Ref2(in IAddress a, out Address b, ref IAddress c)
         {
             b = new Address();
             return 404;

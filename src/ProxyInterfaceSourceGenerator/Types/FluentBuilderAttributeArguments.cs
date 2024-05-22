@@ -5,4 +5,6 @@ internal record ProxyInterfaceGeneratorAttributeArguments(string FullyQualifiedD
     public bool ProxyBaseClasses { get; set; }
 
     public ProxyClassAccessibility Accessibility { get; set; }
+
+    public string[] MembersToIgnore { get; set; } = Array.Empty<string>();
 }

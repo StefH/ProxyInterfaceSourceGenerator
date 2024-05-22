@@ -49,6 +49,12 @@
         <Compile Update="Source\AkkaActor\*.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
+        <Compile Update="Source\Foo2.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
+        <Compile Update="Source\IFoo2.cs">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
