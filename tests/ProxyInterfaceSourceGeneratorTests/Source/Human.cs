@@ -6,9 +6,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public string GetterOnly => "x";
 
-        public void Dispose()
-        {
-
-        }
+        public void Dispose() { }
     }
 }

@@ -2,8 +2,8 @@ using System.Runtime.CompilerServices;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Source;
+using Speckle.ProxyGenerator;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -72,10 +72,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -85,7 +82,6 @@ public class ProxyInterfaceSourceGeneratorTest
         var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
         return Verify(results);
     }
-
 
     [Fact]
     public Task GenerateFiles_ForClassWithIgnores()
@@ -105,19 +101,18 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = new []
+                ArgumentList = new[]
                 {
-                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)", "false", "ProxyClassAccessibility.Public",
+                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)",
+                    "false",
+                    "ProxyClassAccessibility.Public",
                     "new []{\"Weird\",\"NotHere\"}"
                 }
             }
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -151,10 +146,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -165,7 +157,8 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
     }
@@ -193,10 +186,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -207,7 +197,8 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
     }
@@ -235,10 +226,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -249,15 +237,13 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
 
         var name = "stef";
-        var operatorTest = new OperatorTest
-        {
-            Name = name
-        };
+        var operatorTest = new OperatorTest { Name = name };
         string name1 = (string)operatorTest;
         name1.Should().Be(name);
 
@@ -273,11 +259,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_When_NoNamespace_Should_GenerateCorrectFiles()
     {
         // Arrange
-        var fileNames = new[]
-        {
-            "INoNamespace.g.cs",
-            "NoNamespaceProxy.g.cs"
-        };
+        var fileNames = new[] { "INoNamespace.g.cs", "NoNamespaceProxy.g.cs" };
 
         var path = "./Source/INoNamespace.cs";
         var sourceFile = new SourceFile
@@ -292,10 +274,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -306,7 +285,8 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
     }
@@ -334,10 +314,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -348,7 +325,8 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
+            if (Write)
+                File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
             builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
         }
     }
@@ -359,7 +337,8 @@ public class ProxyInterfaceSourceGeneratorTest
         // Arrange
         var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
         var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs";
-        var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
+        var proxyClassFilename =
+            "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
 
         var path = "./Source/IPersonExtends.cs";
         var sourceFile = new SourceFile
@@ -369,7 +348,11 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = new[] { "typeof(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends)", "true" }
+                ArgumentList = new[]
+                {
+                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.PersonExtends)",
+                    "true"
+                }
             }
         };
 
@@ -389,16 +372,24 @@ public class ProxyInterfaceSourceGeneratorTest
         @interface.FilePath.Should().EndWith(interfaceFilename);
 
         var interfaceCode = @interface.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+        if (Write)
+            File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
+        interfaceCode
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
 
         // Assert Proxy
         var proxyClass = result.Files[2].SyntaxTree;
         proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
         var proxyCode = proxyClass.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+        if (Write)
+            File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
+        proxyCode
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
     }
 
     [Fact]
@@ -406,7 +397,8 @@ public class ProxyInterfaceSourceGeneratorTest
     {
         // Arrange
         var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.ITestClassInternal.g.cs";
-        var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.TestClassInternalProxy.g.cs";
+        var proxyClassFilename =
+            "ProxyInterfaceSourceGeneratorTests.Source.TestClassInternalProxy.g.cs";
 
         var path = "./Source/ITestClassInternal.cs";
         var sourceFile = new SourceFile
@@ -416,7 +408,11 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = new[] { "typeof(ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal)", "ProxyClassAccessibility.Internal" }
+                ArgumentList = new[]
+                {
+                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.TestClassInternal)",
+                    "ProxyClassAccessibility.Internal"
+                }
             }
         };
 
@@ -432,16 +428,24 @@ public class ProxyInterfaceSourceGeneratorTest
         @interface.FilePath.Should().EndWith(interfaceFilename);
 
         var interfaceCode = @interface.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+        if (Write)
+            File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
+        interfaceCode
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
 
         // Assert Proxy
         var proxyClass = result.Files[2].SyntaxTree;
         proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
         var proxyCode = proxyClass.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+        if (Write)
+            File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
+        proxyCode
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
     }
 
     [Fact]
@@ -489,41 +493,56 @@ public class ProxyInterfaceSourceGeneratorTest
         var attribute = result.Files[0].SyntaxTree;
         attribute.FilePath.Should().EndWith(attributeFilename);
 
-
         // Assert interface Human
         var interfaceHuman = result.Files[1].SyntaxTree;
         interfaceHuman.FilePath.Should().EndWith(interfaceHumanFilename);
 
         var interfaceCodeHuman = interfaceHuman.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceHumanFilename}", interfaceCodeHuman);
-        interfaceCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceHumanFilename}"));
-
+        if (Write)
+            File.WriteAllText($"../../../Destination/{interfaceHumanFilename}", interfaceCodeHuman);
+        interfaceCodeHuman
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{interfaceHumanFilename}"));
 
         // Assert interface Person
         var interfacePerson = result.Files[2].SyntaxTree;
         interfacePerson.FilePath.Should().EndWith(interfacePersonFilename);
 
         var interfaceCodePerson = interfacePerson.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfacePersonFilename}", interfaceCodePerson);
-        interfaceCodePerson.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
-
+        if (Write)
+            File.WriteAllText(
+                $"../../../Destination/{interfacePersonFilename}",
+                interfaceCodePerson
+            );
+        interfaceCodePerson
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
 
         // Assert Proxy Human
         var proxyClassHuman = result.Files[3].SyntaxTree;
         proxyClassHuman.FilePath.Should().EndWith(proxyClassHumanFilename);
 
         var proxyCodeHuman = proxyClassHuman.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassHumanFilename}", proxyCodeHuman);
-        proxyCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassHumanFilename}"));
-
+        if (Write)
+            File.WriteAllText($"../../../Destination/{proxyClassHumanFilename}", proxyCodeHuman);
+        proxyCodeHuman
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{proxyClassHumanFilename}"));
 
         // Assert Proxy Person
         var proxyClassPerson = result.Files[4].SyntaxTree;
         proxyClassPerson.FilePath.Should().EndWith(proxyClassPersonFilename);
 
         var proxyCode = proxyClassPerson.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
+        if (Write)
+            File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
+        proxyCode
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
 
         var personProxy = new PersonProxy(new Person());
 
@@ -538,9 +557,11 @@ public class ProxyInterfaceSourceGeneratorTest
     {
         // Arrange
         var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
-        var interfaceIHttpClientFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHttpClient.g.cs";
+        var interfaceIHttpClientFilename =
+            "ProxyInterfaceSourceGeneratorTests.Source.IHttpClient.g.cs";
         var proxyClassIHttpClientFilename = "System.Net.Http.HttpClientProxy.g.cs";
-        var interfaceIHttpMessageInvokerFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker.g.cs";
+        var interfaceIHttpMessageInvokerFilename =
+            "ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker.g.cs";
         var proxyClassIHttpMessageInvokerFilename = "System.Net.Http.HttpMessageInvokerProxy.g.cs";
 
         var pathIHttpClient = "./Source/IHttpClient.cs";
@@ -578,41 +599,69 @@ public class ProxyInterfaceSourceGeneratorTest
         var attribute = result.Files[0].SyntaxTree;
         attribute.FilePath.Should().EndWith(attributeFilename);
 
-
         // Assert interface IHttpClient
         var interfaceIHttpClient = result.Files[1].SyntaxTree;
         interfaceIHttpClient.FilePath.Should().EndWith(interfaceIHttpClientFilename);
 
         var interfaceCodeIHttpClient = interfaceIHttpClient.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpClientFilename}", interfaceCodeIHttpClient);
-        interfaceCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpClientFilename}"));
-
+        if (Write)
+            File.WriteAllText(
+                $"../../../Destination/{interfaceIHttpClientFilename}",
+                interfaceCodeIHttpClient
+            );
+        interfaceCodeIHttpClient
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpClientFilename}"));
 
         // Assert interface IHttpMessageInvoker
         var interfaceIMessageInvoker = result.Files[2].SyntaxTree;
         interfaceIMessageInvoker.FilePath.Should().EndWith(interfaceIHttpMessageInvokerFilename);
 
         var interfaceCodeIMessageInvoker = interfaceIMessageInvoker.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}", interfaceCodeIMessageInvoker);
-        interfaceCodeIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}"));
-
+        if (Write)
+            File.WriteAllText(
+                $"../../../Destination/{interfaceIHttpMessageInvokerFilename}",
+                interfaceCodeIMessageInvoker
+            );
+        interfaceCodeIMessageInvoker
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(
+                File.ReadAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}")
+            );
 
         // Assert Proxy IHttpClient
         var proxyClassIHttpClient = result.Files[3].SyntaxTree;
         proxyClassIHttpClient.FilePath.Should().EndWith(proxyClassIHttpClientFilename);
 
         var proxyCodeIHttpClient = proxyClassIHttpClient.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpClientFilename}", proxyCodeIHttpClient);
-        proxyCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpClientFilename}"));
-
+        if (Write)
+            File.WriteAllText(
+                $"../../../Destination/{proxyClassIHttpClientFilename}",
+                proxyCodeIHttpClient
+            );
+        proxyCodeIHttpClient
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpClientFilename}"));
 
         // Assert Proxy IHttpMessageInvoker
         var proxyClassIMessageInvoker = result.Files[4].SyntaxTree;
         proxyClassIMessageInvoker.FilePath.Should().EndWith(proxyClassIHttpMessageInvokerFilename);
 
         var proxyIMessageInvoker = proxyClassIMessageInvoker.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}", proxyIMessageInvoker);
-        proxyIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}"));
+        if (Write)
+            File.WriteAllText(
+                $"../../../Destination/{proxyClassIHttpMessageInvokerFilename}",
+                proxyIMessageInvoker
+            );
+        proxyIMessageInvoker
+            .Should()
+            .NotBeNullOrEmpty()
+            .And.Be(
+                File.ReadAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}")
+            );
     }
 
     [Fact]
@@ -623,8 +672,10 @@ public class ProxyInterfaceSourceGeneratorTest
         foreach (var x in new[] { 1, 2 })
         {
             var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
-            var interfaceFilename = $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.I{@class}.g.cs";
-            var proxyClassFilename = $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.{@class}Proxy.g.cs";
+            var interfaceFilename =
+                $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.I{@class}.g.cs";
+            var proxyClassFilename =
+                $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.{@class}Proxy.g.cs";
 
             var path = $"./Source/I{@class}{x}.cs";
             var sourceFile = new SourceFile
@@ -634,7 +685,11 @@ public class ProxyInterfaceSourceGeneratorTest
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = new[] { $"typeof(ProxyInterfaceSourceGeneratorTests.Namespace{x}.{@class})", "true" }
+                    ArgumentList = new[]
+                    {
+                        $"typeof(ProxyInterfaceSourceGeneratorTests.Namespace{x}.{@class})",
+                        "true"
+                    }
                 }
             };
 
@@ -654,18 +709,24 @@ public class ProxyInterfaceSourceGeneratorTest
             @interface.FilePath.Should().EndWith(interfaceFilename);
 
             var interfaceCode = @interface.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-            interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+            if (Write)
+                File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
+            interfaceCode
+                .Should()
+                .NotBeNullOrEmpty()
+                .And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
 
             // Assert Proxy
             var proxyClass = result.Files[2].SyntaxTree;
             proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
             var proxyCode = proxyClass.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-            proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+            if (Write)
+                File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
+            proxyCode
+                .Should()
+                .NotBeNullOrEmpty()
+                .And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
         }
-
-
     }
 }

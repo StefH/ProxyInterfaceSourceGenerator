@@ -17,18 +17,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public object @object { get; set; } = null!;
 
-        public void Void()
-        {
-        }
+        public void Void() { }
 
         public string HelloWorld(string name)
         {
             return $"Hello {name} !";
         }
 
-        public void WithParams(params string[] values)
-        {
-        }
+        public void WithParams(params string[] values) { }
 
         public string Add(string s, string @string)
         {

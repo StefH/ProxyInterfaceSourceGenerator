@@ -6,15 +6,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.Disposable
 
         event EventHandler<string>? IUpdate<string>.Update
         {
-            add
-            {
-                throw new NotSupportedException();
-            }
-
-            remove
-            {
-                throw new NotSupportedException();
-            }
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
         }
 
         void IDisposable.Dispose()

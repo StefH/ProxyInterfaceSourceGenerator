@@ -8,8 +8,6 @@ namespace ProxyInterfaceConsumer
 
         public T2 TVal2 { get; set; }
 
-        public void Call(int x, T1 t1, T2 t2)
-        {
-        }
+        public void Call(int x, T1 t1, T2 t2) { }
     }
 }

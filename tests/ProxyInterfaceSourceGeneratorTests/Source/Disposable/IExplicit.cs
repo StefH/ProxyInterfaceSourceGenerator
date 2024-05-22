@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source.Disposable
 {
-    public partial interface IExplicit
-    {
-    }
+    public partial interface IExplicit { }
 }

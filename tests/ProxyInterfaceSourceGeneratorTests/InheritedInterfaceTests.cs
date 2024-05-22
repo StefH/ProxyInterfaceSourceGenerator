@@ -3,8 +3,8 @@ using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Source.Disposable;
+using Speckle.ProxyGenerator;
 using Xunit.Abstractions;
 
 namespace ProxyInterfaceSourceGeneratorTests;
@@ -27,17 +27,17 @@ public class InheritedInterfaceTests
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, true)]
-    public void GenerateFiles_InheritedInterface_InheritFromBaseClass(bool proxyBaseClass, bool inheritBaseInterface)
+    public void GenerateFiles_InheritedInterface_InheritFromBaseClass(
+        bool proxyBaseClass,
+        bool inheritBaseInterface
+    )
     {
         var name = "Child";
         var interfaceName = "I" + name;
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
-        ];
+        string[] fileNames = [$"{Namespace}.{interfaceName}.g.cs", $"{Namespace}.{proxyName}.g.cs"];
         var path = $"./Source/Disposable/{interfaceName}.cs";
         SourceFile sourceFile = CreateSourceFile(path, name, proxyBaseClass);
 
@@ -69,10 +69,7 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
-        ];
+        string[] fileNames = [$"{Namespace}.{interfaceName}.g.cs", $"{Namespace}.{proxyName}.g.cs"];
 
         var path = $"./Source/Disposable/{interfaceName}.cs";
         SourceFile sourceFile = CreateSourceFile(path, name, true);
@@ -107,10 +104,7 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
-        ];
+        string[] fileNames = [$"{Namespace}.{interfaceName}.g.cs", $"{Namespace}.{proxyName}.g.cs"];
         var interfaceIndex = 1;
         var path = $"./Source/Disposable/{interfaceName}.cs";
         SourceFile sourceFile = CreateSourceFile(path, name, true);

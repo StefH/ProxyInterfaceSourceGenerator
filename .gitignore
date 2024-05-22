@@ -350,4 +350,6 @@ MigrationBackup/
 .ionide/
 /tests/ProxyInterfaceSourceGeneratorTests/Destination/Disposable/*.g.cs
 
-.idea/.idea.ProxyInterfaceSourceGenerator Solution/.idea/
+.idea/
+
+Speckle.ProxyGenerator.sln.DotSettings

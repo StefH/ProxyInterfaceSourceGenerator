@@ -1,6 +1,4 @@
 ﻿namespace ProxyInterfaceConsumer
 {
-    public interface IMyInterface
-    {
-    }
+    public interface IMyInterface { }
 }

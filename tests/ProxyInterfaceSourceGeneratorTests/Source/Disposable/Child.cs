@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source.Disposable
 {
-    public class Child : Parent
-    {
-    }
+    public class Child : Parent { }
 }

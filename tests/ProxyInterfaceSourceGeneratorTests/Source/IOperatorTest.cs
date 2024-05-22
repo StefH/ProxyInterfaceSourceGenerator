@@ -1,6 +1,4 @@
 // file-scoped namespace !
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
-public partial interface IOperatorTest
-{
-}
+public partial interface IOperatorTest { }

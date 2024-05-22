@@ -2,7 +2,7 @@ using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using CultureAwareTesting.xUnit;
 using FluentAssertions;
-using ProxyInterfaceSourceGenerator;
+using Speckle.ProxyGenerator;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -40,10 +40,7 @@ public class AkkaTests
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute(new[] { sourceFile });
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -54,8 +51,14 @@ public class AkkaTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/AkkaGenerated/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/AkkaGenerated/{fileName.fileName}"));
+            if (Write)
+                File.WriteAllText(
+                    $"../../../Destination/AkkaGenerated/{fileName.fileName}",
+                    builder.Text
+                );
+            builder
+                .Text.Should()
+                .Be(File.ReadAllText($"../../../Destination/AkkaGenerated/{fileName.fileName}"));
         }
     }
 }

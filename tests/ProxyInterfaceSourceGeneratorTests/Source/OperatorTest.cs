@@ -9,18 +9,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         // Operator : implicit
         public static implicit operator OperatorTest(string name)
         {
-            return new()
-            {
-                Name = name
-            };
+            return new() { Name = name };
         }
-        
+
         public static implicit operator OperatorTest(int? id)
         {
-            return new()
-            {
-                Id = id
-            };
+            return new() { Id = id };
         }
 
         // Operator : explicit

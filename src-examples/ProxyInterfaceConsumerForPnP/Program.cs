@@ -18,9 +18,12 @@ public class Program
                 "15b347bf-90a2-4c16-aa76-5a3263476b59",
                 "Test.pfx",
                 Environment.GetEnvironmentVariable("Test.pfx_PWD"),
-                "s7gb6.onmicrosoft.com");
+                "s7gb6.onmicrosoft.com"
+            );
 
-            using var clientContext = await authManager.GetContextAsync("https://s7gb6.sharepoint.com/sites/Test");
+            using var clientContext = await authManager.GetContextAsync(
+                "https://s7gb6.sharepoint.com/sites/Test"
+            );
             clientContext.Load(clientContext.Web, p => p.Title);
             await clientContext.ExecuteQueryRetryAsync();
 
@@ -28,7 +31,12 @@ public class Program
 
             IClientContext cp = new ClientContextProxy(clientContext);
 
-            cp.Load<ProxyInterfaceConsumerForPnP.Interfaces.IWeb, Web>(cp.Web, w => w.Lists, w => w.Language, w => w.Author);
+            cp.Load<ProxyInterfaceConsumerForPnP.Interfaces.IWeb, Web>(
+                cp.Web,
+                w => w.Lists,
+                w => w.Language,
+                w => w.Author
+            );
 
             await cp.ExecuteQueryRetryAsync();
 

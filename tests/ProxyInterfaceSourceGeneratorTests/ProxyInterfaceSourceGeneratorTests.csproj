@@ -32,7 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ProxyInterfaceSourceGenerator\ProxyInterfaceSourceGenerator.csproj" />
+        <ProjectReference Include="..\..\src\Speckle.ProxyGenerator\Speckle.ProxyGenerator.csproj" />
     </ItemGroup>
 
     <ItemGroup>

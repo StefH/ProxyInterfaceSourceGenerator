@@ -1,5 +1,3 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
-public class Bar
-{
-}
+public class Bar { }

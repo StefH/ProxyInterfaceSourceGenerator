@@ -1,6 +1,4 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface IGeneric
-    {
-    }
+    public partial interface IGeneric { }
 }
