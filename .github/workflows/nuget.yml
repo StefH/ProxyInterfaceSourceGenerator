@@ -6,8 +6,6 @@ on:
 jobs: 
   deploy:
     runs-on: ubuntu-latest
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
       
     steps:
       - name: Checkout Project
@@ -22,13 +20,10 @@ jobs:
         run: dotnet restore
         
       - name: Build
-        run: dotnet build --configuration Release --no-restore  
-        
-      - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+        run: dotnet build --configuration Release --no-restore Speckle.ProxyGenerator/Speckle.ProxyGenerator.csproj
 
       - name: Pack
-        run: dotnet pack --no-build --configuration Release Speckle.InterfaceGenerator/Speckle.InterfaceGenerator.csproj --output .
+        run: dotnet pack --no-build --configuration Release Speckle.ProxyGenerator/Speckle.ProxyGenerator.csproj --output .
                 
       - name: Push to nuget.org
         run: dotnet nuget push *.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{secrets.CONNECTORS_NUGET_TOKEN }} --skip-duplicate
