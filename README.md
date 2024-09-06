@@ -9,7 +9,7 @@ It supports:
 - implicit and explicit operators
 
 ## Install
-[![NuGet Badge](https://buildstats.info/nuget/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
+[![NuGet Badge](https://img.shields.io/nuget/v/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
 
 You can install from NuGet using the following command in the package manager window:
 
