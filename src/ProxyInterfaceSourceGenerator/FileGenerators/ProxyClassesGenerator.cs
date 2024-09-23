@@ -173,16 +173,18 @@ operators}
 
                 if (getIsPublic)
                 {
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
                     get = isNullable ?
-                        $"get => {instancePropertyName} != null ? Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}) : null; " :
-                        $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); ";
+                        $"get => {instancePropertyName} != null ? {mapster} : null; " :
+                        $"get => {mapster}; ";
                 }
 
                 if (setIsPublic)
                 {
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
                     set = isNullable ?
-                        $"set => {instancePropertyName} = value != null ? Mapster.TypeAdapter.Adapt<{property.Type}>(value) : null; " :
-                        $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); ";
+                        $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
+                        $"set => {instancePropertyName} = {mapster}; ";
                 }
             }
             else
@@ -271,9 +273,10 @@ operators}
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
+                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name})";
                         normalOrMap = ps.IsNullable() ?
-                            $" = {name} != null ? Mapster.TypeAdapter.Adapt<{type}>({name}) : null" :
-                            $" = Mapster.TypeAdapter.Adapt<{type}>({name})";
+                            $" = {name} != null ? {mapster} : null" :
+                            $" = {mapster}";
                     }
                 }
 
@@ -303,9 +306,10 @@ operators}
                     var type = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
+                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name}_)";
                         normalOrMap = ps.IsNullable() ?
-                            $" = {name}_ != null ? Mapster.TypeAdapter.Adapt<{type}>({name}_) : null" :
-                            $" = Mapster.TypeAdapter.Adapt<{type}>({name}_)";
+                            $" = {name}_ != null ? {mapster} : null" :
+                            $" = {mapster}";
                     }
                 }
 
@@ -316,14 +320,10 @@ operators}
             {
                 if (returnIsReplaced)
                 {
-                    if (method.ReturnType.IsNullable())
-                    {
-                        str.AppendLine($"            return {alternateReturnVariableName} != null ? Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName}) : null;");
-                    }
-                    else
-                    {
-                        str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
-                    }
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName})";
+                    str.AppendLine(method.ReturnType.IsNullable() ?
+                        $"            return {alternateReturnVariableName} != null ? {mapster} : null;" :
+                        $"            return {mapster};");
                 }
                 else
                 {
