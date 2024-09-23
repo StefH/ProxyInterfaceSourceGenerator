@@ -316,7 +316,14 @@ operators}
             {
                 if (returnIsReplaced)
                 {
-                    str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
+                    if (method.ReturnType.IsNullable())
+                    {
+                        str.AppendLine($"            return {alternateReturnVariableName} != null ? Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName}) : null;");
+                    }
+                    else
+                    {
+                        str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
+                    }
                 }
                 else
                 {

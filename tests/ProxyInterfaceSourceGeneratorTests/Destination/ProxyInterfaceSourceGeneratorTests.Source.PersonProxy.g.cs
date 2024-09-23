@@ -40,7 +40,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             global::ProxyInterfaceSourceGeneratorTests.Source.Human? h2_ = h2 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h2) : null;
             global::ProxyInterfaceSourceGeneratorTests.Source.Human h3_ = Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human>(h3);
             var result_121857625 = _Instance.GetHuman(h1_, h2_, h3_);
-            return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(result_121857625);
+            return result_121857625 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(result_121857625) : null;
         }
 
         public global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
