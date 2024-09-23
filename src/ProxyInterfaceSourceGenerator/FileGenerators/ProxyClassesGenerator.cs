@@ -169,7 +169,7 @@ operators}
             string set = string.Empty;
             if (isReplaced)
             {
-                var isNullable = property.Type.NullableAnnotation == NullableAnnotation.Annotated;
+                var isNullable = property.IsNullable();
 
                 if (getIsPublic)
                 {
@@ -260,7 +260,8 @@ operators}
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
                 var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
-                string normalOrMap = $" = {ps.GetSanitizedName()}";
+                var name = ps.GetSanitizedName();
+                var normalOrMap = $" = {name}";
                 if (ps.RefKind == RefKind.Out)
                 {
                     normalOrMap = string.Empty;
@@ -270,11 +271,13 @@ operators}
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
-                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()})";
+                        normalOrMap = ps.IsNullable() ?
+                            $" = {name} != null ? Mapster.TypeAdapter.Adapt<{type}>({name}) : null" :
+                            $" = Mapster.TypeAdapter.Adapt<{type}>({name})";
                     }
                 }
 
-                str.AppendLine($"            {type} {ps.GetSanitizedName()}_{normalOrMap};");
+                str.AppendLine($"            {type} {name}_{normalOrMap};");
             }
 
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
@@ -293,17 +296,20 @@ operators}
 
             foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
             {
-                string normalOrMap = $" = {ps.GetSanitizedName()}_";
+                var name = ps.GetSanitizedName();
+                var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
                     var type = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()}_)";
+                        normalOrMap = ps.IsNullable() ?
+                            $" = {name}_ != null ? Mapster.TypeAdapter.Adapt<{type}>({name}_) : null" :
+                            $" = Mapster.TypeAdapter.Adapt<{type}>({name}_)";
                     }
                 }
 
-                str.AppendLine($"            {ps.GetSanitizedName()}{normalOrMap};");
+                str.AppendLine($"            {name}{normalOrMap};");
             }
 
             if (returnTypeAsString != "void")

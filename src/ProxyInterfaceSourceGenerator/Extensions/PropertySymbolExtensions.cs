@@ -6,6 +6,8 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class PropertySymbolExtensions
 {
+    public static bool IsNullable(this IPropertySymbol p) => p.Type.NullableAnnotation == NullableAnnotation.Annotated;
+
     public static TypeEnum GetTypeEnum(this IPropertySymbol p) => p.Type.GetTypeEnum();
 
     public static (string PropertyType, string? PropertyName, string GetSet)? ToPropertyDetails(this IPropertySymbol property, string? overrideType = null)

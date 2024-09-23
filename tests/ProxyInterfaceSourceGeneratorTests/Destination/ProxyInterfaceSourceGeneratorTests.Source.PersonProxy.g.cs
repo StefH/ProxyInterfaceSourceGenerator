@@ -16,7 +16,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public global::ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
-        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(_Instance.Human); set => _Instance.Human = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human?>(value); }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get => _Instance.Human != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(_Instance.Human) : null; set => _Instance.Human = value != null ? Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human?>(value) : null; }
 
         public global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get => Mapster.TypeAdapter.Adapt<global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(_Instance.Humans); set => _Instance.Humans = Mapster.TypeAdapter.Adapt<System.Collections.Generic.List<ProxyInterfaceSourceGeneratorTests.Source.Human>>(value); }
 
