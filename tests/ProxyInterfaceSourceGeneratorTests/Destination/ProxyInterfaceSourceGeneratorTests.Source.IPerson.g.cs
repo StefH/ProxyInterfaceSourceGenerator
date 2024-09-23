@@ -16,6 +16,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
 
+        global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get; set; }
+
         global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get; set; }
 
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
