@@ -169,7 +169,7 @@ operators}
             string set;
             if (isReplaced)
             {
-                get = getIsPublic ? $"get => instancePropertyName != null ? Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}) : null; " : string.Empty;
+                get = getIsPublic ? $"get => {instancePropertyName} != null ? Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}) : null; " : string.Empty;
                 set = setIsPublic ? $"set => {instancePropertyName} = value != null ? Mapster.TypeAdapter.Adapt<{property.Type}>(value) : null; " : string.Empty;
             }
             else
