@@ -16,6 +16,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
 
+        global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get; set; }
+
+        global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get; set; }
+
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
 
@@ -29,6 +33,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         long? NullableLong { get; }
 
         object @object { get; set; }
+
+        global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? GetHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h1, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h2, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h3);
 
         global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h);
 

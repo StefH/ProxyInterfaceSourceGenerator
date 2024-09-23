@@ -8,6 +8,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
+        public Human? Human { get; set; }
+
+        public List<Human> Humans { get; set; } = new();
+
         private readonly MyStruct[] _arr = new MyStruct[1];
 
         [Display(Prompt = "MyStruct Indexer")]
@@ -21,6 +25,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             get { return _arr[i]; }
             set { _arr[i] = value; }
+        }
+
+        public Human? GetHuman(Human? h1, Human? h2, Human h3)
+        {
+            return h1;
         }
 
         public IList<Human> AddHuman(Human h)

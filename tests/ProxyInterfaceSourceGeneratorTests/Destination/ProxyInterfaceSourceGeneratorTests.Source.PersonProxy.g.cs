@@ -16,6 +16,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public global::ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get => _Instance.Human != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(_Instance.Human) : null; set => _Instance.Human = value != null ? Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human?>(value) : null; }
+
+        public global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get => Mapster.TypeAdapter.Adapt<global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(_Instance.Humans); set => _Instance.Humans = Mapster.TypeAdapter.Adapt<System.Collections.Generic.List<ProxyInterfaceSourceGeneratorTests.Source.Human>>(value); }
+
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
@@ -29,6 +33,15 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         public long? NullableLong { get => _Instance.NullableLong; }
 
         public object @object { get => _Instance.@object; set => _Instance.@object = value; }
+
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? GetHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h1, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h2, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h3)
+        {
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human? h1_ = h1 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h1) : null;
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human? h2_ = h2 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h2) : null;
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human h3_ = Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human>(h3);
+            var result_121857625 = _Instance.GetHuman(h1_, h2_, h3_);
+            return result_121857625 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(result_121857625) : null;
+        }
 
         public global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h)
         {

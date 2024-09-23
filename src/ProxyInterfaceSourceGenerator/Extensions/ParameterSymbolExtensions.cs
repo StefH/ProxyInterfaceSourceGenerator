@@ -8,6 +8,8 @@ internal static class ParameterSymbolExtensions
 {
     private const string ParameterValueNull = "null";
 
+    public static bool IsNullable(this IParameterSymbol ps) => ps.Type.NullableAnnotation == NullableAnnotation.Annotated;
+
     public static bool IsRef(this IParameterSymbol ps)
     {
         return ps.RefKind is RefKind.Ref or RefKind.RefReadOnly;

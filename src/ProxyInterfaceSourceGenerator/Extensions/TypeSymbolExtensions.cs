@@ -5,6 +5,8 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class TypeSymbolExtensions
 {
+    public static bool IsNullable(this ITypeSymbol ts) => ts.NullableAnnotation == NullableAnnotation.Annotated;
+
     public static TypeEnum GetTypeEnum(this ITypeSymbol ts)
     {
         if (ts.IsValueType || ts.IsString())

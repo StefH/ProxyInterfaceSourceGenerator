@@ -165,17 +165,39 @@ operators}
                 continue;
             }
 
-            string get;
-            string set;
+            string get = string.Empty;
+            string set = string.Empty;
             if (isReplaced)
             {
-                get = getIsPublic ? $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); " : string.Empty;
-                set = setIsPublic ? $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); " : string.Empty;
+                var isNullable = property.IsNullable();
+
+                if (getIsPublic)
+                {
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
+                    get = isNullable ?
+                        $"get => {instancePropertyName} != null ? {mapster} : null; " :
+                        $"get => {mapster}; ";
+                }
+
+                if (setIsPublic)
+                {
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
+                    set = isNullable ?
+                        $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
+                        $"set => {instancePropertyName} = {mapster}; ";
+                }
             }
             else
             {
-                get = getIsPublic ? $"get => {instancePropertyName}; " : string.Empty;
-                set = setIsPublic ? $"set => {instancePropertyName} = value; " : string.Empty;
+                if (getIsPublic)
+                {
+                    get = $"get => {instancePropertyName}; ";
+                }
+
+                if (setIsPublic)
+                {
+                    set = $"set => {instancePropertyName} = value; ";
+                }
             }
 
             foreach (var attribute in property.GetAttributesAsList())
@@ -211,7 +233,7 @@ operators}
                 invokeParameters.Add($"{parameterSymbol.GetRefKindPrefix()}{parameterSymbol.GetSanitizedName()}{(!parameterSymbol.IsRef()).IIf("_")}");
             }
 
-            string overrideOrVirtual = string.Empty;
+            var overrideOrVirtual = string.Empty;
             if (method.IsOverride && method.OverriddenMethod != null)
             {
                 var baseType = method.OverriddenMethod.ContainingType.GetFullType();
@@ -225,7 +247,7 @@ operators}
                 overrideOrVirtual = "virtual ";
             }
 
-            string returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
+            var returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -240,7 +262,8 @@ operators}
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
                 var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
-                string normalOrMap = $" = {ps.GetSanitizedName()}";
+                var name = ps.GetSanitizedName();
+                var normalOrMap = $" = {name}";
                 if (ps.RefKind == RefKind.Out)
                 {
                     normalOrMap = string.Empty;
@@ -250,17 +273,20 @@ operators}
                     _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
                     if (isReplaced)
                     {
-                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()})";
+                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name})";
+                        normalOrMap = ps.IsNullable() ?
+                            $" = {name} != null ? {mapster} : null" :
+                            $" = {mapster}";
                     }
                 }
 
-                str.AppendLine($"            {type} {ps.GetSanitizedName()}_{normalOrMap};");
+                str.AppendLine($"            {type} {name}_{normalOrMap};");
             }
 
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
+            var instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
 
             if (returnTypeAsString == "void")
             {
@@ -273,24 +299,31 @@ operators}
 
             foreach (var ps in method.Parameters.Where(p => p.RefKind == RefKind.Out))
             {
-                string normalOrMap = $" = {ps.GetSanitizedName()}_";
+                var name = ps.GetSanitizedName();
+                var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
                     var type = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        normalOrMap = $" = Mapster.TypeAdapter.Adapt<{type}>({ps.GetSanitizedName()}_)";
+                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name}_)";
+                        normalOrMap = ps.IsNullable() ?
+                            $" = {name}_ != null ? {mapster} : null" :
+                            $" = {mapster}";
                     }
                 }
 
-                str.AppendLine($"            {ps.GetSanitizedName()}{normalOrMap};");
+                str.AppendLine($"            {name}{normalOrMap};");
             }
 
             if (returnTypeAsString != "void")
             {
                 if (returnIsReplaced)
                 {
-                    str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName});");
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName})";
+                    str.AppendLine(method.ReturnType.IsNullable() ?
+                        $"            return {alternateReturnVariableName} != null ? {mapster} : null;" :
+                        $"            return {mapster};");
                 }
                 else
                 {
