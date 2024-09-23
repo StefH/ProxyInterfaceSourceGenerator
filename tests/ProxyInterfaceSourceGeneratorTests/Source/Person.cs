@@ -8,6 +8,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class Person : Human
     {
+        public List<Human> Humans { get; set; } = new();
+
         private readonly MyStruct[] _arr = new MyStruct[1];
 
         [Display(Prompt = "MyStruct Indexer")]

@@ -437,7 +437,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[] { sourceFileHuman, sourceFilePerson });
+        var result = _sut.Execute([ sourceFileHuman, sourceFilePerson ]);
 
         // Assert
         result.Valid.Should().BeTrue();

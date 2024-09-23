@@ -16,6 +16,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         public new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public global::ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
+        public global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get => Mapster.TypeAdapter.Adapt<global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>>(_Instance.Humans); set => _Instance.Humans = Mapster.TypeAdapter.Adapt<System.Collections.Generic.List<ProxyInterfaceSourceGeneratorTests.Source.Human>>(value); }
+
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
