@@ -27,6 +27,11 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             set { _arr[i] = value; }
         }
 
+        public Human? GetHuman(Human? h)
+        {
+            return h;
+        }
+
         public IList<Human> AddHuman(Human h)
         {
             return new List<Human> { h, new Human { IsAlive = true } };

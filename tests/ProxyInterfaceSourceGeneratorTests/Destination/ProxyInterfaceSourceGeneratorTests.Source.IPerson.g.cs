@@ -34,6 +34,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         object @object { get; set; }
 
+        global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? GetHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h);
+
         global::System.Collections.Generic.IList<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> AddHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h);
 
         void Void();
