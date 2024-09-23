@@ -1,6 +1,4 @@
-# 0.1.0 (28 April 2024)
-- #68 Use fully qualified names to reduce namespace clashes. [bug]
-- #70 Add tests for interfaces with same name but different namespace [test]
-- #69 output filename clash in case with multiple interfaces with same name but different namespace [bug]
+# 0.2.0 (23 September 2024)
+- #75 Add null check for nullable [bug]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md

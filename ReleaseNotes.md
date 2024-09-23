@@ -1,3 +1,6 @@
+# 0.2.0 (23 September 2024)
+- [#75](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/75) - Add null check for nullable [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.1.0 (28 April 2024)
 - [#68](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/68) - Use fully qualified names to reduce namespace clashes. [bug] contributed by [Fieslix](https://github.com/Fieslix)
 - [#70](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/70) - Add tests for interfaces with same name but different namespace [test] contributed by [StefH](https://github.com/StefH)
