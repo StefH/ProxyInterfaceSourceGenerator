@@ -34,10 +34,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public object @object { get => _Instance.@object; set => _Instance.@object = value; }
 
-        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? GetHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h)
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? GetHuman(global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h1, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? h2, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman h3)
         {
-            global::ProxyInterfaceSourceGeneratorTests.Source.Human? h_ = Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h);
-            var result_121857625 = _Instance.GetHuman(h_);
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human? h1_ = h1 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h1) : null;
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human? h2_ = h2 != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human?>(h2) : null;
+            global::ProxyInterfaceSourceGeneratorTests.Source.Human h3_ = Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Human>(h3);
+            var result_121857625 = _Instance.GetHuman(h1_, h2_, h3_);
             return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(result_121857625);
         }
 

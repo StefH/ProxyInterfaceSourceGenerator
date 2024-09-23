@@ -231,7 +231,7 @@ operators}
                 invokeParameters.Add($"{parameterSymbol.GetRefKindPrefix()}{parameterSymbol.GetSanitizedName()}{(!parameterSymbol.IsRef()).IIf("_")}");
             }
 
-            string overrideOrVirtual = string.Empty;
+            var overrideOrVirtual = string.Empty;
             if (method.IsOverride && method.OverriddenMethod != null)
             {
                 var baseType = method.OverriddenMethod.ContainingType.GetFullType();
@@ -245,7 +245,7 @@ operators}
                 overrideOrVirtual = "virtual ";
             }
 
-            string returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
+            var returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -283,7 +283,7 @@ operators}
             var methodName = method.GetMethodNameWithOptionalTypeParameters();
             var alternateReturnVariableName = $"result_{methodName.GetDeterministicHashCodeAsString()}";
 
-            string instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
+            var instance = method.IsStatic ? targetClassSymbol.Symbol.ToFullyQualifiedDisplayString() : "_Instance";
 
             if (returnTypeAsString == "void")
             {
