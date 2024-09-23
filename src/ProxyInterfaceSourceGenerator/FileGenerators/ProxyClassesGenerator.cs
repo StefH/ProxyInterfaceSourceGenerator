@@ -165,17 +165,37 @@ operators}
                 continue;
             }
 
-            string get;
-            string set;
+            string get = string.Empty;
+            string set = string.Empty;
             if (isReplaced)
             {
-                get = getIsPublic ? $"get => {instancePropertyName} != null ? Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}) : null; " : string.Empty;
-                set = setIsPublic ? $"set => {instancePropertyName} = value != null ? Mapster.TypeAdapter.Adapt<{property.Type}>(value) : null; " : string.Empty;
+                var isNullable = property.Type.NullableAnnotation == NullableAnnotation.Annotated;
+
+                if (getIsPublic)
+                {
+                    get = isNullable ?
+                        $"get => {instancePropertyName} != null ? Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}) : null; " :
+                        $"get => Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName}); ";
+                }
+
+                if (setIsPublic)
+                {
+                    set = isNullable ?
+                        $"set => {instancePropertyName} = value != null ? Mapster.TypeAdapter.Adapt<{property.Type}>(value) : null; " :
+                        $"set => {instancePropertyName} = Mapster.TypeAdapter.Adapt<{property.Type}>(value); ";
+                }
             }
             else
             {
-                get = getIsPublic ? $"get => {instancePropertyName}; " : string.Empty;
-                set = setIsPublic ? $"set => {instancePropertyName} = value; " : string.Empty;
+                if (getIsPublic)
+                {
+                    get = $"get => {instancePropertyName}; ";
+                }
+
+                if (setIsPublic)
+                {
+                    set = $"set => {instancePropertyName} = value; ";
+                }
             }
 
             foreach (var attribute in property.GetAttributesAsList())
