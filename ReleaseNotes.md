@@ -1,3 +1,6 @@
+# 0.3.0 (24 September 2024)
+- [#76](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/76) - Define the Mapster configuration in a static class [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.2.0 (23 September 2024)
 - [#75](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/75) - Add null check for nullable [bug] contributed by [StefH](https://github.com/StefH)
 
