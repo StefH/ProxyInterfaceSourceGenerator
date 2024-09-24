@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
 {
     public partial class LocalActorRefProviderProxy : global::ProxyInterfaceSourceGeneratorTests.Source.AkkaActor.ILocalActorRefProvider
     {
+
+
         public global::Akka.Actor.LocalActorRefProvider _Instance { get; }
         
         public global::Akka.Actor.IActorRef DeadLetters { get => _Instance.DeadLetters; }
@@ -130,8 +132,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.AkkaActor
         {
             _Instance = instance;
             
-
-
         }
     }
 }

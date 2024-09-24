@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Namespace2
 {
     public partial class ClassInNamespaceProxy : global::ProxyInterfaceSourceGeneratorTests.Namespace2.IClassInNamespace
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Namespace2.ClassInNamespace _Instance { get; }
         
 
@@ -21,8 +23,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Namespace2
         {
             _Instance = instance;
             
-
-
         }
     }
 }

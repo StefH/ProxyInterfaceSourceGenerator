@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class MixedVisibilityProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IMixedVisibility
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.MixedVisibility _Instance { get; }
         
         public string Foo { get => _Instance.Foo; }
@@ -23,8 +25,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }

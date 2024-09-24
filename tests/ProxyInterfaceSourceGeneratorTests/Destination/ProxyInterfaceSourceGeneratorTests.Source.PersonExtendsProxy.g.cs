@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class PersonExtendsProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
         
         public string StaticString { get => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString; set => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString = value; }
@@ -115,8 +117,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }
