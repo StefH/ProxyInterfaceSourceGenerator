@@ -102,6 +102,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.Foo, global::ProxyInterfaceSourceGeneratorTests.Source.IFoo>.NewConfig().ConstructUsing(instance2058774601 => new global::ProxyInterfaceSourceGeneratorTests.Source.FooProxy(instance2058774601));
             Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo, global::ProxyInterfaceSourceGeneratorTests.Source.Foo>.NewConfig().MapWith(proxy1662609081 => ((global::ProxyInterfaceSourceGeneratorTests.Source.FooProxy) proxy1662609081)._Instance);
+
         }
 
 

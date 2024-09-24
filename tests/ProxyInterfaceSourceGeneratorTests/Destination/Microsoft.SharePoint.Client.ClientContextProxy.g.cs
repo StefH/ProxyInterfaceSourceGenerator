@@ -30,6 +30,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
             Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.Web, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb>.NewConfig().ConstructUsing(instance290679610 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.WebProxy(instance290679610));
             Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb, global::Microsoft.SharePoint.Client.Web>.NewConfig().MapWith(proxy_1534869484 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.WebProxy) proxy_1534869484)._Instance);
+
         }
 
 
