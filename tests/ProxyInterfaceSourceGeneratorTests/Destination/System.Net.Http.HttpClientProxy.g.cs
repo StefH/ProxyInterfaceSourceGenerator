@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class HttpClientProxy : global::ProxyInterfaceSourceGeneratorTests.Source.HttpMessageInvokerProxy, global::ProxyInterfaceSourceGeneratorTests.Source.IHttpClient
     {
+
+
         public new global::System.Net.Http.HttpClient _Instance { get; }
         public global::System.Net.Http.HttpMessageInvoker _InstanceHttpMessageInvoker { get; }
         public global::System.Net.IWebProxy DefaultProxy { get => System.Net.Http.HttpClient.DefaultProxy; set => System.Net.Http.HttpClient.DefaultProxy = value; }
@@ -394,8 +396,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             _InstanceHttpMessageInvoker = instance;
-
-
         }
     }
 }

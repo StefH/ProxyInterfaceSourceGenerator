@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class HttpMessageInvokerProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker
     {
+
+
         public global::System.Net.Http.HttpMessageInvoker _Instance { get; }
         
         [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -43,8 +45,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }

@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class OperatorTestProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IOperatorTest
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.OperatorTest _Instance { get; }
         
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
@@ -45,8 +47,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }

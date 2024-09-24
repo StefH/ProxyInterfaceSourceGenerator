@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class HumanProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IHuman
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.Human _Instance { get; }
         
         public bool IsAlive { get => _Instance.IsAlive; set => _Instance.IsAlive = value; }
@@ -30,8 +32,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }

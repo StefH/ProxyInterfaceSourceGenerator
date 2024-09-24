@@ -84,7 +84,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var configurationForMapster = string.Empty;
         if (Context.ReplacedTypes.Count > 0)
         {
-            configurationForMapster = GenerateMapperConfigurationForMapster();
+            configurationForMapster = GenerateMapperConfigurationForMapster(className);
         }
 
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(pd.Namespace);
@@ -106,18 +106,18 @@ using System;
 {namespaceStart}
     {accessibility} {@abstract}partial class {className} : {extends}{interfaceName}
     {{
+{configurationForMapster}
+
         public {@new}{targetClassSymbol} _Instance {{ get; }}
         {instanceBaseDefinition}
 {events +
-properties +
-methods +
-operators}
+ properties +
+ methods +
+ operators}
         public {constructorName}({targetClassSymbol} instance){@base}
         {{
             _Instance = instance;
             {instanceBaseSetter}
-
-{configurationForMapster}
         }}
     }}
 {namespaceEnd}

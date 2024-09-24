@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class GenericProxy<T> : global::ProxyInterfaceSourceGeneratorTests.Source.IGeneric<T>
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.Generic<T> _Instance { get; }
         
         public T Test(T value)
@@ -28,8 +30,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }

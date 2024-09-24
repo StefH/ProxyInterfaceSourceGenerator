@@ -14,6 +14,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class PersonProxy : global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy, global::ProxyInterfaceSourceGeneratorTests.Source.IPerson
     {
+        static PersonProxy()
+        {
+            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.Human, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>.NewConfig().ConstructUsing(instance2145588841 => new global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance2145588841));
+            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman, global::ProxyInterfaceSourceGeneratorTests.Source.Human>.NewConfig().MapWith(proxy1567394325 => ((global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1567394325)._Instance);
+        }
+
+
         public new global::ProxyInterfaceSourceGeneratorTests.Source.Person _Instance { get; }
         public global::ProxyInterfaceSourceGeneratorTests.Source.Human _InstanceHuman { get; }
         public global::ProxyInterfaceSourceGeneratorTests.Source.IHuman? Human { get => _Instance.Human != null ? Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman?>(_Instance.Human) : null; set => _Instance.Human = value != null ? Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Human?>(value) : null; }
@@ -185,11 +192,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             _InstanceHuman = instance;
-
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.Human, global::ProxyInterfaceSourceGeneratorTests.Source.IHuman>.NewConfig().ConstructUsing(instance2145588841 => new global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy(instance2145588841));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman, global::ProxyInterfaceSourceGeneratorTests.Source.Human>.NewConfig().MapWith(proxy1567394325 => ((global::ProxyInterfaceSourceGeneratorTests.Source.HumanProxy) proxy1567394325)._Instance);
-
-
         }
     }
 }

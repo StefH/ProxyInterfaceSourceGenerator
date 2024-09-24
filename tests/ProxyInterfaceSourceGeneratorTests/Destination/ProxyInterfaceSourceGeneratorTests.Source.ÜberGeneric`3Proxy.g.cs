@@ -14,6 +14,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class ÜberGenericProxy<T1, TKey, KAi> : global::ProxyInterfaceSourceGeneratorTests.Source.IÜberGeneric<T1, TKey, KAi>
     {
+
+
         public global::ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric<T1, TKey, KAi> _Instance { get; }
         
         public T1 Test(T1 value)
@@ -42,8 +44,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
             _Instance = instance;
             
-
-
         }
     }
 }
