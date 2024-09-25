@@ -27,6 +27,7 @@ namespace ProxyInterfaceGenerator
         public Type Type {{ get; }}
         public bool ProxyBaseClasses {{ get; }}
         public ProxyClassAccessibility Accessibility {{ get; }}
+        public string[]? MembersToIgnore {{ get; }}
 
         public ProxyAttribute(Type type) : this(type, false, ProxyClassAccessibility.Public)
         {{
@@ -40,11 +41,20 @@ namespace ProxyInterfaceGenerator
         {{
         }}
 
-        public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility)
+        public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(type, proxyBaseClasses, accessibility, null)
+        {{
+        }}
+
+        public ProxyAttribute(Type type, string[]? membersToIgnore) : this(type, false, ProxyClassAccessibility.Public, null)
+        {{
+        }}
+
+        public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility, string[]? membersToIgnore)
         {{
             Type = type;
             ProxyBaseClasses = proxyBaseClasses;
             Accessibility = accessibility;
+            MembersToIgnore = membersToIgnore;
         }}
     }}
 

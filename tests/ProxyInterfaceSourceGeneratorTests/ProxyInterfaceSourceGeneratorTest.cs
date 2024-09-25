@@ -486,7 +486,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var personProxy = new PersonProxy(new Person());
 
         int c = 100;
-        personProxy.In_Out_Ref1(1, out var b, ref c);
+        personProxy.In_Out_Ref1(1, out _, ref c);
 
         c.Should().Be(101);
     }
@@ -623,7 +623,46 @@ public class ProxyInterfaceSourceGeneratorTest
             if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
             proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
         }
+    }
 
+    [Fact]
+    public Task GenerateFiles_ForClassWithIgnores()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.IFoo2.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.Foo2Proxy.g.cs"
+        };
 
+        var path = "./Source/IFoo2.cs";
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = new[]
+                {
+                    "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)", "false", "ProxyClassAccessibility.Public",
+                    "new []{\"Weird\",\"NotHere\"}"
+                }
+            }
+        };
+
+        // Act
+        var result = _sut.Execute(new[]
+        {
+            sourceFile
+        });
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        // Verify
+        var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
+        return Verify(results);
     }
 }

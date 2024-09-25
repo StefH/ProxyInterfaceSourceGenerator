@@ -9,7 +9,7 @@ internal static class MemberHelper
 
     public static IReadOnlyList<IPropertySymbol> GetPublicProperties(
         ClassSymbol classSymbol,
-        bool proxyBaseClasses,
+        ProxyData proxyData,
         params Func<IPropertySymbol, bool>[] filters)
     {
         var allFilters = new List<Func<IPropertySymbol, bool>>(filters)
@@ -17,12 +17,12 @@ internal static class MemberHelper
             p => p.Kind == SymbolKind.Property
         };
 
-        return GetPublicMembers(classSymbol, proxyBaseClasses, allFilters.ToArray()).ToArray();
+        return GetPublicMembers(classSymbol, proxyData, allFilters.ToArray()).ToArray();
     }
 
     public static IReadOnlyList<IMethodSymbol> GetPublicMethods(
         ClassSymbol classSymbol,
-        bool proxyBaseClasses,
+        ProxyData proxyData,
         Func<IMethodSymbol, bool>? filter = null)
     {
         filter ??= _ => true;
@@ -30,7 +30,7 @@ internal static class MemberHelper
         return
             GetPublicMembers(
                 classSymbol,
-                proxyBaseClasses,
+                proxyData,
                 m => m.Kind == SymbolKind.Method,
                 m => m.MethodKind == MethodKind.Ordinary,
                 m => !ExcludedMethods.Contains(m.Name),
@@ -40,7 +40,7 @@ internal static class MemberHelper
 
     public static IReadOnlyList<IMethodSymbol> GetPublicStaticOperators(
         ClassSymbol classSymbol,
-        bool proxyBaseClasses,
+        ProxyData proxyData,
         Func<IMethodSymbol, bool>? filter = null)
     {
         filter ??= _ => true;
@@ -48,7 +48,7 @@ internal static class MemberHelper
         return
             GetPublicMembers(
                     classSymbol,
-                    proxyBaseClasses,
+                    proxyData,
                     m => m.Kind == SymbolKind.Method,
                     m => m.MethodKind == MethodKind.Conversion,
                     m => !ExcludedMethods.Contains(m.Name),
@@ -58,7 +58,7 @@ internal static class MemberHelper
 
     public static IReadOnlyList<IGrouping<ISymbol, IMethodSymbol>> GetPublicEvents(
         ClassSymbol classSymbol,
-        bool proxyBaseClasses,
+        ProxyData proxyData,
         Func<IMethodSymbol, bool>? filter = null)
     {
         filter ??= _ => true;
@@ -67,7 +67,7 @@ internal static class MemberHelper
 #pragma warning disable RS1024 // Compare symbols correctly
         return GetPublicMembers(
                 classSymbol,
-                proxyBaseClasses,
+                proxyData,
                 m => m.MethodKind is MethodKind.EventAdd or MethodKind.EventRemove/* || m.MethodKind == MethodKind.EventRaise*/,
                 filter)
             .GroupBy(e => e.AssociatedSymbol)
@@ -79,14 +79,16 @@ internal static class MemberHelper
     // TODO : do we need also to check for "SanitizedName()" here?
     private static IReadOnlyList<T> GetPublicMembers<T>(
         ClassSymbol classSymbol,
-        bool proxyBaseClasses,
+        ProxyData proxyData,
         params Func<T, bool>[] filters
     ) where T : ISymbol
     {
         var membersQuery = classSymbol.Symbol.GetMembers().OfType<T>()
             .Where(m => m.DeclaredAccessibility == Accessibility.Public);
 
-        foreach (var filter in filters)
+        var allFilters = filters.ToList();
+        allFilters.Add(x => !proxyData.MembersToIgnore.Contains(x.Name));
+        foreach (var filter in allFilters)
         {
             membersQuery = membersQuery.Where(filter);
         }
@@ -94,7 +96,7 @@ internal static class MemberHelper
         var ownMembers = membersQuery.ToList();
         var ownMemberNames = ownMembers.Select(x => x.Name);
 
-        if (!proxyBaseClasses)
+        if (!proxyData.ProxyBaseClasses)
         {
             return ownMembers;
         }
