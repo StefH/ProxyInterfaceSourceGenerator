@@ -27,10 +27,10 @@ public class Program
 
         var t = new TestProxy(new Test());
 
-        IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
-        pT.TVal = 1;
-        Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
-        Console.WriteLine(new string('-', 80));
+        //IPersonT<int> pT = new PersonTProxy<int>(new PersonT<int>());
+        //pT.TVal = 1;
+        //Console.WriteLine(JsonSerializer.Serialize(pT, JsonSerializerOptions));
+        //Console.WriteLine(new string('-', 80));
 
         //IPersonTT<int, Program> pTT = new PersonTTProxy<int, Program>(new PersonTT<int, Program>());
         //pTT.TVal1 = 42;
@@ -40,6 +40,7 @@ public class Program
 
         var ap = new AddressProxy(new Address { HouseNumber = 42 });
         ap.HouseNumber = -1;
+        ap.Weird2();
         ap.MyEvent += delegate (object x, EventArgs a)
         {
         };
