@@ -437,7 +437,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute([ sourceFileHuman, sourceFilePerson ]);
+        var result = _sut.Execute([sourceFileHuman, sourceFilePerson]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -646,16 +646,13 @@ public class ProxyInterfaceSourceGeneratorTest
                 ArgumentList = new[]
                 {
                     "typeof(ProxyInterfaceSourceGeneratorTests.Source.Foo2)", "false", "ProxyClassAccessibility.Public",
-                    "new []{\"Weird\",\"NotHere\"}"
+                    "new [] { \"Weird\", \"NotHere\" }"
                 }
             }
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute([sourceFile]);
 
         // Assert
         result.Valid.Should().BeTrue();
