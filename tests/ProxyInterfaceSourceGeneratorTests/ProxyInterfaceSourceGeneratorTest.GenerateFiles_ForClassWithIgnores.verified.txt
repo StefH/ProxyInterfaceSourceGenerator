@@ -1,4 +1,4 @@
-﻿[
+[
   {
     HintName: ProxyInterfaceGenerator.Extra.g.cs,
     Source:
@@ -32,6 +32,10 @@ namespace ProxyInterfaceGenerator
         }
 
         public ProxyAttribute(Type type, ProxyClassAccessibility accessibility) : this(type, false, accessibility)
+        {
+        }
+
+        public ProxyAttribute(Type type, ProxyClassAccessibility accessibility, string[]? membersToIgnore) : this(type, false, accessibility, membersToIgnore)
         {
         }
 

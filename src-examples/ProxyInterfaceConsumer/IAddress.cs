@@ -2,7 +2,7 @@ using ProxyInterfaceGenerator;
 
 namespace ProxyInterfaceConsumer
 {
-    [Proxy(typeof(Address), false, ProxyClassAccessibility.Public, new[] { "Weird" })]
+    [Proxy(typeof(Address), ["Weird"])]
     public partial interface IAddress
     {
     }

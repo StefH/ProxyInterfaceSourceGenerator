@@ -35,6 +35,10 @@ namespace ProxyInterfaceGenerator
         {
         }
 
+        public ProxyAttribute(Type type, ProxyClassAccessibility accessibility, string[]? membersToIgnore) : this(type, false, accessibility, membersToIgnore)
+        {
+        }
+
         public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(type, proxyBaseClasses, accessibility, null)
         {
         }
