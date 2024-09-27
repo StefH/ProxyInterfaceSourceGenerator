@@ -83,12 +83,16 @@ internal static class MemberHelper
         params Func<T, bool>[] filters
     ) where T : ISymbol
     {
-        var membersQuery = classSymbol.Symbol.GetMembers().OfType<T>()
+        var membersQuery = classSymbol.Symbol.GetMembers()
+            .OfType<T>()
             .Where(m => m.DeclaredAccessibility == Accessibility.Public);
 
-        var allFilters = filters.ToList();
-        allFilters.Add(x => !proxyData.MembersToIgnore.Contains(x.Name));
-        foreach (var filter in allFilters)
+        if (proxyData.MembersToIgnore.Length > 0)
+        {
+            membersQuery = membersQuery.Where(symbol => !proxyData.MembersToIgnore.Any(regex => regex.IsMatch(symbol.Name)));
+        }
+
+        foreach (var filter in filters)
         {
             membersQuery = membersQuery.Where(filter);
         }

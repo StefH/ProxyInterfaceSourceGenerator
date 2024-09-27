@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using ProxyInterfaceSourceGenerator.Types;
 
 namespace ProxyInterfaceSourceGenerator.Models;
@@ -22,7 +23,7 @@ internal class ProxyData
 
     public bool ProxyBaseClasses { get; }
 
-    public string[] MembersToIgnore { get; }
+    public Regex[] MembersToIgnore { get; }
 
     public ProxyClassAccessibility Accessibility { get; }
 
@@ -39,16 +40,27 @@ internal class ProxyData
         ProxyClassAccessibility accessibility,
         string[] membersToIgnore)
     {
-        Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
-        NamespaceDot = namespaceDot ?? throw new ArgumentNullException(nameof(namespaceDot));
-        ShortInterfaceName = shortInterfaceName ?? throw new ArgumentNullException(nameof(shortInterfaceName));
-        FullInterfaceName = fullInterfaceName ?? throw new ArgumentNullException(nameof(fullInterfaceName));
-        FullQualifiedTypeName = fullQualifiedTypeName ?? throw new ArgumentNullException(nameof(fullQualifiedTypeName));
-        ShortMetadataName = shortMetadataTypeName ?? throw new ArgumentNullException(nameof(shortMetadataTypeName));
-        FullMetadataTypeName = fullMetadataTypeName ?? throw new ArgumentNullException(nameof(fullMetadataTypeName));
-        Usings = usings ?? throw new ArgumentNullException(nameof(usings));
+        Namespace = @namespace;
+        NamespaceDot = namespaceDot;
+        ShortInterfaceName = shortInterfaceName;
+        FullInterfaceName = fullInterfaceName;
+        FullQualifiedTypeName = fullQualifiedTypeName;
+        ShortMetadataName = shortMetadataTypeName;
+        FullMetadataTypeName = fullMetadataTypeName;
+        Usings = usings;
         ProxyBaseClasses = proxyBaseClasses;
         Accessibility = accessibility;
-        MembersToIgnore = membersToIgnore ?? throw new ArgumentNullException(nameof(membersToIgnore));
+        MembersToIgnore = CreateRegexArray(membersToIgnore);
+    }
+
+    private static Regex[] CreateRegexArray(IEnumerable<string> membersToIgnore)
+    {
+        return membersToIgnore
+            .Select(member =>
+            {
+                return new Regex("^" + Regex.Escape(member).Replace(@"\*", ".*").Replace(@"\?", ".") + "$",
+                    RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+            })
+            .ToArray();
     }
 }
