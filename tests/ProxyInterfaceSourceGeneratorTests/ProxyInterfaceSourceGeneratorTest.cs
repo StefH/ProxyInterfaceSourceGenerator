@@ -504,7 +504,7 @@ public class ProxyInterfaceSourceGeneratorTest
             (IF: "", INS: "ProxyInterfaceDemo", I: "IGroup", CF: "", CNS: "ProxyInterfaceDemo", C: "Group"),
             (IF: "", INS: "ProxyInterfaceDemo", I: "IDisplayable", CF: "", CNS: "ProxyInterfaceDemo", C: "Displayable"),
             (IF: "", INS: "ProxyInterfaceDemo", I: "IDestroyable", CF: "", CNS: "ProxyInterfaceDemo", C: "Destroyable"),
-            (IF: "", INS: "ProxyInterfaceDemo", I: "IGroupDepth", CF: "Depth/", CNS: "ProxyInterfaceDemo.Depth", C: "Group")
+            (IF: "Depth/", INS: "ProxyInterfaceDemo.Depth", I: "IGroupDepth", CF: "Depth/", CNS: "ProxyInterfaceDemo.Depth", C: "Group")
         };
 
         foreach (var x in list)

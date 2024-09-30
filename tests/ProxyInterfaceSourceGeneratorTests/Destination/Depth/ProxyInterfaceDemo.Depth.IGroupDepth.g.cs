@@ -12,18 +12,11 @@ using System;
 
 namespace ProxyInterfaceDemo.Depth
 {
-    public partial class GroupProxy : global::ProxyInterfaceDemo.DestroyableProxy, global::ProxyInterfaceDemo.Depth.IGroupDepth
+    public partial interface IGroupDepth
     {
+        new global::ProxyInterfaceDemo.Depth.Group _Instance { get; }
 
 
-        public new global::ProxyInterfaceDemo.Depth.Group _Instance { get; }
-        public global::ProxyInterfaceDemo.Destroyable _InstanceDestroyable { get; }
-
-        public GroupProxy(global::ProxyInterfaceDemo.Depth.Group instance) : base(instance)
-        {
-            _Instance = instance;
-            _InstanceDestroyable = instance;
-        }
     }
 }
 #nullable restore
