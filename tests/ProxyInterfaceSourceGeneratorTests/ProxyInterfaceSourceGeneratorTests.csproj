@@ -63,4 +63,8 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Destination\Depth\" />
+    </ItemGroup>
+
 </Project>
