@@ -8,16 +8,8 @@ It supports:
 - events
 - implicit and explicit operators
 
-## Install
+## NuGet
 [![NuGet Badge](https://img.shields.io/nuget/v/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
-
-You can install from NuGet using the following command in the package manager window:
-
-`Install-Package ProxyInterfaceGenerator`
-
-Or via the Visual Studio NuGet package manager or if you use the `dotnet` command:
-
-`dotnet add package ProxyInterfaceGenerator`
 
 ## Usage
 ### Given: an external existing class which does not implement an interface
@@ -108,6 +100,28 @@ public class PersonProxy : IPerson
 IPerson p = new PersonProxy(new Person());
 p.Name = "test";
 p.HelloWorld("stef");
+```
+
+### Extra functionality
+
+#### Ignore members
+You can ignore members by adding a property to the membersToIgnore string array.
+
+Example when you want to ignore the `Postcode` property:
+
+``` c#
+[Proxy(typeof(Address), ["Postcode"])]
+public partial interface IAddress
+{
+}
+```
+
+Note that's also possible to use wildcard matching to ignore multiple members at once.
+``` c#
+[Proxy(typeof(Address), ["Post*"])]
+public partial interface IAddress
+{
+}
 ```
 
 # References

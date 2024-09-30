@@ -18,7 +18,7 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         var syntaxNode = context.Node;
         var semanticModel = context.SemanticModel;
 
-        if (syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax && TryGet(interfaceDeclarationSyntax, out var data, semanticModel!))
+        if (syntaxNode is InterfaceDeclarationSyntax interfaceDeclarationSyntax && TryGet(interfaceDeclarationSyntax, semanticModel, out var data))
         {
             CandidateInterfaces.Add(interfaceDeclarationSyntax, data);
         }
@@ -28,7 +28,8 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
     {
         return !string.IsNullOrEmpty(ns) ? $"{ns}.{classDeclarationSyntax.Identifier}" : classDeclarationSyntax.Identifier.ToString();
     }
-    private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, [NotNullWhen(true)] out ProxyData? data, SemanticModel semanticModel)
+
+    private static bool TryGet(InterfaceDeclarationSyntax interfaceDeclarationSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out ProxyData? data)
     {
         data = null;
 
@@ -77,7 +78,8 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             shortMetadataTypeName: metadataName.Split('.').Last(),
             usings: usings,
             proxyBaseClasses: fluentBuilderAttributeArguments.ProxyBaseClasses,
-            accessibility: fluentBuilderAttributeArguments.Accessibility
+            accessibility: fluentBuilderAttributeArguments.Accessibility,
+            membersToIgnore: fluentBuilderAttributeArguments.MembersToIgnore
         );
 
         return true;

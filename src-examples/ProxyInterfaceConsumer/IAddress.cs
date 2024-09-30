@@ -1,6 +1,8 @@
+using ProxyInterfaceGenerator;
+
 namespace ProxyInterfaceConsumer
 {
-    [ProxyInterfaceGenerator.Proxy(typeof(Address))]
+    [Proxy(typeof(Address), ["Weird"])]
     public partial interface IAddress
     {
     }
