@@ -501,15 +501,15 @@ public class ProxyInterfaceSourceGeneratorTest
 
         var list = new[]
         {
-            (F: "", NS: "ProxyInterfaceDemo", C: "Group"),
-            (F: "", NS: "ProxyInterfaceDemo", C: "Displayable"),
-            (F: "Depth/", NS: "ProxyInterfaceDemo.Depth", C: "Group"),
-            (F: "Depth/", NS: "ProxyInterfaceDemo.Depth", C: "Destroyable")
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IGroup", CF: "", CNS: "ProxyInterfaceDemo", C: "Group"),
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IDisplayable", CF: "", CNS: "ProxyInterfaceDemo", C: "Displayable"),
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IDestroyable", CF: "", CNS: "ProxyInterfaceDemo", C: "Destroyable"),
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IGroupDepth", CF: "Depth", CNS: "ProxyInterfaceDemo.Depth", C: "Group")
         };
 
         foreach (var x in list)
         {
-            var pathInterface = $"./Source/{x.F}I{x.C}.cs";
+            var pathInterface = $"./Source/{x.IF}{x.I}.cs";
             var sourceFile = new SourceFile
             {
                 Path = pathInterface,
@@ -517,7 +517,7 @@ public class ProxyInterfaceSourceGeneratorTest
                 AttributeToAddToInterface = new ExtraAttribute
                 {
                     Name = "ProxyInterfaceGenerator.Proxy",
-                    ArgumentList = $"typeof({x.NS}.{x.C})"
+                    ArgumentList = $"typeof({x.CNS}.{x.C})"
                 }
             };
             sourceFiles.Add(sourceFile);
@@ -539,13 +539,14 @@ public class ProxyInterfaceSourceGeneratorTest
         // Interfaces
         foreach (var x in list)
         {
-            var filenameInterface = $"{x.NS}.I{x.C}.g.cs";
+            var filenameInterface = $"{x.INS}.{x.I}.g.cs";
             var syntaxTreeInterface = result.Files[fileIndex].SyntaxTree;
             syntaxTreeInterface.FilePath.Should().EndWith(filenameInterface);
 
             var codeInterface = syntaxTreeInterface.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{x.F}{filenameInterface}", codeInterface);
-            codeInterface.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{x.F}{filenameInterface}"));
+            var path = $"../../../Destination/{x.IF}{filenameInterface}";
+            if (Write) File.WriteAllText(path, codeInterface);
+            codeInterface.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
 
             fileIndex += 1;
         }
@@ -553,13 +554,14 @@ public class ProxyInterfaceSourceGeneratorTest
         // Proxies
         foreach (var x in list)
         {
-            var filenameProxy = $"{x.NS}.{x.C}Proxy.g.cs";
+            var filenameProxy = $"{x.CNS}.{x.C}Proxy.g.cs";
             var syntaxTreeProxy = result.Files[fileIndex].SyntaxTree;
             syntaxTreeProxy.FilePath.Should().EndWith(filenameProxy);
 
             var codeProxy = syntaxTreeProxy.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{x.F}{filenameProxy}", codeProxy);
-            codeProxy.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{x.F}{filenameProxy}"));
+            var path = $"../../../Destination/{x.CF}{filenameProxy}";
+            if (Write) File.WriteAllText(path, codeProxy);
+            codeProxy.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
 
             fileIndex += 1;
         }

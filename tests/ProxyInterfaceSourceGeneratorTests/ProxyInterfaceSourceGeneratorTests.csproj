@@ -57,4 +57,10 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Source\IGroup.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
+    </ItemGroup>
+
 </Project>

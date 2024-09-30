@@ -1,5 +1,5 @@
 // ReSharper disable once CheckNamespace
-namespace ProxyInterfaceDemo.Depth
+namespace ProxyInterfaceDemo
 {
     public partial interface IDestroyable
     {

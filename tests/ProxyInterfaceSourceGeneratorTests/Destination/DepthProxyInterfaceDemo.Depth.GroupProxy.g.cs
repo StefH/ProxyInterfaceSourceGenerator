@@ -10,19 +10,19 @@
 #nullable enable
 using System;
 
-namespace ProxyInterfaceDemo.Depth
+namespace ProxyInterfaceDemo
 {
-    public partial class DestroyableProxy : global::ProxyInterfaceDemo.Depth.IDestroyable
+    public partial class GroupProxy : global::ProxyInterfaceDemo.DestroyableProxy, global::ProxyInterfaceDemo.IGroupDepth
     {
 
 
-        public global::ProxyInterfaceDemo.Depth.Destroyable _Instance { get; }
-        
+        public new global::ProxyInterfaceDemo.Depth.Group _Instance { get; }
+        public global::ProxyInterfaceDemo.Destroyable _InstanceDestroyable { get; }
 
-        public DestroyableProxy(global::ProxyInterfaceDemo.Depth.Destroyable instance)
+        public GroupProxy(global::ProxyInterfaceDemo.Depth.Group instance) : base(instance)
         {
             _Instance = instance;
-            
+            _InstanceDestroyable = instance;
         }
     }
 }

@@ -10,11 +10,11 @@
 #nullable enable
 using System;
 
-namespace ProxyInterfaceDemo.Depth
+namespace ProxyInterfaceDemo
 {
     public partial interface IDestroyable
     {
-        global::ProxyInterfaceDemo.Depth.Destroyable _Instance { get; }
+        global::ProxyInterfaceDemo.Destroyable _Instance { get; }
 
 
     }

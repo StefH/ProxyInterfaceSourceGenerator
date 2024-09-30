@@ -10,9 +10,9 @@
 #nullable enable
 using System;
 
-namespace ProxyInterfaceDemo.Depth
+namespace ProxyInterfaceDemo
 {
-    public partial interface IGroup
+    public partial interface IGroupDepth
     {
         new global::ProxyInterfaceDemo.Depth.Group _Instance { get; }
 
