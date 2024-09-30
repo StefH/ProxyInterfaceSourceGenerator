@@ -528,7 +528,7 @@ public class ProxyInterfaceSourceGeneratorTest
 
         // Assert
         result.Valid.Should().BeTrue();
-        result.Files.Should().HaveCount(3 + list.Length);
+        result.Files.Should().HaveCount(1 + list.Length * 2);
 
         // Assert attribute
         var attribute = result.Files[0].SyntaxTree;
