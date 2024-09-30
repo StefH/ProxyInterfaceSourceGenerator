@@ -1,3 +1,7 @@
+# 0.4.0 (30 September 2024)
+- [#77](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/77) - Add functionality to ignore members while generating interface and proxy [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#74](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/74) - Is there a way we can lazy load interface mappings? [enhancement]
+
 # 0.3.0 (24 September 2024)
 - [#76](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/76) - Define the Mapster configuration in a static class [enhancement] contributed by [StefH](https://github.com/StefH)
 
