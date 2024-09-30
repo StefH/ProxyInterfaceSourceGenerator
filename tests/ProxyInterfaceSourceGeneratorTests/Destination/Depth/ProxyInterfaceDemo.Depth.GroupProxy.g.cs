@@ -18,8 +18,6 @@ namespace ProxyInterfaceDemo
 
         public global::ProxyInterfaceDemo.Destroyable _InstanceDestroyable { get; } //
 
-        Displayable IDisplayable._Instance => throw new NotImplementedException();
-
         public GroupProxy2(global::ProxyInterfaceDemo.Depth.Group instance) : base(instance) //
         {
             _Instance = instance;
