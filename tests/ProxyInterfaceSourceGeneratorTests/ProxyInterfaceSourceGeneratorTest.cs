@@ -492,6 +492,82 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Fact]
+    public void GenerateFiles_ForTwoClassesSameName_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
+
+        var sourceFiles = new List<SourceFile>();
+
+        var list = new[]
+        {
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IGroup", CF: "", CNS: "ProxyInterfaceDemo", C: "Group"),
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IDisplayable", CF: "", CNS: "ProxyInterfaceDemo", C: "Displayable"),
+            (IF: "", INS: "ProxyInterfaceDemo", I: "IDestroyable", CF: "", CNS: "ProxyInterfaceDemo", C: "Destroyable"),
+            (IF: "Depth/", INS: "ProxyInterfaceDemo.Depth", I: "IGroupDepth", CF: "Depth/", CNS: "ProxyInterfaceDemo.Depth", C: "Group")
+        };
+
+        foreach (var x in list)
+        {
+            var pathInterface = $"./Source/{x.IF}{x.I}.cs";
+            var sourceFile = new SourceFile
+            {
+                Path = pathInterface,
+                Text = File.ReadAllText(pathInterface),
+                AttributeToAddToInterface = new ExtraAttribute
+                {
+                    Name = "ProxyInterfaceGenerator.Proxy",
+                    ArgumentList = $"typeof({x.CNS}.{x.C})"
+                }
+            };
+            sourceFiles.Add(sourceFile);
+        }
+
+        // Act
+        var result = _sut.Execute(sourceFiles);
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(1 + list.Length * 2);
+
+        // Assert attribute
+        var attribute = result.Files[0].SyntaxTree;
+        attribute.FilePath.Should().EndWith(attributeFilename);
+
+        var fileIndex = 1;
+
+        // Interfaces
+        foreach (var x in list)
+        {
+            var filenameInterface = $"{x.INS}.{x.I}.g.cs";
+            var syntaxTreeInterface = result.Files[fileIndex].SyntaxTree;
+            syntaxTreeInterface.FilePath.Should().EndWith(filenameInterface);
+
+            var codeInterface = syntaxTreeInterface.ToString();
+            var path = $"../../../Destination/{x.IF}{filenameInterface}";
+            if (Write) File.WriteAllText(path, codeInterface);
+            codeInterface.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
+
+            fileIndex += 1;
+        }
+
+        // Proxies
+        foreach (var x in list)
+        {
+            var filenameProxy = $"{x.CNS}.{x.C}Proxy.g.cs";
+            var syntaxTreeProxy = result.Files[fileIndex].SyntaxTree;
+            syntaxTreeProxy.FilePath.Should().EndWith(filenameProxy);
+
+            var codeProxy = syntaxTreeProxy.ToString();
+            var path = $"../../../Destination/{x.CF}{filenameProxy}";
+            if (Write) File.WriteAllText(path, codeProxy);
+            codeProxy.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
+
+            fileIndex += 1;
+        }
+    }
+
+    [Fact]
     public void GenerateFiles_HttpClient()
     {
         // Arrange

@@ -49,18 +49,22 @@
         <Compile Update="Source\AkkaActor\*.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
         <Compile Update="Source\Disposable\*.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="Source\Generic.cs">
+        <Compile Update="Source\Depth\*.cs">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Compile>
-        <Compile Update="Source\IGeneric.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Source\IGroup.cs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Destination\Depth\" />
     </ItemGroup>
 
 </Project>
