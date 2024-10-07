@@ -10,9 +10,8 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
-    private static readonly Regex ProxyAttributesRegex = new(@"^ProxyInterfaceGenerator\.Proxy|Proxy(.*)?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
-    // private static readonly Regex ProxyAttributesRegex = new(@"^ProxyInterfaceGenerator\.Proxy|Proxy(?:<([^>]+)>)?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
-    
+    private static readonly Regex ProxyAttributesRegex = new(@"^ProxyInterfaceGenerator\.Proxy|Proxy(?:<([^>]+)>)?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+
     public static bool IsMatch(AttributeSyntax attributeSyntax)
     {
         return ProxyAttributesRegex.IsMatch(attributeSyntax.Name.ToString());
