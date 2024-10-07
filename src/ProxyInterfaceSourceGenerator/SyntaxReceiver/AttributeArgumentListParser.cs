@@ -1,15 +1,22 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Types;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
+    private static readonly Regex ProxyAttributesRegex = new("^(ProxyInterfaceGenerator.Proxy|Proxy)(?:<([^>]+)>)?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+
+    public static bool IsMatch(AttributeSyntax attributeSyntax)
+    {
+        return ProxyAttributesRegex.IsMatch(attributeSyntax.Name.ToString());
+    }
+
     public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
     {
         if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
