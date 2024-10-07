@@ -58,11 +58,11 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         {
             foreach (var @using in cc.Usings)
             {
-                usings.Add(@using.Name.ToString());
+                usings.Add(@using.Name!.ToString());
             }
         }
 
-        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
+        var fluentBuilderAttributeArguments = AttributeArgumentListParser.Parse(attributeList.Attributes.FirstOrDefault(), semanticModel);
 
         var metadataName = fluentBuilderAttributeArguments.MetadataName;
         var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";
