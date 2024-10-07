@@ -132,7 +132,7 @@ internal static class AttributeArgumentListParser
         var typeInfo = semanticModel.GetTypeInfo(typeSyntax);
         var typeSymbol = typeInfo.Type!;
 
-        info = new(typeSymbol.GetFullMetadataName(), typeSymbol.ToFullyQualifiedDisplayString(), isGeneric);
+        info = new(typeSymbol.ToFullyQualifiedDisplayString(), typeSymbol.GetFullMetadataName(), isGeneric);
 
         return true;
     }
