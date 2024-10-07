@@ -4,7 +4,7 @@
         <Version>0.5.0-preview-01</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
         <ProjectGuid>{12344228-91F4-4502-9595-39584E5ABB34}</ProjectGuid>
-        <LangVersion>10</LangVersion>
+        <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <Authors>Stef Heyenrath</Authors>
         <Description></Description>

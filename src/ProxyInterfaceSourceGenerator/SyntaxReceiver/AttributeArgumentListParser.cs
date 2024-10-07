@@ -44,7 +44,7 @@ internal static class AttributeArgumentListParser
             throw new ArgumentException("The first argument from the ProxyAttribute should be a Type.");
         }
 
-        var array = attributeSyntax.ArgumentList?.Arguments.ToArray() ?? Array.Empty<AttributeArgumentSyntax>();
+        var array = attributeSyntax.ArgumentList?.Arguments.ToArray() ?? [];
 
         foreach (var argument in array.Skip(skip))
         {
@@ -103,7 +103,7 @@ internal static class AttributeArgumentListParser
     }
 
     private static bool TryParseAsType(
-        CSharpSyntaxNode? expressionSyntax,
+        CSharpSyntaxNode? syntaxNode,
         SemanticModel semanticModel,
         [NotNullWhen(true)] out (string FullyQualifiedDisplayString, string MetadataName, bool IsGeneric)? info
     )
@@ -112,7 +112,7 @@ internal static class AttributeArgumentListParser
 
         bool isGeneric;
         TypeSyntax typeSyntax;
-        switch (expressionSyntax)
+        switch (syntaxNode)
         {
             case TypeOfExpressionSyntax typeOfExpressionSyntax:
                 typeSyntax = typeOfExpressionSyntax.Type;
