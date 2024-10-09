@@ -412,6 +412,17 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
         var proxyClassPersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
 
+        var pathHuman = "./Source/IHuman.cs";
+        var sourceFileHuman = new SourceFile
+        {
+            Path = pathHuman,
+            Text = File.ReadAllText(pathHuman),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy<ProxyInterfaceSourceGeneratorTests.Source.Human>"
+            }
+        };
+
         var pathPerson = "./Source/IPerson.cs";
         var sourceFilePerson = new SourceFile
         {
@@ -421,18 +432,6 @@ public class ProxyInterfaceSourceGeneratorTest
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
                 ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Person)"
-            }
-        };
-
-        var pathHuman = "./Source/IHuman.cs";
-        var sourceFileHuman = new SourceFile
-        {
-            Path = pathHuman,
-            Text = File.ReadAllText(pathHuman),
-            AttributeToAddToInterface = new ExtraAttribute
-            {
-                Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Human)"
             }
         };
 

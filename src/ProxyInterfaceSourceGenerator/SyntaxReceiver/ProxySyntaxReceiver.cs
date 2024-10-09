@@ -9,8 +9,7 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
     private const string GlobalPrefix = "global::";
-    private static readonly string[] GenerateProxyAttributes = { "ProxyInterfaceGenerator.Proxy", "Proxy" };
-    private static readonly string[] Modifiers = { "public", "partial" };
+    private static readonly string[] Modifiers = ["public", "partial"];
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
     public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
@@ -39,7 +38,8 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
             return false;
         }
 
-        var attributeList = interfaceDeclarationSyntax.AttributeLists.FirstOrDefault(x => x.Attributes.Any(a => GenerateProxyAttributes.Contains(a.Name.ToString())));
+        var attributeList = interfaceDeclarationSyntax.AttributeLists
+            .FirstOrDefault(x => x.Attributes.Any(AttributeArgumentListParser.IsMatch));
         if (attributeList is null)
         {
             // InterfaceDeclarationSyntax should have the correct attribute
@@ -58,11 +58,11 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         {
             foreach (var @using in cc.Usings)
             {
-                usings.Add(@using.Name.ToString());
+                usings.Add(@using.Name!.ToString());
             }
         }
 
-        var fluentBuilderAttributeArguments = AttributeArgumentListParser.ParseAttributeArguments(attributeList.Attributes.FirstOrDefault()?.ArgumentList, semanticModel);
+        var fluentBuilderAttributeArguments = AttributeArgumentListParser.Parse(attributeList.Attributes.FirstOrDefault(), semanticModel);
 
         var metadataName = fluentBuilderAttributeArguments.MetadataName;
         var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";

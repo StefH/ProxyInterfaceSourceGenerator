@@ -4,5 +4,5 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal interface IFileGenerator
 {
-    FileData GenerateFile(bool supportsNullable);
+    FileData GenerateFile(bool supportsNullable, bool supportsGenericAttributes);
 }
