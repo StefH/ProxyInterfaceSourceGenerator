@@ -26,7 +26,9 @@ public sealed class Person
 ```
 
 ### Create a partial interface
-And annotate this with `ProxyInterfaceGenerator.Proxy[...]` and with the Type which needs to be wrapped:
+
+#### Annotate with `[ProxyInterfaceGenerator.Proxy(typeof(...)]`
+And annotate this partial interface with `[ProxyInterfaceGenerator.Proxy(typeof(...))]` and with the Type which needs to be wrapped:
 
 ``` c#
 [ProxyInterfaceGenerator.Proxy(typeof(Person))]
@@ -34,6 +36,16 @@ public partial interface IPerson
 {
 }
 ```
+
+#### Annotate with `[ProxyInterfaceGenerator.Proxy<...>]`
+Since version 0.5.0 it's also possible to use the generic version of the attribute:
+``` c#
+[ProxyInterfaceGenerator.Proxy<Person>()]
+public partial interface IPerson
+{
+}
+```
+
 
 #### ProxyBaseClasses
 In case also want to proxy the properties/methods/events from the base class(es), use this:
