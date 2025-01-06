@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 using ProxyInterfaceSourceGeneratorTests.Source.Disposable;
 
 namespace ProxyInterfaceSourceGeneratorTests;
@@ -17,8 +18,9 @@ public class InheritedInterfaceTests
 
     public InheritedInterfaceTests()
     {
-        _basePath = AppContext.BaseDirectory;
-        _outputPath = Path.Combine(_basePath, "../../../Destination/Disposable/");
+        _basePath = TestHelper.TestProjectRoot.Value;
+        _outputPath = Path.Combine(_basePath, "Destination/Disposable/");
+
         if (!Directory.Exists(_outputPath))
         {
             Directory.CreateDirectory(_outputPath);
@@ -36,15 +38,16 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = {
-                $"{Namespace}.{interfaceName}.g.cs",
-                $"{Namespace}.{proxyName}.g.cs"
-            };
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
+            $"{Namespace}.{proxyName}.g.cs"
+        ];
         var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, proxyBaseClass);
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         result.Valid.Should().BeTrue();
         result.Files.Should().HaveCount(fileNames.Length + 1);
@@ -53,7 +56,7 @@ public class InheritedInterfaceTests
         var interfaceIndex = 1;
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
         Assert.Single(interfaceDeclarations);
@@ -71,16 +74,17 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = {
-                $"{Namespace}.{interfaceName}.g.cs",
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
                 $"{Namespace}.{proxyName}.g.cs"
-            };
+        ];
 
         var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, true);
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         result.Valid.Should().BeTrue();
         result.Files.Should().HaveCount(fileNames.Length + 1);
@@ -89,7 +93,7 @@ public class InheritedInterfaceTests
         var interfaceIndex = 1;
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
         Assert.Single(interfaceDeclarations);
@@ -109,16 +113,17 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = {
-                $"{Namespace}.{interfaceName}.g.cs",
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
                 $"{Namespace}.{proxyName}.g.cs"
-            };
+        ];
         var interfaceIndex = 1;
         var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, true);
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         result.Valid.Should().BeTrue();
         result.Files.Should().HaveCount(fileNames.Length + 1);
@@ -126,7 +131,7 @@ public class InheritedInterfaceTests
 
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
         //This actually could work, we just need to implement the logic inside the Proxy (and interface).

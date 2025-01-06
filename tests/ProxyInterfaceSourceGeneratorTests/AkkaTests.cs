@@ -3,6 +3,7 @@ using CSharp.SourceGenerators.Extensions.Models;
 using CultureAwareTesting.xUnit;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -16,7 +17,7 @@ public class AkkaTests
     public AkkaTests()
     {
         _sut = new ProxyInterfaceCodeGenerator();
-        _basePath = AppContext.BaseDirectory;
+        _basePath = TestHelper.TestProjectRoot.Value;
     }
 
     [CulturedFact("sv-SE")]
@@ -53,8 +54,10 @@ public class AkkaTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText(Path.Combine(_basePath, $"../../../Destination/AkkaGenerated/{fileName.fileName}"), builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(Path.Combine(_basePath, $"../../../Destination/AkkaGenerated/{fileName.fileName}")));
+
+            var destinationFileName = Path.Combine(_basePath, $"Destination/AkkaGenerated/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
     }
 }
