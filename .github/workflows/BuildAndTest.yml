@@ -20,4 +20,4 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: 'Run Unit Tests'
-      run: dotnet test './tests/ProxyInterfaceSourceGeneratorTests/ProxyInterfaceSourceGeneratorTests.csproj' -c Release
+      run: dotnet test './tests/ProxyInterfaceSourceGeneratorTests/ProxyInterfaceSourceGeneratorTests.csproj' -c Debug
