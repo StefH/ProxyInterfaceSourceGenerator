@@ -65,7 +65,7 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var attributeData = _proxyAttributeGenerator.GenerateFile(supportsNullable);
-        context.GeneratorExecutionContext.AddSource(attributeData.FileName, SourceText.From(attributeData.Text, Encoding.UTF8));
+        context.GeneratorExecutionContext.AddSource(attributeData.Filename, SourceText.From(attributeData.Text, Encoding.UTF8));
     }
 
     private static void GenerateError(GeneratorExecutionContext context, Exception exception)

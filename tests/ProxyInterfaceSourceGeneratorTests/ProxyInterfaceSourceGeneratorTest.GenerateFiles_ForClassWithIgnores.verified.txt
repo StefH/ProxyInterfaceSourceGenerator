@@ -11,6 +11,7 @@
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
+#nullable enable
 using System;
 
 namespace ProxyInterfaceGenerator
@@ -64,6 +65,7 @@ namespace ProxyInterfaceGenerator
         Internal = 1
     }
 }
+#nullable restore
   },
   {
     HintName: ProxyInterfaceSourceGeneratorTests.Source.IFoo2.g.cs,

@@ -1,3 +1,4 @@
+using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
@@ -19,6 +20,7 @@ internal class ExtraFilesGenerator : IFileGenerator
 // </auto-generated>
 //----------------------------------------------------------------------------------------
 
+{supportsNullable.IIf("#nullable enable")}
 using System;
 
 namespace ProxyInterfaceGenerator
@@ -71,6 +73,6 @@ namespace ProxyInterfaceGenerator
 
         Internal = 1
     }}
-}}");
+}}{supportsNullable.IIf("\r\n#nullable restore")}");
     }
 }

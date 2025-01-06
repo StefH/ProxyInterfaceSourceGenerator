@@ -3,6 +3,7 @@ using CSharp.SourceGenerators.Extensions.Models;
 using CultureAwareTesting.xUnit;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -11,10 +12,12 @@ public class AkkaTests
     private bool Write = true;
 
     private readonly ProxyInterfaceCodeGenerator _sut;
+    private readonly string _basePath;
 
     public AkkaTests()
     {
         _sut = new ProxyInterfaceCodeGenerator();
+        _basePath = TestHelper.TestProjectRoot.Value;
     }
 
     [CulturedFact("sv-SE")]
@@ -27,7 +30,7 @@ public class AkkaTests
             "Akka.Actor.LocalActorRefProviderProxy.g.cs"
         };
 
-        var path = "./Source/AkkaActor/ILocalActorRefProvider.cs";
+        var path = Path.Combine(_basePath, "Source/AkkaActor/ILocalActorRefProvider.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -40,10 +43,7 @@ public class AkkaTests
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
-            sourceFile
-        });
+        var result = _sut.Execute([sourceFile]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -54,8 +54,10 @@ public class AkkaTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/AkkaGenerated/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/AkkaGenerated/{fileName.fileName}"));
+
+            var destinationFilename = Path.Combine(_basePath, $"Destination/AkkaGenerated/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 }

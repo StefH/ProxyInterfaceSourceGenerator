@@ -39,32 +39,4 @@
         <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.11" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Compile Update="Source\*.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-        <Compile Update="Source\PnP\*.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-        <Compile Update="Source\AkkaActor\*.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-        <Compile Update="Source\Disposable\*.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-        <Compile Update="Source\Depth\*.cs">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Source\IGroup.cs">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Destination\Depth\" />
-    </ItemGroup>
-
 </Project>

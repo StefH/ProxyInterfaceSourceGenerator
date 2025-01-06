@@ -30,7 +30,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
     [SuppressMessage("MicrosoftCodeAnalysisCorrectness", "RS1024:Compare symbols correctly", Justification = "<Pending>")]
     private bool TryGenerateFile(ProxyData pd, [NotNullWhen(true)] out FileData? fileData)
     {
-        fileData = default;
+        fileData = null;
 
         if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
         {
