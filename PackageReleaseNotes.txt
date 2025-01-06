@@ -1,5 +1,4 @@
-# 0.4.0 (30 September 2024)
-- #77 Add functionality to ignore members while generating interface and proxy [enhancement]
-- #74 Is there a way we can lazy load interface mappings? [enhancement]
+# 0.5.0 (06 January 2025)
+- #83 Also add #nullable annotation for ProxyInterfaceGenerator.Extra.g.cs [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
