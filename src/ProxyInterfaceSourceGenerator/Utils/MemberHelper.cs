@@ -105,7 +105,7 @@ internal static class MemberHelper
             return ownMembers;
         }
 
-        var allMembers = ownMembers;
+        var allMembers = ownMembers.ToList();
         var baseType = classSymbol.Symbol.BaseType;
 
         while (baseType != null && baseType.SpecialType != SpecialType.System_Object)
