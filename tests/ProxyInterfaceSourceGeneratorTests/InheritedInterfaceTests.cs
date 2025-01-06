@@ -1,7 +1,6 @@
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Helpers;
@@ -77,7 +76,7 @@ public class InheritedInterfaceTests
         string[] fileNames =
         [
             $"{Namespace}.{interfaceName}.g.cs",
-                $"{Namespace}.{proxyName}.g.cs"
+            $"{Namespace}.{proxyName}.g.cs"
         ];
 
         var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
@@ -116,7 +115,7 @@ public class InheritedInterfaceTests
         string[] fileNames =
         [
             $"{Namespace}.{interfaceName}.g.cs",
-                $"{Namespace}.{proxyName}.g.cs"
+            $"{Namespace}.{proxyName}.g.cs"
         ];
         var interfaceIndex = 1;
         var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
@@ -146,6 +145,7 @@ public class InheritedInterfaceTests
     private static SourceFile CreateSourceFile(string path, string name, bool extend)
     {
         var extendString = extend.ToString().ToLowerInvariant();
+
         return new SourceFile
         {
             Path = path,

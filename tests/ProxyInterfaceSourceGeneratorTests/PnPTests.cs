@@ -38,7 +38,7 @@ public class PnPTests
             "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
         };
 
-        var pathClientObject = "Source/PnP/IClientObject.cs";
+        var pathClientObject = Path.Combine(_basePath, "Source/PnP/IClientObject.cs");
         var sourceFileClientObject = new SourceFile
         {
             Path = pathClientObject,
@@ -50,7 +50,7 @@ public class PnPTests
             }
         };
 
-        var pathSec = "Source/PnP/ISecurableObject.cs";
+        var pathSec = Path.Combine(_basePath, "Source/PnP/ISecurableObject.cs");
         var sourceFileSec = new SourceFile
         {
             Path = pathSec,
@@ -62,7 +62,7 @@ public class PnPTests
             }
         };
 
-        var pathWeb = "Source/PnP/IWeb.cs";
+        var pathWeb = Path.Combine(_basePath, "Source/PnP/IWeb.cs");
         var sourceFileWeb = new SourceFile
         {
             Path = pathWeb,
@@ -74,7 +74,7 @@ public class PnPTests
             }
         };
 
-        var pathClientRuntimeContext = "Source/Pnp/IClientRuntimeContext.cs";
+        var pathClientRuntimeContext = Path.Combine(_basePath, "Source/Pnp/IClientRuntimeContext.cs");
         var sourceFileClientRuntimeContext = new SourceFile
         {
             Path = pathClientRuntimeContext,
@@ -86,7 +86,7 @@ public class PnPTests
             }
         };
 
-        var pathClientContext = "Source/PnP/IClientContext.cs";
+        var pathClientContext = Path.Combine(_basePath, "Source/PnP/IClientContext.cs");
         var sourceFileClientContext = new SourceFile
         {
             Path = pathClientContext,
@@ -117,9 +117,9 @@ public class PnPTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 }

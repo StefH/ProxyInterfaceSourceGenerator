@@ -55,9 +55,9 @@ public class AkkaTests
             builder.Path.Should().EndWith(fileName.fileName);
 
 
-            var destinationFileName = Path.Combine(_basePath, $"Destination/AkkaGenerated/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/AkkaGenerated/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 }

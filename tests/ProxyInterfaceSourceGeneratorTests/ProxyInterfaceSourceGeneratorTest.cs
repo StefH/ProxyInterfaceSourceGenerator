@@ -3,6 +3,7 @@ using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 using ProxyInterfaceSourceGeneratorTests.Source;
 
 namespace ProxyInterfaceSourceGeneratorTests;
@@ -21,7 +22,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public ProxyInterfaceSourceGeneratorTest()
     {
         _sut = new ProxyInterfaceCodeGenerator();
-        _basePath = AppContext.BaseDirectory;
+        _basePath = TestHelper.TestProjectRoot.Value;
     }
 
     [Fact]
@@ -58,7 +59,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.FooProxy.g.cs"
         };
 
-        var path = Path.Combine(_basePath, "./Source/IFoo.cs");
+        var path = Path.Combine(_basePath, "Source/IFoo.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -94,7 +95,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.Generic`1Proxy.g.cs"
         };
 
-        var path = Path.Combine(_basePath, "./Source/IGeneric.cs");
+        var path = Path.Combine(_basePath, "Source/IGeneric.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -120,9 +121,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 
@@ -136,7 +137,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric`3Proxy.g.cs"
         };
 
-        var path = Path.Combine(_basePath, "./Source/IÜberGeneric.cs");
+        var path = Path.Combine(_basePath, "Source/IÜberGeneric.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -162,9 +163,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 
@@ -178,7 +179,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.OperatorTestProxy.g.cs"
         };
 
-        var path = "./Source/IOperatorTest.cs";
+        var path = Path.Combine(_basePath, "Source/IOperatorTest.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -204,9 +205,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
 
         var name = "stef";
@@ -235,7 +236,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "NoNamespaceProxy.g.cs"
         };
 
-        var path = "./Source/INoNamespace.cs";
+        var path = Path.Combine(_basePath, "Source/INoNamespace.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -261,9 +262,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 
@@ -277,7 +278,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.MixedVisibilityProxy.g.cs"
         };
 
-        var path = "./Source/IMixedVisibility.cs";
+        var path = Path.Combine(_basePath, "Source/IMixedVisibility.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -303,9 +304,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
-            if (Write) File.WriteAllText(destinationFileName, builder.Text);
-            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 
@@ -317,7 +318,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs";
         var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
 
-        var path = "./Source/IPersonExtends.cs";
+        var path = Path.Combine(_basePath, "Source", "IPersonExtends.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -345,16 +346,18 @@ public class ProxyInterfaceSourceGeneratorTest
         @interface.FilePath.Should().EndWith(interfaceFilename);
 
         var interfaceCode = @interface.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+        var interfaceCodeFilename = Path.Combine(_basePath, "Destination", interfaceFilename);
+        if (Write) File.WriteAllText(interfaceCodeFilename, interfaceCode);
+        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeFilename));
 
         // Assert Proxy
         var proxyClass = result.Files[2].SyntaxTree;
         proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
         var proxyCode = proxyClass.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+        var proxyCodeFilename = Path.Combine(_basePath, "Destination", proxyClassFilename);
+        if (Write) File.WriteAllText(proxyCodeFilename, proxyCode);
+        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeFilename));
     }
 
     [Fact]
@@ -364,7 +367,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.ITestClassInternal.g.cs";
         var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.TestClassInternalProxy.g.cs";
 
-        var path = "./Source/ITestClassInternal.cs";
+        var path = Path.Combine(_basePath, "Source", "ITestClassInternal.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -388,16 +391,18 @@ public class ProxyInterfaceSourceGeneratorTest
         @interface.FilePath.Should().EndWith(interfaceFilename);
 
         var interfaceCode = @interface.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+        var interfaceCodeFilename = Path.Combine(_basePath, "Destination", interfaceFilename);
+        if (Write) File.WriteAllText(interfaceCodeFilename, interfaceCode);
+        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeFilename));
 
         // Assert Proxy
         var proxyClass = result.Files[2].SyntaxTree;
         proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
         var proxyCode = proxyClass.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+        var proxyCodeFilename = Path.Combine(_basePath, "Destination", proxyClassFilename);
+        if (Write) File.WriteAllText(proxyCodeFilename, proxyCode);
+        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeFilename));
     }
 
     [Fact]
@@ -410,7 +415,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
         var proxyClassPersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
 
-        var pathPerson = "./Source/IPerson.cs";
+        var pathPerson = Path.Combine(_basePath, "Source", "IPerson.cs");
         var sourceFilePerson = new SourceFile
         {
             Path = pathPerson,
@@ -422,7 +427,7 @@ public class ProxyInterfaceSourceGeneratorTest
             }
         };
 
-        var pathHuman = "./Source/IHuman.cs";
+        var pathHuman = Path.Combine(_basePath, "Source", "IHuman.cs");
         var sourceFileHuman = new SourceFile
         {
             Path = pathHuman,
@@ -451,8 +456,9 @@ public class ProxyInterfaceSourceGeneratorTest
         interfaceHuman.FilePath.Should().EndWith(interfaceHumanFilename);
 
         var interfaceCodeHuman = interfaceHuman.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceHumanFilename}", interfaceCodeHuman);
-        interfaceCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceHumanFilename}"));
+        var interfaceCodeHumanFilename = Path.Combine(_basePath, "Destination", interfaceHumanFilename);
+        if (Write) File.WriteAllText(interfaceCodeHumanFilename, interfaceCodeHuman);
+        interfaceCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeHumanFilename));
 
 
         // Assert interface Person
@@ -460,8 +466,9 @@ public class ProxyInterfaceSourceGeneratorTest
         interfacePerson.FilePath.Should().EndWith(interfacePersonFilename);
 
         var interfaceCodePerson = interfacePerson.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfacePersonFilename}", interfaceCodePerson);
-        interfaceCodePerson.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfacePersonFilename}"));
+        var interfaceCodePersonFilename = Path.Combine(_basePath, "Destination", interfacePersonFilename);
+        if (Write) File.WriteAllText(interfaceCodePersonFilename, interfaceCodePerson);
+        interfaceCodePerson.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodePersonFilename));
 
 
         // Assert Proxy Human
@@ -469,8 +476,9 @@ public class ProxyInterfaceSourceGeneratorTest
         proxyClassHuman.FilePath.Should().EndWith(proxyClassHumanFilename);
 
         var proxyCodeHuman = proxyClassHuman.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassHumanFilename}", proxyCodeHuman);
-        proxyCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassHumanFilename}"));
+        var proxyCodeHumanFilename = Path.Combine(_basePath, "Destination", proxyClassHumanFilename);
+        if (Write) File.WriteAllText(proxyCodeHumanFilename, proxyCodeHuman);
+        proxyCodeHuman.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeHumanFilename));
 
 
         // Assert Proxy Person
@@ -478,8 +486,9 @@ public class ProxyInterfaceSourceGeneratorTest
         proxyClassPerson.FilePath.Should().EndWith(proxyClassPersonFilename);
 
         var proxyCode = proxyClassPerson.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassPersonFilename}", proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassPersonFilename}"));
+        var proxyCodeFilename = Path.Combine(_basePath, "Destination", proxyClassPersonFilename);
+        if (Write) File.WriteAllText(proxyCodeFilename, proxyCode);
+        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeFilename));
 
         var personProxy = new PersonProxy(new Person());
 
@@ -507,7 +516,7 @@ public class ProxyInterfaceSourceGeneratorTest
 
         foreach (var x in list)
         {
-            var pathInterface = $"./Source/{x.IF}{x.I}.cs";
+            var pathInterface = Path.Combine(_basePath, "Source", $"{x.IF}{x.I}.cs");
             var sourceFile = new SourceFile
             {
                 Path = pathInterface,
@@ -542,7 +551,7 @@ public class ProxyInterfaceSourceGeneratorTest
             syntaxTreeInterface.FilePath.Should().EndWith(filenameInterface);
 
             var codeInterface = syntaxTreeInterface.ToString();
-            var path = $"../../../Destination/{x.IF}{filenameInterface}";
+            var path = Path.Combine(_basePath, "Destination", $"{x.IF}{filenameInterface}");
             if (Write) File.WriteAllText(path, codeInterface);
             codeInterface.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
 
@@ -557,7 +566,7 @@ public class ProxyInterfaceSourceGeneratorTest
             syntaxTreeProxy.FilePath.Should().EndWith(filenameProxy);
 
             var codeProxy = syntaxTreeProxy.ToString();
-            var path = $"../../../Destination/{x.CF}{filenameProxy}";
+            var path = Path.Combine(_basePath, "Destination", $"{x.CF}{filenameProxy}");
             if (Write) File.WriteAllText(path, codeProxy);
             codeProxy.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(path));
 
@@ -575,7 +584,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfaceIHttpMessageInvokerFilename = "ProxyInterfaceSourceGeneratorTests.Source.IHttpMessageInvoker.g.cs";
         var proxyClassIHttpMessageInvokerFilename = "System.Net.Http.HttpMessageInvokerProxy.g.cs";
 
-        var pathIHttpClient = "./Source/IHttpClient.cs";
+        var pathIHttpClient = Path.Combine(_basePath, "Source", "IHttpClient.cs");
         var sourceFileIHttpClient = new SourceFile
         {
             Path = pathIHttpClient,
@@ -587,7 +596,7 @@ public class ProxyInterfaceSourceGeneratorTest
             }
         };
 
-        var pathIHttpMessageInvoker = "./Source/IHttpMessageInvoker.cs";
+        var pathIHttpMessageInvoker = Path.Combine(_basePath, "Source", "IHttpMessageInvoker.cs");
         var sourceFileIHttpMessageInvoker = new SourceFile
         {
             Path = pathIHttpMessageInvoker,
@@ -616,8 +625,9 @@ public class ProxyInterfaceSourceGeneratorTest
         interfaceIHttpClient.FilePath.Should().EndWith(interfaceIHttpClientFilename);
 
         var interfaceCodeIHttpClient = interfaceIHttpClient.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpClientFilename}", interfaceCodeIHttpClient);
-        interfaceCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpClientFilename}"));
+        var interfaceCodeIHttpClientFilename = Path.Combine(_basePath, "Destination", interfaceIHttpClientFilename);
+        if (Write) File.WriteAllText(interfaceCodeIHttpClientFilename, interfaceCodeIHttpClient);
+        interfaceCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeIHttpClientFilename));
 
 
         // Assert interface IHttpMessageInvoker
@@ -625,8 +635,9 @@ public class ProxyInterfaceSourceGeneratorTest
         interfaceIMessageInvoker.FilePath.Should().EndWith(interfaceIHttpMessageInvokerFilename);
 
         var interfaceCodeIMessageInvoker = interfaceIMessageInvoker.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}", interfaceCodeIMessageInvoker);
-        interfaceCodeIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceIHttpMessageInvokerFilename}"));
+        var interfaceCodeIMessageInvokerFilename = Path.Combine(_basePath, "Destination", interfaceIHttpMessageInvokerFilename);
+        if (Write) File.WriteAllText(interfaceCodeIMessageInvokerFilename, interfaceCodeIMessageInvoker);
+        interfaceCodeIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeIMessageInvokerFilename));
 
 
         // Assert Proxy IHttpClient
@@ -634,8 +645,9 @@ public class ProxyInterfaceSourceGeneratorTest
         proxyClassIHttpClient.FilePath.Should().EndWith(proxyClassIHttpClientFilename);
 
         var proxyCodeIHttpClient = proxyClassIHttpClient.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpClientFilename}", proxyCodeIHttpClient);
-        proxyCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpClientFilename}"));
+        var proxyCodeIHttpClientFilename = Path.Combine(_basePath, "Destination", proxyClassIHttpClientFilename);
+        if (Write) File.WriteAllText(proxyCodeIHttpClientFilename, proxyCodeIHttpClient);
+        proxyCodeIHttpClient.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeIHttpClientFilename));
 
 
         // Assert Proxy IHttpMessageInvoker
@@ -643,8 +655,9 @@ public class ProxyInterfaceSourceGeneratorTest
         proxyClassIMessageInvoker.FilePath.Should().EndWith(proxyClassIHttpMessageInvokerFilename);
 
         var proxyIMessageInvoker = proxyClassIMessageInvoker.ToString();
-        if (Write) File.WriteAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}", proxyIMessageInvoker);
-        proxyIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassIHttpMessageInvokerFilename}"));
+        var proxyIMessageInvokerFilename = Path.Combine(_basePath, "Destination", proxyClassIHttpMessageInvokerFilename);
+        if (Write) File.WriteAllText(proxyIMessageInvokerFilename, proxyIMessageInvoker);
+        proxyIMessageInvoker.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyIMessageInvokerFilename));
     }
 
     [Fact]
@@ -658,7 +671,7 @@ public class ProxyInterfaceSourceGeneratorTest
             var interfaceFilename = $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.I{@class}.g.cs";
             var proxyClassFilename = $"ProxyInterfaceSourceGeneratorTests.Namespace{x}.{@class}Proxy.g.cs";
 
-            var path = $"./Source/I{@class}{x}.cs";
+            var path = Path.Combine(_basePath, "Source", $"I{@class}{x}.cs");
             var sourceFile = new SourceFile
             {
                 Path = path,
@@ -686,16 +699,18 @@ public class ProxyInterfaceSourceGeneratorTest
             @interface.FilePath.Should().EndWith(interfaceFilename);
 
             var interfaceCode = @interface.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{interfaceFilename}", interfaceCode);
-            interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{interfaceFilename}"));
+            var interfaceCodeFilename = Path.Combine(_basePath, "Destination", interfaceFilename);
+            if (Write) File.WriteAllText(interfaceCodeFilename, interfaceCode);
+            interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeFilename));
 
             // Assert Proxy
             var proxyClass = result.Files[2].SyntaxTree;
             proxyClass.FilePath.Should().EndWith(proxyClassFilename);
 
             var proxyCode = proxyClass.ToString();
-            if (Write) File.WriteAllText($"../../../Destination/{proxyClassFilename}", proxyCode);
-            proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText($"../../../Destination/{proxyClassFilename}"));
+            var proxyCodeFilename = Path.Combine(_basePath, "Destination", proxyClassFilename);
+            if (Write) File.WriteAllText(proxyCodeFilename, proxyCode);
+            proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeFilename));
         }
     }
 
@@ -709,7 +724,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.Foo2Proxy.g.cs"
         };
 
-        var path = "./Source/IFoo2.cs";
+        var path = Path.Combine(_basePath, "Source/IFoo2.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -747,7 +762,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.Foo2Proxy.g.cs"
         };
 
-        var path = "./Source/IFoo2.cs";
+        var path = Path.Combine(_basePath, "Source/IFoo2.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
