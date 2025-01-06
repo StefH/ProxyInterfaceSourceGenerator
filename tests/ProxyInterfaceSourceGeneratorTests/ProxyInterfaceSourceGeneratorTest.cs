@@ -16,13 +16,12 @@ public class ProxyInterfaceSourceGeneratorTest
     private const bool Write = true;
 
     private readonly ProxyInterfaceCodeGenerator _sut;
+    private readonly string _basePath;
 
     public ProxyInterfaceSourceGeneratorTest()
     {
         _sut = new ProxyInterfaceCodeGenerator();
-
-        var pp = new PersonProxy(new Person());
-        _ = pp.AddHuman(new HumanProxy(new Human()));
+        _basePath = AppContext.BaseDirectory;
     }
 
     [Fact]
@@ -42,7 +41,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -72,10 +71,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -109,10 +107,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -151,10 +148,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -193,10 +189,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -250,10 +245,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -292,10 +286,9 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute([
             sourceFile
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -332,7 +325,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -379,7 +372,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[] { sourceFile });
+        var result = _sut.Execute([sourceFile]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -602,7 +595,7 @@ public class ProxyInterfaceSourceGeneratorTest
         };
 
         // Act
-        var result = _sut.Execute(new[] { sourceFileIHttpClient, sourceFileIHttpMessageInvoker });
+        var result = _sut.Execute([sourceFileIHttpClient, sourceFileIHttpMessageInvoker]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -673,7 +666,7 @@ public class ProxyInterfaceSourceGeneratorTest
             };
 
             // Act
-            var result = _sut.Execute(new[] { sourceFile });
+            var result = _sut.Execute([sourceFile]);
 
             // Assert
             result.Valid.Should().BeTrue();
