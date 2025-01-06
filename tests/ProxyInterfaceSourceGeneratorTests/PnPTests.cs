@@ -74,7 +74,7 @@ public class PnPTests
             }
         };
 
-        var pathClientRuntimeContext = Path.Combine(_basePath, "Source/Pnp/IClientRuntimeContext.cs");
+        var pathClientRuntimeContext = Path.Combine(_basePath, "Source", "PnP", "IClientRuntimeContext.cs");
         var sourceFileClientRuntimeContext = new SourceFile
         {
             Path = pathClientRuntimeContext,
@@ -117,7 +117,7 @@ public class PnPTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            var destinationFilename = Path.Combine(_basePath, "Destination", fileName.fileName);
             if (Write) File.WriteAllText(destinationFilename, builder.Text);
             builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
