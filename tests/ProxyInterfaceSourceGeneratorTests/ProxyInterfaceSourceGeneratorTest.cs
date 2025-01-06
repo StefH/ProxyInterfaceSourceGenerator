@@ -28,7 +28,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_ForStruct_Should_Not_GenerateProxyCode()
     {
         // Arrange
-        var path = "./Source/IMyStruct.cs";
+        var path = Path.Combine(_basePath, "./Source/IMyStruct.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -58,7 +58,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.FooProxy.g.cs"
         };
 
-        var path = "./Source/IFoo.cs";
+        var path = Path.Combine(_basePath, "./Source/IFoo.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -94,7 +94,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.Generic`1Proxy.g.cs"
         };
 
-        var path = "./Source/IGeneric.cs";
+        var path = Path.Combine(_basePath, "./Source/IGeneric.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -120,8 +120,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
     }
 
@@ -135,7 +136,7 @@ public class ProxyInterfaceSourceGeneratorTest
             "ProxyInterfaceSourceGeneratorTests.Source.ÜberGeneric`3Proxy.g.cs"
         };
 
-        var path = "./Source/IÜberGeneric.cs";
+        var path = Path.Combine(_basePath, "./Source/IÜberGeneric.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -161,8 +162,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
     }
 
@@ -202,8 +204,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
 
         var name = "stef";
@@ -258,8 +261,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
     }
 
@@ -299,8 +303,9 @@ public class ProxyInterfaceSourceGeneratorTest
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFileName = Path.Combine(_basePath, $"../../../Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFileName, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFileName));
         }
     }
 

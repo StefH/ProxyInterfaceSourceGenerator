@@ -2,6 +2,7 @@ using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -15,7 +16,7 @@ public class PnPTests
     public PnPTests()
     {
         _sut = new ProxyInterfaceCodeGenerator();
-        _basePath = AppContext.BaseDirectory;
+        _basePath = TestHelper.ProjectRoot.Value;
     }
 
     [Fact]
