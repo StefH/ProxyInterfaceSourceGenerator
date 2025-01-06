@@ -2,16 +2,15 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <AssemblyName>ProxyInterfaceConsumer</AssemblyName>
         <RootNamespace>ProxyInterfaceConsumer</RootNamespace>
         <Nullable>enable</Nullable>
-
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Mapster" Version="7.4.0" />
-        <PackageReference Include="ProxyInterfaceGenerator" Version="0.3.0">
+        <PackageReference Include="ProxyInterfaceGenerator" Version="0.4.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

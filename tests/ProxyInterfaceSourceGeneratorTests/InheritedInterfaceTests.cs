@@ -1,25 +1,28 @@
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 using ProxyInterfaceSourceGeneratorTests.Source.Disposable;
-using Xunit.Abstractions;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
 public class InheritedInterfaceTests
 {
     private const string Namespace = "ProxyInterfaceSourceGeneratorTests.Source.Disposable";
-    private const string OutputPath = "../../../Destination/Disposable/";
     private readonly ProxyInterfaceCodeGenerator _sut;
+    private readonly string _basePath;
+    private readonly string _outputPath;
 
     public InheritedInterfaceTests()
     {
-        if (!Directory.Exists(OutputPath))
+        _basePath = TestHelper.TestProjectRoot.Value;
+        _outputPath = Path.Combine(_basePath, "Destination/Disposable/");
+
+        if (!Directory.Exists(_outputPath))
         {
-            Directory.CreateDirectory(OutputPath);
+            Directory.CreateDirectory(_outputPath);
         }
         _sut = new ProxyInterfaceCodeGenerator();
     }
@@ -34,11 +37,12 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
+            $"{Namespace}.{proxyName}.g.cs"
         ];
-        var path = $"./Source/Disposable/{interfaceName}.cs";
+        var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, proxyBaseClass);
 
         // Act
@@ -51,7 +55,7 @@ public class InheritedInterfaceTests
         var interfaceIndex = 1;
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
         Assert.Single(interfaceDeclarations);
@@ -69,12 +73,13 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
+            $"{Namespace}.{proxyName}.g.cs"
         ];
 
-        var path = $"./Source/Disposable/{interfaceName}.cs";
+        var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, true);
 
         // Act
@@ -87,7 +92,7 @@ public class InheritedInterfaceTests
         var interfaceIndex = 1;
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
         Assert.Single(interfaceDeclarations);
@@ -107,12 +112,13 @@ public class InheritedInterfaceTests
         var proxyName = name + "Proxy";
 
         // Arrange
-        string[] fileNames = [
-        $"{Namespace}.{interfaceName}.g.cs",
-        $"{Namespace}.{proxyName}.g.cs"
+        string[] fileNames =
+        [
+            $"{Namespace}.{interfaceName}.g.cs",
+            $"{Namespace}.{proxyName}.g.cs"
         ];
         var interfaceIndex = 1;
-        var path = $"./Source/Disposable/{interfaceName}.cs";
+        var path = Path.Combine(_basePath, $"Source/Disposable/{interfaceName}.cs");
         SourceFile sourceFile = CreateSourceFile(path, name, true);
 
         // Act
@@ -124,12 +130,12 @@ public class InheritedInterfaceTests
 
         var tree = result.Files[interfaceIndex].SyntaxTree;
         var root = tree.GetRoot();
-        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+        var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>().ToArray();
 
         // Assert
-        //This actually could work, we just need to implenent the logic inside the Proxy (and interface).
+        //This actually could work, we just need to implement the logic inside the Proxy (and interface).
         //⚠ Dispose is not a public member of the 'Explicit' class and also not of the Proxy.
-        //e.g. new Explicit().Dipose() is not possible.
+        //e.g. new Explicit().Dispose() is not possible.
         Assert.Single(interfaceDeclarations);
         var baseList = interfaceDeclarations.First().BaseList;
         bool noInterfaceImplementationFound = baseList is null;
@@ -139,6 +145,7 @@ public class InheritedInterfaceTests
     private static SourceFile CreateSourceFile(string path, string name, bool extend)
     {
         var extendString = extend.ToString().ToLowerInvariant();
+
         return new SourceFile
         {
             Path = path,
@@ -151,14 +158,14 @@ public class InheritedInterfaceTests
         };
     }
 
-    private static void WriteFiles(string[] fileNames, ExecuteResult result)
+    private void WriteFiles(string[] fileNames, ExecuteResult result)
     {
         foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
         {
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
-            File.WriteAllText($"{OutputPath}{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"{OutputPath}{fileName.fileName}"));
+            File.WriteAllText(Path.Combine(_outputPath, fileName.fileName), builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(Path.Combine(_outputPath, fileName.fileName)));
         }
     }
 }

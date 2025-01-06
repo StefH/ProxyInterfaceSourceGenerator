@@ -22,8 +22,10 @@ internal static class TypeSymbolExtensions
         return TypeEnum.Complex;
     }
 
-    public static bool IsString(this ITypeSymbol ts) =>
-        ts.ToString().ToLowerInvariant() == "string" || ts.ToString().ToLowerInvariant() == "string?";
+    public static bool IsString(this ITypeSymbol ts)
+    {
+        return ts.ToString().ToLowerInvariant() is "string" or "string?";
+    }
 
     public static string ToFullyQualifiedDisplayString(this ITypeSymbol property) =>
         property.ToDisplayString(NullableFlowState.None, SymbolDisplayFormat.FullyQualifiedFormat);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>0.5.0-preview-01</Version>
+        <Version>0.5.0</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
         <ProjectGuid>{12344228-91F4-4502-9595-39584E5ABB34}</ProjectGuid>
         <LangVersion>latest</LangVersion>
@@ -54,11 +54,6 @@
         </PackageReference>
     </ItemGroup>
 
-    <!--<ItemGroup>
-        <ProjectCapability Include="DynamicDependentFile" />
-        <ProjectCapability Include="DynamicFileNesting" />
-    </ItemGroup>-->
-
     <ItemGroup>
         <Compile Update="ProxyClassesGenerator.AutoMapper.cs">
             <DependentUpon>ProxyClassesGenerator.cs</DependentUpon>
@@ -71,9 +66,6 @@
 
     <!-- https://www.meziantou.net/declaring-internalsvisibleto-in-the-csproj.htm -->
     <ItemGroup>
-        <!--<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-            <_Parameter1>ProxyInterfaceSourceGeneratorTests</_Parameter1>
-        </AssemblyAttribute>-->
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
             <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
         </AssemblyAttribute>

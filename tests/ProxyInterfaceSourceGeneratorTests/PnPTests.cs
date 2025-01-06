@@ -1,10 +1,8 @@
-using System.IO;
-using System.Linq;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
 using ProxyInterfaceSourceGenerator;
-using Xunit;
+using ProxyInterfaceSourceGeneratorTests.Helpers;
 
 namespace ProxyInterfaceSourceGeneratorTests;
 
@@ -13,10 +11,12 @@ public class PnPTests
     private bool Write = true;
 
     private readonly ProxyInterfaceCodeGenerator _sut;
+    private readonly string _basePath;
 
     public PnPTests()
     {
         _sut = new ProxyInterfaceCodeGenerator();
+        _basePath = TestHelper.TestProjectRoot.Value;
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class PnPTests
             "Microsoft.SharePoint.Client.ClientContextProxy.g.cs"
         };
 
-        var pathClientObject = "./Source/PnP/IClientObject.cs";
+        var pathClientObject = Path.Combine(_basePath, "Source/PnP/IClientObject.cs");
         var sourceFileClientObject = new SourceFile
         {
             Path = pathClientObject,
@@ -50,7 +50,7 @@ public class PnPTests
             }
         };
 
-        var pathSec = "./Source/PnP/ISecurableObject.cs";
+        var pathSec = Path.Combine(_basePath, "Source/PnP/ISecurableObject.cs");
         var sourceFileSec = new SourceFile
         {
             Path = pathSec,
@@ -62,7 +62,7 @@ public class PnPTests
             }
         };
 
-        var pathWeb = "./Source/PnP/IWeb.cs";
+        var pathWeb = Path.Combine(_basePath, "Source/PnP/IWeb.cs");
         var sourceFileWeb = new SourceFile
         {
             Path = pathWeb,
@@ -74,7 +74,7 @@ public class PnPTests
             }
         };
 
-        var pathClientRuntimeContext = "./Source/Pnp/IClientRuntimeContext.cs";
+        var pathClientRuntimeContext = Path.Combine(_basePath, "Source", "PnP", "IClientRuntimeContext.cs");
         var sourceFileClientRuntimeContext = new SourceFile
         {
             Path = pathClientRuntimeContext,
@@ -86,7 +86,7 @@ public class PnPTests
             }
         };
 
-        var pathClientContext = "./Source/PnP/IClientContext.cs";
+        var pathClientContext = Path.Combine(_basePath, "Source/PnP/IClientContext.cs");
         var sourceFileClientContext = new SourceFile
         {
             Path = pathClientContext,
@@ -99,14 +99,14 @@ public class PnPTests
         };
 
         // Act
-        var result = _sut.Execute(new[]
-        {
+        var result = _sut.Execute(
+        [
             sourceFileClientObject,
             sourceFileSec,
             sourceFileWeb,
             sourceFileClientRuntimeContext,
             sourceFileClientContext
-        });
+        ]);
 
         // Assert
         result.Valid.Should().BeTrue();
@@ -117,8 +117,9 @@ public class PnPTests
             var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
-            if (Write) File.WriteAllText($"../../../Destination/{fileName.fileName}", builder.Text);
-            builder.Text.Should().Be(File.ReadAllText($"../../../Destination/{fileName.fileName}"));
+            var destinationFilename = Path.Combine(_basePath, "Destination", fileName.fileName);
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
     }
 }
