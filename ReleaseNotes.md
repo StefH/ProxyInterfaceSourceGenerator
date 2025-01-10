@@ -1,3 +1,7 @@
+# 0.6.0 (10 January 2025)
+- [#81](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/81) - Add support for Generic Attributes [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#84](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/84) - Use global:: prefix [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.5.0 (06 January 2025)
 - [#83](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/83) - Also add #nullable annotation for ProxyInterfaceGenerator.Extra.g.cs [enhancement] contributed by [StefH](https://github.com/StefH)
 
