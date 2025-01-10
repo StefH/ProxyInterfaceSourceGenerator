@@ -134,7 +134,7 @@ using System;
 
             var instance = !property.IsStatic ?
                 "_Instance" :
-                $"{targetClassSymbol.Symbol}";
+                $"{targetClassSymbol.Symbol.ToFullyQualifiedDisplayString()}";
 
             var propertyName = property.GetSanitizedName();
             var instancePropertyName = $"{instance}.{propertyName}";

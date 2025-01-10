@@ -18,7 +18,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends _Instance { get; }
         
-        public string StaticString { get => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString; set => ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString = value; }
+        public string StaticString { get => global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString; set => global::ProxyInterfaceSourceGeneratorTests.Source.PersonExtends.StaticString = value; }
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 

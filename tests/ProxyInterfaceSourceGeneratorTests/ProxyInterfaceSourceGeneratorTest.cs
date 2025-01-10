@@ -786,4 +786,49 @@ public class ProxyInterfaceSourceGeneratorTest
         var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
         return Verify(results);
     }
+
+    [Fact]
+    public void GenerateFiles_ForTimeProvider_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider.g.cs",
+            "System.TimeProviderProxy.g.cs"
+        };
+
+        var path = Path.Combine(_basePath, "Source/ITimeProvider.cs");
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(System.TimeProvider)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([sourceFile]);
+
+        // Assert
+        Assert(result, fileNames);
+    }
+
+    private void Assert(ExecuteResult result, string[] fileNames)
+    {
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+        {
+            var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+            builder.Path.Should().EndWith(fileName.fileName);
+
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
+        }
+    }
 }
