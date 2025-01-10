@@ -24,7 +24,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::System.TimeProvider _Instance { get; }
         
-        public global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider System { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider>(TimeProvider.System); }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider System { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider>(global::System.TimeProvider.System); }
 
         public virtual global::System.TimeZoneInfo LocalTimeZone { get => _Instance.LocalTimeZone; }
 

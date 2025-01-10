@@ -18,7 +18,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public new global::System.Net.Http.HttpClient _Instance { get; }
         public global::System.Net.Http.HttpMessageInvoker _InstanceHttpMessageInvoker { get; }
-        public global::System.Net.IWebProxy DefaultProxy { get => System.Net.Http.HttpClient.DefaultProxy; set => System.Net.Http.HttpClient.DefaultProxy = value; }
+        public global::System.Net.IWebProxy DefaultProxy { get => global::System.Net.Http.HttpClient.DefaultProxy; set => global::System.Net.Http.HttpClient.DefaultProxy = value; }
 
         public global::System.Net.Http.Headers.HttpRequestHeaders DefaultRequestHeaders { get => _Instance.DefaultRequestHeaders; }
 
