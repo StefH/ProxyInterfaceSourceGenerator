@@ -1,33 +1,52 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Types;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal static class AttributeArgumentListParser
 {
-    public static ProxyInterfaceGeneratorAttributeArguments ParseAttributeArguments(AttributeArgumentListSyntax? argumentList, SemanticModel semanticModel)
+    private static readonly Regex ProxyAttributesRegex = new(@"^ProxyInterfaceGenerator\.Proxy|Proxy(?:<([^>]+)>)?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+
+    public static bool IsMatch(AttributeSyntax attributeSyntax)
     {
-        if (argumentList is null || argumentList.Arguments.Count is < 1 or > 4)
+        return ProxyAttributesRegex.IsMatch(attributeSyntax.Name.ToString());
+    }
+
+    public static ProxyInterfaceGeneratorAttributeArguments Parse(AttributeSyntax? attributeSyntax, SemanticModel semanticModel)
+    {
+        if (attributeSyntax == null)
+        {
+            throw new ArgumentNullException(nameof(attributeSyntax));
+        }
+
+        int skip = 0;
+        ProxyInterfaceGeneratorAttributeArguments? result;
+        if (TryParseAsType(attributeSyntax.Name, semanticModel, out var infoGeneric))
+        {
+            result = new ProxyInterfaceGeneratorAttributeArguments(infoGeneric.Value.FullyQualifiedDisplayString, infoGeneric.Value.MetadataName);
+        }
+        else if (attributeSyntax.ArgumentList == null || attributeSyntax.ArgumentList.Arguments.Count is < 1 or > 4)
         {
             throw new ArgumentException("The ProxyAttribute requires 1, 2, 3 or 4 arguments.");
         }
-
-        ProxyInterfaceGeneratorAttributeArguments result;
-        if (TryParseAsType(argumentList.Arguments[0].Expression, semanticModel, out var fullyQualifiedDisplayString, out var metadataName))
+        else if (TryParseAsType(attributeSyntax.ArgumentList.Arguments[0].Expression, semanticModel, out var info))
         {
-            result = new ProxyInterfaceGeneratorAttributeArguments(fullyQualifiedDisplayString, metadataName);
+            skip = 1;
+            result = new ProxyInterfaceGeneratorAttributeArguments(info.Value.FullyQualifiedDisplayString, info.Value.MetadataName);
         }
         else
         {
             throw new ArgumentException("The first argument from the ProxyAttribute should be a Type.");
         }
 
-        foreach (var argument in argumentList.Arguments.Skip(1))
+        var array = attributeSyntax.ArgumentList?.Arguments.ToArray() ?? [];
+
+        foreach (var argument in array.Skip(skip))
         {
             if (TryParseAsStringArray(argument.Expression, out var membersToIgnore))
             {
@@ -83,22 +102,38 @@ internal static class AttributeArgumentListParser
         return false;
     }
 
-    private static bool TryParseAsType(ExpressionSyntax expressionSyntax, SemanticModel semanticModel, [NotNullWhen(true)] out string? fullyQualifiedDisplayString, [NotNullWhen(true)] out string? metadataName)
+    private static bool TryParseAsType(
+        CSharpSyntaxNode? syntaxNode,
+        SemanticModel semanticModel,
+        [NotNullWhen(true)] out (string FullyQualifiedDisplayString, string MetadataName, bool IsGeneric)? info
+    )
     {
-        fullyQualifiedDisplayString = null;
-        metadataName = null;
+        info = null;
 
-        if (expressionSyntax is TypeOfExpressionSyntax typeOfExpressionSyntax)
+        bool isGeneric;
+        TypeSyntax typeSyntax;
+        switch (syntaxNode)
         {
-            var typeInfo = semanticModel.GetTypeInfo(typeOfExpressionSyntax.Type);
-            var typeSymbol = typeInfo.Type!;
-            metadataName = typeSymbol.GetFullMetadataName();
-            fullyQualifiedDisplayString = typeSymbol.ToFullyQualifiedDisplayString();
+            case TypeOfExpressionSyntax typeOfExpressionSyntax:
+                typeSyntax = typeOfExpressionSyntax.Type;
+                isGeneric = false;
+                break;
 
-            return true;
+            case GenericNameSyntax genericRightNameSyntax:
+                typeSyntax = genericRightNameSyntax.TypeArgumentList.Arguments.First();
+                isGeneric = true;
+                break;
+
+            default:
+                return false;
         }
 
-        return false;
+        var typeInfo = semanticModel.GetTypeInfo(typeSyntax);
+        var typeSymbol = typeInfo.Type!;
+
+        info = new(typeSymbol.ToFullyQualifiedDisplayString(), typeSymbol.GetFullMetadataName(), isGeneric);
+
+        return true;
     }
 
     private static bool TryParseAsEnum<TEnum>(ExpressionSyntax expressionSyntax, out TEnum value)

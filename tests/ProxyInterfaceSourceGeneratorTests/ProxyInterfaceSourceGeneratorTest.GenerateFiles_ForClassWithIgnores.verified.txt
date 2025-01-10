@@ -16,6 +16,7 @@ using System;
 
 namespace ProxyInterfaceGenerator
 {
+    
     [AttributeUsage(AttributeTargets.Interface)]
     internal sealed class ProxyAttribute : Attribute
     {
@@ -51,6 +52,47 @@ namespace ProxyInterfaceGenerator
         public ProxyAttribute(Type type, bool proxyBaseClasses, ProxyClassAccessibility accessibility, string[]? membersToIgnore)
         {
             Type = type;
+            ProxyBaseClasses = proxyBaseClasses;
+            Accessibility = accessibility;
+            MembersToIgnore = membersToIgnore;
+        }
+    }
+
+    
+    [AttributeUsage(AttributeTargets.Interface)]
+    internal sealed class ProxyAttribute<T> : Attribute where T : class
+    {
+        public bool ProxyBaseClasses { get; }
+        public ProxyClassAccessibility Accessibility { get; }
+        public string[]? MembersToIgnore { get; }
+
+        public ProxyAttribute() : this(false, ProxyClassAccessibility.Public)
+        {
+        }
+
+        public ProxyAttribute(bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyClassAccessibility.Public)
+        {
+        }
+
+        public ProxyAttribute(ProxyClassAccessibility accessibility) : this(type, false, accessibility)
+        {
+        }
+
+        public ProxyAttribute(ProxyClassAccessibility accessibility, string[]? membersToIgnore) : this(type, false, accessibility, membersToIgnore)
+        {
+        }
+
+        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(type, proxyBaseClasses, accessibility, null)
+        {
+        }
+
+        public ProxyAttribute(string[]? membersToIgnore) : this(type, false, ProxyClassAccessibility.Public, null)
+        {
+        }
+
+        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility, string[]? membersToIgnore)
+        {
+            Type = typeof(T);
             ProxyBaseClasses = proxyBaseClasses;
             Accessibility = accessibility;
             MembersToIgnore = membersToIgnore;

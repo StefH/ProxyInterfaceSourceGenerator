@@ -29,7 +29,7 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_ForStruct_Should_Not_GenerateProxyCode()
     {
         // Arrange
-        var path = Path.Combine(_basePath, "./Source/IMyStruct.cs");
+        var path = Path.Combine(_basePath, "Source/IMyStruct.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -415,6 +415,14 @@ public class ProxyInterfaceSourceGeneratorTest
         var interfacePersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPerson.g.cs";
         var proxyClassPersonFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonProxy.g.cs";
 
+        var pathHuman = Path.Combine(_basePath, "Source", "IHuman.cs");
+        var sourceFileHuman = new SourceFile
+        {
+            Path = pathHuman,
+            Text = File.ReadAllText(pathHuman),
+            AttributeToAddToInterface = "ProxyInterfaceGenerator.Proxy<ProxyInterfaceSourceGeneratorTests.Source.Human>"
+        };
+
         var pathPerson = Path.Combine(_basePath, "Source", "IPerson.cs");
         var sourceFilePerson = new SourceFile
         {
@@ -427,23 +435,12 @@ public class ProxyInterfaceSourceGeneratorTest
             }
         };
 
-        var pathHuman = Path.Combine(_basePath, "Source", "IHuman.cs");
-        var sourceFileHuman = new SourceFile
-        {
-            Path = pathHuman,
-            Text = File.ReadAllText(pathHuman),
-            AttributeToAddToInterface = new ExtraAttribute
-            {
-                Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Human)"
-            }
-        };
-
         // Act
         var result = _sut.Execute([sourceFileHuman, sourceFilePerson]);
 
         // Assert
         result.Valid.Should().BeTrue();
+        result.WarningMessages.Should().BeEmpty();
         result.Files.Should().HaveCount(5);
 
         // Assert attribute

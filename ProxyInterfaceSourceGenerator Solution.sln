@@ -8,8 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CE637DC-E8F5-4603-8B57-E51A32F631F1}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.github\workflows\CreateRelease.yml = .github\workflows\CreateRelease.yml
 		.github\workflows\BuildAndTest.yml = .github\workflows\BuildAndTest.yml
+		.github\workflows\CreateRelease.yml = .github\workflows\CreateRelease.yml
 		Generate-ReleaseNotes.bat = Generate-ReleaseNotes.bat
 		PackageReadme.md = PackageReadme.md
 		PackageReleaseNotes.template = PackageReleaseNotes.template

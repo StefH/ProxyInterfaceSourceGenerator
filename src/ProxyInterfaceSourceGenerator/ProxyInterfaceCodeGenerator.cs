@@ -43,10 +43,10 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
                 throw new NotSupportedException($"Only {nameof(ProxySyntaxReceiver)} is supported.");
             }
 
-            // https://github.com/reactiveui/refit/blob/main/InterfaceStubGenerator.Core/InterfaceStubGenerator.cs
             var supportsNullable = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp8;
+            var supportsGenericAttributes = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp11;
 
-            GenerateProxyAttribute(context, receiver, supportsNullable);
+            GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
             GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
@@ -56,7 +56,7 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         }
     }
 
-    private void GenerateProxyAttribute(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private void GenerateProxyAttribute(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable, bool supportsGenericAttributes)
     {
         var context = new Context
         {
@@ -64,7 +64,7 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
             Candidates = receiver.CandidateInterfaces
         };
 
-        var attributeData = _proxyAttributeGenerator.GenerateFile(supportsNullable);
+        var attributeData = _proxyAttributeGenerator.GenerateFile(supportsNullable, supportsGenericAttributes);
         context.GeneratorExecutionContext.AddSource(attributeData.Filename, SourceText.From(attributeData.Text, Encoding.UTF8));
     }
 
