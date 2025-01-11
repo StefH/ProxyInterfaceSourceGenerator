@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ProxyInterfaceConsumer": {
-      "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\src-examples\\ProxyInterfaceConsumer\\ProxyInterfaceConsumer.csproj"
-    }
-  }
-}
