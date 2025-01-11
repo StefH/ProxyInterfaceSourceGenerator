@@ -5,7 +5,7 @@ namespace ProxyInterfaceSourceGenerator.Utils;
 
 internal static class MemberHelper
 {
-    private static readonly string[] ExcludedMethods = { "ToString", "GetHashCode" };
+    private static readonly string[] ExcludedMethods = ["ToString", "GetHashCode"];
 
     public static IReadOnlyList<IPropertySymbol> GetPublicProperties(
         ClassSymbol classSymbol,
