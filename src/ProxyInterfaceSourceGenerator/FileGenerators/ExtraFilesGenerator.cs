@@ -57,6 +57,7 @@ internal class ExtraFilesGenerator : IFileGenerator
     [AttributeUsage(AttributeTargets.Interface)]
     internal sealed class ProxyAttribute<T> : Attribute where T : class
     {{
+        public Type Type {{ get; }}
         public bool ProxyBaseClasses {{ get; }}
         public ProxyClassAccessibility Accessibility {{ get; }}
         public {stringArray} MembersToIgnore {{ get; }}
