@@ -11,6 +11,8 @@ namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal abstract class BaseGenerator
 {
+    protected const string GlobalPrefix = "global::";
+
     protected readonly Context Context;
     protected readonly bool SupportsNullable;
 
@@ -20,14 +22,14 @@ internal abstract class BaseGenerator
         SupportsNullable = supportsNullable;
     }
 
-    protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
+    protected string GetPropertyType(IPropertySymbol property, out ReplaceType replaceType)
     {
-        return GetReplacedTypeAsString(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, out replaceType);
     }
 
-    protected string GetParameterType(IParameterSymbol property, out bool isReplaced)
+    protected string GetParameterType(IParameterSymbol property, out ReplaceType replaceType)
     {
-        return GetReplacedTypeAsString(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, out replaceType);
     }
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
@@ -130,21 +132,21 @@ internal abstract class BaseGenerator
             SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier
     );
 
-    protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out bool isReplaced)
+    protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out ReplaceType replaceType)
     {
-        isReplaced = false;
+        replaceType = ReplaceType.None;
 
         var typeSymbolAsString = typeSymbol.ToFullyQualifiedDisplayString();
         var nullableTypeSymbolAsString = typeSymbol.ToDisplayString(NullableFlowState.None, NullableDisplayFormat);
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
-            if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
+            if (!Context.DirectReplacedTypes.ContainsKey(typeSymbolAsString))
             {
-                Context.ReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
+                Context.DirectReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
             }
 
-            isReplaced = true;
+            replaceType = ReplaceType.Direct;
             return FixType(existing.FullInterfaceName, typeSymbol.NullableAnnotation);
         }
 
@@ -155,7 +157,7 @@ internal abstract class BaseGenerator
         }
         else if (typeSymbol is IArrayTypeSymbol arrayTypeSymbol)
         {
-            typeArguments = new[] { arrayTypeSymbol.ElementType };
+            typeArguments = [arrayTypeSymbol.ElementType];
         }
         else
         {
@@ -169,11 +171,11 @@ internal abstract class BaseGenerator
 
             if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
             {
-                isReplaced = true;
+                replaceType = ReplaceType.Indirect;
 
-                if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+                if (!Context.IndirectReplacedTypes.ContainsKey(typeArgumentAsString))
                 {
-                    Context.ReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                    Context.IndirectReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
                 }
 
                 propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
@@ -186,10 +188,9 @@ internal abstract class BaseGenerator
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
     {
         classSymbol = default;
-        const string globalPrefix = "global::";
-        if (name.StartsWith(globalPrefix, StringComparison.Ordinal))
+        if (name.StartsWith(GlobalPrefix, StringComparison.Ordinal))
         {
-            name = name.Substring(globalPrefix.Length);
+            name = name.Substring(GlobalPrefix.Length);
         }
 
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.

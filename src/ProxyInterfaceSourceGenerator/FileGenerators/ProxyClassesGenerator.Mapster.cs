@@ -1,4 +1,5 @@
 using System.Text;
+using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
@@ -7,7 +8,7 @@ internal partial class ProxyClassesGenerator
 {
     private string GenerateMapperConfigurationForMapster(string className)
     {
-        if (Context.ReplacedTypes.Count == 0)
+        if (Context.IndirectReplacedTypes.Count == 0)
         {
             return string.Empty;
         }
@@ -17,11 +18,9 @@ internal partial class ProxyClassesGenerator
         str.AppendLine($"        static {className}()");
         str.AppendLine(@"        {");
 
-        foreach (var replacedType in Context.ReplacedTypes)
+        foreach (var replacedType in Context.IndirectReplacedTypes)
         {
-            TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
-
-            var classNameProxy = $"global::{fullTypeName!.NamespaceDot}{fullTypeName!.ShortMetadataName}Proxy";
+            var classNameProxy = GetClassNameProxy(replacedType.Key);
 
             var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
             var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
@@ -36,4 +35,49 @@ internal partial class ProxyClassesGenerator
 
         return str.ToString();
     }
+
+    private string GetClassNameProxy(string type)
+    {
+        if (TryFindProxyDataByTypeName(type, out var fullTypeName))
+        {
+            return $"{GlobalPrefix}{fullTypeName.NamespaceDot}{fullTypeName.ShortMetadataName}Proxy";
+        }
+
+        throw new InvalidOperationException($"Cannot find proxy for {type}");
+    }
+
+    private string GetAdaptPropertyGet(ReplaceType replaceType, string propertyType, string propertyTypeOriginal, string instancePropertyName, bool isNullable)
+    {
+        return replaceType switch
+        {
+            ReplaceType.Indirect => isNullable
+                ? $"get => {instancePropertyName} != null ? Mapster.TypeAdapter.Adapt<{propertyType}>({instancePropertyName}) : null; "
+                : $"get => Mapster.TypeAdapter.Adapt<{propertyType}>({instancePropertyName}); ",
+
+            ReplaceType.Direct => isNullable
+                ? $"get => {instancePropertyName} != null ? new {GetClassNameProxy(propertyTypeOriginal)}({instancePropertyName}) : null; "
+                : $"get => new {GetClassNameProxy(propertyTypeOriginal)}({instancePropertyName}); ",
+
+            _ => throw new ArgumentOutOfRangeException(nameof(replaceType), replaceType, null)
+        };
+    }
+
+    /*
+     *var isNullable = property.IsNullable();
+
+       if (getIsPublic)
+       {
+           var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
+           get = isNullable ?
+               $"get => {instancePropertyName} != null ? {mapster} : null; " :
+               $"get => {mapster}; ";
+       }
+
+       if (setIsPublic)
+       {
+           var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
+           set = isNullable ?
+               $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
+               $"set => {instancePropertyName} = {mapster}; ";
+       }*/
 }

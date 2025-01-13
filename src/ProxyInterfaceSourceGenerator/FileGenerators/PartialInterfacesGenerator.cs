@@ -115,9 +115,9 @@ methods}
 
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData, InterfaceFilter<IPropertySymbol>()))
         {
-            var type = GetPropertyType(property, out var isReplaced);
+            var type = GetPropertyType(property, out var replaceType);
 
-            var getterSetter = isReplaced ? property.ToPropertyDetails(type) : property.ToPropertyDetails();
+            var getterSetter = replaceType != ReplaceType.None ? property.ToPropertyDetails(type) : property.ToPropertyDetails();
             if (getterSetter is null)
             {
                 continue;

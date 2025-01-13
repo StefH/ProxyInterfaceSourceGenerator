@@ -7,7 +7,9 @@ internal record Context
 {
     public GeneratorExecutionContext GeneratorExecutionContext { get; init; }
 
-    public IDictionary<InterfaceDeclarationSyntax, ProxyData> Candidates { get; init; } = default!;
+    public required IDictionary<InterfaceDeclarationSyntax, ProxyData> Candidates { get; init; }
 
-    public Dictionary<string, string> ReplacedTypes { get; } = new();
+    public Dictionary<string, string> DirectReplacedTypes { get; } = new();
+
+    public Dictionary<string, string> IndirectReplacedTypes { get; } = new();
 }

@@ -82,7 +82,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var operators = GenerateOperators(targetClassSymbol, proxyData);
 
         var configurationForMapster = string.Empty;
-        if (Context.ReplacedTypes.Count > 0)
+        if (Context.IndirectReplacedTypes.Count > 0)
         {
             configurationForMapster = GenerateMapperConfigurationForMapster(className);
         }
@@ -130,7 +130,8 @@ using System;
 
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData))
         {
-            var type = GetPropertyType(property, out var isReplaced);
+            var propertyTypeOriginal = property.Type.ToFullyQualifiedDisplayString();
+            var propertyType = GetPropertyType(property, out var replaceType);
 
             var instance = !property.IsStatic ?
                 "_Instance" :
@@ -167,27 +168,7 @@ using System;
 
             string get = string.Empty;
             string set = string.Empty;
-            if (isReplaced)
-            {
-                var isNullable = property.IsNullable();
-
-                if (getIsPublic)
-                {
-                    var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
-                    get = isNullable ?
-                        $"get => {instancePropertyName} != null ? {mapster} : null; " :
-                        $"get => {mapster}; ";
-                }
-
-                if (setIsPublic)
-                {
-                    var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
-                    set = isNullable ?
-                        $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
-                        $"set => {instancePropertyName} = {mapster}; ";
-                }
-            }
-            else
+            if (replaceType == ReplaceType.None)
             {
                 if (getIsPublic)
                 {
@@ -199,13 +180,34 @@ using System;
                     set = $"set => {instancePropertyName} = value; ";
                 }
             }
+            else
+            {
+                var isNullable = property.IsNullable();
+
+                if (getIsPublic)
+                {
+                    get = GetAdaptPropertyGet(replaceType, propertyType, propertyTypeOriginal, instancePropertyName, isNullable);
+                    //var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
+                    //get = isNullable ?
+                    //    $"get => {instancePropertyName} != null ? {mapster} : null; " :
+                    //    $"get => {mapster}; ";
+                }
+
+                if (setIsPublic)
+                {
+                    var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
+                    set = isNullable ?
+                        $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
+                        $"set => {instancePropertyName} = {mapster}; ";
+                }
+            }
 
             foreach (var attribute in property.GetAttributesAsList())
             {
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        public {overrideOrVirtual}{type} {propertyName} {{ {get}{set}}}");
+            str.AppendLine($"        public {overrideOrVirtual}{propertyType} {propertyName} {{ {get}{set}}}");
             str.AppendLine();
         }
 
@@ -270,8 +272,8 @@ using System;
                 }
                 else
                 {
-                    _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
-                    if (isReplaced)
+                    _ = GetParameterType(ps, out var replaceType); // TODO : response is not used?
+                    if (replaceType != ReplaceType.None)
                     {
                         var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name})";
                         normalOrMap = ps.IsNullable() ?
@@ -303,8 +305,8 @@ using System;
                 var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    var type = GetParameterType(ps, out var isReplaced);
-                    if (isReplaced)
+                    var type = GetParameterType(ps, out var replaceType);
+                    if (replaceType != ReplaceType.None)
                     {
                         var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name}_)";
                         normalOrMap = ps.IsNullable() ?
@@ -318,7 +320,7 @@ using System;
 
             if (returnTypeAsString != "void")
             {
-                if (returnIsReplaced)
+                if (returnIsReplaced != ReplaceType.None)
                 {
                     var mapster = $"Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName})";
                     str.AppendLine(method.ReturnType.IsNullable() ?
