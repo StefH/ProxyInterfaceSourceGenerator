@@ -71,23 +71,23 @@ namespace ProxyInterfaceGenerator
         {
         }
 
-        public ProxyAttribute(bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyClassAccessibility.Public)
+        public ProxyAttribute(bool proxyBaseClasses) : this(proxyBaseClasses, ProxyClassAccessibility.Public)
         {
         }
 
-        public ProxyAttribute(ProxyClassAccessibility accessibility) : this(type, false, accessibility)
+        public ProxyAttribute(ProxyClassAccessibility accessibility) : this(false, accessibility)
         {
         }
 
-        public ProxyAttribute(ProxyClassAccessibility accessibility, string[]? membersToIgnore) : this(type, false, accessibility, membersToIgnore)
+        public ProxyAttribute(ProxyClassAccessibility accessibility, string[]? membersToIgnore) : this(false, accessibility, membersToIgnore)
         {
         }
 
-        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(type, proxyBaseClasses, accessibility, null)
+        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(proxyBaseClasses, accessibility, null)
         {
         }
 
-        public ProxyAttribute(string[]? membersToIgnore) : this(type, false, ProxyClassAccessibility.Public, null)
+        public ProxyAttribute(string[]? membersToIgnore) : this(false, ProxyClassAccessibility.Public, null)
         {
         }
 

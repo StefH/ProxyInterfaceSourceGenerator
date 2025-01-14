@@ -66,23 +66,23 @@ internal class ExtraFilesGenerator : IFileGenerator
         {{
         }}
 
-        public ProxyAttribute(bool proxyBaseClasses) : this(type, proxyBaseClasses, ProxyClassAccessibility.Public)
+        public ProxyAttribute(bool proxyBaseClasses) : this(proxyBaseClasses, ProxyClassAccessibility.Public)
         {{
         }}
 
-        public ProxyAttribute(ProxyClassAccessibility accessibility) : this(type, false, accessibility)
+        public ProxyAttribute(ProxyClassAccessibility accessibility) : this(false, accessibility)
         {{
         }}
 
-        public ProxyAttribute(ProxyClassAccessibility accessibility, {stringArray} membersToIgnore) : this(type, false, accessibility, membersToIgnore)
+        public ProxyAttribute(ProxyClassAccessibility accessibility, {stringArray} membersToIgnore) : this(false, accessibility, membersToIgnore)
         {{
         }}
 
-        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(type, proxyBaseClasses, accessibility, null)
+        public ProxyAttribute(bool proxyBaseClasses, ProxyClassAccessibility accessibility) : this(proxyBaseClasses, accessibility, null)
         {{
         }}
 
-        public ProxyAttribute({stringArray} membersToIgnore) : this(type, false, ProxyClassAccessibility.Public, null)
+        public ProxyAttribute({stringArray} membersToIgnore) : this(false, ProxyClassAccessibility.Public, null)
         {{
         }}
 
