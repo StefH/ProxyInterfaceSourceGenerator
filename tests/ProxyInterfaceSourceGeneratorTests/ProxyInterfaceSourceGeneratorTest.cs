@@ -314,9 +314,12 @@ public class ProxyInterfaceSourceGeneratorTest
     public void GenerateFiles_ForSingleClass_Should_GenerateCorrectFiles()
     {
         // Arrange
-        var attributeFilename = "ProxyInterfaceGenerator.Extra.g.cs";
-        var interfaceFilename = "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs";
-        var proxyClassFilename = "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs";
+        var fileNames = new[]
+        {
+            "ProxyInterfaceGenerator.Extra.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.IPersonExtends.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.PersonExtendsProxy.g.cs",
+        };
 
         var path = Path.Combine(_basePath, "Source", "IPersonExtends.cs");
         var sourceFile = new SourceFile
@@ -334,30 +337,7 @@ public class ProxyInterfaceSourceGeneratorTest
         var result = _sut.Execute([sourceFile]);
 
         // Assert
-        result.Valid.Should().BeTrue();
-        result.Files.Should().HaveCount(3);
-
-        // Assert attribute
-        var attribute = result.Files[0].SyntaxTree;
-        attribute.FilePath.Should().EndWith(attributeFilename);
-
-        // Assert interface
-        var @interface = result.Files[1].SyntaxTree;
-        @interface.FilePath.Should().EndWith(interfaceFilename);
-
-        var interfaceCode = @interface.ToString();
-        var interfaceCodeFilename = Path.Combine(_basePath, "Destination", interfaceFilename);
-        if (Write) File.WriteAllText(interfaceCodeFilename, interfaceCode);
-        interfaceCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(interfaceCodeFilename));
-
-        // Assert Proxy
-        var proxyClass = result.Files[2].SyntaxTree;
-        proxyClass.FilePath.Should().EndWith(proxyClassFilename);
-
-        var proxyCode = proxyClass.ToString();
-        var proxyCodeFilename = Path.Combine(_basePath, "Destination", proxyClassFilename);
-        if (Write) File.WriteAllText(proxyCodeFilename, proxyCode);
-        proxyCode.Should().NotBeNullOrEmpty().And.Be(File.ReadAllText(proxyCodeFilename));
+        Assert(result, fileNames, false);
     }
 
     [Fact]
@@ -816,14 +796,16 @@ public class ProxyInterfaceSourceGeneratorTest
         Assert(result, fileNames);
     }
 
-    private void Assert(ExecuteResult result, string[] fileNames)
+    private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)
     {
+        var skip = skipExtra ? 1 : 0;
+
         result.Valid.Should().BeTrue();
-        result.Files.Should().HaveCount(fileNames.Length + 1);
+        result.Files.Should().HaveCount(fileNames.Length + skip);
 
         foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
         {
-            var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+            var builder = result.Files[fileName.index + skip]; // +1 means skip the attribute
             builder.Path.Should().EndWith(fileName.fileName);
 
             var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
