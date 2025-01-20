@@ -22,7 +22,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
-        public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value; }
+        public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value!; }
 
         public long? NullableLong { get => _Instance.NullableLong; }
 

@@ -26,7 +26,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::System.Net.Http.HttpVersionPolicy DefaultVersionPolicy { get => _Instance.DefaultVersionPolicy; set => _Instance.DefaultVersionPolicy = value; }
 
-        public global::System.Uri? BaseAddress { get => _Instance.BaseAddress; set => _Instance.BaseAddress = value; }
+        public global::System.Uri? BaseAddress { get => _Instance.BaseAddress; set => _Instance.BaseAddress = value!; }
 
         public global::System.TimeSpan Timeout { get => _Instance.Timeout; set => _Instance.Timeout = value; }
 

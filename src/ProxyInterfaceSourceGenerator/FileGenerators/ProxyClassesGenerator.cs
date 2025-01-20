@@ -165,16 +165,16 @@ using System;
                 continue;
             }
 
-            string get = string.Empty;
-            string set = string.Empty;
+            var propertyIsNullable = property.IsNullable();
+
+            var get = string.Empty;
+            var set = string.Empty;
             if (isReplaced)
             {
-                var isNullable = property.IsNullable();
-
                 if (getIsPublic)
                 {
                     var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
-                    get = isNullable ?
+                    get = propertyIsNullable ?
                         $"get => {instancePropertyName} != null ? {mapster} : null; " :
                         $"get => {mapster}; ";
                 }
@@ -182,7 +182,7 @@ using System;
                 if (setIsPublic)
                 {
                     var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
-                    set = isNullable ?
+                    set = propertyIsNullable ?
                         $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
                         $"set => {instancePropertyName} = {mapster}; ";
                 }
@@ -196,7 +196,7 @@ using System;
 
                 if (setIsPublic)
                 {
-                    set = $"set => {instancePropertyName} = value; ";
+                    set = $"set => {instancePropertyName} = value{propertyIsNullable.IIf("!")}; ";
                 }
             }
 
