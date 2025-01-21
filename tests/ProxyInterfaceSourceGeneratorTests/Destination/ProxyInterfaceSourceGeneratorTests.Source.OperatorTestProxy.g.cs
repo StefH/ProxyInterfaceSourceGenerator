@@ -20,7 +20,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
-        public int? Id { get => _Instance.Id; set => _Instance.Id = value; }
+        public int? Id { get => _Instance.Id; set => _Instance.Id = value!; }
 
         public static implicit operator OperatorTestProxy(string name)
         {

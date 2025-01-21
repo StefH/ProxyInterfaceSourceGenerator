@@ -14,24 +14,43 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class SecurableObjectProxy : global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject
     {
-        static SecurableObjectProxy()
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext MapToInterface(global::Microsoft.SharePoint.Client.ClientRuntimeContext value)
         {
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.ClientRuntimeContext, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>.NewConfig().ConstructUsing(instance_572349648 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_572349648));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, global::Microsoft.SharePoint.Client.ClientRuntimeContext>.NewConfig().MapWith(proxy214349770 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy214349770)._Instance);
-
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.ClientObject, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>.NewConfig().ConstructUsing(instance_205438316 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_205438316));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, global::Microsoft.SharePoint.Client.ClientObject>.NewConfig().MapWith(proxy_437526006 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy_437526006)._Instance);
-
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.SecurableObject, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>.NewConfig().ConstructUsing(instance_247129254 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(instance_247129254));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject, global::Microsoft.SharePoint.Client.SecurableObject>.NewConfig().MapWith(proxy_117192422 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy) proxy_117192422)._Instance);
-
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(value);
         }
+
+        private static global::Microsoft.SharePoint.Client.ClientRuntimeContext MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext value)
+        {
+            return value._Instance;
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject MapToInterface(global::Microsoft.SharePoint.Client.ClientObject value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(value);
+        }
+
+        private static global::Microsoft.SharePoint.Client.ClientObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject value)
+        {
+            return value._Instance;
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject MapToInterface(global::Microsoft.SharePoint.Client.SecurableObject value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(value);
+        }
+
+        private static global::Microsoft.SharePoint.Client.SecurableObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject value)
+        {
+            return value._Instance;
+        }
+
 
 
         public new global::Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
         public global::Microsoft.SharePoint.Client.ClientObject _InstanceClientObject { get; }
         [Microsoft.SharePoint.Client.RemoteAttribute]
-        public global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>(_Instance.FirstUniqueAncestorSecurableObject); }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get => MapToInterface(_Instance.FirstUniqueAncestorSecurableObject); }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public bool HasUniqueRoleAssignments { get => _Instance.HasUniqueRoleAssignments; }

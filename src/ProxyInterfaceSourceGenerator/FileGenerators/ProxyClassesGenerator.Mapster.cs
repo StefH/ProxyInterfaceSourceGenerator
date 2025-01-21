@@ -1,6 +1,5 @@
-using ProxyInterfaceSourceGenerator.Extensions;
-using ProxyInterfaceSourceGenerator.Models;
 using System.Text;
+using ProxyInterfaceSourceGenerator.Extensions;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
@@ -30,7 +29,6 @@ internal partial class ProxyClassesGenerator
                 var proxy = $"proxy{hash}";
 
                 str.AppendLine($"            Mapster.TypeAdapterConfig<{direct.ClassType}, {direct.InterfaceType}>.NewConfig().ConstructUsing({instance} => new {direct.Proxy}({instance}));");
-                // str.AppendLine($"            Mapster.TypeAdapterConfig<{direct.InterfaceType}, {direct.ClassType}>.NewConfig().MapWith({proxy} => (({direct.Proxy}) {proxy})._Instance);");
                 str.AppendLine($"            Mapster.TypeAdapterConfig<{direct.InterfaceType}, {direct.ClassType}>.NewConfig().MapWith({proxy} => {proxy}._Instance);");
                 str.AppendLine();
             }
@@ -65,7 +63,6 @@ internal partial class ProxyClassesGenerator
 
             str.AppendLine($"        private static {direct.ClassType} MapToInstance({direct.InterfaceType} value)");
             str.AppendLine(@"        {");
-            //str.AppendLine($"            return (({direct.Proxy})value)._Instance;");
             str.AppendLine($"            return value._Instance;");
             str.AppendLine(@"        }");
             str.AppendLine();
