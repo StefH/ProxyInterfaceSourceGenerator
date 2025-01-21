@@ -796,6 +796,37 @@ public class ProxyInterfaceSourceGeneratorTest
         Assert(result, fileNames);
     }
 
+    [Theory]
+    [InlineData("ClassDirect")]
+    [InlineData("ClassDirectAndIndirect")]
+    public void GenerateFiles_Map(string value)
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            $"ProxyInterfaceSourceGeneratorTests.Source.I{value}.g.cs",
+            $"ProxyInterfaceSourceGeneratorTests.Source.{value}Proxy.g.cs"
+        };
+
+        var path = Path.Combine(_basePath, $"Source/I{value}.cs");
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = $"typeof(ProxyInterfaceSourceGeneratorTests.Source.{value})"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([sourceFile]);
+
+        // Assert
+        Assert(result, fileNames);
+    }
+
     private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)
     {
         var skip = skipExtra ? 1 : 0;
