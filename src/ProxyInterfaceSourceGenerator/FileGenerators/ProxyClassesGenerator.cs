@@ -169,7 +169,6 @@ using System;
             {
                 if (getIsPublic)
                 {
-                    //var mapMethod = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
                     var mapMethod = $"MapToInterface({instancePropertyName})";
                     get = propertyIsNullable ?
                         $"get => {instancePropertyName} != null ? {mapMethod} : null; " :
@@ -178,8 +177,7 @@ using System;
 
                 if (setIsPublic)
                 {
-                    // var mapMethod = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
-                    var mapMethod = $"MapToInstance(value)";
+                    var mapMethod = "MapToInstance(value)";
                     set = propertyIsNullable ?
                         $"set => {instancePropertyName} = value != null ? {mapMethod} : null; " :
                         $"set => {instancePropertyName} = {mapMethod}; ";
@@ -259,7 +257,7 @@ using System;
 
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
-                var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
+                var type = FixTypeForNullable(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
                 var name = ps.GetSanitizedName();
                 var normalOrMap = $" = {name}";
                 if (ps.RefKind == RefKind.Out)
@@ -268,10 +266,9 @@ using System;
                 }
                 else
                 {
-                    _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
+                    _ = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        // var mapMethod = $"Mapster.TypeAdapter.Adapt<{type}>({name})";
                         var mapMethod = $"MapToInstance({name})";
                         normalOrMap = ps.IsNullable() ?
                             $" = {name} != null ? {mapMethod} : null" :
@@ -302,10 +299,9 @@ using System;
                 var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    var type = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        //var mapMethod = $"Mapster.TypeAdapter.Adapt<{type}>({name}_)";
                         var mapMethod = $"MapToInstance({name}_)";
                         normalOrMap = ps.IsNullable() ?
                             $" = {name}_ != null ? {mapMethod} : null" :
@@ -320,7 +316,6 @@ using System;
             {
                 if (returnIsReplaced)
                 {
-                    // var mapMethod = $"Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName})";
                     var mapMethod = $"MapToInterface({alternateReturnVariableName})";
                     str.AppendLine(method.ReturnType.IsNullable() ?
                         $"            return {alternateReturnVariableName} != null ? {mapMethod} : null;" :

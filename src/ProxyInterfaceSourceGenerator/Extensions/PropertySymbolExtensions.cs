@@ -24,7 +24,7 @@ internal static class PropertySymbolExtensions
         var set = setIsPublic ? "set; " : string.Empty;
 
         var type = !string.IsNullOrEmpty(overrideType) ? overrideType
-            : BaseGenerator.FixType(property.Type.ToFullyQualifiedDisplayString(), property.NullableAnnotation);
+            : BaseGenerator.FixTypeForNullable(property.Type.ToFullyQualifiedDisplayString(), property.NullableAnnotation);
 
         return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");
     }
