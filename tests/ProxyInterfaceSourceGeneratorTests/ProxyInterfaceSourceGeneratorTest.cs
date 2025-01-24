@@ -838,8 +838,8 @@ public class ProxyInterfaceSourceGeneratorTest
         var proxy = new ClassDirectAndIndirectProxy(instance);
         proxy.Id.Should().Be("Instance");
         proxy.Value!.Id.Should().Be("Value");
-        proxy.Array.Select(a => a.Id).Should().BeEquivalentTo(["Array 1", "Array 2"]);
-        proxy.List.Select(a => a.Id).Should().BeEquivalentTo(["List 1", "List 2", "List 3"]);
+        proxy.Array.Select(a => a.Id).Should().BeEquivalentTo("Array 1", "Array 2");
+        proxy.List.Select(a => a.Id).Should().BeEquivalentTo("List 1", "List 2", "List 3");
     }
 
     private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)
