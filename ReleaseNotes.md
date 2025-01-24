@@ -1,3 +1,6 @@
+# 0.9.0 (24 January 2025)
+- [#88](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/88) - Use internal Map methods if possible, else use Mapster [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.8.1 (20 January 2025)
 - [#87](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/87) - In case nullable is enabled and a property can be null, add ! set setter value to fix warning. [bug] contributed by [StefH](https://github.com/StefH)
 
