@@ -14,18 +14,17 @@ internal static class PropertySymbolExtensions
     {
         var getIsPublic = property.GetMethod.IsPublic();
         var setIsPublic = property.SetMethod.IsPublic();
+        var setIsInitOnly = property.SetMethod.IsInitOnly();
 
         if (!getIsPublic && !setIsPublic)
         {
             return null;
         }
 
-        var get = getIsPublic ? "get; " : string.Empty;
-        var set = setIsPublic ? "set; " : string.Empty;
-
+        var set = setIsInitOnly ? "init; " : "set; ";
         var type = !string.IsNullOrEmpty(overrideType) ? overrideType
             : BaseGenerator.FixTypeForNullable(property.Type.ToFullyQualifiedDisplayString(), property.NullableAnnotation);
 
-        return (type!, property.GetSanitizedName(), $"{{ {get}{set}}}");
+        return (type!, property.GetSanitizedName(), $"{{ {getIsPublic.IIf("get; ")}{setIsPublic.IIf(set)}}}");
     }
 }
