@@ -9,6 +9,17 @@ internal class ExtraFilesGenerator : IFileGenerator
 
     public FileData GenerateFile(bool supportsNullable, bool supportsGenericAttributes)
     {
+        var reflection = @"
+    internal static class Reflection
+    {
+        internal static void SetBackingField<T>(T instance, string propertyName, object value)
+        {
+            var type = typeof(T);
+            var backingField = type.GetField($""<{propertyName}>k__BackingField"", BindingFlags.Instance | BindingFlags.NonPublic);
+            backingField?.SetValue(instance, value);
+        }
+    }";
+
         var stringArray = supportsNullable ? "string[]?" : "string[]";
 
         var attribute = $@"
@@ -106,9 +117,12 @@ internal class ExtraFilesGenerator : IFileGenerator
 
 {supportsNullable.IIf("#nullable enable")}
 using System;
+using System.Reflection;
 
 namespace ProxyInterfaceGenerator
 {{
+    {reflection}
+
     {attribute}
 
     {supportsGenericAttributes.IIf(genericAttribute)}

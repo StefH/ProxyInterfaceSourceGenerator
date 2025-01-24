@@ -9,9 +9,21 @@
 
 #nullable enable
 using System;
+using System.Reflection;
 
 namespace ProxyInterfaceGenerator
 {
+    
+    internal static class Reflection
+    {
+        internal static void SetBackingField<T>(T instance, string propertyName, object value)
+        {
+            var type = typeof(T);
+            var backingField = type.GetField($"<{propertyName}>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+            backingField?.SetValue(instance, value);
+        }
+    }
+
     
     [AttributeUsage(AttributeTargets.Interface)]
     internal sealed class ProxyAttribute : Attribute

@@ -18,13 +18,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty _Instance { get; }
         
-        public required string Test { get => _Instance.Test; set => _Instance.Test = value; }
+        public string Test { get => _Instance.Test; set => _Instance.Test = value; }
 
-        public required string Test2
-        {
-            get => _Instance.Test2;
-            init => throw new NotImplementedException();
-        }
+        public string Test2 { get => _Instance.Test2; init => ProxyInterfaceGenerator.Reflection.SetBackingField(_Instance, nameof(Test2), value);}
 
 
         public ClassRequiredPropertyProxy(global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty instance)

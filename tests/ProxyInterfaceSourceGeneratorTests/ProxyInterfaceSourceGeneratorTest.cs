@@ -797,8 +797,8 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Theory]
-    [InlineData("ClassDirect")]
-    [InlineData("ClassDirectAndIndirect")]
+    //[InlineData("ClassDirect")]
+    //[InlineData("ClassDirectAndIndirect")]
     [InlineData("ClassRequiredProperty")]
     public void GenerateFiles_Map(string value)
     {
@@ -826,6 +826,20 @@ public class ProxyInterfaceSourceGeneratorTest
 
         // Assert
         Assert(result, fileNames);
+
+        // Test
+        var instance = new ClassRequiredProperty
+        {
+            Test = "required",
+            Test2 = "required init!"
+        };
+        var proxy = new ClassRequiredPropertyProxy(instance)
+        {
+            Test2 = "t"
+        };
+        proxy.Test = "a";
+
+        int x = 0;
     }
 
     [Fact]

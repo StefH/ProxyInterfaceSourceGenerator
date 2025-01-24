@@ -152,13 +152,14 @@ using System;
             {
                 overrideOrVirtual = "virtual ";
             }
-            else if (property.IsRequired)
-            {
-                overrideOrVirtual = "required ";
-            }
+            //else if (property.IsRequired)
+            //{
+            //    overrideOrVirtual = "required ";
+            //}
 
             var getIsPublic = property.GetMethod.IsPublic();
             var setIsPublic = property.SetMethod.IsPublic();
+            var setIsInitOnly = property.SetMethod.IsInitOnly();
 
             if (!getIsPublic && !setIsPublic)
             {
@@ -196,7 +197,14 @@ using System;
 
                 if (setIsPublic)
                 {
-                    set = $"set => {instancePropertyName} = value{propertyIsNullable.IIf("!")}; ";
+                    if (setIsInitOnly)
+                    {
+                        set = $"init => ProxyInterfaceGenerator.Reflection.SetBackingField({instance}, nameof({propertyName}), value);";
+                    }
+                    else
+                    {
+                        set = $"set => {instancePropertyName} = value{propertyIsNullable.IIf("!")}; ";
+                    }
                 }
             }
 
