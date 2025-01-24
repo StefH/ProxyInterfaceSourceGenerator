@@ -12,7 +12,7 @@ internal class ExtraFilesGenerator : IFileGenerator
         var reflection = @"
     internal static class Reflection
     {
-        internal static void SetBackingField<T>(T instance, string propertyName, object value)
+        internal static void SetBackingField<T>(T instance, string propertyName, object? value)
         {
             var type = typeof(T);
             var backingField = type.GetField($""<{propertyName}>k__BackingField"", BindingFlags.Instance | BindingFlags.NonPublic);

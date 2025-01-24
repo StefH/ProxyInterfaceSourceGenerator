@@ -15,12 +15,25 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     public partial class ClassRequiredPropertyProxy : global::ProxyInterfaceSourceGeneratorTests.Source.IClassRequiredProperty
     {
 
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.IClassRequiredProperty MapToInterface(global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredPropertyProxy(value);
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.IClassRequiredProperty value)
+        {
+            return value._Instance;
+        }
+
+
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty _Instance { get; }
         
         public string Test { get => _Instance.Test; set => _Instance.Test = value; }
 
-        public string Test2 { get => _Instance.Test2; init => ProxyInterfaceGenerator.Reflection.SetBackingField(_Instance, nameof(Test2), value);}
+        public string Test2 { get => _Instance.Test2; init => ProxyInterfaceGenerator.Reflection.SetBackingField(_Instance, nameof(Test2), value); }
+
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IClassRequiredProperty? X { get => _Instance.X != null ? MapToInterface(_Instance.X) : null; init => ProxyInterfaceGenerator.Reflection.SetBackingField(_Instance, nameof(X), value != null ? MapToInstance(value) : null); }
 
 
         public ClassRequiredPropertyProxy(global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty instance)

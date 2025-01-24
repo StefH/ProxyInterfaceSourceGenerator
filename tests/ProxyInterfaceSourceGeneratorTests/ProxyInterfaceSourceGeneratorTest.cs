@@ -831,11 +831,18 @@ public class ProxyInterfaceSourceGeneratorTest
         var instance = new ClassRequiredProperty
         {
             Test = "required",
-            Test2 = "required init!"
+            Test2 = "required init!",
+            X = new ClassRequiredProperty
+            {
+                Test = "x.1",
+                Test2 = "x.2",
+                X = null
+            }
         };
         var proxy = new ClassRequiredPropertyProxy(instance)
         {
-            Test2 = "t"
+            Test2 = "t",
+            X = new ClassRequiredPropertyProxy(instance)
         };
         proxy.Test = "a";
 

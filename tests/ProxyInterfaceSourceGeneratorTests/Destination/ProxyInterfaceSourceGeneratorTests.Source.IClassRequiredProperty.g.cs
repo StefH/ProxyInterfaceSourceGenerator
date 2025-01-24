@@ -20,6 +20,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         string Test2 { get; init; }
 
+        global::ProxyInterfaceSourceGeneratorTests.Source.IClassRequiredProperty? X { get; init; }
+
 
     }
 }

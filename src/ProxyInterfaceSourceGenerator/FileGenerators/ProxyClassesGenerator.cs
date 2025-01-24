@@ -183,9 +183,18 @@ using System;
                 if (setIsPublic)
                 {
                     var mapMethod = "MapToInstance(value)";
-                    set = propertyIsNullable ?
-                        $"set => {instancePropertyName} = value != null ? {mapMethod} : null; " :
-                        $"set => {instancePropertyName} = {mapMethod}; ";
+                    if (setIsInitOnly)
+                    {
+                        set = propertyIsNullable ?
+                            $"init => ProxyInterfaceGenerator.Reflection.SetBackingField({instance}, nameof({propertyName}), value != null ? {mapMethod} : null); " :
+                            $"init => ProxyInterfaceGenerator.Reflection.SetBackingField({instance}, nameof({propertyName}), {mapMethod}); ";
+                    }
+                    else
+                    {
+                        set = propertyIsNullable ?
+                            $"set => {instancePropertyName} = value != null ? {mapMethod} : null; " :
+                            $"set => {instancePropertyName} = {mapMethod}; ";
+                    }
                 }
             }
             else
@@ -199,7 +208,7 @@ using System;
                 {
                     if (setIsInitOnly)
                     {
-                        set = $"init => ProxyInterfaceGenerator.Reflection.SetBackingField({instance}, nameof({propertyName}), value);";
+                        set = $"init => ProxyInterfaceGenerator.Reflection.SetBackingField({instance}, nameof({propertyName}), value); ";
                     }
                     else
                     {
