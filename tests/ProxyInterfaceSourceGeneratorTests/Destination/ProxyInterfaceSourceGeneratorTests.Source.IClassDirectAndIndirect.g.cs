@@ -16,6 +16,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         global::ProxyInterfaceSourceGeneratorTests.Source.ClassDirectAndIndirect _Instance { get; }
 
+        string Id { get; set; }
+
         global::ProxyInterfaceSourceGeneratorTests.Source.IClassDirectAndIndirect? Value { get; set; }
 
         global::ProxyInterfaceSourceGeneratorTests.Source.IClassDirectAndIndirect[] Array { get; set; }

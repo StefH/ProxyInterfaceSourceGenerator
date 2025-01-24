@@ -2,6 +2,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public class ClassDirectAndIndirect
     {
+        public string Id { get; set; } = string.Empty;
+
         public ClassDirectAndIndirect? Value { get; set; }
 
         public ClassDirectAndIndirect[] Array { get; set; } = [];
