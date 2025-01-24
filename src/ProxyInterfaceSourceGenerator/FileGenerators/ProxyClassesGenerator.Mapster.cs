@@ -14,25 +14,59 @@ internal partial class ProxyClassesGenerator
 
         var str = new StringBuilder();
 
-        str.AppendLine($"        static {className}()");
-        str.AppendLine(@"        {");
+        var indirectReplacedTypes = Context.ReplacedTypes.Where(r => !r.Direct).ToArray();
+        var directReplacedTypes = Context.ReplacedTypes.Where(r => r.Direct).ToArray();
 
-        foreach (var replacedType in Context.ReplacedTypes)
+        if (indirectReplacedTypes.Length > 0)
         {
-            TryFindProxyDataByTypeName(replacedType.Key, out var fullTypeName);
+            str.AppendLine($"        static {className}()");
+            str.AppendLine(@"        {");
 
-            var classNameProxy = $"global::{fullTypeName!.NamespaceDot}{fullTypeName!.ShortMetadataName}Proxy";
+            foreach (var direct in directReplacedTypes)
+            {
+                var hash = (direct.ClassType + direct.InterfaceType).GetDeterministicHashCodeAsString();
+                var instance = $"instance{hash}";
+                var proxy = $"proxy{hash}";
 
-            var instance = $"instance{(replacedType.Key + replacedType.Value).GetDeterministicHashCodeAsString()}";
-            var proxy = $"proxy{(replacedType.Value + replacedType.Key).GetDeterministicHashCodeAsString()}";
+                str.AppendLine($"            Mapster.TypeAdapterConfig<{direct.ClassType}, {direct.InterfaceType}>.NewConfig().ConstructUsing({instance} => new {direct.Proxy}({instance}));");
+                str.AppendLine($"            Mapster.TypeAdapterConfig<{direct.InterfaceType}, {direct.ClassType}>.NewConfig().MapWith({proxy} => {proxy}._Instance);");
+                str.AppendLine();
+            }
 
-            str.AppendLine($"            Mapster.TypeAdapterConfig<{replacedType.Key}, {replacedType.Value}>.NewConfig().ConstructUsing({instance} => new {classNameProxy}({instance}));");
-            str.AppendLine($"            Mapster.TypeAdapterConfig<{replacedType.Value}, {replacedType.Key}>.NewConfig().MapWith({proxy} => (({classNameProxy}) {proxy})._Instance);");
+            str.AppendLine(@"        }");
+        }
+
+        str.AppendLine();
+
+        foreach (var indirect in indirectReplacedTypes)
+        {
+            str.AppendLine($"        private static {indirect.InterfaceType} MapToInterface({indirect.ClassType} value)");
+            str.AppendLine(@"        {");
+            str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{indirect.InterfaceType}>(value);");
+            str.AppendLine(@"        }");
+            str.AppendLine();
+
+            str.AppendLine($"        private static {indirect.ClassType} MapToInstance({indirect.InterfaceType} value)");
+            str.AppendLine(@"        {");
+            str.AppendLine($"            return Mapster.TypeAdapter.Adapt<{indirect.ClassType}>(value);");
+            str.AppendLine(@"        }");
             str.AppendLine();
         }
 
-        str.AppendLine(@"        }");
+        foreach (var direct in directReplacedTypes)
+        {
+            str.AppendLine($"        private static {direct.InterfaceType} MapToInterface({direct.ClassType} value)");
+            str.AppendLine(@"        {");
+            str.AppendLine($"            return new {direct.Proxy}(value);");
+            str.AppendLine(@"        }");
+            str.AppendLine();
 
+            str.AppendLine($"        private static {direct.ClassType} MapToInstance({direct.InterfaceType} value)");
+            str.AppendLine(@"        {");
+            str.AppendLine($"            return value._Instance;");
+            str.AppendLine(@"        }");
+            str.AppendLine();
+        }
 
         return str.ToString();
     }

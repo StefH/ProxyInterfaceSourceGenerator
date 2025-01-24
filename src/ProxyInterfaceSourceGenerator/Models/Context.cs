@@ -9,5 +9,5 @@ internal record Context
 
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> Candidates { get; init; } = default!;
 
-    public Dictionary<string, string> ReplacedTypes { get; } = new();
+    public List<ReplacedTypeInfo> ReplacedTypes { get; } = new();
 }

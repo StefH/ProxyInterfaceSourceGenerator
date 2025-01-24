@@ -14,17 +14,22 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 {
     public partial class TimeProviderProxy : global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider
     {
-        static TimeProviderProxy()
-        {
-            Mapster.TypeAdapterConfig<global::System.TimeProvider, global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider>.NewConfig().ConstructUsing(instance98737229 => new global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy(instance98737229));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider, global::System.TimeProvider>.NewConfig().MapWith(proxy_979750559 => ((global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy) proxy_979750559)._Instance);
 
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider MapToInterface(global::System.TimeProvider value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy(value);
         }
+
+        private static global::System.TimeProvider MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider value)
+        {
+            return value._Instance;
+        }
+
 
 
         public global::System.TimeProvider _Instance { get; }
         
-        public global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider System { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider>(global::System.TimeProvider.System); }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider System { get => MapToInterface(global::System.TimeProvider.System); }
 
         public virtual global::System.TimeZoneInfo LocalTimeZone { get => _Instance.LocalTimeZone; }
 

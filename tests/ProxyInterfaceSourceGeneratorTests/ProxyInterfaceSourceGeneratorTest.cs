@@ -796,6 +796,52 @@ public class ProxyInterfaceSourceGeneratorTest
         Assert(result, fileNames);
     }
 
+    [Theory]
+    [InlineData("ClassDirect")]
+    [InlineData("ClassDirectAndIndirect")]
+    public void GenerateFiles_Map(string value)
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            $"ProxyInterfaceSourceGeneratorTests.Source.I{value}.g.cs",
+            $"ProxyInterfaceSourceGeneratorTests.Source.{value}Proxy.g.cs"
+        };
+
+        var path = Path.Combine(_basePath, $"Source/I{value}.cs");
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = $"typeof(ProxyInterfaceSourceGeneratorTests.Source.{value})"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([sourceFile]);
+
+        // Assert
+        Assert(result, fileNames);
+
+        // Test
+        var instance = new ClassDirectAndIndirect
+        {
+            Id = "Instance",
+            Value = new ClassDirectAndIndirect { Id = "Value" },
+            Array = [new ClassDirectAndIndirect { Id = "Array 1" }, new ClassDirectAndIndirect { Id = "Array 2" }],
+            List = [new ClassDirectAndIndirect { Id = "List 1" }, new ClassDirectAndIndirect { Id = "List 2" }, new ClassDirectAndIndirect { Id = "List 3" }]
+        };
+
+        var proxy = new ClassDirectAndIndirectProxy(instance);
+        proxy.Id.Should().Be("Instance");
+        proxy.Value!.Id.Should().Be("Value");
+        proxy.Array.Select(a => a.Id).Should().BeEquivalentTo("Array 1", "Array 2");
+        proxy.List.Select(a => a.Id).Should().BeEquivalentTo("List 1", "List 2", "List 3");
+    }
+
     private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)
     {
         var skip = skipExtra ? 1 : 0;

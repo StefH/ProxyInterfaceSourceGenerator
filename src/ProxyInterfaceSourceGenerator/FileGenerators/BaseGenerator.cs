@@ -139,13 +139,10 @@ internal abstract class BaseGenerator
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
-            if (!Context.ReplacedTypes.ContainsKey(typeSymbolAsString))
-            {
-                Context.ReplacedTypes.Add(typeSymbolAsString, existing.FullInterfaceName);
-            }
+            TryAddDirect(typeSymbolAsString, existing);
 
             isReplaced = true;
-            return FixType(existing.FullInterfaceName, typeSymbol.NullableAnnotation);
+            return FixTypeForNullable(existing.FullInterfaceName, typeSymbol.NullableAnnotation);
         }
 
         ITypeSymbol[] typeArguments;
@@ -155,32 +152,47 @@ internal abstract class BaseGenerator
         }
         else if (typeSymbol is IArrayTypeSymbol arrayTypeSymbol)
         {
-            typeArguments = new[] { arrayTypeSymbol.ElementType };
+            typeArguments = [arrayTypeSymbol.ElementType];
         }
         else
         {
-            return FixType(typeSymbolAsString, typeSymbol.NullableAnnotation);
+            return FixTypeForNullable(typeSymbolAsString, typeSymbol.NullableAnnotation);
         }
 
-        var propertyTypeAsStringToBeModified = nullableTypeSymbolAsString;
+        var elementTypeAsStringToBeModified = nullableTypeSymbolAsString;
         foreach (var typeArgument in typeArguments)
         {
             var typeArgumentAsString = typeArgument.ToFullyQualifiedDisplayString();
 
             if (TryFindProxyDataByTypeName(typeArgumentAsString, out var existingTypeArgument))
             {
-                isReplaced = true;
+                var original = elementTypeAsStringToBeModified;
 
-                if (!Context.ReplacedTypes.ContainsKey(typeArgumentAsString))
+                elementTypeAsStringToBeModified = elementTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+
+                var foundIndirect = Context.ReplacedTypes.FirstOrDefault(r => !r.Direct && r.ClassType == original);
+                if (foundIndirect == null)
                 {
-                    Context.ReplacedTypes.Add(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                    Context.ReplacedTypes.Add(new(original, elementTypeAsStringToBeModified, typeArgumentAsString, existingTypeArgument.FullInterfaceName, string.Empty, false));
+
+                    TryAddDirect(typeArgumentAsString, existingTypeArgument);
                 }
 
-                propertyTypeAsStringToBeModified = propertyTypeAsStringToBeModified.Replace(typeArgumentAsString, existingTypeArgument.FullInterfaceName);
+                isReplaced = true;
             }
         }
 
-        return FixType(propertyTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
+        return FixTypeForNullable(elementTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
+    }
+
+    private void TryAddDirect(string typeSymbolAsString, ProxyData existing)
+    {
+        var found = Context.ReplacedTypes.FirstOrDefault(r => r.Direct && r.ClassType == typeSymbolAsString);
+        if (found == null)
+        {
+            var proxy = $"global::{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
+            Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, true));
+        }
     }
 
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
@@ -228,7 +240,7 @@ internal abstract class BaseGenerator
                 }
                 else
                 {
-                    type = FixType(parameterSymbol.Type.ToFullyQualifiedDisplayString(), parameterSymbol.NullableAnnotation);
+                    type = FixTypeForNullable(parameterSymbol.Type.ToFullyQualifiedDisplayString(), parameterSymbol.NullableAnnotation);
                 }
             }
 
@@ -253,7 +265,7 @@ internal abstract class BaseGenerator
         return extendsProxyClasses;
     }
 
-    internal static string FixType(string type, NullableAnnotation nullableAnnotation)
+    internal static string FixTypeForNullable(string type, NullableAnnotation nullableAnnotation)
     {
         if (nullableAnnotation == NullableAnnotation.Annotated && !type.EndsWith("?", StringComparison.Ordinal))
         {

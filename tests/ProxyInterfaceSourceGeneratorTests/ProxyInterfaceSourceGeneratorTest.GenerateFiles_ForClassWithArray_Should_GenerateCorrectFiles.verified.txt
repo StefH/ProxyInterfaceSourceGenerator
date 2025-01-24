@@ -160,19 +160,40 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         static FooProxy()
         {
             Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.Foo, global::ProxyInterfaceSourceGeneratorTests.Source.IFoo>.NewConfig().ConstructUsing(instance2058774601 => new global::ProxyInterfaceSourceGeneratorTests.Source.FooProxy(instance2058774601));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo, global::ProxyInterfaceSourceGeneratorTests.Source.Foo>.NewConfig().MapWith(proxy1662609081 => ((global::ProxyInterfaceSourceGeneratorTests.Source.FooProxy) proxy1662609081)._Instance);
+            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo, global::ProxyInterfaceSourceGeneratorTests.Source.Foo>.NewConfig().MapWith(proxy2058774601 => proxy2058774601._Instance);
 
         }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[] MapToInterface(global::ProxyInterfaceSourceGeneratorTests.Source.Foo[] value)
+        {
+            return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[]>(value);
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.Foo[] MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[] value)
+        {
+            return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.Foo[]>(value);
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.IFoo MapToInterface(global::ProxyInterfaceSourceGeneratorTests.Source.Foo value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.FooProxy(value);
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.Foo MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.IFoo value)
+        {
+            return value._Instance;
+        }
+
 
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.Foo _Instance { get; }
         
-        public global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[] Foos { get => Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[]>(_Instance.Foos); set => _Instance.Foos = Mapster.TypeAdapter.Adapt<ProxyInterfaceSourceGeneratorTests.Source.Foo[]>(value); }
+        public global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[] Foos { get => MapToInterface(_Instance.Foos); set => _Instance.Foos = MapToInstance(value); }
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[] DoSomethingAndGetAnArrayOfFoos()
         {
             var result_1603865878 = _Instance.DoSomethingAndGetAnArrayOfFoos();
-            return Mapster.TypeAdapter.Adapt<global::ProxyInterfaceSourceGeneratorTests.Source.IFoo[]>(result_1603865878);
+            return MapToInterface(result_1603865878);
         }
 
 

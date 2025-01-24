@@ -14,21 +14,47 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 {
     public partial class WebProxy : global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IWeb
     {
-        static WebProxy()
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext MapToInterface(global::Microsoft.SharePoint.Client.ClientRuntimeContext value)
         {
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.ClientRuntimeContext, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext>.NewConfig().ConstructUsing(instance_572349648 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(instance_572349648));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext, global::Microsoft.SharePoint.Client.ClientRuntimeContext>.NewConfig().MapWith(proxy214349770 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy) proxy214349770)._Instance);
-
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.ClientObject, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject>.NewConfig().ConstructUsing(instance_205438316 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(instance_205438316));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject, global::Microsoft.SharePoint.Client.ClientObject>.NewConfig().MapWith(proxy_437526006 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy) proxy_437526006)._Instance);
-
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.SecurableObject, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject>.NewConfig().ConstructUsing(instance_247129254 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(instance_247129254));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject, global::Microsoft.SharePoint.Client.SecurableObject>.NewConfig().MapWith(proxy_117192422 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy) proxy_117192422)._Instance);
-
-            Mapster.TypeAdapterConfig<global::Microsoft.SharePoint.Client.ClientContext, global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext>.NewConfig().ConstructUsing(instance_1483513702 => new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(instance_1483513702));
-            Mapster.TypeAdapterConfig<global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext, global::Microsoft.SharePoint.Client.ClientContext>.NewConfig().MapWith(proxy343311664 => ((global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy) proxy343311664)._Instance);
-
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(value);
         }
+
+        private static global::Microsoft.SharePoint.Client.ClientRuntimeContext MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext value)
+        {
+            return value._Instance;
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject MapToInterface(global::Microsoft.SharePoint.Client.ClientObject value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(value);
+        }
+
+        private static global::Microsoft.SharePoint.Client.ClientObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject value)
+        {
+            return value._Instance;
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject MapToInterface(global::Microsoft.SharePoint.Client.SecurableObject value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(value);
+        }
+
+        private static global::Microsoft.SharePoint.Client.SecurableObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject value)
+        {
+            return value._Instance;
+        }
+
+        private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext MapToInterface(global::Microsoft.SharePoint.Client.ClientContext value)
+        {
+            return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(value);
+        }
+
+        private static global::Microsoft.SharePoint.Client.ClientContext MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext value)
+        {
+            return value._Instance;
+        }
+
 
 
         public new global::Microsoft.SharePoint.Client.Web _Instance { get; }
@@ -440,7 +466,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public global::System.Uri WebUrlFromPageUrlDirect(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, global::System.Uri pageFullUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientContext>(context);
+            global::Microsoft.SharePoint.Client.ClientContext context_ = MapToInstance(context);
             global::System.Uri pageFullUrl_ = pageFullUrl;
             var result__258107370 = global::Microsoft.SharePoint.Client.Web.WebUrlFromPageUrlDirect(context_, pageFullUrl_);
             return result__258107370;
@@ -448,7 +474,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public global::System.Uri WebUrlFromFolderUrlDirect(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, global::System.Uri folderFullUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientContext>(context);
+            global::Microsoft.SharePoint.Client.ClientContext context_ = MapToInstance(context);
             global::System.Uri folderFullUrl_ = folderFullUrl;
             var result_21992317 = global::Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(context_, folderFullUrl_);
             return result_21992317;
@@ -482,7 +508,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             var result_2070260011 = global::Microsoft.SharePoint.Client.Web.CreateOrganizationSharingLink(context_, url_, isEditLink_);
@@ -492,7 +518,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DestroyOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
@@ -502,7 +528,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string fileUrl_ = fileUrl;
             var result_654626020 = global::Microsoft.SharePoint.Client.Web.GetSharingLinkKind(context_, fileUrl_);
             return result_654626020;
@@ -529,7 +555,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string pageFullUrl_ = pageFullUrl;
             var result__907059837 = global::Microsoft.SharePoint.Client.Web.GetWebUrlFromPageUrl(context_, pageFullUrl_);
             return result__907059837;
@@ -635,7 +661,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.SharingResult ShareObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string roleValue, int groupId, bool propagateAcl, bool sendEmail, bool includeAnonymousLinkInEmail, string emailSubject, string emailBody, bool useSimplifiedRoles)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             string peoplePickerInput_ = peoplePickerInput;
             string roleValue_ = roleValue;
@@ -653,7 +679,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.SharingResult ForwardObjectLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string emailSubject, string emailBody)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             string peoplePickerInput_ = peoplePickerInput;
             string emailSubject_ = emailSubject;
@@ -665,7 +691,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.SharingResult UnshareObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             var result__823224569 = global::Microsoft.SharePoint.Client.Web.UnshareObject(context_, url_);
             return result__823224569;
@@ -674,7 +700,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ObjectSharingSettings GetObjectSharingSettings(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string objectUrl, int groupId, bool useSimplifiedRoles)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string objectUrl_ = objectUrl;
             int groupId_ = groupId;
             bool useSimplifiedRoles_ = useSimplifiedRoles;
@@ -685,7 +711,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             var result__820192309 = global::Microsoft.SharePoint.Client.Web.CreateAnonymousLink(context_, url_, isEditLink_);
@@ -695,7 +721,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLinkWithExpiration(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, string expirationString)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             string expirationString_ = expirationString;
@@ -706,7 +732,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DeleteAllAnonymousLinksForObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             global::Microsoft.SharePoint.Client.Web.DeleteAllAnonymousLinksForObject(context_, url_);
         }
@@ -714,7 +740,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public void DeleteAnonymousLinkForObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string url_ = url;
             bool isEditLink_ = isEditLink;
             bool removeAssociatedSharingLinkGroup_ = removeAssociatedSharingLinkGroup;
@@ -894,7 +920,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::System.Collections.Generic.IList<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentLibraries(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string webFullUrl_ = webFullUrl;
             var result_2078170246 = global::Microsoft.SharePoint.Client.Web.GetDocumentLibraries(context_, webFullUrl_);
             return result_2078170246;
@@ -903,7 +929,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::System.Collections.Generic.IList<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentAndMediaLibraries(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl, bool includePageLibraries)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string webFullUrl_ = webFullUrl;
             bool includePageLibraries_ = includePageLibraries;
             var result__431075153 = global::Microsoft.SharePoint.Client.Web.GetDocumentAndMediaLibraries(context_, webFullUrl_, includePageLibraries_);
@@ -913,7 +939,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         [Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl)
         {
-            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = Mapster.TypeAdapter.Adapt<global::Microsoft.SharePoint.Client.ClientRuntimeContext>(context);
+            global::Microsoft.SharePoint.Client.ClientRuntimeContext context_ = MapToInstance(context);
             string webUrl_ = webUrl;
             var result_1125717726 = global::Microsoft.SharePoint.Client.Web.DefaultDocumentLibraryUrl(context_, webUrl_);
             return result_1125717726;

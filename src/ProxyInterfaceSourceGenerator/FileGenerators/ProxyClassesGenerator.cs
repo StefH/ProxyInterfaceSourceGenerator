@@ -81,11 +81,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
         var events = GenerateEvents(targetClassSymbol, proxyData);
         var operators = GenerateOperators(targetClassSymbol, proxyData);
 
-        var configurationForMapster = string.Empty;
-        if (Context.ReplacedTypes.Count > 0)
-        {
-            configurationForMapster = GenerateMapperConfigurationForMapster(className);
-        }
+        var configurationForMapster = GenerateMapperConfigurationForMapster(className);
 
         var (namespaceStart, namespaceEnd) = NamespaceBuilder.Build(proxyData.Namespace);
 
@@ -173,18 +169,18 @@ using System;
             {
                 if (getIsPublic)
                 {
-                    var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({instancePropertyName})";
+                    var mapMethod = $"MapToInterface({instancePropertyName})";
                     get = propertyIsNullable ?
-                        $"get => {instancePropertyName} != null ? {mapster} : null; " :
-                        $"get => {mapster}; ";
+                        $"get => {instancePropertyName} != null ? {mapMethod} : null; " :
+                        $"get => {mapMethod}; ";
                 }
 
                 if (setIsPublic)
                 {
-                    var mapster = $"Mapster.TypeAdapter.Adapt<{property.Type}>(value)";
+                    var mapMethod = "MapToInstance(value)";
                     set = propertyIsNullable ?
-                        $"set => {instancePropertyName} = value != null ? {mapster} : null; " :
-                        $"set => {instancePropertyName} = {mapster}; ";
+                        $"set => {instancePropertyName} = value != null ? {mapMethod} : null; " :
+                        $"set => {instancePropertyName} = {mapMethod}; ";
                 }
             }
             else
@@ -261,7 +257,7 @@ using System;
 
             foreach (var ps in method.Parameters.Where(p => !p.IsRef()))
             {
-                var type = FixType(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
+                var type = FixTypeForNullable(ps.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), ps.Type.NullableAnnotation);
                 var name = ps.GetSanitizedName();
                 var normalOrMap = $" = {name}";
                 if (ps.RefKind == RefKind.Out)
@@ -270,13 +266,13 @@ using System;
                 }
                 else
                 {
-                    _ = GetParameterType(ps, out var isReplaced); // TODO : response is not used?
+                    _ = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name})";
+                        var mapMethod = $"MapToInstance({name})";
                         normalOrMap = ps.IsNullable() ?
-                            $" = {name} != null ? {mapster} : null" :
-                            $" = {mapster}";
+                            $" = {name} != null ? {mapMethod} : null" :
+                            $" = {mapMethod}";
                     }
                 }
 
@@ -303,13 +299,13 @@ using System;
                 var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    var type = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, out var isReplaced);
                     if (isReplaced)
                     {
-                        var mapster = $"Mapster.TypeAdapter.Adapt<{type}>({name}_)";
+                        var mapMethod = $"MapToInstance({name}_)";
                         normalOrMap = ps.IsNullable() ?
-                            $" = {name}_ != null ? {mapster} : null" :
-                            $" = {mapster}";
+                            $" = {name}_ != null ? {mapMethod} : null" :
+                            $" = {mapMethod}";
                     }
                 }
 
@@ -320,10 +316,10 @@ using System;
             {
                 if (returnIsReplaced)
                 {
-                    var mapster = $"Mapster.TypeAdapter.Adapt<{returnTypeAsString}>({alternateReturnVariableName})";
+                    var mapMethod = $"MapToInterface({alternateReturnVariableName})";
                     str.AppendLine(method.ReturnType.IsNullable() ?
-                        $"            return {alternateReturnVariableName} != null ? {mapster} : null;" :
-                        $"            return {mapster};");
+                        $"            return {alternateReturnVariableName} != null ? {mapMethod} : null;" :
+                        $"            return {mapMethod};");
                 }
                 else
                 {
@@ -358,6 +354,7 @@ using System;
             {
                 str.Append($" add {{ _Instance.{name} += value; }}");
             }
+
             if (@event.Any(e => e.MethodKind == MethodKind.EventRemove))
             {
                 str.Append($" remove {{ _Instance.{name} -= value; }}");
