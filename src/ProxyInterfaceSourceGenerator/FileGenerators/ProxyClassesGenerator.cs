@@ -152,6 +152,10 @@ using System;
             {
                 overrideOrVirtual = "virtual ";
             }
+            else if (property.IsRequired)
+            {
+                overrideOrVirtual = "required ";
+            }
 
             var getIsPublic = property.GetMethod.IsPublic();
             var setIsPublic = property.SetMethod.IsPublic();
