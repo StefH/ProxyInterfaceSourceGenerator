@@ -18,6 +18,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         string Test { get; set; }
 
+        string Test2 { get; init; }
+
 
     }
 }

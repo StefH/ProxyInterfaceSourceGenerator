@@ -20,6 +20,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         
         public required string Test { get => _Instance.Test; set => _Instance.Test = value; }
 
+        public required string Test2
+        {
+            get => _Instance.Test2;
+            init => throw new NotImplementedException();
+        }
+
 
         public ClassRequiredPropertyProxy(global::ProxyInterfaceSourceGeneratorTests.Source.ClassRequiredProperty instance)
         {
