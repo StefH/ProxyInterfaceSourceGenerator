@@ -799,6 +799,7 @@ public class ProxyInterfaceSourceGeneratorTest
     [Theory]
     [InlineData("ClassDirect")]
     [InlineData("ClassDirectAndIndirect")]
+    [InlineData("ClassRequiredProperty")]
     public void GenerateFiles_Map(string value)
     {
         // Arrange
@@ -825,8 +826,12 @@ public class ProxyInterfaceSourceGeneratorTest
 
         // Assert
         Assert(result, fileNames);
+    }
 
-        // Test
+    [Fact]
+    public void GenerateFiles_Map_ClassDirectAndIndirect()
+    {
+        // Arrange
         var instance = new ClassDirectAndIndirect
         {
             Id = "Instance",
@@ -835,7 +840,10 @@ public class ProxyInterfaceSourceGeneratorTest
             List = [new ClassDirectAndIndirect { Id = "List 1" }, new ClassDirectAndIndirect { Id = "List 2" }, new ClassDirectAndIndirect { Id = "List 3" }]
         };
 
+        // Act
         var proxy = new ClassDirectAndIndirectProxy(instance);
+
+        // Assert
         proxy.Id.Should().Be("Instance");
         proxy.Value!.Id.Should().Be("Value");
         proxy.Array.Select(a => a.Id).Should().BeEquivalentTo("Array 1", "Array 2");
