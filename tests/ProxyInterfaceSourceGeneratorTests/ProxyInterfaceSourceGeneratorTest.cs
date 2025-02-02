@@ -768,7 +768,7 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Fact]
-    public void GenerateFiles_ForTimeProvider_Should_GenerateCorrectFiles()
+    public void GenerateFiles2()
     {
         // Arrange
         var fileNames = new[]
@@ -797,18 +797,20 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Theory]
-    [InlineData("ClassDirect")]
-    [InlineData("ClassDirectAndIndirect")]
-    public void GenerateFiles_Map(string value)
+    [InlineData("ClassDirect", "ProxyInterfaceSourceGeneratorTests.Source.ClassDirect")]
+    [InlineData("ClassDirectAndIndirect", "ProxyInterfaceSourceGeneratorTests.Source.ClassDirectAndIndirect")]
+    [InlineData("TimeProvider", "System.TimeProvider")]
+    [InlineData("Task", "System.Threading.Tasks.Task")]
+    public void GenerateFiles(string sourceClassName, string type)
     {
         // Arrange
         var fileNames = new[]
         {
-            $"ProxyInterfaceSourceGeneratorTests.Source.I{value}.g.cs",
-            $"ProxyInterfaceSourceGeneratorTests.Source.{value}Proxy.g.cs"
+            $"ProxyInterfaceSourceGeneratorTests.Source.I{sourceClassName}.g.cs",
+            $"{type}Proxy.g.cs"
         };
 
-        var path = Path.Combine(_basePath, $"Source/I{value}.cs");
+        var path = Path.Combine(_basePath, $"Source/I{sourceClassName}.cs");
         var sourceFile = new SourceFile
         {
             Path = path,
@@ -816,7 +818,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = $"typeof(ProxyInterfaceSourceGeneratorTests.Source.{value})"
+                ArgumentList = $"typeof({type})"
             }
         };
 
@@ -825,8 +827,11 @@ public class ProxyInterfaceSourceGeneratorTest
 
         // Assert
         Assert(result, fileNames);
+    }
 
-        // Test
+    [Fact]
+    public void TestClassDirectAndIndirect()
+    {
         var instance = new ClassDirectAndIndirect
         {
             Id = "Instance",
@@ -849,12 +854,12 @@ public class ProxyInterfaceSourceGeneratorTest
         result.Valid.Should().BeTrue();
         result.Files.Should().HaveCount(fileNames.Length + skip);
 
-        foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+        foreach (var file in fileNames.Select((name, index) => new { name, index }))
         {
-            var builder = result.Files[fileName.index + skip]; // +1 means skip the attribute
-            builder.Path.Should().EndWith(fileName.fileName);
+            var builder = result.Files[file.index + skip]; // +1 means skip the attribute
+            builder.Path.Should().EndWith(file.name);
 
-            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{file.name}");
             if (Write) File.WriteAllText(destinationFilename, builder.Text);
             builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
