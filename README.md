@@ -1,4 +1,4 @@
-# ProxyInterfaceGenerator
+# ![icon](./resources/icon_32x32.png) ProxyInterfaceGenerator
 This project uses Source Generation to generate an interface and a Proxy class for classes.
 This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.
 
@@ -8,7 +8,7 @@ It supports:
 - events
 - implicit and explicit operators
 
-## NuGet
+## 📦 NuGet
 [![NuGet Badge](https://img.shields.io/nuget/v/ProxyInterfaceGenerator)](https://www.nuget.org/packages/ProxyInterfaceGenerator)
 
 ## Usage
@@ -136,5 +136,14 @@ public partial interface IAddress
 }
 ```
 
-# References
+## 📚 References
 - https://route2roslyn.netlify.app/symbols-for-dummies/
+
+
+## Sponsors
+
+[Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=StefH) and [Dapper Plus](https://dapper-plus.net/?utm_source=StefH) are major sponsors and proud to contribute to the development of **ProxyInterfaceSourceGenerator**.
+
+[![Entity Framework Extensions](https://raw.githubusercontent.com/StefH/resources/main/sponsor/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=StefH)
+
+[![Dapper Plus](https://raw.githubusercontent.com/StefH/resources/main/sponsor/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=StefH)

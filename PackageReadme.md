@@ -1,4 +1,15 @@
-# Usage
+## ProxyInterfaceGenerator
+This project uses Source Generation to generate an interface and a Proxy class for classes.
+This makes it possible to wrap external classes which do not have an interface, in a Proxy class which makes it easier to Mock and use DI.
+
+It supports:
+- properties
+- methods
+- events
+- implicit and explicit operators
+
+
+### Info
 
 **Given: an external existing class which does not implement an interface**
 ``` c#
@@ -60,9 +71,18 @@ public class PersonProxy : IPerson
 }
 ```
 
-## Use it
+### Use it
 ``` c#
 IPerson p = new PersonProxy(new Person());
 p.Name = "test";
 p.HelloWorld("stef");
 ```
+
+
+### Sponsors
+
+[Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=StefH) and [Dapper Plus](https://dapper-plus.net/?utm_source=StefH) are major sponsors and proud to contribute to the development of **ProxyInterfaceSourceGenerator**.
+
+[![Entity Framework Extensions](https://raw.githubusercontent.com/StefH/resources/main/sponsor/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=StefH)
+
+[![Dapper Plus](https://raw.githubusercontent.com/StefH/resources/main/sponsor/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=StefH)
