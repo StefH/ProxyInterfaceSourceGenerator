@@ -24,3 +24,15 @@ namespace Microsoft.Graph.Admin.Edge
     [Proxy(typeof(EdgeRequestBuilder), true)]
     public partial interface IEdgeRequestBuilder;
 }
+
+namespace Microsoft.Graph
+{
+    [Proxy<GraphServiceClient>(true)]
+    public partial interface IGraphServiceClient;
+}
+
+namespace Microsoft.Graph
+{
+    [Proxy<BatchRequestBuilder>(true)]
+    public partial interface IBatchRequestBuilder;
+}
