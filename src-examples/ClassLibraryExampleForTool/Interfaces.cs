@@ -31,7 +31,7 @@ namespace Microsoft.Graph
     public partial interface IGraphServiceClient;
 }
 
-namespace Microsoft.Graph
+namespace Microsoft.Graph.Core.Requests
 {
     [Proxy<BatchRequestBuilder>(true)]
     public partial interface IBatchRequestBuilder;
