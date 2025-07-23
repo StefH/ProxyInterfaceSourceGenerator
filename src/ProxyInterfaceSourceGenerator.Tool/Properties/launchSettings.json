@@ -2,7 +2,7 @@
   "profiles": {
     "ProxyInterfaceSourceGenerator.Tool": {
         "commandName": "Project",
-        "commandLineArgs": "--sourceDll \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\bin\\Debug\\net8.0\\ClassLibraryExampleForTool.dll\" --sourceFile \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\IBuilders.cs\" --outputPath \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\Generated\""
+        "commandLineArgs": "--sourceDll \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\bin\\Debug\\net8.0\\ClassLibraryExampleForTool.dll\" --sourceFile \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\Interfaces.cs\" --outputPath \"C:\\dev\\GitHub\\ProxyInterfaceSourceGenerator\\src-examples\\ClassLibraryExampleForTool\\Generated\""
     }
   }
 }
