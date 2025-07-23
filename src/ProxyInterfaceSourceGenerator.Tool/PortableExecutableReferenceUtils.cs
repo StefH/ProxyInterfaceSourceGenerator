@@ -81,9 +81,12 @@ internal static class PortableExecutableReferenceUtils
     private static IEnumerable<string> GetFrameworkAssemblyPaths()
     {
         var runtimeDir = RuntimeEnvironment.GetRuntimeDirectory();
-        var common = new[] {
-            "System.Private.CoreLib.dll", "System.Runtime.dll",
-            "netstandard.dll", "mscorlib.dll"
+        var common = new[]
+        {
+            "System.Private.CoreLib.dll",
+            "System.Runtime.dll",
+            "netstandard.dll",
+            "mscorlib.dll"
         };
 
         foreach (var name in common)
@@ -131,6 +134,8 @@ internal static class PortableExecutableReferenceUtils
                         {
                             dlls.Add(dll);
                         }
+
+                        break;
                     }
                 }
             }
