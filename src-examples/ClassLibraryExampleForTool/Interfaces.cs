@@ -13,14 +13,14 @@ namespace Stef
     }
 }
 
-namespace Microsoft.Graph.Admin
-{
-    [Proxy(typeof(AdminRequestBuilder), true)]
-    public partial interface IAdminRequestBuilder;
-}
+//namespace Microsoft.Graph.Admin
+//{
+//    [Proxy(typeof(AdminRequestBuilder), true)]
+//    public partial interface IAdminRequestBuilder;
+//}
 
-namespace Microsoft.Graph.Admin.Edge
-{
-    [Proxy(typeof(EdgeRequestBuilder), true)]
-    public partial interface IEdgeRequestBuilder;
-}
+//namespace Microsoft.Graph.Admin.Edge
+//{
+//    [Proxy(typeof(EdgeRequestBuilder), true)]
+//    public partial interface IEdgeRequestBuilder;
+//}
