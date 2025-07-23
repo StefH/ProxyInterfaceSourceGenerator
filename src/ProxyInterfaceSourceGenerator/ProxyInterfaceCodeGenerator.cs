@@ -12,6 +12,12 @@ namespace ProxyInterfaceSourceGenerator;
 internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
     private readonly ExtraFilesGenerator _proxyAttributeGenerator = new();
+    private readonly Action<string, string>? _generateFileAction;
+
+    public ProxyInterfaceCodeGenerator(Action<string, string>? generateFileAction = null)
+    {
+        _generateFileAction = generateFileAction;
+    }
 
     public void Initialize(GeneratorInitializationContext context)
     {
@@ -42,6 +48,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
             var supportsGenericAttributes = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp11;
 
             GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
+
             GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
@@ -69,7 +76,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         context.AddSource("Error.g", SourceText.From(message, Encoding.UTF8));
     }
 
-    private static void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
     {
         var context = new Context
         {
@@ -80,11 +87,18 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
         foreach (var (fileName, text) in partialInterfacesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            if (_generateFileAction == null)
+            {
+                context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            }
+            else
+            {
+                _generateFileAction(fileName, text);
+            }
         }
     }
 
-    private static void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
     {
         var context = new Context
         {
@@ -95,7 +109,14 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
         foreach (var (fileName, text) in proxyClassesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            if (_generateFileAction == null)
+            {
+                context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            }
+            else
+            {
+                _generateFileAction(fileName, text);
+            }
         }
     }
 }

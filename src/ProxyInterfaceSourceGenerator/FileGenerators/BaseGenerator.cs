@@ -6,11 +6,13 @@ using ProxyInterfaceSourceGenerator.Builders;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
+using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
 internal abstract class BaseGenerator
 {
+    protected readonly UniqueFileNameHelper UniqueFileNameHelper = new();
     protected readonly Context Context;
     protected readonly bool SupportsNullable;
 
