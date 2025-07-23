@@ -6,6 +6,8 @@ namespace ProxyInterfaceSourceGenerator.Tool;
 
 internal static class PortableExecutableReferenceUtils
 {
+    private static readonly string[] TargetFrameworks = ["net8.0", "net7.0", "net6.0", "net5.0", "netstandard2.1", "netstandard2.0"];
+
     internal static HashSet<PortableExecutableReference> GetAllReferences(string dllPath, string? nugetPackagesFolder = null)
     {
         if (!File.Exists(dllPath))
@@ -113,7 +115,7 @@ internal static class PortableExecutableReferenceUtils
             return dlls;
         }
 
-        var targetFrameworks = new[] { "net6.0", "net8.0", "netstandard2.0" };
+
 
         foreach (var idDir in Directory.EnumerateDirectories(nugetRoot))
         {
@@ -125,7 +127,7 @@ internal static class PortableExecutableReferenceUtils
                     continue;
                 }
 
-                foreach (var tfm in targetFrameworks)
+                foreach (var tfm in TargetFrameworks)
                 {
                     var tfmDir = Path.Combine(libDir, tfm);
                     if (Directory.Exists(tfmDir))
@@ -141,6 +143,6 @@ internal static class PortableExecutableReferenceUtils
             }
         }
 
-        return dlls;
+        return dlls.OrderBy(d => d);
     }
 }

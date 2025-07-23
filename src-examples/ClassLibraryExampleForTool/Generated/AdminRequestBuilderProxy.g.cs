@@ -41,34 +41,34 @@ namespace Microsoft.Graph.Admin
 
         public global::Microsoft.Graph.Admin.Sharepoint.SharepointRequestBuilder Sharepoint { get => _Instance.Sharepoint; }
 
-        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin> GetAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>> requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin?> GetAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>> requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
             global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result_1805284658 = _Instance.GetAsync(requestConfiguration_, cancellationToken_);
             return result_1805284658;
         }
 
-        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin> PatchAsync(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>> requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin?> PatchAsync(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             global::Microsoft.Graph.Models.Admin body_ = body;
-            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>> requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
             global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result_910894592 = _Instance.PatchAsync(body_, requestConfiguration_, cancellationToken_);
             return result_910894592;
         }
 
-        public global::Microsoft.Kiota.Abstractions.RequestInformation ToGetRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>> requestConfiguration = null)
+        public global::Microsoft.Kiota.Abstractions.RequestInformation ToGetRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null)
         {
-            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>> requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
             var result__695410420 = _Instance.ToGetRequestInformation(requestConfiguration_);
             return result__695410420;
         }
 
-        public global::Microsoft.Kiota.Abstractions.RequestInformation ToPatchRequestInformation(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>> requestConfiguration = null)
+        public global::Microsoft.Kiota.Abstractions.RequestInformation ToPatchRequestInformation(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null)
         {
             global::Microsoft.Graph.Models.Admin body_ = body;
-            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>> requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
             var result_2136344646 = _Instance.ToPatchRequestInformation(body_, requestConfiguration_);
             return result_2136344646;
         }
