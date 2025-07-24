@@ -43,7 +43,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
-        var fileName = UniqueFileNameHelper.GetUniqueFileName($"{className}Proxy.g.cs");
+        var fileName = UniqueFileNameHelper.GetUniqueFileName($"{className}.g.cs");
 
         fileData = new FileData(
             //$"{targetClassSymbol.Symbol.GetFullMetadataName()}Proxy.g.cs",

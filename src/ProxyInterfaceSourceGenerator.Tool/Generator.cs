@@ -89,7 +89,7 @@ internal class Generator : IDisposable
 
         var parallelOptions = new ParallelOptions
         {
-            MaxDegreeOfParallelism = Environment.ProcessorCount * 2,
+            MaxDegreeOfParallelism = 2, //Environment.ProcessorCount * 2,
             CancellationToken = cancellationToken
         };
 
@@ -102,7 +102,7 @@ internal class Generator : IDisposable
                 stopwatch.Start();
 
                 var fullPath = Path.Combine(_outputPath, fileData.Filename);
-                Console.WriteLine($"Processing file: {fileData.Filename}");
+                // Console.WriteLine($"Processing file: {fileData.Filename}");
 
                 string modified;
                 try

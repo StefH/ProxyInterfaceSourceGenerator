@@ -49,7 +49,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
             GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
 
-            GeneratePartialInterfaces(context, receiver, supportsNullable);
+            // GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
         catch (Exception exception)
