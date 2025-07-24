@@ -1,9 +1,5 @@
-using System.Runtime.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.Extensions.Configuration;
 
 namespace ProxyInterfaceSourceGenerator.Tool;
