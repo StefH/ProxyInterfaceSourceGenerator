@@ -44,7 +44,7 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 
         var interfaceName = ResolveInterfaceNameWithOptionalTypeConstraints(targetClassSymbol.Symbol, pd.ShortInterfaceName);
 
-        var fileName = UniqueFileNameHelper.GetUniqueFileName($"{ci.Identifier.ToFullString()}.g.cs");
+        var fileName = UniqueFileNameHelper.GetUniqueFileName($"{ci.Identifier.ToString()}.g.cs");
 
         fileData = new FileData(
             //$"{sourceInterfaceSymbol.Symbol.GetFullMetadataName()}.g.cs",

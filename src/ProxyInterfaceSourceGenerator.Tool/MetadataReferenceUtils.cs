@@ -4,11 +4,11 @@ using Microsoft.CodeAnalysis;
 
 namespace ProxyInterfaceSourceGenerator.Tool;
 
-internal static class PortableExecutableReferenceUtils
+internal static class MetadataReferenceUtils
 {
     private static readonly string[] TargetFrameworks = ["net8.0", "net7.0", "net6.0", "net5.0", "netstandard2.1", "netstandard2.0"];
 
-    internal static HashSet<PortableExecutableReference> GetAllReferences(string dllPath, string? nugetPackagesFolder = null)
+    internal static HashSet<MetadataReference> GetAllReferences(string dllPath, string? nugetPackagesFolder = null)
     {
         if (!File.Exists(dllPath))
         {
@@ -16,7 +16,7 @@ internal static class PortableExecutableReferenceUtils
         }
 
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var references = new HashSet<PortableExecutableReference>();
+        var references = new HashSet<MetadataReference>();
 
         // Build full resolver set
         nugetPackagesFolder ??= GetDefaultNuGetPackagesPath();
@@ -50,7 +50,7 @@ internal static class PortableExecutableReferenceUtils
         Assembly assembly,
         MetadataLoadContext mlc,
         HashSet<string> visited,
-        HashSet<PortableExecutableReference> references)
+        HashSet<MetadataReference> references)
     {
         if (string.IsNullOrEmpty(assembly.Location) || !visited.Add(assembly.Location))
         {
@@ -114,8 +114,6 @@ internal static class PortableExecutableReferenceUtils
         {
             return dlls;
         }
-
-
 
         foreach (var idDir in Directory.EnumerateDirectories(nugetRoot))
         {

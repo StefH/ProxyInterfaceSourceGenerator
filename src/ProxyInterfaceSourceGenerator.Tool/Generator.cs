@@ -24,7 +24,7 @@ internal class Generator
             Directory.CreateDirectory(_outputPath);
         }
 
-        var references = PortableExecutableReferenceUtils.GetAllReferences(_sourceDll);
+        var references = MetadataReferenceUtils.GetAllReferences(_sourceDll);
 
         var allText = File.ReadAllText(_sourceFile);
 
