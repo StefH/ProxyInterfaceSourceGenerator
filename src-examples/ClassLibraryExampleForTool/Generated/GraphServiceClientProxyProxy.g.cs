@@ -9,6 +9,7 @@
 
 #nullable enable
 using System;
+using Microsoft.Graph.Core.Requests;
 
 namespace Microsoft.Graph
 {
@@ -190,6 +191,8 @@ namespace Microsoft.Graph
         public global::Microsoft.Graph.TenantRelationships.TenantRelationshipsRequestBuilder TenantRelationships { get => _Instance.TenantRelationships; }
 
         public global::Microsoft.Graph.Users.UsersRequestBuilder Users { get => _Instance.Users; }
+
+        BatchRequestBuilder IBaseClient.Batch => throw new NotImplementedException();
 
         public void Dispose()
         {

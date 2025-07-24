@@ -5,45 +5,40 @@ using Microsoft.CodeAnalysis.Options;
 using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.CodeAnalysis.Text;
 
-namespace ProxyInterfaceSourceGenerator.Tool
+namespace ProxyInterfaceSourceGenerator.Tool;
+
+public class CSharpSimplifier
 {
-    public static class CSharpSimplifier
+    private readonly HashSet<MetadataReference> _references;
+
+    public CSharpSimplifier(HashSet<MetadataReference> references)
     {
-        public static async Task<string> SimplifyCSharpCodeAsync(string sourceCode)
-        {
-            var id = Guid.NewGuid().ToString("N");
+        _references = references;
+    }
 
-            var workspace = new AdhocWorkspace();
-            workspace.Options
-                .WithChangedOption(FormattingOptions.IndentationSize, LanguageNames.CSharp, 2);
-                //.WithChangedOption(new OptionKey(SimplificationOptions., LanguageNames.CSharp), );
+    public async Task<string> SimplifyCSharpCodeAsync(string sourceCode)
+    {
+        var id = Guid.NewGuid().ToString("N");
 
-            var project = workspace
-                .CurrentSolution
-                .AddProject(id, $"{id}.dll", LanguageNames.CSharp)
-                .WithMetadataReferences(GetDefaultReferences());
+        var workspace = new AdhocWorkspace();
+        //workspace.Options
+        //    .WithChangedOption(FormattingOptions.IndentationSize, LanguageNames.CSharp, 2);
+            //.WithChangedOption(new OptionKey(SimplificationOptions., LanguageNames.CSharp), );
 
-            var document = project.AddDocument($"Input_{id}.cs", SourceText.From(sourceCode));
+        var project = workspace
+            .CurrentSolution
+            .AddProject(id, $"{id}.dll", LanguageNames.CSharp)
+            .WithMetadataReferences(_references);
 
-            // Annotate document to allow simplification
-            var annotatedDoc = await Simplifier.ReduceAsync(document, workspace.Options);
+        var document = project.AddDocument($"Input_{id}.cs", SourceText.From(sourceCode));
 
-            // Format the document after simplification
-            var formattedDoc = await Formatter.FormatAsync(annotatedDoc, workspace.Options);
+        // Annotate document to allow simplification
+        var annotatedDoc = await Simplifier.ReduceAsync(document, workspace.Options);
 
-            var simplifiedText = await formattedDoc.GetTextAsync();
-            return simplifiedText.ToString();
-        }
+        // Format the document after simplification
+        var formattedDoc = await Formatter.FormatAsync(annotatedDoc, workspace.Options);
 
-        private static IEnumerable<MetadataReference> GetDefaultReferences()
-        {
-            return
-            [
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Task).Assembly.Location),
-                MetadataReference.CreateFromFile(Assembly.Load("netstandard").Location)
-            ];
-        }
+        var simplifiedText = await formattedDoc.GetTextAsync();
+        return simplifiedText.ToString();
     }
 }

@@ -14,6 +14,8 @@ internal class Generator
     private readonly string _sourceFile;
     private readonly string _outputPath;
 
+    private CSharpSimplifier _simplifier;
+
     public Generator(IConfiguration configuration)
     {
         _sourceDll = configuration["sourceDll"] ?? throw new ArgumentNullException();
@@ -29,6 +31,8 @@ internal class Generator
         }
 
         var references = MetadataReferenceUtils.GetAllReferences(_sourceDll);
+
+        _simplifier = new CSharpSimplifier(references);
 
         var allText = File.ReadAllText(_sourceFile);
 
@@ -50,7 +54,7 @@ internal class Generator
         Console.WriteLine($"Writing file: {fullPath}");
 
         var modified = "";
-        CSharpSimplifier.SimplifyCSharpCodeAsync(content).ContinueWith(task =>
+        _simplifier.SimplifyCSharpCodeAsync(content).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
