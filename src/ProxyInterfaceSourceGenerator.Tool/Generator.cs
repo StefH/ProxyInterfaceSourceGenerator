@@ -1,5 +1,9 @@
+using System.Runtime.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.Extensions.Configuration;
 
 namespace ProxyInterfaceSourceGenerator.Tool;
@@ -17,7 +21,7 @@ internal class Generator
         _outputPath = configuration["outputPath"] ?? ".";
     }
 
-    public void Generate()
+    public async Task GenerateAsync()
     {
         if (!Directory.Exists(_outputPath))
         {
@@ -44,6 +48,18 @@ internal class Generator
     {
         var fullPath = Path.Combine(_outputPath, fileName);
         Console.WriteLine($"Writing file: {fullPath}");
-        File.WriteAllText(fullPath, content);
+
+        var modified = "";
+        CSharpSimplifier.SimplifyCSharpCodeAsync(content).ContinueWith(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Console.WriteLine($"Error simplifying code: {task.Exception?.Message}");
+                return;
+            }
+            modified = task.Result;
+        }).Wait();
+
+        File.WriteAllText(fullPath, modified);
     }
 }

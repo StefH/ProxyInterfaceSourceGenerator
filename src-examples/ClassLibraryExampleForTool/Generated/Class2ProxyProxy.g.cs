@@ -17,12 +17,12 @@ namespace Stef
 
 
         public global::Stef.Class2 _Instance { get; }
-        
+
 
         public Class2Proxy(global::Stef.Class2 instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }

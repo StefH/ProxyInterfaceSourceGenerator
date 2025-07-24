@@ -38,7 +38,7 @@ namespace Microsoft.Graph.Admin
 
 
         public global::Microsoft.Graph.Admin.AdminRequestBuilder _Instance { get; }
-        
+
         public global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder Edge { get => MapToInterface(_Instance.Edge); }
 
         public global::Microsoft.Graph.Admin.Microsoft365Apps.Microsoft365AppsRequestBuilder Microsoft365Apps { get => _Instance.Microsoft365Apps; }
@@ -94,7 +94,7 @@ namespace Microsoft.Graph.Admin
         public AdminRequestBuilderProxy(global::Microsoft.Graph.Admin.AdminRequestBuilder instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }

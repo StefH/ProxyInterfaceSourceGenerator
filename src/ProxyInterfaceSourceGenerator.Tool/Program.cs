@@ -23,4 +23,4 @@ using var host = builder.Build();
 
 var generator = host.Services.GetRequiredService<Generator>();
 
-generator.Generate();
+await generator.GenerateAsync();

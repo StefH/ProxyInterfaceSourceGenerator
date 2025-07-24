@@ -48,7 +48,7 @@ namespace Microsoft.Graph
 
 
         public global::Microsoft.Graph.GraphServiceClient _Instance { get; }
-        
+
         public global::Microsoft.Kiota.Abstractions.IRequestAdapter RequestAdapter { get => _Instance.RequestAdapter; set => _Instance.RequestAdapter = value; }
 
         public global::Microsoft.Graph.Core.Requests.IBatchRequestBuilder Batch { get => MapToInterface(_Instance.Batch); }
@@ -249,7 +249,7 @@ namespace Microsoft.Graph
         public GraphServiceClientProxy(global::Microsoft.Graph.GraphServiceClient instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }

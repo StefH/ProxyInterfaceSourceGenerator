@@ -48,7 +48,7 @@ namespace Microsoft.Graph.Core.Requests
 
 
         public global::Microsoft.Graph.Core.Requests.BatchRequestBuilder _Instance { get; }
-        
+
         public global::System.Threading.Tasks.Task<global::Microsoft.Graph.BatchResponseContent> PostAsync(global::Microsoft.Graph.BatchRequestContent batchRequestContent, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken), global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings = null)
         {
             global::Microsoft.Graph.BatchRequestContent batchRequestContent_ = batchRequestContent;
@@ -79,7 +79,7 @@ namespace Microsoft.Graph.Core.Requests
         public BatchRequestBuilderProxy(global::Microsoft.Graph.Core.Requests.BatchRequestBuilder instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }

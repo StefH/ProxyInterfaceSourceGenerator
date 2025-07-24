@@ -17,7 +17,7 @@ namespace Stef
 
 
         public global::Stef.Class1 _Instance { get; }
-        
+
         public void T(string? s)
         {
             string? s_ = s;
@@ -28,7 +28,7 @@ namespace Stef
         public Class1Proxy(global::Stef.Class1 instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }

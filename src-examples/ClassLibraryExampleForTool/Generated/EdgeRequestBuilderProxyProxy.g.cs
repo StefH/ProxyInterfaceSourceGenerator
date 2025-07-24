@@ -38,7 +38,7 @@ namespace Microsoft.Graph.Admin.Edge
 
 
         public global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder _Instance { get; }
-        
+
         public global::Microsoft.Graph.Admin.Edge.InternetExplorerMode.InternetExplorerModeRequestBuilder InternetExplorerMode { get => _Instance.InternetExplorerMode; }
 
         public global::System.Threading.Tasks.Task DeleteAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
@@ -99,7 +99,7 @@ namespace Microsoft.Graph.Admin.Edge
         public EdgeRequestBuilderProxy(global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder instance)
         {
             _Instance = instance;
-            
+
         }
     }
 }
