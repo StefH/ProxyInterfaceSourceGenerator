@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.CodeAnalysis.Text;
 
@@ -12,8 +11,6 @@ public class CSharpSimplifier(HashSet<MetadataReference> references)
         var id = Guid.NewGuid().ToString("N");
 
         using var workspace = new AdhocWorkspace();
-        workspace.Options
-            .WithChangedOption(FormattingOptions.IndentationSize, LanguageNames.CSharp, 2);           
 
         var project = workspace
             .CurrentSolution
@@ -30,8 +27,6 @@ public class CSharpSimplifier(HashSet<MetadataReference> references)
 
         var simplifiedDoc = await Simplifier.ReduceAsync(newDoc, workspace.Options);
 
-        // var formattedDoc = await Formatter.FormatAsync(simplifiedDoc, workspace.Options);
-        
         return (await simplifiedDoc.GetTextAsync()).ToString();
     }
 }

@@ -54,33 +54,58 @@ internal class Generator : IDisposable
         using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
 
         // Start the file processing task
-        var fileProcessingTask = ProcessFileQueueAsync(references, combinedCts.Token);
+        //var fileProcessingTask = ProcessFileQueueAsync(references, combinedCts.Token);
+
+        var simplifier = new CSharpSimplifier(references);
 
         try
         {
             // Run the generator
-            _ = CSharpGeneratorDriver.Create(new ProxyInterfaceCodeGenerator(GenerateFileAction))
+            _ = CSharpGeneratorDriver.Create(new ProxyInterfaceCodeGenerator(fileData => GenerateFileAction(fileData, simplifier)))
                 .RunGeneratorsAndUpdateCompilation(compilation, out _, out _);
 
             // Signal that no more files will be enqueued
-            _writer.Complete();
+            //_writer.Complete();
 
             // Wait for all files to be processed
-            await fileProcessingTask;
+            //await fileProcessingTask;
         }
         catch
         {
-            await _cancellationTokenSource.CancelAsync();
+            //await _cancellationTokenSource.CancelAsync();
             throw;
         }
     }
 
-    private void GenerateFileAction(FileData fileData)
+    private void GenerateFileAction(FileData fileData, CSharpSimplifier simplifier)
     {
-        if (!_writer.TryWrite(fileData))
-        {
-            Console.WriteLine($"Warning: Failed to enqueue file {fileData.Filename}");
-        }
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        var fullPath = Path.Combine(_outputPath, fileData.Filename);
+        // Console.WriteLine($"Processing file: {fileData.Filename}");
+
+        //string modified;
+        //try
+        //{
+        //    modified = simplifier.SimplifyCSharpCodeAsync(fileData.Text).GetAwaiter().GetResult();
+        //}
+        //catch (Exception ex)
+        //{
+        //    modified = fileData.Text; // Fall back to original content
+
+        //    Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
+        //}
+
+        File.WriteAllText(fullPath, fileData.Text);
+
+        stopwatch.Stop();
+        Console.WriteLine($"Written file: {fileData.Filename} ({stopwatch.Elapsed.TotalMilliseconds} ms)");
+
+        //if (!_writer.TryWrite(fileData))
+        //{
+        //    Console.WriteLine($"Warning: Failed to enqueue file {fileData.Filename}");
+        //}
     }
 
     private async Task ProcessFileQueueAsync(HashSet<MetadataReference> references, CancellationToken cancellationToken)
@@ -89,18 +114,20 @@ internal class Generator : IDisposable
 
         var parallelOptions = new ParallelOptions
         {
-            MaxDegreeOfParallelism = 2, //Environment.ProcessorCount * 2,
+            MaxDegreeOfParallelism = 1, // Environment.ProcessorCount,
             CancellationToken = cancellationToken
         };
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        int idx = 0;
 
         await Parallel.ForEachAsync(
             _reader.ReadAllAsync(cancellationToken),
             parallelOptions,
             async (fileData, ct) =>
             {
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
                 var fullPath = Path.Combine(_outputPath, fileData.Filename);
                 // Console.WriteLine($"Processing file: {fileData.Filename}");
 
@@ -118,8 +145,23 @@ internal class Generator : IDisposable
 
                 await File.WriteAllTextAsync(fullPath, modified, ct);
 
-                stopwatch.Stop();
-                Console.WriteLine($"Written file: {fileData.Filename} ({stopwatch.ElapsedMilliseconds} ms)");
+                
+                Console.WriteLine($"Written file: {fileData.Filename}");
+
+                idx++;
+
+                if (idx > 100)
+                {
+                    stopwatch.Stop();
+                    Console.WriteLine($"{stopwatch.Elapsed.TotalSeconds} s");
+                    throw new AccessViolationException();
+                }
+
+                //  1 = 13,7243953 s
+                //  2 = 12,0959904 s
+                //  4 = 11,9327242 s
+                //  8 = 12,4146649 s
+                // 32 = 15,0603359 s
             });
     }
 
