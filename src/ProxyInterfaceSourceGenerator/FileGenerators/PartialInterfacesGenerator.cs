@@ -30,12 +30,12 @@ internal class PartialInterfacesGenerator : BaseGenerator, IFilesGenerator
 
     private bool TryGenerateFile(InterfaceDeclarationSyntax ci, ProxyData pd, [NotNullWhen(true)] out FileData? fileData)
     {
-        fileData = default;
+        fileData = null;
 
-        if (!TryGetNamedTypeSymbolByFullName(TypeKind.Interface, ci.Identifier.ToString(), pd.Usings, out var sourceInterfaceSymbol))
-        {
-            return false;
-        }
+        //if (!TryGetNamedTypeSymbolByFullName(TypeKind.Interface, ci.Identifier.ToString(), pd.Usings, out var sourceInterfaceSymbol))
+        //{
+        //    return false;
+        //}
 
         if (!TryGetNamedTypeSymbolByFullName(TypeKind.Class, pd.FullMetadataTypeName, pd.Usings, out var targetClassSymbol))
         {
