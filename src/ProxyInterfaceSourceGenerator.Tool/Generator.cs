@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Threading.Channels;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -86,57 +87,40 @@ internal class Generator : IDisposable
     {
         var simplifier = new CSharpSimplifier(references);
 
-        var semaphore = new SemaphoreSlim(Environment.ProcessorCount); // Limit concurrent file operations
-        var tasks = new List<Task>();
-
-        try
+        var parallelOptions = new ParallelOptions
         {
-            await foreach (var fileData in _reader.ReadAllAsync(cancellationToken))
+            MaxDegreeOfParallelism = Environment.ProcessorCount * 2,
+            CancellationToken = cancellationToken
+        };
+
+        await Parallel.ForEachAsync(
+            _reader.ReadAllAsync(cancellationToken),
+            parallelOptions,
+            async (fileData, ct) =>
             {
-                await semaphore.WaitAsync(cancellationToken);
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
 
-                var processTask = ProcessSingleFileAsync(simplifier, fileData, semaphore, cancellationToken);
-                tasks.Add(processTask);
-            }
+                var fullPath = Path.Combine(_outputPath, fileData.Filename);
+                Console.WriteLine($"Processing file: {fileData.Filename}");
 
-            // Wait for all file processing tasks to complete
-            await Task.WhenAll(tasks);
-        }
-        catch (OperationCanceledException)
-        {
-            // Expected when cancellation is requested
-        }
-    }
+                string modified;
+                try
+                {
+                    modified = await simplifier.SimplifyCSharpCodeAsync(fileData.Text);
+                }
+                catch (Exception ex)
+                {
+                    modified = fileData.Text; // Fall back to original content
 
-    private async Task ProcessSingleFileAsync(CSharpSimplifier simplifier, FileData fileData, SemaphoreSlim semaphore, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var fullPath = Path.Combine(_outputPath, fileData.Filename);
-            Console.WriteLine($"Processing file: {fullPath}");
+                    Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
+                }
 
-            string modified;
-            try
-            {
-                modified = await simplifier.SimplifyCSharpCodeAsync(fileData.Text);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error simplifying code for {fileData.Filename}: {ex.Message}");
-                modified = fileData.Text; // Fall back to original content
-            }
+                await File.WriteAllTextAsync(fullPath, modified, ct);
 
-            await File.WriteAllTextAsync(fullPath, modified, cancellationToken);
-            Console.WriteLine($"Written file: {fullPath}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
-        }
-        finally
-        {
-            semaphore.Release();
-        }
+                stopwatch.Stop();
+                Console.WriteLine($"Written file: {fileData.Filename} ({stopwatch.ElapsedMilliseconds} ms)");
+            });
     }
 
     public void Dispose()
