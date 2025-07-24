@@ -6,14 +6,12 @@ using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.Tool;
 
-internal class Generator
+internal class Generator : IDisposable
 {
     private readonly string _sourceDll;
     private readonly string _sourceFile;
     private readonly string _outputPath;
 
-    private CSharpSimplifier _simplifier;
-    private readonly Channel<FileData> _fileQueue;
     private readonly ChannelWriter<FileData> _writer;
     private readonly ChannelReader<FileData> _reader;
     private readonly CancellationTokenSource _cancellationTokenSource;
@@ -25,9 +23,9 @@ internal class Generator
         _outputPath = configuration["outputPath"] ?? ".";
 
         // Create unbounded channel for file processing queue
-        _fileQueue = Channel.CreateUnbounded<FileData>();
-        _writer = _fileQueue.Writer;
-        _reader = _fileQueue.Reader;
+        var fileDataQueue = Channel.CreateUnbounded<FileData>();
+        _writer = fileDataQueue.Writer;
+        _reader = fileDataQueue.Reader;
         _cancellationTokenSource = new CancellationTokenSource();
     }
 
@@ -39,8 +37,6 @@ internal class Generator
         }
 
         var references = MetadataReferenceUtils.GetAllReferences(_sourceDll);
-
-        _simplifier = new CSharpSimplifier(references);
 
         var allText = await File.ReadAllTextAsync(_sourceFile, cancellationToken);
 
@@ -57,7 +53,7 @@ internal class Generator
         using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
 
         // Start the file processing task
-        var fileProcessingTask = ProcessFileQueueAsync(combinedCts.Token);
+        var fileProcessingTask = ProcessFileQueueAsync(references, combinedCts.Token);
 
         try
         {
@@ -73,7 +69,7 @@ internal class Generator
         }
         catch
         {
-            _cancellationTokenSource.Cancel();
+            await _cancellationTokenSource.CancelAsync();
             throw;
         }
     }
@@ -86,8 +82,10 @@ internal class Generator
         }
     }
 
-    private async Task ProcessFileQueueAsync(CancellationToken cancellationToken)
+    private async Task ProcessFileQueueAsync(HashSet<MetadataReference> references, CancellationToken cancellationToken)
     {
+        var simplifier = new CSharpSimplifier(references);
+
         var semaphore = new SemaphoreSlim(Environment.ProcessorCount); // Limit concurrent file operations
         var tasks = new List<Task>();
 
@@ -97,7 +95,7 @@ internal class Generator
             {
                 await semaphore.WaitAsync(cancellationToken);
 
-                var processTask = ProcessSingleFileAsync(fileData, semaphore, cancellationToken);
+                var processTask = ProcessSingleFileAsync(simplifier, fileData, semaphore, cancellationToken);
                 tasks.Add(processTask);
             }
 
@@ -110,7 +108,7 @@ internal class Generator
         }
     }
 
-    private async Task ProcessSingleFileAsync(FileData fileData, SemaphoreSlim semaphore, CancellationToken cancellationToken)
+    private async Task ProcessSingleFileAsync(CSharpSimplifier simplifier, FileData fileData, SemaphoreSlim semaphore, CancellationToken cancellationToken)
     {
         try
         {
@@ -120,7 +118,7 @@ internal class Generator
             string modified;
             try
             {
-                modified = await _simplifier.SimplifyCSharpCodeAsync(fileData.Text);
+                modified = await simplifier.SimplifyCSharpCodeAsync(fileData.Text);
             }
             catch (Exception ex)
             {
@@ -143,7 +141,7 @@ internal class Generator
 
     public void Dispose()
     {
-        _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
     }
 }
