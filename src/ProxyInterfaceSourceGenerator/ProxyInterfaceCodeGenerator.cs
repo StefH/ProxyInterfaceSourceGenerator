@@ -12,9 +12,9 @@ namespace ProxyInterfaceSourceGenerator;
 internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
     private readonly ExtraFilesGenerator _proxyAttributeGenerator = new();
-    private readonly Action<string, string>? _generateFileAction;
+    private readonly Action<FileData>? _generateFileAction;
 
-    public ProxyInterfaceCodeGenerator(Action<string, string>? generateFileAction = null)
+    public ProxyInterfaceCodeGenerator(Action<FileData>? generateFileAction = null)
     {
         _generateFileAction = generateFileAction;
     }
@@ -85,15 +85,15 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
-        foreach (var (fileName, text) in partialInterfacesGenerator.GenerateFiles())
+        foreach (var fileData in partialInterfacesGenerator.GenerateFiles())
         {
             if (_generateFileAction == null)
             {
-                context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(fileData.Filename, SourceText.From(fileData.Text, Encoding.UTF8));
             }
             else
             {
-                _generateFileAction(fileName, text);
+                _generateFileAction(fileData);
             }
         }
     }
@@ -107,15 +107,15 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
-        foreach (var (fileName, text) in proxyClassesGenerator.GenerateFiles())
+        foreach (var fileData in proxyClassesGenerator.GenerateFiles())
         {
             if (_generateFileAction == null)
             {
-                context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+                context.GeneratorExecutionContext.AddSource(fileData.Filename, SourceText.From(fileData.Text, Encoding.UTF8));
             }
             else
             {
-                _generateFileAction(fileName, text);
+                _generateFileAction(fileData);
             }
         }
     }

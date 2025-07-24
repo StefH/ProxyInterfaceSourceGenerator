@@ -2,6 +2,7 @@ using System.Threading.Channels;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Configuration;
+using ProxyInterfaceSourceGenerator.Models;
 
 namespace ProxyInterfaceSourceGenerator.Tool;
 
@@ -12,9 +13,9 @@ internal class Generator
     private readonly string _outputPath;
 
     private CSharpSimplifier _simplifier;
-    private readonly Channel<FileTask> _fileQueue;
-    private readonly ChannelWriter<FileTask> _writer;
-    private readonly ChannelReader<FileTask> _reader;
+    private readonly Channel<FileData> _fileQueue;
+    private readonly ChannelWriter<FileData> _writer;
+    private readonly ChannelReader<FileData> _reader;
     private readonly CancellationTokenSource _cancellationTokenSource;
 
     public Generator(IConfiguration configuration)
@@ -24,13 +25,13 @@ internal class Generator
         _outputPath = configuration["outputPath"] ?? ".";
 
         // Create unbounded channel for file processing queue
-        _fileQueue = Channel.CreateUnbounded<FileTask>();
+        _fileQueue = Channel.CreateUnbounded<FileData>();
         _writer = _fileQueue.Writer;
         _reader = _fileQueue.Reader;
         _cancellationTokenSource = new CancellationTokenSource();
     }
 
-    public async Task GenerateAsync()
+    public async Task GenerateAsync(CancellationToken cancellationToken = default)
     {
         if (!Directory.Exists(_outputPath))
         {
@@ -41,7 +42,7 @@ internal class Generator
 
         _simplifier = new CSharpSimplifier(references);
 
-        var allText = File.ReadAllText(_sourceFile);
+        var allText = await File.ReadAllTextAsync(_sourceFile, cancellationToken);
 
         var syntaxTree = CSharpSyntaxTree.ParseText(allText);
 
@@ -52,8 +53,11 @@ internal class Generator
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
         );
 
+        // Create combined cancellation token
+        using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
+
         // Start the file processing task
-        var fileProcessingTask = ProcessFileQueueAsync(_cancellationTokenSource.Token);
+        var fileProcessingTask = ProcessFileQueueAsync(combinedCts.Token);
 
         try
         {
@@ -74,14 +78,11 @@ internal class Generator
         }
     }
 
-    private void GenerateFileAction(string fileName, string content)
+    private void GenerateFileAction(FileData fileData)
     {
-        // Enqueue the file for processing
-        var fileTask = new FileTask(fileName, content);
-
-        if (!_writer.TryWrite(fileTask))
+        if (!_writer.TryWrite(fileData))
         {
-            Console.WriteLine($"Warning: Failed to enqueue file {fileName}");
+            Console.WriteLine($"Warning: Failed to enqueue file {fileData.Filename}");
         }
     }
 
@@ -92,11 +93,11 @@ internal class Generator
 
         try
         {
-            await foreach (var fileTask in _reader.ReadAllAsync(cancellationToken))
+            await foreach (var fileData in _reader.ReadAllAsync(cancellationToken))
             {
                 await semaphore.WaitAsync(cancellationToken);
 
-                var processTask = ProcessSingleFileAsync(fileTask, semaphore, cancellationToken);
+                var processTask = ProcessSingleFileAsync(fileData, semaphore, cancellationToken);
                 tasks.Add(processTask);
             }
 
@@ -109,22 +110,22 @@ internal class Generator
         }
     }
 
-    private async Task ProcessSingleFileAsync(FileTask fileTask, SemaphoreSlim semaphore, CancellationToken cancellationToken)
+    private async Task ProcessSingleFileAsync(FileData fileData, SemaphoreSlim semaphore, CancellationToken cancellationToken)
     {
         try
         {
-            var fullPath = Path.Combine(_outputPath, fileTask.FileName);
+            var fullPath = Path.Combine(_outputPath, fileData.Filename);
             Console.WriteLine($"Processing file: {fullPath}");
 
             string modified;
             try
             {
-                modified = await _simplifier.SimplifyCSharpCodeAsync(fileTask.Content);
+                modified = await _simplifier.SimplifyCSharpCodeAsync(fileData.Text);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error simplifying code for {fileTask.FileName}: {ex.Message}");
-                modified = fileTask.Content; // Fall back to original content
+                Console.WriteLine($"Error simplifying code for {fileData.Filename}: {ex.Message}");
+                modified = fileData.Text; // Fall back to original content
             }
 
             await File.WriteAllTextAsync(fullPath, modified, cancellationToken);
@@ -132,7 +133,7 @@ internal class Generator
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error processing file {fileTask.FileName}: {ex.Message}");
+            Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
         }
         finally
         {
@@ -145,6 +146,4 @@ internal class Generator
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
     }
-
-    private record FileTask(string FileName, string Content);
 }
