@@ -12,161 +12,161 @@ using System;
 
 namespace Microsoft.Graph
 {
-    public partial interface IGraphServiceClient : IBaseClient, IDisposable
+    public partial interface IGraphServiceClient : global::Microsoft.Graph.IBaseClient, global::System.IDisposable
     {
-        GraphServiceClient _Instance { get; }
+        global::Microsoft.Graph.GraphServiceClient _Instance { get; }
 
-        Admin.IAdminRequestBuilder Admin { get; }
+        global::Microsoft.Graph.Admin.IAdminRequestBuilder Admin { get; }
 
-        AgreementAcceptances.AgreementAcceptancesRequestBuilder AgreementAcceptances { get; }
+        global::Microsoft.Graph.AgreementAcceptances.AgreementAcceptancesRequestBuilder AgreementAcceptances { get; }
 
-        Agreements.AgreementsRequestBuilder Agreements { get; }
+        global::Microsoft.Graph.Agreements.AgreementsRequestBuilder Agreements { get; }
 
-        AppCatalogs.AppCatalogsRequestBuilder AppCatalogs { get; }
+        global::Microsoft.Graph.AppCatalogs.AppCatalogsRequestBuilder AppCatalogs { get; }
 
-        Applications.ApplicationsRequestBuilder Applications { get; }
+        global::Microsoft.Graph.Applications.ApplicationsRequestBuilder Applications { get; }
 
-        ApplicationTemplates.ApplicationTemplatesRequestBuilder ApplicationTemplates { get; }
+        global::Microsoft.Graph.ApplicationTemplates.ApplicationTemplatesRequestBuilder ApplicationTemplates { get; }
 
-        AuditLogs.AuditLogsRequestBuilder AuditLogs { get; }
+        global::Microsoft.Graph.AuditLogs.AuditLogsRequestBuilder AuditLogs { get; }
 
-        AuthenticationMethodConfigurations.AuthenticationMethodConfigurationsRequestBuilder AuthenticationMethodConfigurations { get; }
+        global::Microsoft.Graph.AuthenticationMethodConfigurations.AuthenticationMethodConfigurationsRequestBuilder AuthenticationMethodConfigurations { get; }
 
-        AuthenticationMethodsPolicy.AuthenticationMethodsPolicyRequestBuilder AuthenticationMethodsPolicy { get; }
+        global::Microsoft.Graph.AuthenticationMethodsPolicy.AuthenticationMethodsPolicyRequestBuilder AuthenticationMethodsPolicy { get; }
 
-        CertificateBasedAuthConfiguration.CertificateBasedAuthConfigurationRequestBuilder CertificateBasedAuthConfiguration { get; }
+        global::Microsoft.Graph.CertificateBasedAuthConfiguration.CertificateBasedAuthConfigurationRequestBuilder CertificateBasedAuthConfiguration { get; }
 
-        Chats.ChatsRequestBuilder Chats { get; }
+        global::Microsoft.Graph.Chats.ChatsRequestBuilder Chats { get; }
 
-        Communications.CommunicationsRequestBuilder Communications { get; }
+        global::Microsoft.Graph.Communications.CommunicationsRequestBuilder Communications { get; }
 
-        Compliance.ComplianceRequestBuilder Compliance { get; }
+        global::Microsoft.Graph.Compliance.ComplianceRequestBuilder Compliance { get; }
 
-        Connections.ConnectionsRequestBuilder Connections { get; }
+        global::Microsoft.Graph.Connections.ConnectionsRequestBuilder Connections { get; }
 
-        Contacts.ContactsRequestBuilder Contacts { get; }
+        global::Microsoft.Graph.Contacts.ContactsRequestBuilder Contacts { get; }
 
-        Contracts.ContractsRequestBuilder Contracts { get; }
+        global::Microsoft.Graph.Contracts.ContractsRequestBuilder Contracts { get; }
 
-        DataPolicyOperations.DataPolicyOperationsRequestBuilder DataPolicyOperations { get; }
+        global::Microsoft.Graph.DataPolicyOperations.DataPolicyOperationsRequestBuilder DataPolicyOperations { get; }
 
-        DeviceAppManagement.DeviceAppManagementRequestBuilder DeviceAppManagement { get; }
+        global::Microsoft.Graph.DeviceAppManagement.DeviceAppManagementRequestBuilder DeviceAppManagement { get; }
 
-        DeviceManagement.DeviceManagementRequestBuilder DeviceManagement { get; }
+        global::Microsoft.Graph.DeviceManagement.DeviceManagementRequestBuilder DeviceManagement { get; }
 
-        Devices.DevicesRequestBuilder Devices { get; }
+        global::Microsoft.Graph.Devices.DevicesRequestBuilder Devices { get; }
 
-        DirectoryNamespace.DirectoryRequestBuilder Directory { get; }
+        global::Microsoft.Graph.DirectoryNamespace.DirectoryRequestBuilder Directory { get; }
 
-        DirectoryObjects.DirectoryObjectsRequestBuilder DirectoryObjects { get; }
+        global::Microsoft.Graph.DirectoryObjects.DirectoryObjectsRequestBuilder DirectoryObjects { get; }
 
-        DirectoryRoles.DirectoryRolesRequestBuilder DirectoryRoles { get; }
+        global::Microsoft.Graph.DirectoryRoles.DirectoryRolesRequestBuilder DirectoryRoles { get; }
 
-        DirectoryRoleTemplates.DirectoryRoleTemplatesRequestBuilder DirectoryRoleTemplates { get; }
+        global::Microsoft.Graph.DirectoryRoleTemplates.DirectoryRoleTemplatesRequestBuilder DirectoryRoleTemplates { get; }
 
-        DomainDnsRecords.DomainDnsRecordsRequestBuilder DomainDnsRecords { get; }
+        global::Microsoft.Graph.DomainDnsRecords.DomainDnsRecordsRequestBuilder DomainDnsRecords { get; }
 
-        Domains.DomainsRequestBuilder Domains { get; }
+        global::Microsoft.Graph.Domains.DomainsRequestBuilder Domains { get; }
 
-        Drives.DrivesRequestBuilder Drives { get; }
+        global::Microsoft.Graph.Drives.DrivesRequestBuilder Drives { get; }
 
-        Education.EducationRequestBuilder Education { get; }
+        global::Microsoft.Graph.Education.EducationRequestBuilder Education { get; }
 
-        EmployeeExperience.EmployeeExperienceRequestBuilder EmployeeExperience { get; }
+        global::Microsoft.Graph.EmployeeExperience.EmployeeExperienceRequestBuilder EmployeeExperience { get; }
 
-        External.ExternalRequestBuilder External { get; }
+        global::Microsoft.Graph.External.ExternalRequestBuilder External { get; }
 
-        FilterOperators.FilterOperatorsRequestBuilder FilterOperators { get; }
+        global::Microsoft.Graph.FilterOperators.FilterOperatorsRequestBuilder FilterOperators { get; }
 
-        Functions.FunctionsRequestBuilder Functions { get; }
+        global::Microsoft.Graph.Functions.FunctionsRequestBuilder Functions { get; }
 
-        GroupLifecyclePolicies.GroupLifecyclePoliciesRequestBuilder GroupLifecyclePolicies { get; }
+        global::Microsoft.Graph.GroupLifecyclePolicies.GroupLifecyclePoliciesRequestBuilder GroupLifecyclePolicies { get; }
 
-        Groups.GroupsRequestBuilder Groups { get; }
+        global::Microsoft.Graph.Groups.GroupsRequestBuilder Groups { get; }
 
-        GroupSettings.GroupSettingsRequestBuilder GroupSettings { get; }
+        global::Microsoft.Graph.GroupSettings.GroupSettingsRequestBuilder GroupSettings { get; }
 
-        GroupSettingTemplates.GroupSettingTemplatesRequestBuilder GroupSettingTemplates { get; }
+        global::Microsoft.Graph.GroupSettingTemplates.GroupSettingTemplatesRequestBuilder GroupSettingTemplates { get; }
 
-        Identity.IdentityRequestBuilder Identity { get; }
+        global::Microsoft.Graph.Identity.IdentityRequestBuilder Identity { get; }
 
-        IdentityGovernance.IdentityGovernanceRequestBuilder IdentityGovernance { get; }
+        global::Microsoft.Graph.IdentityGovernance.IdentityGovernanceRequestBuilder IdentityGovernance { get; }
 
-        IdentityProtection.IdentityProtectionRequestBuilder IdentityProtection { get; }
+        global::Microsoft.Graph.IdentityProtection.IdentityProtectionRequestBuilder IdentityProtection { get; }
 
-        IdentityProviders.IdentityProvidersRequestBuilder IdentityProviders { get; }
+        global::Microsoft.Graph.IdentityProviders.IdentityProvidersRequestBuilder IdentityProviders { get; }
 
-        InformationProtection.InformationProtectionRequestBuilder InformationProtection { get; }
+        global::Microsoft.Graph.InformationProtection.InformationProtectionRequestBuilder InformationProtection { get; }
 
-        Invitations.InvitationsRequestBuilder Invitations { get; }
+        global::Microsoft.Graph.Invitations.InvitationsRequestBuilder Invitations { get; }
 
-        Me.MeRequestBuilder Me { get; }
+        global::Microsoft.Graph.Me.MeRequestBuilder Me { get; }
 
-        Oauth2PermissionGrants.Oauth2PermissionGrantsRequestBuilder Oauth2PermissionGrants { get; }
+        global::Microsoft.Graph.Oauth2PermissionGrants.Oauth2PermissionGrantsRequestBuilder Oauth2PermissionGrants { get; }
 
-        Organization.OrganizationRequestBuilder Organization { get; }
+        global::Microsoft.Graph.Organization.OrganizationRequestBuilder Organization { get; }
 
-        PermissionGrants.PermissionGrantsRequestBuilder PermissionGrants { get; }
+        global::Microsoft.Graph.PermissionGrants.PermissionGrantsRequestBuilder PermissionGrants { get; }
 
-        Places.PlacesRequestBuilder Places { get; }
+        global::Microsoft.Graph.Places.PlacesRequestBuilder Places { get; }
 
-        Planner.PlannerRequestBuilder Planner { get; }
+        global::Microsoft.Graph.Planner.PlannerRequestBuilder Planner { get; }
 
-        Policies.PoliciesRequestBuilder Policies { get; }
+        global::Microsoft.Graph.Policies.PoliciesRequestBuilder Policies { get; }
 
-        Print.PrintRequestBuilder Print { get; }
+        global::Microsoft.Graph.Print.PrintRequestBuilder Print { get; }
 
-        Privacy.PrivacyRequestBuilder Privacy { get; }
+        global::Microsoft.Graph.Privacy.PrivacyRequestBuilder Privacy { get; }
 
-        Reports.ReportsRequestBuilder Reports { get; }
+        global::Microsoft.Graph.Reports.ReportsRequestBuilder Reports { get; }
 
-        RoleManagement.RoleManagementRequestBuilder RoleManagement { get; }
+        global::Microsoft.Graph.RoleManagement.RoleManagementRequestBuilder RoleManagement { get; }
 
-        SchemaExtensions.SchemaExtensionsRequestBuilder SchemaExtensions { get; }
+        global::Microsoft.Graph.SchemaExtensions.SchemaExtensionsRequestBuilder SchemaExtensions { get; }
 
-        ScopedRoleMemberships.ScopedRoleMembershipsRequestBuilder ScopedRoleMemberships { get; }
+        global::Microsoft.Graph.ScopedRoleMemberships.ScopedRoleMembershipsRequestBuilder ScopedRoleMemberships { get; }
 
-        Search.SearchRequestBuilder Search { get; }
+        global::Microsoft.Graph.Search.SearchRequestBuilder Search { get; }
 
-        Security.SecurityRequestBuilder Security { get; }
+        global::Microsoft.Graph.Security.SecurityRequestBuilder Security { get; }
 
-        ServicePrincipals.ServicePrincipalsRequestBuilder ServicePrincipals { get; }
+        global::Microsoft.Graph.ServicePrincipals.ServicePrincipalsRequestBuilder ServicePrincipals { get; }
 
-        Shares.SharesRequestBuilder Shares { get; }
+        global::Microsoft.Graph.Shares.SharesRequestBuilder Shares { get; }
 
-        Sites.SitesRequestBuilder Sites { get; }
+        global::Microsoft.Graph.Sites.SitesRequestBuilder Sites { get; }
 
-        Solutions.SolutionsRequestBuilder Solutions { get; }
+        global::Microsoft.Graph.Solutions.SolutionsRequestBuilder Solutions { get; }
 
-        Storage.StorageRequestBuilder Storage { get; }
+        global::Microsoft.Graph.Storage.StorageRequestBuilder Storage { get; }
 
-        SubscribedSkus.SubscribedSkusRequestBuilder SubscribedSkus { get; }
+        global::Microsoft.Graph.SubscribedSkus.SubscribedSkusRequestBuilder SubscribedSkus { get; }
 
-        Subscriptions.SubscriptionsRequestBuilder Subscriptions { get; }
+        global::Microsoft.Graph.Subscriptions.SubscriptionsRequestBuilder Subscriptions { get; }
 
-        Teams.TeamsRequestBuilder Teams { get; }
+        global::Microsoft.Graph.Teams.TeamsRequestBuilder Teams { get; }
 
-        TeamsTemplates.TeamsTemplatesRequestBuilder TeamsTemplates { get; }
+        global::Microsoft.Graph.TeamsTemplates.TeamsTemplatesRequestBuilder TeamsTemplates { get; }
 
-        Teamwork.TeamworkRequestBuilder Teamwork { get; }
+        global::Microsoft.Graph.Teamwork.TeamworkRequestBuilder Teamwork { get; }
 
-        TenantRelationships.TenantRelationshipsRequestBuilder TenantRelationships { get; }
+        global::Microsoft.Graph.TenantRelationships.TenantRelationshipsRequestBuilder TenantRelationships { get; }
 
-        Users.UsersRequestBuilder Users { get; }
+        global::Microsoft.Graph.Users.UsersRequestBuilder Users { get; }
 
-        ApplicationsWithAppId.ApplicationsWithAppIdRequestBuilder ApplicationsWithAppId(string appId);
+        global::Microsoft.Graph.ApplicationsWithAppId.ApplicationsWithAppIdRequestBuilder ApplicationsWithAppId(string appId);
 
-        ApplicationsWithUniqueName.ApplicationsWithUniqueNameRequestBuilder ApplicationsWithUniqueName(string uniqueName);
+        global::Microsoft.Graph.ApplicationsWithUniqueName.ApplicationsWithUniqueNameRequestBuilder ApplicationsWithUniqueName(string uniqueName);
 
-        DevicesWithDeviceId.DevicesWithDeviceIdRequestBuilder DevicesWithDeviceId(string deviceId);
+        global::Microsoft.Graph.DevicesWithDeviceId.DevicesWithDeviceIdRequestBuilder DevicesWithDeviceId(string deviceId);
 
-        DirectoryRolesWithRoleTemplateId.DirectoryRolesWithRoleTemplateIdRequestBuilder DirectoryRolesWithRoleTemplateId(string roleTemplateId);
+        global::Microsoft.Graph.DirectoryRolesWithRoleTemplateId.DirectoryRolesWithRoleTemplateIdRequestBuilder DirectoryRolesWithRoleTemplateId(string roleTemplateId);
 
-        GroupsWithUniqueName.GroupsWithUniqueNameRequestBuilder GroupsWithUniqueName(string uniqueName);
+        global::Microsoft.Graph.GroupsWithUniqueName.GroupsWithUniqueNameRequestBuilder GroupsWithUniqueName(string uniqueName);
 
-        ServicePrincipalsWithAppId.ServicePrincipalsWithAppIdRequestBuilder ServicePrincipalsWithAppId(string appId);
+        global::Microsoft.Graph.ServicePrincipalsWithAppId.ServicePrincipalsWithAppIdRequestBuilder ServicePrincipalsWithAppId(string appId);
 
-        UsersWithUserPrincipalName.UsersWithUserPrincipalNameRequestBuilder UsersWithUserPrincipalName(string userPrincipalName);
+        global::Microsoft.Graph.UsersWithUserPrincipalName.UsersWithUserPrincipalNameRequestBuilder UsersWithUserPrincipalName(string userPrincipalName);
     }
 }
 #nullable restore

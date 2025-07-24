@@ -14,13 +14,13 @@ namespace Microsoft.Graph.Core.Requests
 {
     public partial interface IBatchRequestBuilder
     {
-        BatchRequestBuilder _Instance { get; }
+        global::Microsoft.Graph.Core.Requests.BatchRequestBuilder _Instance { get; }
 
-        System.Threading.Tasks.Task<BatchResponseContent> PostAsync(BatchRequestContent batchRequestContent, System.Threading.CancellationToken cancellationToken = default, System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings = null);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.BatchResponseContent> PostAsync(global::Microsoft.Graph.BatchRequestContent batchRequestContent, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken), global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings = null);
 
-        System.Threading.Tasks.Task<BatchResponseContentCollection> PostAsync(BatchRequestContentCollection batchRequestContentCollection, System.Threading.CancellationToken cancellationToken = default, System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings = null);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.BatchResponseContentCollection> PostAsync(global::Microsoft.Graph.BatchRequestContentCollection batchRequestContentCollection, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken), global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings = null);
 
-        System.Threading.Tasks.Task<Kiota.Abstractions.RequestInformation> ToPostRequestInformationAsync(BatchRequestContent batchRequestContent, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Microsoft.Kiota.Abstractions.RequestInformation> ToPostRequestInformationAsync(global::Microsoft.Graph.BatchRequestContent batchRequestContent, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }
 #nullable restore

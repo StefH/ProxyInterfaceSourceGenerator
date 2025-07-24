@@ -12,83 +12,83 @@ using System;
 
 namespace Microsoft.Graph.Admin.Edge
 {
-    public partial class EdgeRequestBuilderProxy : Edge.IEdgeRequestBuilder
+    public partial class EdgeRequestBuilderProxy : global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder
     {
 
-        private static Edge.IEdgeRequestBuilder MapToInterface(EdgeRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder MapToInterface(global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder value)
         {
-            return new EdgeRequestBuilderProxy(value);
+            return new global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilderProxy(value);
         }
 
-        private static EdgeRequestBuilder MapToInstance(Edge.IEdgeRequestBuilder value)
-        {
-            return value._Instance;
-        }
-
-        private static Admin.IAdminRequestBuilder MapToInterface(AdminRequestBuilder value)
-        {
-            return new Admin.AdminRequestBuilderProxy(value);
-        }
-
-        private static AdminRequestBuilder MapToInstance(Admin.IAdminRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder MapToInstance(global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder value)
         {
             return value._Instance;
         }
 
+        private static global::Microsoft.Graph.Admin.IAdminRequestBuilder MapToInterface(global::Microsoft.Graph.Admin.AdminRequestBuilder value)
+        {
+            return new global::Microsoft.Graph.Admin.AdminRequestBuilderProxy(value);
+        }
+
+        private static global::Microsoft.Graph.Admin.AdminRequestBuilder MapToInstance(global::Microsoft.Graph.Admin.IAdminRequestBuilder value)
+        {
+            return value._Instance;
+        }
 
 
-        public EdgeRequestBuilder _Instance { get; }
+
+        public global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder _Instance { get; }
         
-        public InternetExplorerMode.InternetExplorerModeRequestBuilder InternetExplorerMode { get => _Instance.InternetExplorerMode; }
+        public global::Microsoft.Graph.Admin.Edge.InternetExplorerMode.InternetExplorerModeRequestBuilder InternetExplorerMode { get => _Instance.InternetExplorerMode; }
 
-        public System.Threading.Tasks.Task DeleteAsync(Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default)
+        public global::System.Threading.Tasks.Task DeleteAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result_534537427 = _Instance.DeleteAsync(requestConfiguration_, cancellationToken_);
             return result_534537427;
         }
 
-        public System.Threading.Tasks.Task<Models.Edge?> GetAsync(Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default)
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Edge?> GetAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result_1805284658 = _Instance.GetAsync(requestConfiguration_, cancellationToken_);
             return result_1805284658;
         }
 
-        public System.Threading.Tasks.Task<Models.Edge?> PatchAsync(Models.Edge body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default)
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Edge?> PatchAsync(global::Microsoft.Graph.Models.Edge body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Models.Edge body_ = body;
-            Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::Microsoft.Graph.Models.Edge body_ = body;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result_910894592 = _Instance.PatchAsync(body_, requestConfiguration_, cancellationToken_);
             return result_910894592;
         }
 
-        public Kiota.Abstractions.RequestInformation ToDeleteRequestInformation(Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null)
+        public global::Microsoft.Kiota.Abstractions.RequestInformation ToDeleteRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null)
         {
-            Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
             var result__1658178693 = _Instance.ToDeleteRequestInformation(requestConfiguration_);
             return result__1658178693;
         }
 
-        public Kiota.Abstractions.RequestInformation ToGetRequestInformation(Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null)
+        public global::Microsoft.Kiota.Abstractions.RequestInformation ToGetRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null)
         {
-            Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration_ = requestConfiguration;
             var result__695410420 = _Instance.ToGetRequestInformation(requestConfiguration_);
             return result__695410420;
         }
 
-        public Kiota.Abstractions.RequestInformation ToPatchRequestInformation(Models.Edge body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null)
+        public global::Microsoft.Kiota.Abstractions.RequestInformation ToPatchRequestInformation(global::Microsoft.Graph.Models.Edge body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null)
         {
-            Models.Edge body_ = body;
-            Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
+            global::Microsoft.Graph.Models.Edge body_ = body;
+            global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration_ = requestConfiguration;
             var result_2136344646 = _Instance.ToPatchRequestInformation(body_, requestConfiguration_);
             return result_2136344646;
         }
 
-        public Edge.IEdgeRequestBuilder WithUrl(string rawUrl)
+        public global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder WithUrl(string rawUrl)
         {
             string rawUrl_ = rawUrl;
             var result_232713549 = _Instance.WithUrl(rawUrl_);
@@ -96,7 +96,7 @@ namespace Microsoft.Graph.Admin.Edge
         }
 
 
-        public EdgeRequestBuilderProxy(EdgeRequestBuilder instance)
+        public EdgeRequestBuilderProxy(global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder instance)
         {
             _Instance = instance;
             

@@ -12,11 +12,11 @@ using System;
 
 namespace Stef
 {
-    public partial class Class1Proxy : Stef.IClass1
+    public partial class Class1Proxy : global::Stef.IClass1
     {
 
 
-        public Class1 _Instance { get; }
+        public global::Stef.Class1 _Instance { get; }
         
         public void T(string? s)
         {
@@ -25,7 +25,7 @@ namespace Stef
         }
 
 
-        public Class1Proxy(Class1 instance)
+        public Class1Proxy(global::Stef.Class1 instance)
         {
             _Instance = instance;
             

@@ -14,23 +14,23 @@ namespace Microsoft.Graph.Admin.Edge
 {
     public partial interface IEdgeRequestBuilder
     {
-        EdgeRequestBuilder _Instance { get; }
+        global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder _Instance { get; }
 
-        InternetExplorerMode.InternetExplorerModeRequestBuilder InternetExplorerMode { get; }
+        global::Microsoft.Graph.Admin.Edge.InternetExplorerMode.InternetExplorerModeRequestBuilder InternetExplorerMode { get; }
 
-        System.Threading.Tasks.Task DeleteAsync(Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task DeleteAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
-        System.Threading.Tasks.Task<Models.Edge?> GetAsync(Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Edge?> GetAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
-        System.Threading.Tasks.Task<Models.Edge?> PatchAsync(Models.Edge body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Edge?> PatchAsync(global::Microsoft.Graph.Models.Edge body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
-        Kiota.Abstractions.RequestInformation ToDeleteRequestInformation(Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
+        global::Microsoft.Kiota.Abstractions.RequestInformation ToDeleteRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
 
-        Kiota.Abstractions.RequestInformation ToGetRequestInformation(Action<Kiota.Abstractions.RequestConfiguration<EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null);
+        global::Microsoft.Kiota.Abstractions.RequestInformation ToGetRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder.EdgeRequestBuilderGetQueryParameters>>? requestConfiguration = null);
 
-        Kiota.Abstractions.RequestInformation ToPatchRequestInformation(Models.Edge body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
+        global::Microsoft.Kiota.Abstractions.RequestInformation ToPatchRequestInformation(global::Microsoft.Graph.Models.Edge body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
 
-        IEdgeRequestBuilder WithUrl(string rawUrl);
+        global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder WithUrl(string rawUrl);
     }
 }
 #nullable restore

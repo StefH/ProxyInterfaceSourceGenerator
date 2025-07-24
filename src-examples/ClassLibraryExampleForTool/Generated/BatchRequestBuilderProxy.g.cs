@@ -12,71 +12,71 @@ using System;
 
 namespace Microsoft.Graph.Core.Requests
 {
-    public partial class BatchRequestBuilderProxy : Requests.IBatchRequestBuilder
+    public partial class BatchRequestBuilderProxy : global::Microsoft.Graph.Core.Requests.IBatchRequestBuilder
     {
 
-        private static Admin.Edge.IEdgeRequestBuilder MapToInterface(Admin.Edge.EdgeRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder MapToInterface(global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder value)
         {
-            return new Admin.Edge.EdgeRequestBuilderProxy(value);
+            return new global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilderProxy(value);
         }
 
-        private static Admin.Edge.EdgeRequestBuilder MapToInstance(Admin.Edge.IEdgeRequestBuilder value)
-        {
-            return value._Instance;
-        }
-
-        private static Admin.IAdminRequestBuilder MapToInterface(Admin.AdminRequestBuilder value)
-        {
-            return new Admin.AdminRequestBuilderProxy(value);
-        }
-
-        private static Admin.AdminRequestBuilder MapToInstance(Admin.IAdminRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.Edge.EdgeRequestBuilder MapToInstance(global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder value)
         {
             return value._Instance;
         }
 
-        private static Requests.IBatchRequestBuilder MapToInterface(BatchRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.IAdminRequestBuilder MapToInterface(global::Microsoft.Graph.Admin.AdminRequestBuilder value)
         {
-            return new BatchRequestBuilderProxy(value);
+            return new global::Microsoft.Graph.Admin.AdminRequestBuilderProxy(value);
         }
 
-        private static BatchRequestBuilder MapToInstance(Requests.IBatchRequestBuilder value)
+        private static global::Microsoft.Graph.Admin.AdminRequestBuilder MapToInstance(global::Microsoft.Graph.Admin.IAdminRequestBuilder value)
+        {
+            return value._Instance;
+        }
+
+        private static global::Microsoft.Graph.Core.Requests.IBatchRequestBuilder MapToInterface(global::Microsoft.Graph.Core.Requests.BatchRequestBuilder value)
+        {
+            return new global::Microsoft.Graph.Core.Requests.BatchRequestBuilderProxy(value);
+        }
+
+        private static global::Microsoft.Graph.Core.Requests.BatchRequestBuilder MapToInstance(global::Microsoft.Graph.Core.Requests.IBatchRequestBuilder value)
         {
             return value._Instance;
         }
 
 
 
-        public BatchRequestBuilder _Instance { get; }
+        public global::Microsoft.Graph.Core.Requests.BatchRequestBuilder _Instance { get; }
         
-        public System.Threading.Tasks.Task<BatchResponseContent> PostAsync(BatchRequestContent batchRequestContent, System.Threading.CancellationToken cancellationToken = default, System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings = null)
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.BatchResponseContent> PostAsync(global::Microsoft.Graph.BatchRequestContent batchRequestContent, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken), global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings = null)
         {
-            BatchRequestContent batchRequestContent_ = batchRequestContent;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
-            System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings_ = errorMappings;
+            global::Microsoft.Graph.BatchRequestContent batchRequestContent_ = batchRequestContent;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings_ = errorMappings;
             var result__1705712948 = _Instance.PostAsync(batchRequestContent_, cancellationToken_, errorMappings_);
             return result__1705712948;
         }
 
-        public System.Threading.Tasks.Task<BatchResponseContentCollection> PostAsync(BatchRequestContentCollection batchRequestContentCollection, System.Threading.CancellationToken cancellationToken = default, System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings = null)
+        public global::System.Threading.Tasks.Task<global::Microsoft.Graph.BatchResponseContentCollection> PostAsync(global::Microsoft.Graph.BatchRequestContentCollection batchRequestContentCollection, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken), global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings = null)
         {
-            BatchRequestContentCollection batchRequestContentCollection_ = batchRequestContentCollection;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
-            System.Collections.Generic.Dictionary<string, Kiota.Abstractions.Serialization.ParsableFactory<Kiota.Abstractions.Serialization.IParsable>> errorMappings_ = errorMappings;
+            global::Microsoft.Graph.BatchRequestContentCollection batchRequestContentCollection_ = batchRequestContentCollection;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::System.Collections.Generic.Dictionary<string, global::Microsoft.Kiota.Abstractions.Serialization.ParsableFactory<global::Microsoft.Kiota.Abstractions.Serialization.IParsable>> errorMappings_ = errorMappings;
             var result__1705712948 = _Instance.PostAsync(batchRequestContentCollection_, cancellationToken_, errorMappings_);
             return result__1705712948;
         }
 
-        public System.Threading.Tasks.Task<Kiota.Abstractions.RequestInformation> ToPostRequestInformationAsync(BatchRequestContent batchRequestContent, System.Threading.CancellationToken cancellationToken = default)
+        public global::System.Threading.Tasks.Task<global::Microsoft.Kiota.Abstractions.RequestInformation> ToPostRequestInformationAsync(global::Microsoft.Graph.BatchRequestContent batchRequestContent, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            BatchRequestContent batchRequestContent_ = batchRequestContent;
-            System.Threading.CancellationToken cancellationToken_ = cancellationToken;
+            global::Microsoft.Graph.BatchRequestContent batchRequestContent_ = batchRequestContent;
+            global::System.Threading.CancellationToken cancellationToken_ = cancellationToken;
             var result__530651472 = _Instance.ToPostRequestInformationAsync(batchRequestContent_, cancellationToken_);
             return result__530651472;
         }
 
 
-        public BatchRequestBuilderProxy(BatchRequestBuilder instance)
+        public BatchRequestBuilderProxy(global::Microsoft.Graph.Core.Requests.BatchRequestBuilder instance)
         {
             _Instance = instance;
             

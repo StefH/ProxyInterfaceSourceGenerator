@@ -14,29 +14,29 @@ namespace Microsoft.Graph.Admin
 {
     public partial interface IAdminRequestBuilder
     {
-        AdminRequestBuilder _Instance { get; }
+        global::Microsoft.Graph.Admin.AdminRequestBuilder _Instance { get; }
 
-        Edge.IEdgeRequestBuilder Edge { get; }
+        global::Microsoft.Graph.Admin.Edge.IEdgeRequestBuilder Edge { get; }
 
-        Microsoft365Apps.Microsoft365AppsRequestBuilder Microsoft365Apps { get; }
+        global::Microsoft.Graph.Admin.Microsoft365Apps.Microsoft365AppsRequestBuilder Microsoft365Apps { get; }
 
-        People.PeopleRequestBuilder People { get; }
+        global::Microsoft.Graph.Admin.People.PeopleRequestBuilder People { get; }
 
-        ReportSettings.ReportSettingsRequestBuilder ReportSettings { get; }
+        global::Microsoft.Graph.Admin.ReportSettings.ReportSettingsRequestBuilder ReportSettings { get; }
 
-        ServiceAnnouncement.ServiceAnnouncementRequestBuilder ServiceAnnouncement { get; }
+        global::Microsoft.Graph.Admin.ServiceAnnouncement.ServiceAnnouncementRequestBuilder ServiceAnnouncement { get; }
 
-        Sharepoint.SharepointRequestBuilder Sharepoint { get; }
+        global::Microsoft.Graph.Admin.Sharepoint.SharepointRequestBuilder Sharepoint { get; }
 
-        System.Threading.Tasks.Task<Models.Admin?> GetAsync(Action<Kiota.Abstractions.RequestConfiguration<AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin?> GetAsync(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
-        System.Threading.Tasks.Task<Models.Admin?> PatchAsync(Models.Admin body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, System.Threading.CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Microsoft.Graph.Models.Admin?> PatchAsync(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null, global::System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
-        Kiota.Abstractions.RequestInformation ToGetRequestInformation(Action<Kiota.Abstractions.RequestConfiguration<AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null);
+        global::Microsoft.Kiota.Abstractions.RequestInformation ToGetRequestInformation(global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Graph.Admin.AdminRequestBuilder.AdminRequestBuilderGetQueryParameters>>? requestConfiguration = null);
 
-        Kiota.Abstractions.RequestInformation ToPatchRequestInformation(Models.Admin body, Action<Kiota.Abstractions.RequestConfiguration<Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
+        global::Microsoft.Kiota.Abstractions.RequestInformation ToPatchRequestInformation(global::Microsoft.Graph.Models.Admin body, global::System.Action<global::Microsoft.Kiota.Abstractions.RequestConfiguration<global::Microsoft.Kiota.Abstractions.DefaultQueryParameters>>? requestConfiguration = null);
 
-        IAdminRequestBuilder WithUrl(string rawUrl);
+        global::Microsoft.Graph.Admin.IAdminRequestBuilder WithUrl(string rawUrl);
     }
 }
 #nullable restore

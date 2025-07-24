@@ -12,14 +12,14 @@ using System;
 
 namespace Stef
 {
-    public partial class Class2Proxy : Stef.IClass2
+    public partial class Class2Proxy : global::Stef.IClass2
     {
 
 
-        public Class2 _Instance { get; }
+        public global::Stef.Class2 _Instance { get; }
         
 
-        public Class2Proxy(Class2 instance)
+        public Class2Proxy(global::Stef.Class2 instance)
         {
             _Instance = instance;
             

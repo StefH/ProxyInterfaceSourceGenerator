@@ -14,7 +14,7 @@ namespace Stef
 {
     public partial interface IClass1
     {
-        Class1 _Instance { get; }
+        global::Stef.Class1 _Instance { get; }
 
         void T(string? s);
     }

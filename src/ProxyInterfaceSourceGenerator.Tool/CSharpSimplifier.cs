@@ -21,29 +21,29 @@ public class CSharpSimplifier
             .WithMetadataReferences(references);
     }
 
-    //public async Task<string> SimplifyCSharpCodeAsync(string sourceCode)
-    //{
-    //    var id = Guid.NewGuid().ToString("N");
+    public async Task<string> SimplifyCSharpCodeAsync(string sourceCode)
+    {
+        var id = Guid.NewGuid().ToString("N");
 
-    //    using var workspace = new AdhocWorkspace();
+        //using var workspace = new AdhocWorkspace();
 
-    //    var project = workspace
-    //        .CurrentSolution
-    //        .AddProject(id, $"{id}.dll", LanguageNames.CSharp)
-    //        .WithMetadataReferences(references);
+        //var project = workspace
+        //    .CurrentSolution
+        //    .AddProject(id, $"{id}.dll", LanguageNames.CSharp)
+        //    .WithMetadataReferences(references);
 
-    //    var document = project.AddDocument($"Input_{id}.cs", SourceText.From(sourceCode));
+        var document = _project.AddDocument($"Input_{id}.cs", SourceText.From(sourceCode));
 
-    //    var root = await document.GetSyntaxRootAsync();
+        var root = await document.GetSyntaxRootAsync();
 
-    //    var annotatedRoot = root!.WithAdditionalAnnotations(Simplifier.Annotation);
+        var annotatedRoot = root!.WithAdditionalAnnotations(Simplifier.Annotation);
 
-    //    var newDoc = document.WithSyntaxRoot(annotatedRoot);
+        var newDoc = document.WithSyntaxRoot(annotatedRoot);
 
-    //    var simplifiedDoc = await Simplifier.ReduceAsync(newDoc, workspace.Options);
+        var simplifiedDoc = await Simplifier.ReduceAsync(newDoc);
 
-    //    return (await simplifiedDoc.GetTextAsync()).ToString();
-    //}
+        return (await simplifiedDoc.GetTextAsync()).ToString();
+    }
 
     public async IAsyncEnumerable<string> SimplifyCSharpCodesAsync(IEnumerable<string> sourceCodes, [EnumeratorCancellation] CancellationToken cancellationToken)
     {

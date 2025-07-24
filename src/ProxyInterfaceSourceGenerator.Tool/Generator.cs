@@ -159,120 +159,121 @@ internal class Generator : IDisposable
 
     private async Task ProcessFileQueueAsync(HashSet<MetadataReference> references, CancellationToken cancellationToken)
     {
-        //int idx = 0;
-        const int batchSize = 200;
-        var batch = new List<(string Filename, string Text)>(batchSize);
-
-        await foreach (var fileData in _reader.ReadAllAsync(cancellationToken))
-        {
-            // Decompress the data first
-            var text = await StringCompressor.DecompressAsync(fileData.Data);
-            batch.Add((fileData.Filename, text));
-
-            //var currentIdx = Interlocked.Increment(ref idx);
-            //Console.WriteLine($"DecompressAsync {currentIdx}");
-
-            if (batch.Count >= batchSize)
-            {
-                await ProcessBatchAsync(references, batch, cancellationToken);
-                batch.Clear();
-            }
-        }
-
-        // Process any remaining items in the final batch
-        if (batch.Count > 0)
-        {
-            await ProcessBatchAsync(references, batch, cancellationToken);
-        }
-
-        return;
-
-        
+        int idx = 0;
+        //const int batchSize = 200;
+        //var batch = new List<(string Filename, string Text)>(batchSize);
 
         //await foreach (var fileData in _reader.ReadAllAsync(cancellationToken))
         //{
-        //    var fullPath = Path.Combine(_outputPath, fileData.Filename);
-        //    // Console.WriteLine($"Processing file: {fileData.Filename}");
-
+        //    // Decompress the data first
         //    var text = await StringCompressor.DecompressAsync(fileData.Data);
-        //    string modified;
-        //    try
+        //    batch.Add((fileData.Filename, text));
+
+        //    //var currentIdx = Interlocked.Increment(ref idx);
+        //    //Console.WriteLine($"DecompressAsync {currentIdx}");
+
+        //    if (batch.Count >= batchSize)
         //    {
-        //        modified = await simplifier.SimplifyCSharpCodeAsync(text);
+        //        await ProcessBatchAsync(references, batch, cancellationToken);
+        //        batch.Clear();
         //    }
-        //    catch (Exception ex)
-        //    {
-        //        modified = text; // Fall back to original content
-
-        //        Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
-        //    }
-
-        //    await File.WriteAllTextAsync(fullPath, modified, cancellationToken);
-
-        //    Console.WriteLine($"Written file: {fileData.Filename} {idx}");
-
-        //    idx++;
         //}
-    }
 
-    private async Task ProcessBatchAsync(HashSet<MetadataReference> references, List<(string Filename, string Text)> batchItems, CancellationToken cancellationToken)
-    {
-        var simplifier = new CSharpSimplifier(references);
+        //// Process any remaining items in the final batch
+        //if (batch.Count > 0)
+        //{
+        //    await ProcessBatchAsync(references, batch, cancellationToken);
+        //}
 
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
+        //return;
 
-        int idx = 0;
 
-        var parallelOptions = new ParallelOptions
+
+        await foreach (var fileData in _reader.ReadAllAsync(cancellationToken))
         {
-            MaxDegreeOfParallelism = Environment.ProcessorCount * 4,
-            CancellationToken = cancellationToken
-        };
+            var fullPath = Path.Combine(_outputPath, fileData.Filename);
+            // Console.WriteLine($"Processing file: {fileData.Filename}");
 
-        try
-        {
-            // Extract source codes for batch processing
-            var sourceCodes = batchItems.Select(item => item.Text);
-
-            // Get simplified results from batch API
-            var simplifiedResults = new List<string>();
-            await foreach (var result in simplifier.SimplifyCSharpCodesAsync(sourceCodes, cancellationToken))
+            var text = await StringCompressor.DecompressAsync(fileData.Data);
+            string modified;
+            try
             {
-                simplifiedResults.Add(result);
+                var simplifier = new CSharpSimplifier(references);
+                modified = await simplifier.SimplifyCSharpCodeAsync(text);
+            }
+            catch (Exception ex)
+            {
+                modified = text; // Fall back to original content
+
+                Console.WriteLine($"Error processing file {fileData.Filename}: {ex.Message}");
             }
 
-            // Write results in parallel
-            await Parallel.ForAsync(0, batchItems.Count, parallelOptions, async (i, ct) =>
-            {
-                var item = batchItems[i];
-                var modified = i < simplifiedResults.Count ? simplifiedResults[i] : item.Text; // Fallback to original
-                var fullPath = Path.Combine(_outputPath, item.Filename);
+            await File.WriteAllTextAsync(fullPath, modified, cancellationToken);
 
-                await File.WriteAllTextAsync(fullPath, modified, ct);
+            Console.WriteLine($"Written file: {fileData.Filename} {idx}");
 
-                var currentIdx = Interlocked.Increment(ref idx);
-                Console.WriteLine($"Written file: {item.Filename} {currentIdx}");
-            });
+            idx++;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing batch: {ex.Message}");
-
-            // Fallback: write original content for all files in batch
-            await Parallel.ForEachAsync(batchItems, parallelOptions, async (item, ct) =>
-            {
-                var fullPath = Path.Combine(_outputPath, item.Filename);
-                await File.WriteAllTextAsync(fullPath, item.Text, ct);
-
-                var currentIdx = Interlocked.Increment(ref idx);
-                Console.WriteLine($"Written file (fallback): {item.Filename} {currentIdx}");
-            });
-        }
-
-        stopwatch.Stop();
-        Console.WriteLine($"ProcessBatchAsync ({stopwatch.Elapsed.TotalSeconds} s)");
     }
+
+    //private async Task ProcessBatchAsync(HashSet<MetadataReference> references, List<(string Filename, string Text)> batchItems, CancellationToken cancellationToken)
+    //{
+    //    var simplifier = new CSharpSimplifier(references);
+
+    //    var stopwatch = new Stopwatch();
+    //    stopwatch.Start();
+
+    //    int idx = 0;
+
+    //    var parallelOptions = new ParallelOptions
+    //    {
+    //        MaxDegreeOfParallelism = Environment.ProcessorCount * 4,
+    //        CancellationToken = cancellationToken
+    //    };
+
+    //    try
+    //    {
+    //        // Extract source codes for batch processing
+    //        var sourceCodes = batchItems.Select(item => item.Text);
+
+    //        // Get simplified results from batch API
+    //        var simplifiedResults = new List<string>();
+    //        await foreach (var result in simplifier.SimplifyCSharpCodesAsync(sourceCodes, cancellationToken))
+    //        {
+    //            simplifiedResults.Add(result);
+    //        }
+
+    //        // Write results in parallel
+    //        await Parallel.ForAsync(0, batchItems.Count, parallelOptions, async (i, ct) =>
+    //        {
+    //            var item = batchItems[i];
+    //            var modified = i < simplifiedResults.Count ? simplifiedResults[i] : item.Text; // Fallback to original
+    //            var fullPath = Path.Combine(_outputPath, item.Filename);
+
+    //            await File.WriteAllTextAsync(fullPath, modified, ct);
+
+    //            var currentIdx = Interlocked.Increment(ref idx);
+    //            Console.WriteLine($"Written file: {item.Filename} {currentIdx}");
+    //        });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($"Error processing batch: {ex.Message}");
+
+    //        // Fallback: write original content for all files in batch
+    //        await Parallel.ForEachAsync(batchItems, parallelOptions, async (item, ct) =>
+    //        {
+    //            var fullPath = Path.Combine(_outputPath, item.Filename);
+    //            await File.WriteAllTextAsync(fullPath, item.Text, ct);
+
+    //            var currentIdx = Interlocked.Increment(ref idx);
+    //            Console.WriteLine($"Written file (fallback): {item.Filename} {currentIdx}");
+    //        });
+    //    }
+
+    //    stopwatch.Stop();
+    //    Console.WriteLine($"ProcessBatchAsync ({stopwatch.Elapsed.TotalSeconds} s)");
+    //}
 
     public void Dispose()
     {
