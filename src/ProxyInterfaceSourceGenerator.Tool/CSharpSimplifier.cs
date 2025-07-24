@@ -21,9 +21,8 @@ public class CSharpSimplifier
         var id = Guid.NewGuid().ToString("N");
 
         var workspace = new AdhocWorkspace();
-        //workspace.Options
-        //    .WithChangedOption(FormattingOptions.IndentationSize, LanguageNames.CSharp, 2);
-            //.WithChangedOption(new OptionKey(SimplificationOptions., LanguageNames.CSharp), );
+        workspace.Options
+            .WithChangedOption(FormattingOptions.IndentationSize, LanguageNames.CSharp, 2);           
 
         var project = workspace
             .CurrentSolution
@@ -32,13 +31,18 @@ public class CSharpSimplifier
 
         var document = project.AddDocument($"Input_{id}.cs", SourceText.From(sourceCode));
 
-        // Annotate document to allow simplification
-        var annotatedDoc = await Simplifier.ReduceAsync(document, workspace.Options);
+        var root = await document.GetSyntaxRootAsync();
 
-        // Format the document after simplification
-        var formattedDoc = await Formatter.FormatAsync(annotatedDoc, workspace.Options);
+        var annotatedRoot = root!.WithAdditionalAnnotations(Simplifier.Annotation);
 
-        var simplifiedText = await formattedDoc.GetTextAsync();
-        return simplifiedText.ToString();
+        var newDoc = document.WithSyntaxRoot(annotatedRoot);
+
+        var simplifiedDoc = await Simplifier.ReduceAsync(newDoc, workspace.Options);
+
+        var formattedDoc = await Formatter.FormatAsync(simplifiedDoc, workspace.Options);
+
+        var simplifiedCode = (await formattedDoc.GetTextAsync()).ToString();
+
+        return simplifiedCode;
     }
 }
