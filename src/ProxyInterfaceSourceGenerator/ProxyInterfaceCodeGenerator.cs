@@ -49,7 +49,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
             GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
 
-            // GeneratePartialInterfaces(context, receiver, supportsNullable);
+            GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
         catch (Exception exception)
@@ -85,6 +85,8 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
+
+        int c = 0;
         foreach (var fileData in partialInterfacesGenerator.GenerateFiles())
         {
             if (_generateFileAction == null)
@@ -93,8 +95,16 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
             }
             else
             {
+                Console.WriteLine("{0}", c);
                 _generateFileAction(fileData);
+                c++;
             }
+
+            //if (c >= 1000)
+            //{
+            //    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
+            //    break;
+            //}
         }
     }
 
@@ -107,6 +117,8 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
+
+        int c = 0;
         foreach (var fileData in proxyClassesGenerator.GenerateFiles())
         {
             if (_generateFileAction == null)
@@ -115,7 +127,15 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
             }
             else
             {
+                Console.WriteLine("{0}", c);
                 _generateFileAction(fileData);
+                c++;
+
+                //if (c >= 1000)
+                //{
+                //    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
+                //    break;
+                //}
             }
         }
     }
