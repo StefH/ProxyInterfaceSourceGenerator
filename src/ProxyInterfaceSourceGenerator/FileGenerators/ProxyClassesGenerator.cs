@@ -129,7 +129,7 @@ using System;
 
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData))
         {
-            var type = GetPropertyType(property, out var isReplaced);
+            var type = GetPropertyType(property, out var isReplaced); // stef
 
             var instance = !property.IsStatic ?
                 "_Instance" :
