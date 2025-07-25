@@ -311,6 +311,63 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Fact]
+    public void GenerateFiles_When_NoSetter_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.IBar.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.INoSetter.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.BarProxy.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.NoSetterProxy.g.cs"
+        };
+
+        var pathNoSetter = Path.Combine(_basePath, "Source/INoSetter.cs");
+        var sourceFileNoSetter = new SourceFile
+        {
+            Path = pathNoSetter,
+            Text = File.ReadAllText(pathNoSetter),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.NoSetter)"
+            }
+        };
+
+        var pathBar = Path.Combine(_basePath, "Source/IBar.cs");
+        var sourceFileBar = new SourceFile
+        {
+            Path = pathBar,
+            Text = File.ReadAllText(pathBar),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Bar)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([
+            sourceFileBar,
+            sourceFileNoSetter,
+        ]);
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        foreach (var fileName in fileNames.Select((fileName, index) => new { fileName, index }))
+        {
+            var builder = result.Files[fileName.index + 1]; // +1 means skip the attribute
+            builder.Path.Should().EndWith(fileName.fileName);
+
+            var destinationFilename = Path.Combine(_basePath, $"Destination/{fileName.fileName}");
+            if (Write) File.WriteAllText(destinationFilename, builder.Text);
+            builder.Text.Should().Be(File.ReadAllText(destinationFilename));
+        }
+    }
+
+    [Fact]
     public void GenerateFiles_ForSingleClass_Should_GenerateCorrectFiles()
     {
         // Arrange
