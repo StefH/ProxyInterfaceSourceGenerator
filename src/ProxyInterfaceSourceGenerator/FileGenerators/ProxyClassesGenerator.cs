@@ -43,9 +43,11 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         var extendsProxyClasses = GetExtendsProxyData(pd, targetClassSymbol);
 
+        var code = SourceCodeCleaner.Clean(CreateProxyClassCode(pd, targetClassSymbol, extendsProxyClasses, interfaceName, className, constructorName));
+
         fileData = new FileData(
             $"{targetClassSymbol.Symbol.GetFullMetadataName()}Proxy.g.cs",
-            CreateProxyClassCode(pd, targetClassSymbol, extendsProxyClasses, interfaceName, className, constructorName)
+            code
         );
 
         return true;
