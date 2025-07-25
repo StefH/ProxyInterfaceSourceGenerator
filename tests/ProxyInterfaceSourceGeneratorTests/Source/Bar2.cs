@@ -1,5 +1,5 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
-public partial interface INoSetter
+public class Bar2
 {
 }

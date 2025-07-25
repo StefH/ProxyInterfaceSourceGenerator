@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
 using FluentAssertions;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Helpers;
 using ProxyInterfaceSourceGeneratorTests.Source;
@@ -311,27 +313,17 @@ public class ProxyInterfaceSourceGeneratorTest
     }
 
     [Fact]
-    public void GenerateFiles_When_NoSetter_Should_GenerateCorrectFiles()
+    public void GenerateFiles_When_NoSetterOrGetter_Should_GenerateCorrectFiles()
     {
         // Arrange
         var fileNames = new[]
         {
             "ProxyInterfaceSourceGeneratorTests.Source.IBar.g.cs",
-            "ProxyInterfaceSourceGeneratorTests.Source.INoSetter.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.IBar2.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.INoSetterOrGetter.g.cs",
             "ProxyInterfaceSourceGeneratorTests.Source.BarProxy.g.cs",
-            "ProxyInterfaceSourceGeneratorTests.Source.NoSetterProxy.g.cs"
-        };
-
-        var pathNoSetter = Path.Combine(_basePath, "Source/INoSetter.cs");
-        var sourceFileNoSetter = new SourceFile
-        {
-            Path = pathNoSetter,
-            Text = File.ReadAllText(pathNoSetter),
-            AttributeToAddToInterface = new ExtraAttribute
-            {
-                Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.NoSetter)"
-            }
+            "ProxyInterfaceSourceGeneratorTests.Source.Bar2Proxy.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetterProxy.g.cs"
         };
 
         var pathBar = Path.Combine(_basePath, "Source/IBar.cs");
@@ -346,10 +338,35 @@ public class ProxyInterfaceSourceGeneratorTest
             }
         };
 
+        var pathBar2 = Path.Combine(_basePath, "Source/IBar2.cs");
+        var sourceFileBar2 = new SourceFile
+        {
+            Path = pathBar2,
+            Text = File.ReadAllText(pathBar2),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.Bar2)"
+            }
+        };
+
+        var pathNoSetterOrGetter = Path.Combine(_basePath, "Source/INoSetterOrGetter.cs");
+        var sourceFileNoSetterOrGetter = new SourceFile
+        {
+            Path = pathNoSetterOrGetter,
+            Text = File.ReadAllText(pathNoSetterOrGetter),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetter)"
+            }
+        };        
+
         // Act
         var result = _sut.Execute([
             sourceFileBar,
-            sourceFileNoSetter,
+            sourceFileBar2,
+            sourceFileNoSetterOrGetter,
         ]);
 
         // Assert
@@ -365,6 +382,40 @@ public class ProxyInterfaceSourceGeneratorTest
             if (Write) File.WriteAllText(destinationFilename, builder.Text);
             builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
+
+        // Load the file content
+        string code = File.ReadAllText(Path.Combine(_basePath, $"Destination/ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetterProxy.g.cs"));
+
+        // Parse syntax tree
+        var tree = CSharpSyntaxTree.ParseText(code);
+        var root = tree.GetRoot();
+
+        // Find all method declarations
+        var methodDeclarations = root.DescendantNodes()
+            .OfType<MethodDeclarationSyntax>()
+            .ToArray();
+
+        // Find all method invocations
+        var methodInvocations = root.DescendantNodes()
+            .OfType<InvocationExpressionSyntax>()
+            .Select(inv => inv.Expression.ToString())
+            .ToArray();
+
+        // Analyze
+        Console.WriteLine("Unused private static methods:");
+        foreach (var method in methodDeclarations)
+        {
+            bool isPrivateStatic = method.Modifiers.Any(m => m.Kind() == SyntaxKind.PrivateKeyword) && method.Modifiers.Any(m => m.Kind() == SyntaxKind.StaticKeyword);
+
+            if (isPrivateStatic && !methodInvocations.Any(call => call.Contains(method.Identifier.Text)))
+            {
+                Console.WriteLine($"- {method.Identifier.Text}");
+
+                code = code.Replace(method.ToFullString(), string.Empty);
+            }
+        }
+
+        int x = 0;
     }
 
     [Fact]

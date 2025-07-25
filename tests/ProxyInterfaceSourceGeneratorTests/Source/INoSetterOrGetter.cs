@@ -1,6 +1,5 @@
 namespace ProxyInterfaceSourceGeneratorTests.Source;
 
-public class NoSetter
+public partial interface INoSetterOrGetter
 {
-    public Bar? Bar { get; }
 }

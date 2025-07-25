@@ -12,11 +12,13 @@ using System;
 
 namespace ProxyInterfaceSourceGeneratorTests.Source
 {
-    public partial interface INoSetter
+    public partial interface INoSetterOrGetter
     {
-        global::ProxyInterfaceSourceGeneratorTests.Source.NoSetter _Instance { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetter _Instance { get; }
 
-        global::ProxyInterfaceSourceGeneratorTests.Source.IBar? Bar { get; }
+        global::ProxyInterfaceSourceGeneratorTests.Source.IBar? BarNoSetter { get; }
+
+        global::ProxyInterfaceSourceGeneratorTests.Source.IBar2? Bar2NoPublicGetter { set; }
 
 
     }
