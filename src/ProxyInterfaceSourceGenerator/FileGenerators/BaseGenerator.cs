@@ -203,6 +203,11 @@ internal abstract class BaseGenerator
             var proxy = $"global::{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
             Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, Direct: true, typeUsedIn));
         }
+        else
+        {
+            Context.ReplacedTypes.Remove(found);
+            Context.ReplacedTypes.Add(found with { UsedIn = found.UsedIn | typeUsedIn });
+        }
     }
 
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)

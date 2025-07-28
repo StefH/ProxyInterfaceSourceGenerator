@@ -20,6 +20,7 @@ internal enum TypeUsedIn : byte
 
     Operator = 32,
 
+    // MapToInstance
     Constraint = 64,
 
     MapToInterface = Get | Method,
