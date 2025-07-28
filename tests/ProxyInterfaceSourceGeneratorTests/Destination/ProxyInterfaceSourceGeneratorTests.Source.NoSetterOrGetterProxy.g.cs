@@ -20,16 +20,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return new global::ProxyInterfaceSourceGeneratorTests.Source.BarProxy(value);
         }
 
-        private static global::ProxyInterfaceSourceGeneratorTests.Source.Bar MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.IBar value)
-        {
-            return value._Instance;
-        }
-
-        private static global::ProxyInterfaceSourceGeneratorTests.Source.IBar2 MapToInterface(global::ProxyInterfaceSourceGeneratorTests.Source.Bar2 value)
-        {
-            return new global::ProxyInterfaceSourceGeneratorTests.Source.Bar2Proxy(value);
-        }
-
         private static global::ProxyInterfaceSourceGeneratorTests.Source.Bar2 MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.IBar2 value)
         {
             return value._Instance;

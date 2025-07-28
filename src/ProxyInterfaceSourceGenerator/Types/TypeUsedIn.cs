@@ -1,7 +1,7 @@
 namespace ProxyInterfaceSourceGenerator.Types;
 
 [Flags]
-internal enum TypeUsedIn
+internal enum TypeUsedIn : byte
 {
     None = 0,
 
@@ -10,8 +10,6 @@ internal enum TypeUsedIn
 
     // MapToInstance
     Set = 2,
-
-    GetAndSet = Get | Set,
 
     Indexer = 4,
 

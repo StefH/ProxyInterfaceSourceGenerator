@@ -56,7 +56,7 @@ internal partial class ProxyClassesGenerator
 
         foreach (var direct in directReplacedTypes)
         {
-            if ((direct.UsedIn & TypeUsedIn.MapToInterface) == TypeUsedIn.MapToInterface)
+            if ((direct.UsedIn | TypeUsedIn.MapToInterface) == TypeUsedIn.MapToInterface)
             {
                 str.AppendLine($"        private static {direct.InterfaceType} MapToInterface({direct.ClassType} value)");
                 str.AppendLine(@"        {");
@@ -65,9 +65,8 @@ internal partial class ProxyClassesGenerator
                 str.AppendLine();
             }
 
-            if ((direct.UsedIn & TypeUsedIn.MapToInstance) == TypeUsedIn.MapToInstance)
+            if ((direct.UsedIn | TypeUsedIn.MapToInstance) == TypeUsedIn.MapToInstance)
             {
-
                 str.AppendLine($"        private static {direct.ClassType} MapToInstance({direct.InterfaceType} value)");
                 str.AppendLine(@"        {");
                 str.AppendLine($"            return value._Instance;");
