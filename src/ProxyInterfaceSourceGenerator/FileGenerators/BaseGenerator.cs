@@ -181,7 +181,7 @@ internal abstract class BaseGenerator
                         typeArgumentAsString,
                         existingTypeArgument.FullInterfaceName,
                         string.Empty,
-                        Direct: false,
+                        direct: false,
                         typeUsedIn
                     ));
 
@@ -201,12 +201,11 @@ internal abstract class BaseGenerator
         if (found == null)
         {
             var proxy = $"global::{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
-            Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, Direct: true, typeUsedIn));
+            Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, direct: true, typeUsedIn));
         }
         else
         {
-            Context.ReplacedTypes.Remove(found);
-            Context.ReplacedTypes.Add(found with { UsedIn = found.UsedIn | typeUsedIn });
+            found.UsedIn |= typeUsedIn;
         }
     }
 

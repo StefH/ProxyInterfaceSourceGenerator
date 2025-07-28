@@ -40,11 +40,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(value);
         }
 
-        private static global::Microsoft.SharePoint.Client.SecurableObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject value)
-        {
-            return value._Instance;
-        }
-
         private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext MapToInterface(global::Microsoft.SharePoint.Client.ClientContext value)
         {
             return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientContextProxy(value);

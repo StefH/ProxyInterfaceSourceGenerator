@@ -20,29 +20,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientRuntimeContextProxy(value);
         }
 
-        private static global::Microsoft.SharePoint.Client.ClientRuntimeContext MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext value)
-        {
-            return value._Instance;
-        }
-
         private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject MapToInterface(global::Microsoft.SharePoint.Client.ClientObject value)
         {
             return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ClientObjectProxy(value);
         }
 
-        private static global::Microsoft.SharePoint.Client.ClientObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject value)
-        {
-            return value._Instance;
-        }
-
         private static global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject MapToInterface(global::Microsoft.SharePoint.Client.SecurableObject value)
         {
             return new global::ProxyInterfaceSourceGeneratorTests.Source.PnP.SecurableObjectProxy(value);
-        }
-
-        private static global::Microsoft.SharePoint.Client.SecurableObject MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject value)
-        {
-            return value._Instance;
         }
 
 
