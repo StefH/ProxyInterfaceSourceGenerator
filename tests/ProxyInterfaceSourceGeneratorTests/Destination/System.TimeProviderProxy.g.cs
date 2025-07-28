@@ -20,11 +20,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return new global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy(value);
         }
 
-        private static global::System.TimeProvider MapToInstance(global::ProxyInterfaceSourceGeneratorTests.Source.ITimeProvider value)
-        {
-            return value._Instance;
-        }
-
 
 
         public global::System.TimeProvider _Instance { get; }
