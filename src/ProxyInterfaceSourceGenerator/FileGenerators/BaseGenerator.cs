@@ -6,6 +6,7 @@ using ProxyInterfaceSourceGenerator.Builders;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
+using ProxyInterfaceSourceGenerator.Types;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
@@ -20,14 +21,14 @@ internal abstract class BaseGenerator
         SupportsNullable = supportsNullable;
     }
 
-    protected string GetPropertyType(IPropertySymbol property, out bool isReplaced)
+    protected string GetPropertyType(IPropertySymbol property, TypeUsedIn typeUsedIn, out bool isReplaced)
     {
-        return GetReplacedTypeAsString(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, typeUsedIn, out isReplaced);
     }
 
-    protected string GetParameterType(IParameterSymbol property, out bool isReplaced)
+    protected string GetParameterType(IParameterSymbol property, TypeUsedIn typeUsedIn, out bool isReplaced)
     {
-        return GetReplacedTypeAsString(property.Type, out isReplaced);
+        return GetReplacedTypeAsString(property.Type, typeUsedIn, out isReplaced);
     }
 
     protected bool TryFindProxyDataByTypeName(string type, [NotNullWhen(true)] out ProxyData? proxyData)
@@ -95,7 +96,7 @@ internal abstract class BaseGenerator
         {
             if (replaceIt)
             {
-                constraints.Add(GetReplacedTypeAsString(namedTypeSymbol, out _));
+                constraints.Add(GetReplacedTypeAsString(namedTypeSymbol, TypeUsedIn.Constraint, out _));
             }
             else
             {
@@ -130,7 +131,7 @@ internal abstract class BaseGenerator
             SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier
     );
 
-    protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, out bool isReplaced)
+    protected string GetReplacedTypeAsString(ITypeSymbol typeSymbol, TypeUsedIn typeUsedIn, out bool isReplaced)
     {
         isReplaced = false;
 
@@ -139,7 +140,7 @@ internal abstract class BaseGenerator
 
         if (TryFindProxyDataByTypeName(typeSymbolAsString, out var existing))
         {
-            TryAddDirect(typeSymbolAsString, existing);
+            TryAddDirect(typeSymbolAsString, typeUsedIn, existing);
 
             isReplaced = true;
             return FixTypeForNullable(existing.FullInterfaceName, typeSymbol.NullableAnnotation);
@@ -173,9 +174,18 @@ internal abstract class BaseGenerator
                 var foundIndirect = Context.ReplacedTypes.FirstOrDefault(r => !r.Direct && r.ClassType == original);
                 if (foundIndirect == null)
                 {
-                    Context.ReplacedTypes.Add(new(original, elementTypeAsStringToBeModified, typeArgumentAsString, existingTypeArgument.FullInterfaceName, string.Empty, false));
+                    Context.ReplacedTypes.Add(new
+                    (
+                        original,
+                        elementTypeAsStringToBeModified,
+                        typeArgumentAsString,
+                        existingTypeArgument.FullInterfaceName,
+                        string.Empty,
+                        Direct: false,
+                        typeUsedIn
+                    ));
 
-                    TryAddDirect(typeArgumentAsString, existingTypeArgument);
+                    TryAddDirect(typeArgumentAsString, typeUsedIn, existingTypeArgument);
                 }
 
                 isReplaced = true;
@@ -185,13 +195,13 @@ internal abstract class BaseGenerator
         return FixTypeForNullable(elementTypeAsStringToBeModified, typeSymbol.NullableAnnotation);
     }
 
-    private void TryAddDirect(string typeSymbolAsString, ProxyData existing)
+    private void TryAddDirect(string typeSymbolAsString, TypeUsedIn typeUsedIn, ProxyData existing)
     {
         var found = Context.ReplacedTypes.FirstOrDefault(r => r.Direct && r.ClassType == typeSymbolAsString);
         if (found == null)
         {
             var proxy = $"global::{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
-            Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, true));
+            Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, Direct: true, typeUsedIn));
         }
     }
 
@@ -226,7 +236,7 @@ internal abstract class BaseGenerator
         return false;
     }
 
-    protected IReadOnlyList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameterSymbols, bool includeType)
+    protected IReadOnlyList<string> GetMethodParameters(ImmutableArray<IParameterSymbol> parameterSymbols, TypeUsedIn typeUsedIn, bool includeType)
     {
         var methodParameters = new List<string>();
         foreach (var parameterSymbol in parameterSymbols)
@@ -236,7 +246,7 @@ internal abstract class BaseGenerator
             {
                 if (parameterSymbol.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    type = GetParameterType(parameterSymbol, out _);
+                    type = GetParameterType(parameterSymbol, typeUsedIn, out _);
                 }
                 else
                 {

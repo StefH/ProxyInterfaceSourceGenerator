@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator.Enums;
 using ProxyInterfaceSourceGenerator.Extensions;
 using ProxyInterfaceSourceGenerator.Models;
+using ProxyInterfaceSourceGenerator.Types;
 using ProxyInterfaceSourceGenerator.Utils;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
@@ -115,7 +116,30 @@ methods}
 
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData, InterfaceFilter<IPropertySymbol>()))
         {
-            var type = GetPropertyType(property, out var isReplaced);
+            var getIsPublic = property.GetMethod.IsPublic();
+            var setIsPublic = property.SetMethod.IsPublic();
+
+            if (!getIsPublic && !setIsPublic)
+            {
+                continue;
+            }
+
+            TypeUsedIn typeUsedIn = TypeUsedIn.None;
+            string get = string.Empty;
+            if (getIsPublic)
+            {
+                get = "get; ";
+                typeUsedIn |= TypeUsedIn.Get;
+            }
+
+            string set = string.Empty;
+            if (setIsPublic)
+            {
+                set = "set; ";
+                typeUsedIn |= TypeUsedIn.Set;
+            }
+
+            var type = GetPropertyType(property, typeUsedIn, out var isReplaced);
 
             var getterSetter = isReplaced ? property.ToPropertyDetails(type) : property.ToPropertyDetails();
             if (getterSetter is null)
@@ -127,7 +151,7 @@ methods}
 
             if (property.IsIndexer)
             {
-                var methodParameters = GetMethodParameters(property.Parameters, true);
+                var methodParameters = GetMethodParameters(property.Parameters, TypeUsedIn.Indexer, true);
                 propertyName = $"this[{string.Join(", ", methodParameters)}]";
             }
 
@@ -136,7 +160,9 @@ methods}
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        {getterSetter.Value.PropertyType} {propertyName} {getterSetter.Value.GetSet}");
+            var getSet = $"{{ {get}{set}}}";
+
+            str.AppendLine($"        {getterSetter.Value.PropertyType} {propertyName} {getSet}");
             str.AppendLine();
         }
         return str.ToString();
@@ -147,7 +173,7 @@ methods}
         var str = new StringBuilder();
         foreach (var method in MemberHelper.GetPublicMethods(targetClassSymbol, proxyData, InterfaceFilter<IMethodSymbol>()))
         {
-            var methodParameters = GetMethodParameters(method.Parameters, true);
+            var methodParameters = GetMethodParameters(method.Parameters, TypeUsedIn.Method, true);
             var whereStatement = GetWhereStatementFromMethod(method);
 
             foreach (var attribute in method.GetAttributesAsList())
@@ -155,7 +181,7 @@ methods}
                 str.AppendLine($"        {attribute}");
             }
 
-            str.AppendLine($"        {GetReplacedTypeAsString(method.ReturnType, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
+            str.AppendLine($"        {GetReplacedTypeAsString(method.ReturnType, TypeUsedIn.Method, out _)} {method.GetMethodNameWithOptionalTypeParameters()}({string.Join(", ", methodParameters)}){whereStatement};");
             str.AppendLine();
         }
 
@@ -168,7 +194,7 @@ methods}
         foreach (var @event in MemberHelper.GetPublicEvents(targetClassSymbol, proxyData, InterfaceFilter<IMethodSymbol>()))
         {
             var ps = @event.First().Parameters.First();
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, TypeUsedIn.Event, out _) : ps.Type.ToString();
 
             foreach (var attribute in ps.GetAttributesAsList())
             {

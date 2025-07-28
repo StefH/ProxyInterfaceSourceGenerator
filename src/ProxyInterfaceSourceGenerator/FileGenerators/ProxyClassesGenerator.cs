@@ -128,7 +128,26 @@ using System;
 
         foreach (var property in MemberHelper.GetPublicProperties(targetClassSymbol, proxyData))
         {
-            var type = GetPropertyType(property, out var isReplaced);
+            var getIsPublic = property.GetMethod.IsPublic();
+            var setIsPublic = property.SetMethod.IsPublic();
+
+            if (!getIsPublic && !setIsPublic)
+            {
+                continue;
+            }
+
+            var typeUsedIn = TypeUsedIn.None;
+            if (getIsPublic)
+            {
+                typeUsedIn |= TypeUsedIn.Get;
+            }
+
+            if (setIsPublic)
+            {
+                typeUsedIn |= TypeUsedIn.Set;
+            }
+
+            var type = GetPropertyType(property, typeUsedIn, out var isReplaced);
 
             var instance = !property.IsStatic ?
                 "_Instance" :
@@ -138,10 +157,11 @@ using System;
             var instancePropertyName = $"{instance}.{propertyName}";
             if (property.IsIndexer)
             {
-                var parameters = GetMethodParameters(property.Parameters, true);
+                typeUsedIn |= TypeUsedIn.Indexer;
+                var parameters = GetMethodParameters(property.Parameters, typeUsedIn, true);
                 propertyName = $"this[{string.Join(", ", parameters)}]";
 
-                var instanceParameters = GetMethodParameters(property.Parameters, false);
+                var instanceParameters = GetMethodParameters(property.Parameters, typeUsedIn, false);
                 instancePropertyName = $"{instance}[{string.Join(", ", instanceParameters)}]";
             }
 
@@ -153,15 +173,7 @@ using System;
             else if (property.IsVirtual)
             {
                 overrideOrVirtual = "virtual ";
-            }
-
-            var getIsPublic = property.GetMethod.IsPublic();
-            var setIsPublic = property.SetMethod.IsPublic();
-
-            if (!getIsPublic && !setIsPublic)
-            {
-                continue;
-            }
+            }           
 
             var propertyIsNullable = property.IsNullable();
 
@@ -223,7 +235,7 @@ using System;
 
             foreach (var parameterSymbol in method.Parameters)
             {
-                var type = GetParameterType(parameterSymbol, out _);
+                var type = GetParameterType(parameterSymbol, TypeUsedIn.Method, out _);
 
                 methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
 
@@ -245,7 +257,7 @@ using System;
                 overrideOrVirtual = "virtual ";
             }
 
-            var returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, out var returnIsReplaced);
+            var returnTypeAsString = GetReplacedTypeAsString(method.ReturnType, TypeUsedIn.Method, out var returnIsReplaced);
 
             var whereStatement = GetWhereStatementFromMethod(method);
 
@@ -268,7 +280,7 @@ using System;
                 }
                 else
                 {
-                    _ = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, TypeUsedIn.Method, out var isReplaced);
                     if (isReplaced)
                     {
                         var mapMethod = $"MapToInstance({name})";
@@ -301,7 +313,7 @@ using System;
                 var normalOrMap = $" = {name}_";
                 if (ps.GetTypeEnum() == TypeEnum.Complex)
                 {
-                    _ = GetParameterType(ps, out var isReplaced);
+                    _ = GetParameterType(ps, TypeUsedIn.Method, out var isReplaced);
                     if (isReplaced)
                     {
                         var mapMethod = $"MapToInstance({name}_)";
@@ -343,7 +355,7 @@ using System;
         {
             var name = @event.Key.GetSanitizedName();
             var ps = @event.First().Parameters.First();
-            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, out _) : ps.Type.ToString();
+            var type = ps.GetTypeEnum() == TypeEnum.Complex ? GetParameterType(ps, TypeUsedIn.Event, out _) : ps.Type.ToString();
 
             foreach (var attribute in ps.GetAttributesAsList())
             {
@@ -385,7 +397,7 @@ using System;
             var operatorType = @operator.Name.ToLowerInvariant().Replace("op_", string.Empty);
             if (operatorType == "explicit")
             {
-                var returnTypeAsString = GetReplacedTypeAsString(@operator.ReturnType, out _);
+                var returnTypeAsString = GetReplacedTypeAsString(@operator.ReturnType, TypeUsedIn.Operator, out _);
 
                 str.AppendLine($"        public static explicit operator {returnTypeAsString}({proxyClassName} {parameter.Name})");
                 str.AppendLine(@"        {");
@@ -394,7 +406,7 @@ using System;
             }
             else
             {
-                var returnTypeAsString = GetReplacedTypeAsString(parameter.Type, out _);
+                var returnTypeAsString = GetReplacedTypeAsString(parameter.Type, TypeUsedIn.Operator, out _);
 
                 str.AppendLine($"        public static implicit operator {proxyClassName}({returnTypeAsString} {parameter.Name})");
                 str.AppendLine(@"        {");

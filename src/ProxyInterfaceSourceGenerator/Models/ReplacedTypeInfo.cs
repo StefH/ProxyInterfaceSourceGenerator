@@ -1,3 +1,5 @@
+using ProxyInterfaceSourceGenerator.Types;
+
 namespace ProxyInterfaceSourceGenerator.Models;
 
 internal record ReplacedTypeInfo
@@ -7,5 +9,6 @@ internal record ReplacedTypeInfo
     string ElementType,
     string ElementInterfaceType,
     string Proxy,
-    bool Direct
+    bool Direct,
+    TypeUsedIn UsedIn
 );
