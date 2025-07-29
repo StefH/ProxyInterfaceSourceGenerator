@@ -10,6 +10,7 @@ internal class Generator : IDisposable
 {
     private readonly string _sourceDll;
     private readonly string _sourceFile;
+    private readonly string _sourceNamespace;
     private readonly string _outputPath;
 
     private readonly ChannelWriter<(string Filename, byte[] Data)> _writer;
@@ -20,6 +21,7 @@ internal class Generator : IDisposable
     {
         _sourceDll = configuration["sourceDll"] ?? throw new ArgumentNullException();
         _sourceFile = configuration["sourceFile"] ?? throw new ArgumentNullException();
+        _sourceNamespace = configuration["sourceNamespace"] ?? "*";
         _outputPath = configuration["outputPath"] ?? ".";
 
         // Create unbounded channel for file processing queue
