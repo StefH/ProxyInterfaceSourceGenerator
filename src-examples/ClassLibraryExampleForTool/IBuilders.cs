@@ -1,3 +1,15 @@
+namespace Microsoft.Graph
+{
+    [Proxy<GraphServiceClient>(true)]
+    public partial interface IGraphServiceClient;
+}
+
+namespace Microsoft.Graph.Core.Requests
+{
+    [Proxy<BatchRequestBuilder>(true)]
+    public partial interface IBatchRequestBuilder;
+}
+
 namespace Microsoft.Graph.Admin
 {
     [Proxy(typeof(AdminRequestBuilder), true)]
@@ -60272,16 +60284,4 @@ namespace Microsoft.Graph.UsersWithUserPrincipalName
 {
     [Proxy(typeof(UsersWithUserPrincipalNameRequestBuilder), true)]
     public partial interface IUsersWithUserPrincipalNameRequestBuilder;
-}
-
-namespace Microsoft.Graph
-{
-    [Proxy<GraphServiceClient>(true)]
-    public partial interface IGraphServiceClient;
-}
-
-namespace Microsoft.Graph.Core.Requests
-{
-    [Proxy<BatchRequestBuilder>(true)]
-    public partial interface IBatchRequestBuilder;
 }

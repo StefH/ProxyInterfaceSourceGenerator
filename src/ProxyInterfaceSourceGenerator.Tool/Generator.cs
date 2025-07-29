@@ -162,8 +162,8 @@ internal class Generator : IDisposable
             string modified;
             try
             {
-                var simplifier = new CSharpSimplifier(references);
-                modified = await simplifier.SimplifyCSharpCodeAsync(text);
+                using var simplifier = new CSharpSimplifier(references);
+                modified = await simplifier.SimplifyCSharpCodeAsync(text, cancellationToken);
             }
             catch (Exception ex)
             {
