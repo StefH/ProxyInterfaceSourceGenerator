@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Channels;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -11,7 +10,6 @@ internal class Generator : IDisposable
 {
     private readonly string _sourceDll;
     private readonly string _sourceFile;
-    private readonly string? _sourceNamespace;
     private readonly string _outputPath;
 
     private readonly ChannelWriter<(string Filename, byte[] Data)> _writer;
@@ -22,13 +20,7 @@ internal class Generator : IDisposable
     {
         _sourceDll = configuration["sourceDll"] ?? throw new ArgumentNullException();
         _sourceFile = configuration["sourceFile"] ?? throw new ArgumentNullException();
-        _sourceNamespace = configuration["sourceNamespace"];
         _outputPath = configuration["outputPath"] ?? ".";
-
-        if (!string.IsNullOrWhiteSpace(_sourceNamespace))
-        {
-            _outputPath = Path.Combine(_outputPath, _sourceNamespace.Split('.').Last());
-        }
 
         // Create unbounded channel for file processing queue
         var fileDataQueue = Channel.CreateUnbounded<(string Filename, byte[] Data)>();
@@ -46,9 +38,7 @@ internal class Generator : IDisposable
 
         var references = MetadataReferenceUtils.GetAllReferences(_sourceDll);
 
-        // var codeBlocks = await GetCodeBlocksByNamespacePrefixAsync(_sourceFile);
-
-        var allText = File.ReadAllText(_sourceFile);
+        var allText = await File.ReadAllTextAsync(_sourceFile, cancellationToken);
 
         var syntaxTree = CSharpSyntaxTree.ParseText(allText);
 
@@ -96,57 +86,6 @@ internal class Generator : IDisposable
             await _cancellationTokenSource.CancelAsync();
             throw;
         }
-    }
-
-    private async Task<string> GetCodeBlocksByNamespacePrefixAsync(string filePath)
-    {
-        if (string.IsNullOrWhiteSpace(_sourceNamespace) || _sourceNamespace == "*")
-        {
-            return await File.ReadAllTextAsync(filePath);
-        }
-
-        var lines = await File.ReadAllLinesAsync(filePath);
-        var result = new StringBuilder();
-        var currentBlock = new StringBuilder();
-        bool insideBlock = false;
-
-        foreach (var line in lines)
-        {
-            // Detect start of a namespace
-            if (line.TrimStart().StartsWith("namespace "))
-            {
-                // If we're inside a matching block, add it to result before starting a new one
-                if (insideBlock && currentBlock.Length > 0)
-                {
-                    result.AppendLine(currentBlock.ToString().Trim());
-                    result.AppendLine(); // Add spacing between blocks
-                    currentBlock.Clear();
-                }
-
-                // Start a new block if namespace matches
-                if (line.Contains(_sourceNamespace!))
-                {
-                    insideBlock = true;
-                    currentBlock.AppendLine(line);
-                }
-                else
-                {
-                    insideBlock = false;
-                }
-            }
-            else if (insideBlock)
-            {
-                currentBlock.AppendLine(line);
-            }
-        }
-
-        // Add the last block if needed
-        if (insideBlock && currentBlock.Length > 0)
-        {
-            result.AppendLine(currentBlock.ToString().Trim());
-        }
-
-        return result.ToString().Trim();
     }
 
     private async Task ProcessFileQueueAsync(HashSet<MetadataReference> references, CancellationToken cancellationToken)
