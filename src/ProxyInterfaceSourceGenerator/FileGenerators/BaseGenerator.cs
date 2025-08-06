@@ -190,7 +190,7 @@ internal abstract class BaseGenerator
         var found = Context.ReplacedTypes.FirstOrDefault(r => r.Direct && r.ClassType == typeSymbolAsString);
         if (found == null)
         {
-            var proxy = $"global::{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
+            var proxy = $"{Constants.GlobalPrefix}{existing.NamespaceDot}{existing.ShortMetadataName}Proxy"; // global::ProxyInterfaceSourceGeneratorTests.Source.TimeProviderProxy
             Context.ReplacedTypes.Add(new(typeSymbolAsString, existing.FullInterfaceName, string.Empty, string.Empty, proxy, true));
         }
     }
@@ -198,10 +198,9 @@ internal abstract class BaseGenerator
     protected bool TryGetNamedTypeSymbolByFullName(TypeKind kind, string name, IEnumerable<string> usings, [NotNullWhen(true)] out ClassSymbol? classSymbol)
     {
         classSymbol = default;
-        const string globalPrefix = "global::";
-        if (name.StartsWith(globalPrefix, StringComparison.Ordinal))
+        if (name.StartsWith(Constants.GlobalPrefix, StringComparison.Ordinal))
         {
-            name = name.Substring(globalPrefix.Length);
+            name = name.Substring(Constants.GlobalPrefix.Length);
         }
 
         // The GetTypeByMetadataName method returns null if no type matches the full name or if 2 or more types (in different assemblies) match the full name.

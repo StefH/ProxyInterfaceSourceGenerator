@@ -18,7 +18,7 @@ internal static class SymbolExtensions
         return symbol
             .GetAttributes()
             .Where(a => a.AttributeClass.IsPublic() && !ExcludedAttributes.Contains(a.AttributeClass?.ToString(), StringComparer.OrdinalIgnoreCase))
-            .Select(a => $"[{a}]")
+            .Select(a => $"[{Constants.GlobalPrefix}{a}]")
             .ToArray();
     }
 

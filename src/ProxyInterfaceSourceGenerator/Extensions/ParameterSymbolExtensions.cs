@@ -6,7 +6,6 @@ namespace ProxyInterfaceSourceGenerator.Extensions;
 
 internal static class ParameterSymbolExtensions
 {
-    private const string GlobalPrefix = "global::";
     private const string ParameterValueNull = "null";
 
     public static bool IsNullable(this IParameterSymbol ps) => ps.Type.NullableAnnotation == NullableAnnotation.Annotated;
@@ -48,7 +47,7 @@ internal static class ParameterSymbolExtensions
             {
                 defaultValue = ps.Type.IsReferenceType
                     ? ParameterValueNull : // The parameter is a ReferenceType, so use "null".
-                    $"default({GlobalPrefix}{ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
+                    $"default({Constants.GlobalPrefix}{ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
             }
         }
         else
