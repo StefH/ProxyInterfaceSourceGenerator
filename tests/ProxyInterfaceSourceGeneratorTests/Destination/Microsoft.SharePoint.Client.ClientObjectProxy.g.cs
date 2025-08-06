@@ -43,10 +43,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public object Tag { get => _Instance.Tag; set => _Instance.Tag = value; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public global::Microsoft.SharePoint.Client.ObjectPath Path { get => _Instance.Path; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public string ObjectVersion { get => _Instance.ObjectVersion; set => _Instance.ObjectVersion = value; }
 
         [global::Microsoft.SharePoint.Client.PseudoRemoteAttribute]
@@ -54,14 +54,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get => MapToInterface(_Instance.TypedObject); }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public virtual void FromJson(global::Microsoft.SharePoint.Client.JsonReader reader)
         {
             global::Microsoft.SharePoint.Client.JsonReader reader_ = reader;
             _Instance.FromJson(reader_);
         }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public virtual bool CustomFromJson(global::Microsoft.SharePoint.Client.JsonReader reader)
         {
             global::Microsoft.SharePoint.Client.JsonReader reader_ = reader;
@@ -69,13 +69,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result__636829107;
         }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve()
         {
             _Instance.Retrieve();
         }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public void Retrieve(params string[] propertyNames)
         {
             string[] propertyNames_ = propertyNames;

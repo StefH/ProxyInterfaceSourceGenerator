@@ -20,10 +20,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         object Tag { get; set; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         global::Microsoft.SharePoint.Client.ObjectPath Path { get; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         string ObjectVersion { get; set; }
 
         [global::Microsoft.SharePoint.Client.PseudoRemoteAttribute]
@@ -31,10 +31,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientObject TypedObject { get; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve();
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         void Retrieve(params string[] propertyNames);
 
         void RefreshLoad();

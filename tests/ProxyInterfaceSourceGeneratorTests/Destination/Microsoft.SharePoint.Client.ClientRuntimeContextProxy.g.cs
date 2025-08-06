@@ -83,7 +83,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public int RequestTimeout { get => _Instance.RequestTimeout; set => _Instance.RequestTimeout = value; }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public global::System.Collections.Generic.Dictionary<string, object> StaticObjects { get => _Instance.StaticObjects; }
 
         public global::System.Version ServerSchemaVersion { get => _Instance.ServerSchemaVersion; }
@@ -125,14 +125,14 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
             return result_366781530;
         }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public void AddQuery(global::Microsoft.SharePoint.Client.ClientAction query)
         {
             global::Microsoft.SharePoint.Client.ClientAction query_ = query;
             _Instance.AddQuery(query_);
         }
 
-        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public void AddQueryIdAndResultObject(long id, object obj)
         {
             long id_ = id;

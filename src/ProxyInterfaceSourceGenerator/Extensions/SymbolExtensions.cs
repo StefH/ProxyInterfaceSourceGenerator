@@ -58,7 +58,7 @@ internal static class SymbolExtensions
             }
 
             var member = enumType.GetMembers().OfType<IFieldSymbol>().FirstOrDefault(f => f.ConstantValue is not null && f.ConstantValue.Equals(arg.Value));
-            return $"{Constants.GlobalPrefix}{enumType.ToFullyQualifiedDisplayString()}.{member?.Name ?? arg.Value?.ToString()}";
+            return $"{enumType.ToFullyQualifiedDisplayString()}.{member?.Name ?? arg.Value?.ToString()}";
         }
 
         return arg.ToCSharpString();
