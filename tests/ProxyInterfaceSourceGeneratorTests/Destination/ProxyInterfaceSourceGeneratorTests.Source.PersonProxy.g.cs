@@ -64,7 +64,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get => _Instance[i, s]; set => _Instance[i, s] = value; }
 
-        [global::System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(System.Threading.PeriodicTimer))]
+        [global::System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(global::System.Threading.PeriodicTimer))]
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
         public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value!; }
