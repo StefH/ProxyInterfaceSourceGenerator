@@ -1,4 +1,4 @@
-namespace ProxyInterfaceSourceGeneratorTests.Source.System2;
+namespace ProxyInterfaceSourceGeneratorTests.Source.Systemn;
 
 public class NamespaceSystem
 {
