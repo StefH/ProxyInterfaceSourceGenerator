@@ -69,7 +69,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
         global::System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
+        void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken));
 
         bool TryParse(string s1, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
 

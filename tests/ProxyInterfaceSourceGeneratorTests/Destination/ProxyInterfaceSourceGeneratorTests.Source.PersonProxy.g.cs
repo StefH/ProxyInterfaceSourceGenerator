@@ -193,7 +193,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(System.Threading.CancellationToken))
+        public void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken))
         {
             int i_ = i;
             string? appId_ = appId;
