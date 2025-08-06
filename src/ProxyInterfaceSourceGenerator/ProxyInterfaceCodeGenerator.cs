@@ -49,7 +49,7 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 
             GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
 
-            GeneratePartialInterfaces(context, receiver, supportsNullable);
+            //GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
         catch (Exception exception)
@@ -127,15 +127,18 @@ internal class ProxyInterfaceCodeGenerator : ISourceGenerator
             }
             else
             {
-                Console.WriteLine("{0}", c);
-                _generateFileAction(fileData);
-                c++;
+                Console.WriteLine("{0}", c++);
 
-                //if (c >= 1000)
-                //{
-                //    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
-                //    break;
-                //}
+                if (c >= 50)
+                {
+                    _generateFileAction(fileData);
+                }
+                
+                if (c >= 100)
+                {
+                    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
+                    break;
+                }
             }
         }
     }

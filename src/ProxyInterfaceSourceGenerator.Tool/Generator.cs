@@ -53,18 +53,22 @@ internal class Generator : IDisposable
         using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
 
         // Start the file processing task
-        var fileProcessingTask = ProcessFileQueueAsync(references, combinedCts.Token);
+        //var fileProcessingTask = ProcessFileQueueAsync(references, combinedCts.Token);
 
         try
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            var stopwatch = Stopwatch.StartNew();
+
+            var list = new List<(string, byte[])>();
 
             // Run the generator
             _ = CSharpGeneratorDriver.Create(new ProxyInterfaceCodeGenerator(fileData =>
                 {
                     // Use compression to reduce memory usage during file processing
-                    _writer.TryWrite((fileData.Filename, StringCompressor.Compress(fileData.Text)));
+                    //_writer.TryWrite((fileData.Filename, StringCompressor.Compress(fileData.Text)));
+
+                    var compressedData = StringCompressor.Compress(fileData.Text);
+                    list.Add((fileData.Filename, compressedData));
                 }))
                 .RunGenerators(compilation, cancellationToken);
 
@@ -72,12 +76,25 @@ internal class Generator : IDisposable
             Console.WriteLine($"RunGenerators ({stopwatch.Elapsed.TotalSeconds} s)");
 
             // Signal that no more files will be enqueued
-            _writer.Complete();
+            //_writer.Complete();
 
             stopwatch.Restart();
+            using var simplifier = new CSharpSimplifier();
+            var result = await simplifier.SimplifyCSharpCodeWithControlledParallelismAsync(list, references, combinedCts.Token);
+            stopwatch.Stop();
+            Console.WriteLine($"SimplifyCSharpCodeInParallelAsync ({stopwatch.Elapsed.TotalSeconds} s)");
+
+            stopwatch.Restart();
+            foreach (var (filename, text) in result)
+            {
+                // Write the simplified file to the output path
+                var fullPath = Path.Combine(_outputPath, filename);
+                await File.WriteAllTextAsync(fullPath, text, combinedCts.Token);
+                Console.WriteLine($"Written file: {filename}");
+            }
 
             // Wait for all files to be processed
-            await fileProcessingTask;
+            //await fileProcessingTask;
             stopwatch.Stop();
             Console.WriteLine($"fileProcessingTask ({stopwatch.Elapsed.TotalSeconds} s)");
         }
@@ -101,7 +118,7 @@ internal class Generator : IDisposable
             string modified;
             try
             {
-                using var simplifier = new CSharpSimplifier(references);
+                using var simplifier = new CSharpSimplifier1(references);
                 modified = await simplifier.SimplifyCSharpCodeAsync(text, cancellationToken);
             }
             catch (Exception ex)
