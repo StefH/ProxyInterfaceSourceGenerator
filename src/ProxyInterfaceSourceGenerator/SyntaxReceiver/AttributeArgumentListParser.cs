@@ -41,7 +41,7 @@ internal static class AttributeArgumentListParser
         }
         else
         {
-            throw new ArgumentException("The first argument from the ProxyAttribute should be a Type.");
+            throw new ArgumentException("The first argument from the ProxyAttribute should be a valid resolvable Type.");
         }
 
         var array = attributeSyntax.ArgumentList?.Arguments.ToArray() ?? [];
@@ -129,6 +129,14 @@ internal static class AttributeArgumentListParser
         }
 
         var typeInfo = semanticModel.GetTypeInfo(typeSyntax);
+
+        if (typeInfo.Type is IErrorTypeSymbol)
+        {
+            // The Roslyn compiler could not resolve the type represented by typeSyntax.
+            // There was an error in the code being analyzed, the type doesn't exist or cannot be resolved in the current context.
+            return false;
+        }
+
         var typeSymbol = typeInfo.Type!;
 
         info = new(typeSymbol.ToFullyQualifiedDisplayString(), typeSymbol.GetFullMetadataName(), isGeneric);

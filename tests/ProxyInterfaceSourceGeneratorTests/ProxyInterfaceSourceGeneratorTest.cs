@@ -677,7 +677,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpClient)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpClient)"
             }
         };
 
@@ -689,7 +689,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpMessageInvoker)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpMessageInvoker)"
             }
         };
 
@@ -893,7 +893,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.TimeProvider)"
+                ArgumentList = "typeof(global::System.TimeProvider)"
             }
         };
 
