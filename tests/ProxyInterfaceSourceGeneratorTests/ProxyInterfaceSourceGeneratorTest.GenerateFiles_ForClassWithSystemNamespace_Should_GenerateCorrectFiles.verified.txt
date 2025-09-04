@@ -134,6 +134,8 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         global::System.Threading.Tasks.Task TestAsync1(global::System.Threading.CancellationToken cancellation = default(global::System.Threading.CancellationToken));
 
         global::System.Threading.Tasks.Task TestAsync2(global::System.Threading.CancellationToken cancellation);
+
+        global::System.Threading.Tasks.Task TestAsync3(global::System.Net.Http.HttpClient h);
     }
 }
 #nullable restore
@@ -173,6 +175,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             global::System.Threading.CancellationToken cancellation_ = cancellation;
             var result_828129024 = _Instance.TestAsync2(cancellation_);
             return result_828129024;
+        }
+
+        public global::System.Threading.Tasks.Task TestAsync3(global::System.Net.Http.HttpClient h)
+        {
+            global::System.Net.Http.HttpClient h_ = h;
+            var result__737954917 = _Instance.TestAsync3(h_);
+            return result__737954917;
         }
 
 

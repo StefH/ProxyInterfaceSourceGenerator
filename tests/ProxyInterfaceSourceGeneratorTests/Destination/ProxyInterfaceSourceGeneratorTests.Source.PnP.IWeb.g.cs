@@ -16,695 +16,695 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
     {
         new global::Microsoft.SharePoint.Client.Web _Instance { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string AccessRequestListUrl { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string AccessRequestSiteDescription { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string Acronym { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AlertCollection Alerts { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowAutomaticASPXPageIndexing { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowCreateDeclarativeWorkflowForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowDesignerForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowMasterPageEditingForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowRevertFromTemplateForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowRssFeeds { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowSaveDeclarativeWorkflowAsTemplateForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool AllowSavePublishDeclarativeWorkflowForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PropertyValues AllProperties { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string AlternateCssUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Guid AppInstanceId { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AppTileCollection AppTiles { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Group AssociatedMemberGroup { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Group AssociatedOwnerGroup { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Group AssociatedVisitorGroup { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User Author { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ContentTypeCollection AvailableContentTypes { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FieldCollection AvailableFields { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ModernizeHomepageResult CanModernizeHomepage { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string ClassicWelcomePage { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool CommentsOnSitePagesDisabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         short Configuration { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool ContainsConfidentialInfo { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ContentTypeCollection ContentTypes { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.DateTime Created { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ChangeToken CurrentChangeToken { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User CurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string CustomMasterUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool CustomSiteActionsDisabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SPDataLeakagePreventionStatusInfo DataLeakagePreventionStatusInfo { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string Description { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string DescriptionForExistingLanguage { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.UserResource DescriptionResource { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Collections.Generic.IEnumerable<global::Microsoft.SharePoint.Client.SPResourceEntry> DescriptionTranslations { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string DesignerDownloadUrlForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Guid DesignPackageId { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool DisableAppViews { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool DisableFlows { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool DisableRecommendedItems { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool DocumentLibraryCalloutOfficeWebAppPreviewersDisabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.BasePermissions EffectiveBasePermissions { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool EnableMinimalDownload { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.EventReceiverDefinitionCollection EventReceivers { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool ExcludeFromOfflineClient { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FeatureCollection Features { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FieldCollection Fields { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FolderCollection Folders { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         int FooterColorIndexInDarkMode { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         int FooterColorIndexInLightMode { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FooterVariantThemeType FooterEmphasis { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool FooterEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FooterLayoutType FooterLayout { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool HasWebTemplateExtension { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         int HeaderColorIndexInDarkMode { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         int HeaderColorIndexInLightMode { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SPVariantThemeType HeaderEmphasis { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.HeaderLayoutType HeaderLayout { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool HideTitleInHeader { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool HorizontalQuickLaunch { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.ClientSideComponent.HostedAppsManager HostedApps { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Guid Id { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsEduClass { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsEduClassProvisionChecked { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsEduClassProvisionPending { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsHomepageModernized { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsMultilingual { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsProvisioningComplete { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool IsRevertHomepageLinkHidden { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         uint Language { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.DateTime LastItemModifiedDate { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.DateTime LastItemUserModifiedDate { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListCollection Lists { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListTemplateCollection ListTemplates { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.LogoAlignment LogoAlignment { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string MasterUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool MegaMenuEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool MembersCanShare { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool NavAudienceTargetingEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Navigation Navigation { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool NextStepsFirstRunEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool NoCrawl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool NotificationsInOneDriveForBusinessEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool NotificationsInSharePointEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool ObjectCacheEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool OverwriteTranslationsOnChange { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.WebInformation ParentWeb { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ResourcePath ResourcePath { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool PreviewFeaturesEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string PrimaryColor { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriberCollection PushNotificationSubscribers { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool QuickLaunchEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RecycleBinItemCollection RecycleBin { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool RecycleBinEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RegionalSettings RegionalSettings { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string RelatedHubSiteIds { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string RequestAccessEmail { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RoleDefinitionCollection RoleDefinitions { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Folder RootFolder { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool SaveSiteAsTemplateEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SearchBoxInNavBarType SearchBoxInNavBar { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string SearchBoxPlaceholderText { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SearchScopeType SearchScope { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ResourcePath ServerRelativePath { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string ServerRelativeUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool ShowUrlStructureForCurrentUser { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Marketplace.CorporateCuratedGallery.SiteCollectionCorporateCatalogAccessor SiteCollectionAppCatalog { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.GroupCollection SiteGroups { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string SiteLogoDescription { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string SiteLogoUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List SiteUserInfoList { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.UserCollection SiteUsers { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Collections.Generic.IEnumerable<int> SupportedUILanguageIds { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool SyndicationEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SharingState TenantAdminMembersCanShare { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Marketplace.CorporateCuratedGallery.TenantCorporateCatalogAccessor TenantAppCatalog { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool TenantTagPolicyEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string ThemeApplicationActionHistory { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string ThemedCssFolderUrl { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ThemeInfo ThemeInfo { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool ThirdPartyMdmEnabled { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string Title { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string TitleForExistingLanguage { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.UserResource TitleResource { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Collections.Generic.IEnumerable<global::Microsoft.SharePoint.Client.SPResourceEntry> TitleTranslations { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool TreeViewEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         int UIVersion { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool UIVersionConfigurationEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string Url { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool UseAccessRequestDefault { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.UserCustomActionCollection UserCustomActions { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.WebCollection Webs { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string WebTemplate { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string WebTemplateConfiguration { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool WebTemplatesGalleryFirstRunEnabled { get; set; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         string WelcomePage { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Workflow.WorkflowAssociationCollection WorkflowAssociations { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Workflow.WorkflowTemplateCollection WorkflowTemplates { get; }
 
         global::System.Uri WebUrlFromPageUrlDirect(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, global::System.Uri pageFullUrl);
 
         global::System.Uri WebUrlFromFolderUrlDirect(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientContext context, global::System.Uri folderFullUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<bool> DoesUserHavePermissions(global::Microsoft.SharePoint.Client.BasePermissions permissionMask);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.BasePermissions> GetUserEffectivePermissions(string userName);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void CreateDefaultAssociatedGroups(string userLogin, string userLogin2, string groupNameSeed);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(global::System.Guid deviceAppInstanceId, string serviceToken);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void UnregisterPushNotificationSubscriber(global::System.Guid deviceAppInstanceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByArgs(string customArgs);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriberCollection GetPushNotificationSubscribersByUser(string userName);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<bool> DoesPushNotificationSubscriberExist(global::System.Guid deviceAppInstanceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(global::System.Guid deviceAppInstanceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SPLargeOperation GetListOperation(global::System.Guid listId, global::System.Guid operationId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User GetUserById(int userId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<bool> EnsureTenantAppCatalog(string callerId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.ClientSideComponent.StorageEntity GetStorageEntity(string key);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void SetStorageEntity(string key, string value, string description, string comments);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void RemoveStorageEntity(string key);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SharingResult ShareObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string roleValue, int groupId, bool propagateAcl, bool sendEmail, bool includeAnonymousLinkInEmail, string emailSubject, string emailBody, bool useSimplifiedRoles);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SharingResult ForwardObjectLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, string peoplePickerInput, string emailSubject, string emailBody);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SharingResult UnshareObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ObjectSharingSettings GetObjectSharingSettings(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string objectUrl, int groupId, bool useSimplifiedRoles);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> CreateAnonymousLinkWithExpiration(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, string expirationString);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteAllAnonymousLinksForObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteAnonymousLinkForObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void DestroyOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, global::Microsoft.SharePoint.Client.Utilities.IconSize size);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListCollection GetLists(global::Microsoft.SharePoint.Client.GetListsParameters getListsParams);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.WebTemplateCollection GetAvailableWebTemplates(uint lcid, bool doIncludeCrossLanguage);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetCatalog(int typeCatalog);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItems(string pagingInfo, int rowLimit, bool isAscending, global::Microsoft.SharePoint.Client.RecycleBinOrderBy orderBy, global::Microsoft.SharePoint.Client.RecycleBinItemState itemState);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RecycleBinItemCollection GetRecycleBinItemsByQueryInfo(global::Microsoft.SharePoint.Client.RecycleBinQueryInformation queryInfo);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ChangeCollection GetChanges(global::Microsoft.SharePoint.Client.ChangeQuery query);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetList(string strUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetListByTitle(string title);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetListUsingPath(global::Microsoft.SharePoint.Client.ResourcePath path);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListItem GetListItem(string strUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListItem GetListItemUsingPath(global::Microsoft.SharePoint.Client.ResourcePath path);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListItem GetListItemByResourceId(string resourceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.BusinessData.MetadataModel.Entity GetEntity(string @namespace, string name);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalogForAppInstance(global::System.Guid appInstanceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.BusinessData.MetadataModel.AppBdcCatalog GetAppBdcCatalog();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.WebCollection GetSubwebsForCurrentUser(global::Microsoft.SharePoint.Client.SubwebQuery query);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::System.IO.Stream> GetSPAppContextAsStream();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List DefaultDocumentLibrary();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileById(global::System.Guid uniqueId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Folder GetFolderById(global::System.Guid uniqueId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByLinkingUrl(string linkingUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByGuestUrl(string guestUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByGuestUrlEnsureAccess(string guestUrl, bool ensureAccess);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByWOPIFrameUrl(string wopiFrameUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByStreamFrameUrl(string streamFrameUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByUrl(string fileUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativeUrl(string serverRelativeUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativePath(global::Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> CreateSitePage(string pageMetaData);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> GetSitePageCopyToStatus(global::System.Guid workItemId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<string> GetSitePageMoveStatus(global::System.Guid workItemId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void ApplyWebTemplate(string webTemplate);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void DeleteObject();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void Recycle();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void Update();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.View GetViewFromUrl(string listUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.View GetViewFromPath(global::Microsoft.SharePoint.Client.ResourcePath listPath);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByServerRelativeUrl(string serverRelativeUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.File GetFileByServerRelativePath(global::Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Collections.Generic.IList<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentLibraries(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::System.Collections.Generic.IList<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> GetDocumentAndMediaLibraries(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webFullUrl, bool includePageLibraries);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::System.IO.Stream> PageContextCore();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AppInstance GetAppInstanceById(global::System.Guid appInstanceId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientObjectList<global::Microsoft.SharePoint.Client.AppInstance> GetAppInstancesByProductId(global::System.Guid productId);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AppInstance LoadAndInstallAppInSpecifiedLocale(global::System.IO.Stream appPackageStream, int installationLocaleLCID);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AppInstance LoadApp(global::System.IO.Stream appPackageStream, int installationLocaleLCID);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::System.Guid> AddPlaceholderUser(string listId, string placeholderText);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.AppInstance LoadAndInstallApp(global::System.IO.Stream appPackageStream);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void SetAccessRequestSiteDescriptionAndUpdate(string description);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void SetUseAccessRequestDefaultAndUpdate(bool useAccessRequestDefault);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void IncrementSiteClientTag();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void AddSupportedUILanguage(int lcid);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void RemoveSupportedUILanguage(int lcid);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User EnsureUser(string logonName);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User EnsureUserByObjectId(global::System.Guid objectId, global::System.Guid tenantId, global::Microsoft.SharePoint.Client.Utilities.PrincipalType principalType);
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void ApplyTheme(string colorPaletteUrl, string fontSchemeUrl, string backgroundImageUrl, bool shareGenerated);
     }
 }
