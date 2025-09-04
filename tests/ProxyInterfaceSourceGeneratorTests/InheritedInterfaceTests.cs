@@ -1,6 +1,6 @@
+using AwesomeAssertions;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
-using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
 using ProxyInterfaceSourceGeneratorTests.Helpers;

@@ -1,4 +1,6 @@
-# 0.9.0 (24 January 2025)
-- #88 Use internal Map methods if possible, else use Mapster [enhancement]
+# 0.10.0 (04 September 2025)
+- #90 add sponsor
+- #91 Revert Microsoft.CodeAnalysis.CSharp to version 4.8.0 [enhancement]
+- #82 [Bug] Can't generate method if base class and interface are same name.
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md

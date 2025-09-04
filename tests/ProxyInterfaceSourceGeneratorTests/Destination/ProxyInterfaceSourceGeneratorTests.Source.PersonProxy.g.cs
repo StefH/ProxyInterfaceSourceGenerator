@@ -59,12 +59,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get => MapToInterface(_Instance.Humans); set => _Instance.Humans = MapToInstance(value); }
 
-        [global::System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get => _Instance[i]; set => _Instance[i] = value; }
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get => _Instance[i, s]; set => _Instance[i, s] = value; }
 
-        [global::System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(global::System.Threading.PeriodicTimer))]
         public string Name { get => _Instance.Name; set => _Instance.Name = value; }
 
         public string? StringNullable { get => _Instance.StringNullable; set => _Instance.StringNullable = value!; }
@@ -186,37 +184,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57677169;
         }
 
-        [global::System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
         public global::System.Threading.Tasks.Task<string?> Method3Async()
         {
             var result__57684656 = _Instance.Method3Async();
             return result__57684656;
-        }
-
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken))
-        {
-            int i_ = i;
-            string? appId_ = appId;
-            global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata_ = metadata;
-            global::System.Threading.CancellationToken token_ = token;
-            _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
-        }
-
-        public bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii)
-        {
-            string s1_ = s1;
-            int[]? ii_ = ii;
-            var result__1226565302 = _Instance.TryParse(s1_, ii_);
-            return result__1226565302;
-        }
-
-        public bool TryParse(string s2, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i)
-        {
-            string s2_ = s2;
-            int? i_;
-            var result__1226565302 = _Instance.TryParse(s2_, out i_);
-            i = i_;
-            return result__1226565302;
         }
 
 
