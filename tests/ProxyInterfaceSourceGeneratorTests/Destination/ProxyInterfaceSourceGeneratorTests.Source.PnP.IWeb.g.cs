@@ -170,6 +170,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         global::Microsoft.SharePoint.Client.FolderCollection Folders { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
+        int FooterColorIndexInDarkMode { get; set; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        int FooterColorIndexInLightMode { get; set; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.FooterVariantThemeType FooterEmphasis { get; set; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
@@ -180,6 +186,12 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         bool HasWebTemplateExtension { get; set; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        int HeaderColorIndexInDarkMode { get; set; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        int HeaderColorIndexInLightMode { get; set; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.SPVariantThemeType HeaderEmphasis { get; set; }
@@ -281,7 +293,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         bool PreviewFeaturesEnabled { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
-        string PrimaryColor { get; }
+        string PrimaryColor { get; set; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriberCollection PushNotificationSubscribers { get; }
@@ -297,6 +309,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RegionalSettings RegionalSettings { get; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        string RelatedHubSiteIds { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         string RequestAccessEmail { get; set; }
@@ -360,6 +375,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         bool TenantTagPolicyEnabled { get; }
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        string ThemeApplicationActionHistory { get; }
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         string ThemedCssFolderUrl { get; set; }
@@ -435,24 +453,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         void CreateDefaultAssociatedGroups(string userLogin, string userLogin2, string groupNameSeed);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        void DestroyOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, global::Microsoft.SharePoint.Client.Utilities.IconSize size);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriber RegisterPushNotificationSubscriber(global::System.Guid deviceAppInstanceId, string serviceToken);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
@@ -469,6 +469,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.PushNotificationSubscriber GetPushNotificationSubscriber(global::System.Guid deviceAppInstanceId);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.SPLargeOperation GetListOperation(global::System.Guid listId, global::System.Guid operationId);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.User GetSiteUserIncludingDeletedByPuid(string puid);
@@ -513,6 +516,24 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         void DeleteAnonymousLinkForObject(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> CreateOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        void DestroyOrganizationSharingLink(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string url, bool isEditLink, bool removeAssociatedSharingLinkGroup);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkKind> GetSharingLinkKind(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string fileUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.SharingLinkData> GetSharingLinkData(string linkUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> MapToIcon(string fileName, string progId, global::Microsoft.SharePoint.Client.Utilities.IconSize size);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> GetWebUrlFromPageUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string pageFullUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ListCollection GetLists(global::Microsoft.SharePoint.Client.GetListsParameters getListsParams);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
@@ -532,6 +553,9 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetList(string strUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.List GetListByTitle(string title);
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.List GetListUsingPath(global::Microsoft.SharePoint.Client.ResourcePath path);
@@ -561,6 +585,57 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
         global::Microsoft.SharePoint.Client.ClientResult<global::System.IO.Stream> GetSPAppContextAsStream();
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.List DefaultDocumentLibrary();
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileById(global::System.Guid uniqueId);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.Folder GetFolderById(global::System.Guid uniqueId);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByLinkingUrl(string linkingUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByGuestUrl(string guestUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByGuestUrlEnsureAccess(string guestUrl, bool ensureAccess);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByWOPIFrameUrl(string wopiFrameUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByStreamFrameUrl(string streamFrameUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.File GetFileByUrl(string fileUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativeUrl(string serverRelativeUrl);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativePath(global::Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> CreateSitePage(string pageMetaData);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> GetSitePageCopyToStatus(global::System.Guid workItemId);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        global::Microsoft.SharePoint.Client.ClientResult<string> GetSitePageMoveStatus(global::System.Guid workItemId);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        void ApplyWebTemplate(string webTemplate);
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        void DeleteObject();
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
+        void Recycle();
+
+        [Microsoft.SharePoint.Client.RemoteAttribute]
         void Update();
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
@@ -583,42 +658,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::Microsoft.SharePoint.Client.DocumentLibraryInformation> DefaultDocumentLibraryUrl(global::ProxyInterfaceSourceGeneratorTests.Source.PnP.IClientRuntimeContext context, string webUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.List DefaultDocumentLibrary();
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileById(global::System.Guid uniqueId);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.Folder GetFolderById(global::System.Guid uniqueId);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileByLinkingUrl(string linkingUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileByGuestUrl(string guestUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileByGuestUrlEnsureAccess(string guestUrl, bool ensureAccess);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileByWOPIFrameUrl(string wopiFrameUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.File GetFileByUrl(string fileUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativeUrl(string serverRelativeUrl);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        global::Microsoft.SharePoint.Client.Folder GetFolderByServerRelativePath(global::Microsoft.SharePoint.Client.ResourcePath serverRelativePath);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        void ApplyWebTemplate(string webTemplate);
-
-        [Microsoft.SharePoint.Client.RemoteAttribute]
-        void DeleteObject();
 
         [Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.ClientResult<global::System.IO.Stream> PageContextInfo(bool includeODBSettings, bool emitNavigationInfo);

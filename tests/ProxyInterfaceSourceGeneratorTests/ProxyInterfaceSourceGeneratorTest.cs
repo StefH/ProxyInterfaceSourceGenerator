@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
+using AwesomeAssertions;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
-using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
@@ -382,40 +382,6 @@ public class ProxyInterfaceSourceGeneratorTest
             if (Write) File.WriteAllText(destinationFilename, builder.Text);
             builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
-
-        // Load the file content
-        string code = File.ReadAllText(Path.Combine(_basePath, $"Destination/ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetterProxy.g.cs"));
-
-        // Parse syntax tree
-        var tree = CSharpSyntaxTree.ParseText(code);
-        var root = tree.GetRoot();
-
-        // Find all method declarations
-        var methodDeclarations = root.DescendantNodes()
-            .OfType<MethodDeclarationSyntax>()
-            .ToArray();
-
-        // Find all method invocations
-        var methodInvocations = root.DescendantNodes()
-            .OfType<InvocationExpressionSyntax>()
-            .Select(inv => inv.Expression.ToString())
-            .ToArray();
-
-        // Analyze
-        Console.WriteLine("Unused private static methods:");
-        foreach (var method in methodDeclarations)
-        {
-            bool isPrivateStatic = method.Modifiers.Any(m => m.Kind() == SyntaxKind.PrivateKeyword) && method.Modifiers.Any(m => m.Kind() == SyntaxKind.StaticKeyword);
-
-            if (isPrivateStatic && !methodInvocations.Any(call => call.Contains(method.Identifier.Text)))
-            {
-                Console.WriteLine($"- {method.Identifier.Text}");
-
-                code = code.Replace(method.ToFullString(), string.Empty);
-            }
-        }
-
-        int x = 0;
     }
 
     [Fact]

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -10,22 +10,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Akka.Remote" Version="1.4.47" />
-        <PackageReference Include="AutoMapper" Version="11.0.1" />
-        <PackageReference Include="CultureAwareTesting.xUnit" Version="0.0.1" />
-        <PackageReference Include="FluentAssertions" Version="6.9.0" />
-        <PackageReference Include="Mapster" Version="7.3.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
-        <PackageReference Include="Moq" Version="4.18.4" />
-        <PackageReference Include="PnP.Framework" Version="1.10.0" />
+        <PackageReference Include="Akka.Remote" Version="1.5.48" />
+        <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+        <PackageReference Include="CultureAwareTesting.xUnit" Version="0.0.1.1" />
+        <PackageReference Include="Mapster" Version="7.4.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="PnP.Framework" Version="1.18.0" />
         <PackageReference Include="Verify.SourceGenerators" Version="2.0.1" />
         <PackageReference Include="Verify.Xunit" Version="19.7.1" />
-        <PackageReference Include="xunit" Version="2.4.2" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PackageReference Include="xunit" Version="2.9.3" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
+        <PackageReference Include="coverlet.collector" Version="6.0.4">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -36,7 +35,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.12" />
+        <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.15" />
     </ItemGroup>
 
 </Project>
