@@ -20,12 +20,10 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         global::System.Collections.Generic.List<global::ProxyInterfaceSourceGeneratorTests.Source.IHuman> Humans { get; set; }
 
-        [System.ComponentModel.DataAnnotations.DisplayAttribute(Prompt = "MyStruct Indexer")]
         global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i] { get; set; }
 
         global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct this[int i, string s] { get; set; }
 
-        [System.ComponentModel.DataAnnotations.DisplayAttribute(ResourceType = typeof(System.Threading.PeriodicTimer))]
         string Name { get; set; }
 
         string? StringNullable { get; set; }
@@ -66,7 +64,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         global::System.Threading.Tasks.Task<int> Method2Async();
 
-        [System.ComponentModel.DataAnnotations.DisplayAttribute(Name = "M3")]
         global::System.Threading.Tasks.Task<string?> Method3Async();
 
         void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
