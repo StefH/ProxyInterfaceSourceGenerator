@@ -47,7 +47,7 @@ internal static class ParameterSymbolExtensions
             {
                 defaultValue = ps.Type.IsReferenceType
                     ? ParameterValueNull : // The parameter is a ReferenceType, so use "null".
-                    $"default({ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
+                    $"default({Constants.GlobalPrefix}{ps.Type})"; // The parameter is not a ReferenceType, so use "default(T)".
             }
         }
         else

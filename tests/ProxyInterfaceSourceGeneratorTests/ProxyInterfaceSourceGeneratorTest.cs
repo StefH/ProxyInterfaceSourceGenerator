@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
+using AwesomeAssertions;
 using CSharp.SourceGenerators.Extensions;
 using CSharp.SourceGenerators.Extensions.Models;
-using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProxyInterfaceSourceGenerator;
@@ -360,7 +360,7 @@ public class ProxyInterfaceSourceGeneratorTest
                 Name = "ProxyInterfaceGenerator.Proxy",
                 ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetter)"
             }
-        };        
+        };
 
         // Act
         var result = _sut.Execute([
@@ -382,40 +382,6 @@ public class ProxyInterfaceSourceGeneratorTest
             if (Write) File.WriteAllText(destinationFilename, builder.Text);
             builder.Text.Should().Be(File.ReadAllText(destinationFilename));
         }
-
-        // Load the file content
-        string code = File.ReadAllText(Path.Combine(_basePath, $"Destination/ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetterProxy.g.cs"));
-
-        // Parse syntax tree
-        var tree = CSharpSyntaxTree.ParseText(code);
-        var root = tree.GetRoot();
-
-        // Find all method declarations
-        var methodDeclarations = root.DescendantNodes()
-            .OfType<MethodDeclarationSyntax>()
-            .ToArray();
-
-        // Find all method invocations
-        var methodInvocations = root.DescendantNodes()
-            .OfType<InvocationExpressionSyntax>()
-            .Select(inv => inv.Expression.ToString())
-            .ToArray();
-
-        // Analyze
-        Console.WriteLine("Unused private static methods:");
-        foreach (var method in methodDeclarations)
-        {
-            bool isPrivateStatic = method.Modifiers.Any(m => m.Kind() == SyntaxKind.PrivateKeyword) && method.Modifiers.Any(m => m.Kind() == SyntaxKind.StaticKeyword);
-
-            if (isPrivateStatic && !methodInvocations.Any(call => call.Contains(method.Identifier.Text)))
-            {
-                Console.WriteLine($"- {method.Identifier.Text}");
-
-                code = code.Replace(method.ToFullString(), string.Empty);
-            }
-        }
-
-        int x = 0;
     }
 
     [Fact]
@@ -677,7 +643,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpClient)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpClient)"
             }
         };
 
@@ -689,7 +655,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpMessageInvoker)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpMessageInvoker)"
             }
         };
 
@@ -893,7 +859,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.TimeProvider)"
+                ArgumentList = "typeof(global::System.TimeProvider)"
             }
         };
 
@@ -948,6 +914,42 @@ public class ProxyInterfaceSourceGeneratorTest
         proxy.Value!.Id.Should().Be("Value");
         proxy.Array.Select(a => a.Id).Should().BeEquivalentTo("Array 1", "Array 2");
         proxy.List.Select(a => a.Id).Should().BeEquivalentTo("List 1", "List 2", "List 3");
+    }
+
+    [Fact]
+    public Task GenerateFiles_ForClassWithSystemNamespace_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.INamespaceSystem.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystemProxy.g.cs"
+        };
+
+        var path = Path.Combine(_basePath, "Source/INamespaceSystem.cs");
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystem)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([
+            sourceFile
+        ]);
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        // Verify
+        var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
+        return Verify(results);
     }
 
     private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)

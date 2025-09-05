@@ -71,7 +71,7 @@ internal partial class ProxyClassesGenerator : BaseGenerator, IFilesGenerator
 
         if (firstExtends is not null)
         {
-            extends = $"global::{firstExtends.NamespaceDot}{firstExtends.ShortMetadataName}Proxy, ";
+            extends = $"{Constants.GlobalPrefix}{firstExtends.NamespaceDot}{firstExtends.ShortMetadataName}Proxy, ";
             @base = " : base(instance)";
             @new = "new ";
             instanceBaseDefinition = $"public {firstExtends.FullQualifiedTypeName} _Instance{firstExtends.FullQualifiedTypeName.GetLastPart()} {{ get; }}";

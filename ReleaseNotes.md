@@ -1,3 +1,11 @@
+# 0.11.0 (05 September 2025)
+- [#92](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/92) - Prefix all code generated types with global:: [bug] contributed by [StefH](https://github.com/StefH)
+
+# 0.10.0 (04 September 2025)
+- [#90](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/90) - add sponsor contributed by [StefH](https://github.com/StefH)
+- [#91](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/91) - Revert Microsoft.CodeAnalysis.CSharp to version 4.8.0 [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#82](https://github.com/StefH/ProxyInterfaceSourceGenerator/issues/82) - [Bug] Can't generate method if base class and interface are same name.
+
 # 0.9.0 (24 January 2025)
 - [#88](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/88) - Use internal Map methods if possible, else use Mapster [enhancement] contributed by [StefH](https://github.com/StefH)
 

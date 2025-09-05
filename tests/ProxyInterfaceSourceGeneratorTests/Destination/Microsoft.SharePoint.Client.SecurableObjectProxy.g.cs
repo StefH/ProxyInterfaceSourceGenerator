@@ -34,22 +34,22 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
 
         public new global::Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
         public global::Microsoft.SharePoint.Client.ClientObject _InstanceClientObject { get; }
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         public global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get => MapToInterface(_Instance.FirstUniqueAncestorSecurableObject); }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         public bool HasUniqueRoleAssignments { get => _Instance.HasUniqueRoleAssignments; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         public global::Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get => _Instance.RoleAssignments; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         public virtual void ResetRoleInheritance()
         {
             _Instance.ResetRoleInheritance();
         }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         public virtual void BreakRoleInheritance(bool copyRoleAssignments, bool clearSubscopes)
         {
             bool copyRoleAssignments_ = copyRoleAssignments;
