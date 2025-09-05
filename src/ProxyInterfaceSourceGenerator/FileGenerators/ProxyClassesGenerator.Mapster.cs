@@ -1,5 +1,6 @@
 using System.Text;
 using ProxyInterfaceSourceGenerator.Extensions;
+using ProxyInterfaceSourceGenerator.Types;
 
 namespace ProxyInterfaceSourceGenerator.FileGenerators;
 
@@ -55,17 +56,23 @@ internal partial class ProxyClassesGenerator
 
         foreach (var direct in directReplacedTypes)
         {
-            str.AppendLine($"        private static {direct.InterfaceType} MapToInterface({direct.ClassType} value)");
-            str.AppendLine(@"        {");
-            str.AppendLine($"            return new {direct.Proxy}(value);");
-            str.AppendLine(@"        }");
-            str.AppendLine();
+            if ((direct.UsedIn & TypeUsedIn.MapToInterface) != 0)
+            {
+                str.AppendLine($"        private static {direct.InterfaceType} MapToInterface({direct.ClassType} value)");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            return new {direct.Proxy}(value);");
+                str.AppendLine(@"        }");
+                str.AppendLine();
+            }
 
-            str.AppendLine($"        private static {direct.ClassType} MapToInstance({direct.InterfaceType} value)");
-            str.AppendLine(@"        {");
-            str.AppendLine($"            return value._Instance;");
-            str.AppendLine(@"        }");
-            str.AppendLine();
+            if ((direct.UsedIn & TypeUsedIn.MapToInstance) != 0)
+            {
+                str.AppendLine($"        private static {direct.ClassType} MapToInstance({direct.InterfaceType} value)");
+                str.AppendLine(@"        {");
+                str.AppendLine($"            return value._Instance;");
+                str.AppendLine(@"        }");
+                str.AppendLine();
+            }
         }
 
         return str.ToString();

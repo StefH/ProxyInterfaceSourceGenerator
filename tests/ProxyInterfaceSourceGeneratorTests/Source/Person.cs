@@ -128,13 +128,13 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         {
         }
 
-        public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
+        public bool TryParse(string s1, params int[]? ii)
         {
             ii = null;
             return false;
         }
 
-        public bool TryParse(string s2, [NotNullWhen(true)] out int? i)
+        public bool TryParse(string s2, out int? i)
         {
             i = 4;
             return true;

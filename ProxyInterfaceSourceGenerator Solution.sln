@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CE637DC-E8F5-4603-8B57-E51A32F631F1}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,6 +37,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumerForAkka", "src-examples\ProxyInterfaceConsumerForAkka\ProxyInterfaceConsumerForAkka.csproj", "{590908DF-A813-467A-94E4-3500020D0D54}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyInterfaceConsumerViaNuGet", "src-examples\ProxyInterfaceConsumerViaNuGet\ProxyInterfaceConsumerViaNuGet.csproj", "{1EA000E4-6103-4577-8D98-BDDA3BE458A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyInterfaceSourceGenerator.Tool", "src\ProxyInterfaceSourceGenerator.Tool\ProxyInterfaceSourceGenerator.Tool.csproj", "{09B03A3A-E066-463C-A631-9E9A8DE15723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibraryExampleForTool", "src-examples\ClassLibraryExampleForTool\ClassLibraryExampleForTool.csproj", "{814B1F1F-2E27-432D-AC98-EB238D6379DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +84,18 @@ Global
 		{1EA000E4-6103-4577-8D98-BDDA3BE458A2}.DebugAttach|Any CPU.Build.0 = Debug|Any CPU
 		{1EA000E4-6103-4577-8D98-BDDA3BE458A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EA000E4-6103-4577-8D98-BDDA3BE458A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.DebugAttach|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.DebugAttach|Any CPU.Build.0 = Debug|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B03A3A-E066-463C-A631-9E9A8DE15723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.DebugAttach|Any CPU.ActiveCfg = Debug|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.DebugAttach|Any CPU.Build.0 = Debug|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +107,8 @@ Global
 		{5F7DA2C5-B908-4B57-9F5F-BADF1216D89C} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 		{590908DF-A813-467A-94E4-3500020D0D54} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 		{1EA000E4-6103-4577-8D98-BDDA3BE458A2} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
+		{09B03A3A-E066-463C-A631-9E9A8DE15723} = {ED3DA9DD-1E07-444B-A2D7-2DBA280F96D4}
+		{814B1F1F-2E27-432D-AC98-EB238D6379DC} = {38BA087F-EDA1-4F8A-A140-85B84791B815}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {585F071D-051D-441C-9C6B-226D9E15A1F5}

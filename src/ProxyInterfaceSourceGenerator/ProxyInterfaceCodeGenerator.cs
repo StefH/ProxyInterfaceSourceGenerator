@@ -9,14 +9,15 @@ using ProxyInterfaceSourceGenerator.SyntaxReceiver;
 namespace ProxyInterfaceSourceGenerator;
 
 [Generator]
-#if DEBUG
-public
-#else
-internal
-#endif
-class ProxyInterfaceCodeGenerator : ISourceGenerator
+internal class ProxyInterfaceCodeGenerator : ISourceGenerator
 {
     private readonly ExtraFilesGenerator _proxyAttributeGenerator = new();
+    private readonly Action<FileData>? _generateFileAction;
+
+    public ProxyInterfaceCodeGenerator(Action<FileData>? generateFileAction = null)
+    {
+        _generateFileAction = generateFileAction;
+    }
 
     public void Initialize(GeneratorInitializationContext context)
     {
@@ -47,7 +48,8 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
             var supportsGenericAttributes = csharpParseOptions.LanguageVersion >= LanguageVersion.CSharp11;
 
             GenerateProxyAttribute(context, receiver, supportsNullable, supportsGenericAttributes);
-            GeneratePartialInterfaces(context, receiver, supportsNullable);
+
+            //GeneratePartialInterfaces(context, receiver, supportsNullable);
             GenerateProxyClasses(context, receiver, supportsNullable);
         }
         catch (Exception exception)
@@ -74,7 +76,7 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         context.AddSource("Error.g", SourceText.From(message, Encoding.UTF8));
     }
 
-    private static void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private void GeneratePartialInterfaces(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
     {
         var context = new Context
         {
@@ -83,13 +85,30 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var partialInterfacesGenerator = new PartialInterfacesGenerator(context, supportsNullable);
-        foreach (var (fileName, text) in partialInterfacesGenerator.GenerateFiles())
+
+        int c = 0;
+        foreach (var fileData in partialInterfacesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            if (_generateFileAction == null)
+            {
+                context.GeneratorExecutionContext.AddSource(fileData.Filename, SourceText.From(fileData.Text, Encoding.UTF8));
+            }
+            else
+            {
+                Console.WriteLine("{0}", c);
+                _generateFileAction(fileData);
+                c++;
+            }
+
+            //if (c >= 1000)
+            //{
+            //    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
+            //    break;
+            //}
         }
     }
 
-    private static void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
+    private void GenerateProxyClasses(GeneratorExecutionContext ctx, ProxySyntaxReceiver receiver, bool supportsNullable)
     {
         var context = new Context
         {
@@ -98,9 +117,29 @@ class ProxyInterfaceCodeGenerator : ISourceGenerator
         };
 
         var proxyClassesGenerator = new ProxyClassesGenerator(context, supportsNullable);
-        foreach (var (fileName, text) in proxyClassesGenerator.GenerateFiles())
+
+        int c = 0;
+        foreach (var fileData in proxyClassesGenerator.GenerateFiles())
         {
-            context.GeneratorExecutionContext.AddSource(fileName, SourceText.From(text, Encoding.UTF8));
+            if (_generateFileAction == null)
+            {
+                context.GeneratorExecutionContext.AddSource(fileData.Filename, SourceText.From(fileData.Text, Encoding.UTF8));
+            }
+            else
+            {
+                Console.WriteLine("{0}", c++);
+
+                if (c >= 50)
+                {
+                    _generateFileAction(fileData);
+                }
+                
+                if (c >= 100)
+                {
+                    Console.WriteLine("Stopping after xxx files to avoid excessive output.");
+                    break;
+                }
+            }
         }
     }
 }

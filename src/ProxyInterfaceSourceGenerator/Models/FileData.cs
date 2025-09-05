@@ -1,3 +1,3 @@
 namespace ProxyInterfaceSourceGenerator.Models;
 
-internal record FileData(string Filename, string Text);
+public record FileData(string Filename, string Text);

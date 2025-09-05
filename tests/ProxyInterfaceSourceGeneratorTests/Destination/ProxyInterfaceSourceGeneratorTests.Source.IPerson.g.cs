@@ -67,10 +67,6 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
         global::System.Threading.Tasks.Task<string?> Method3Async();
 
         void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken));
-
-        bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
-
-        bool TryParse(string s2, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i);
-    }
+}
 }
 #nullable restore
