@@ -360,7 +360,7 @@ public class ProxyInterfaceSourceGeneratorTest
                 Name = "ProxyInterfaceGenerator.Proxy",
                 ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.NoSetterOrGetter)"
             }
-        };        
+        };
 
         // Act
         var result = _sut.Execute([
