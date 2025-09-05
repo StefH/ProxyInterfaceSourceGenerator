@@ -199,7 +199,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
         }
 
-        public bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii)
+        public bool TryParse(string s1, int[]? ii)
         {
             string s1_ = s1;
             int[]? ii_ = ii;
@@ -207,7 +207,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__1226565302;
         }
 
-        public bool TryParse(string s2, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i)
+        public bool TryParse(string s2, out int? i)
         {
             string s2_ = s2;
             int? i_;
