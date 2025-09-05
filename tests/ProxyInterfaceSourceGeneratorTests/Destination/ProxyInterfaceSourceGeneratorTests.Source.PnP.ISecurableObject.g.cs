@@ -16,19 +16,19 @@ namespace ProxyInterfaceSourceGeneratorTests.Source.PnP
     {
         new global::Microsoft.SharePoint.Client.SecurableObject _Instance { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::ProxyInterfaceSourceGeneratorTests.Source.PnP.ISecurableObject FirstUniqueAncestorSecurableObject { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         bool HasUniqueRoleAssignments { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         global::Microsoft.SharePoint.Client.RoleAssignmentCollection RoleAssignments { get; }
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void ResetRoleInheritance();
 
-        [Microsoft.SharePoint.Client.RemoteAttribute]
+        [global::Microsoft.SharePoint.Client.RemoteAttribute]
         void BreakRoleInheritance(bool copyRoleAssignments, bool clearSubscopes);
     }
 }

@@ -8,7 +8,6 @@ namespace ProxyInterfaceSourceGenerator.SyntaxReceiver;
 
 internal class ProxySyntaxReceiver : ISyntaxContextReceiver
 {
-    private const string GlobalPrefix = "global::";
     private static readonly string[] Modifiers = ["public", "partial"];
     public IDictionary<InterfaceDeclarationSyntax, ProxyData> CandidateInterfaces { get; } = new Dictionary<InterfaceDeclarationSyntax, ProxyData>();
 
@@ -65,7 +64,7 @@ internal class ProxySyntaxReceiver : ISyntaxContextReceiver
         var fluentBuilderAttributeArguments = AttributeArgumentListParser.Parse(attributeList.Attributes.FirstOrDefault(), semanticModel);
 
         var metadataName = fluentBuilderAttributeArguments.MetadataName;
-        var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{GlobalPrefix}{ns}";
+        var globalNamespace = string.IsNullOrEmpty(ns) ? string.Empty : $"{Constants.GlobalPrefix}{ns}";
         var namespaceDot = string.IsNullOrEmpty(ns) ? string.Empty : $"{ns}.";
 
         data = new ProxyData(

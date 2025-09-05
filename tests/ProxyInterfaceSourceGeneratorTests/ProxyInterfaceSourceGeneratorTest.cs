@@ -643,7 +643,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpClient)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpClient)"
             }
         };
 
@@ -655,7 +655,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.Net.Http.HttpMessageInvoker)"
+                ArgumentList = "typeof(global::System.Net.Http.HttpMessageInvoker)"
             }
         };
 
@@ -859,7 +859,7 @@ public class ProxyInterfaceSourceGeneratorTest
             AttributeToAddToInterface = new ExtraAttribute
             {
                 Name = "ProxyInterfaceGenerator.Proxy",
-                ArgumentList = "typeof(System.TimeProvider)"
+                ArgumentList = "typeof(global::System.TimeProvider)"
             }
         };
 
@@ -914,6 +914,42 @@ public class ProxyInterfaceSourceGeneratorTest
         proxy.Value!.Id.Should().Be("Value");
         proxy.Array.Select(a => a.Id).Should().BeEquivalentTo("Array 1", "Array 2");
         proxy.List.Select(a => a.Id).Should().BeEquivalentTo("List 1", "List 2", "List 3");
+    }
+
+    [Fact]
+    public Task GenerateFiles_ForClassWithSystemNamespace_Should_GenerateCorrectFiles()
+    {
+        // Arrange
+        var fileNames = new[]
+        {
+            "ProxyInterfaceSourceGeneratorTests.Source.INamespaceSystem.g.cs",
+            "ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystemProxy.g.cs"
+        };
+
+        var path = Path.Combine(_basePath, "Source/INamespaceSystem.cs");
+        var sourceFile = new SourceFile
+        {
+            Path = path,
+            Text = File.ReadAllText(path),
+            AttributeToAddToInterface = new ExtraAttribute
+            {
+                Name = "ProxyInterfaceGenerator.Proxy",
+                ArgumentList = "typeof(ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystem)"
+            }
+        };
+
+        // Act
+        var result = _sut.Execute([
+            sourceFile
+        ]);
+
+        // Assert
+        result.Valid.Should().BeTrue();
+        result.Files.Should().HaveCount(fileNames.Length + 1);
+
+        // Verify
+        var results = result.GeneratorDriver.GetRunResult().Results.First().GeneratedSources;
+        return Verify(results);
     }
 
     private void Assert(ExecuteResult result, string[] fileNames, bool skipExtra = true)

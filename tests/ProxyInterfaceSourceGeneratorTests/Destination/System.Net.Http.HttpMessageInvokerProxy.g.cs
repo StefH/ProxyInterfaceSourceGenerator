@@ -18,7 +18,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::System.Net.Http.HttpMessageInvoker _Instance { get; }
         
-        [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
+        [global::System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
         public virtual global::System.Net.Http.HttpResponseMessage Send(global::System.Net.Http.HttpRequestMessage request, global::System.Threading.CancellationToken cancellationToken)
         {
             global::System.Net.Http.HttpRequestMessage request_ = request;

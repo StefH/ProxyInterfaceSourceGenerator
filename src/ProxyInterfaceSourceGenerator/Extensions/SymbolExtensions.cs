@@ -17,9 +17,51 @@ internal static class SymbolExtensions
     {
         return symbol
             .GetAttributes()
-            .Where(a => a.AttributeClass.IsPublic() && !ExcludedAttributes.Contains(a.AttributeClass?.ToString(), StringComparer.OrdinalIgnoreCase))
-            .Select(a => $"[{a}]")
+            .Where(a => a.AttributeClass.IsPublic() && !ExcludedAttributes.Contains(a.AttributeClass!.ToString(), StringComparer.OrdinalIgnoreCase))
+            .Select(a =>
+            {
+                var sb = new StringBuilder();
+                sb.Append($"[{a.AttributeClass!.ToFullyQualifiedDisplayString()}");
+
+                var args = a.ConstructorArguments.Select(FormatAttributeArgument).ToList();
+                args.AddRange(a.NamedArguments.Select(kvp => $"{kvp.Key} = {FormatAttributeArgument(kvp.Value)}"));
+
+                if (args.Count > 0)
+                {
+                    sb.Append($"({string.Join(", ", args)})");
+                }
+
+                sb.Append("]");
+                return sb.ToString();
+            })
             .ToArray();
+    }
+
+    private static string FormatAttributeArgument(TypedConstant arg)
+    {
+        if (arg.IsNull)
+        {
+            return "null";
+        }
+
+        if (arg.Kind == TypedConstantKind.Type)
+        {
+            return $"typeof({Constants.GlobalPrefix}{arg.Value})";
+        }
+
+        if (arg.Kind == TypedConstantKind.Enum)
+        {
+            var enumType = arg.Type;
+            if (enumType is null)
+            {
+                return arg.Value?.ToString() ?? string.Empty;
+            }
+
+            var member = enumType.GetMembers().OfType<IFieldSymbol>().FirstOrDefault(f => f.ConstantValue is not null && f.ConstantValue.Equals(arg.Value));
+            return $"{enumType.ToFullyQualifiedDisplayString()}.{member?.Name ?? arg.Value?.ToString()}";
+        }
+
+        return arg.ToCSharpString();
     }
 
     public static string GetAttributesPrefix(this ISymbol symbol)
