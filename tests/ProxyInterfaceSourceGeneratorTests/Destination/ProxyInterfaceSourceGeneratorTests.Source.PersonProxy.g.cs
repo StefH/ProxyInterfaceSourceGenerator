@@ -190,13 +190,23 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return result__57684656;
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken))
+        public void CreateInvokeHttpClient(int i = 5, int? iNull = null, int iDefault = 0, int? iNullablaDefault = null, string? appIdNull = null, string? appIdDefault = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct myStruct = default, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct? myNullableStruct = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassNull = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassDefault = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableNull = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableDefault = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default)
         {
             int i_ = i;
-            string? appId_ = appId;
+            int? iNull_ = iNull;
+            int iDefault_ = iDefault;
+            int? iNullablaDefault_ = iNullablaDefault;
+            string? appIdNull_ = appIdNull;
+            string? appIdDefault_ = appIdDefault;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct myStruct_ = myStruct;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct? myNullableStruct_ = myNullableStruct;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassNull_ = myClassNull;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassDefault_ = myClassDefault;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableNull_ = myClassNullableNull;
+            global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableDefault_ = myClassNullableDefault;
             global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata_ = metadata;
             global::System.Threading.CancellationToken token_ = token;
-            _Instance.CreateInvokeHttpClient(i_, appId_, metadata_, token_);
+            _Instance.CreateInvokeHttpClient(i_, iNull_, iDefault_, iNullablaDefault_, appIdNull_, appIdDefault_, myStruct_, myNullableStruct_, myClassNull_, myClassDefault_, myClassNullableNull_, myClassNullableDefault_, metadata_, token_);
         }
 
         public bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii)

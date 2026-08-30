@@ -66,7 +66,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         global::System.Threading.Tasks.Task<string?> Method3Async();
 
-        void CreateInvokeHttpClient(int i = 5, string? appId = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default(global::System.Threading.CancellationToken));
+        void CreateInvokeHttpClient(int i = 5, int? iNull = null, int iDefault = 0, int? iNullablaDefault = null, string? appIdNull = null, string? appIdDefault = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct myStruct = default, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct? myNullableStruct = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassNull = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassDefault = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableNull = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableDefault = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default);
 
         bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
 

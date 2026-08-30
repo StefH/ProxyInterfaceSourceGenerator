@@ -124,11 +124,25 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return Task.FromResult((string?)"");
         }
 
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string>? metadata = null, CancellationToken token = default)
+        public void CreateInvokeHttpClient(
+            int i = 5,
+            int? iNull = null,
+            int iDefault = default,
+            int? iNullablaDefault = default,
+            string? appIdNull = null,
+            string? appIdDefault = default,
+            MyStruct myStruct = default,
+            MyStruct? myNullableStruct = null,
+            MyClass myClassNull = null,
+            MyClass myClassDefault = default,
+            MyClass? myClassNullableNull = null,
+            MyClass? myClassNullableDefault = default,
+            IReadOnlyDictionary<string, string>? metadata = null,
+            CancellationToken token = default)
         {
         }
 
-        public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
+        public bool TryParse(string s1, [NotNullWhen(true)] params int[]? ii)
         {
             ii = null;
             return false;
