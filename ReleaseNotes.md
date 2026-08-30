@@ -1,3 +1,6 @@
+# 0.12.0 (30 August 2026)
+- [#94](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/94) - Fix null default [bug] contributed by [StefH](https://github.com/StefH)
+
 # 0.11.0 (05 September 2025)
 - [#92](https://github.com/StefH/ProxyInterfaceSourceGenerator/pull/92) - Prefix all code generated types with global:: [bug] contributed by [StefH](https://github.com/StefH)
 
