@@ -1,4 +1,4 @@
-﻿[
+[
   {
     HintName: ProxyInterfaceGenerator.Extra.g.cs,
     Source:
@@ -131,7 +131,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
     {
         global::ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystem _Instance { get; }
 
-        global::System.Threading.Tasks.Task TestAsync1(global::System.Threading.CancellationToken cancellation = default(global::System.Threading.CancellationToken));
+        global::System.Threading.Tasks.Task TestAsync1(global::System.Threading.CancellationToken cancellation = default);
 
         global::System.Threading.Tasks.Task TestAsync2(global::System.Threading.CancellationToken cancellation);
 
@@ -163,7 +163,7 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         public global::ProxyInterfaceSourceGeneratorTests.Source.System.NamespaceSystem _Instance { get; }
         
-        public global::System.Threading.Tasks.Task TestAsync1(global::System.Threading.CancellationToken cancellation = default(global::System.Threading.CancellationToken))
+        public global::System.Threading.Tasks.Task TestAsync1(global::System.Threading.CancellationToken cancellation = default)
         {
             global::System.Threading.CancellationToken cancellation_ = cancellation;
             var result_424844497 = _Instance.TestAsync1(cancellation_);

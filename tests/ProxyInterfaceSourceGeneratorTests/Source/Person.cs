@@ -108,36 +108,50 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
             return true;
         }
 
-        public Task Method1Async()
+        //public Task Method1Async()
+        //{
+        //    return Task.CompletedTask;
+        //}
+
+        //public Task<int> Method2Async()
+        //{
+        //    return Task.FromResult(1);
+        //}
+
+        //[Display(Name = "M3")]
+        //public Task<string?> Method3Async()
+        //{
+        //    return Task.FromResult((string?)"");
+        //}
+
+        public void CreateInvokeHttpClient(
+            int i = 5,
+            int? iNull = null,
+            int iDefault = default,
+            int? iNullablaDefault = default,
+            string? appIdNull = null,
+            string? appIdDefault = default,
+            MyStruct myStruct = default,
+            MyStruct? myNullableStruct = null,
+            MyClass myClassNull = null,
+            MyClass myClassDefault = default,
+            MyClass? myClassNullableNull = null,
+            MyClass? myClassNullableDefault = default,
+            IReadOnlyDictionary<string, string>? metadata = null,
+            CancellationToken token = default)
         {
-            return Task.CompletedTask;
         }
 
-        public Task<int> Method2Async()
-        {
-            return Task.FromResult(1);
-        }
+        //public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
+        //{
+        //    ii = null;
+        //    return false;
+        //}
 
-        [Display(Name = "M3")]
-        public Task<string?> Method3Async()
-        {
-            return Task.FromResult((string?)"");
-        }
-
-        public void CreateInvokeHttpClient(int i = 5, string? appId = null, IReadOnlyDictionary<string, string>? metadata = null, CancellationToken token = default)
-        {
-        }
-
-        public bool TryParse(string s1, [NotNullWhen(true)]params int[]? ii)
-        {
-            ii = null;
-            return false;
-        }
-
-        public bool TryParse(string s2, [NotNullWhen(true)] out int? i)
-        {
-            i = 4;
-            return true;
-        }
+        //public bool TryParse(string s2, [NotNullWhen(true)] out int? i)
+        //{
+        //    i = 4;
+        //    return true;
+        //}
     }
 }
