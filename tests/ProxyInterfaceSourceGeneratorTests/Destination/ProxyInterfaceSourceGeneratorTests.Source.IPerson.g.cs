@@ -60,7 +60,17 @@ namespace ProxyInterfaceSourceGeneratorTests.Source
 
         bool Generic2<T1, T2>(int x, T1 t1, T2 t2) where T1 : struct where T2 : class, new();
 
+        global::System.Threading.Tasks.Task Method1Async();
+
+        global::System.Threading.Tasks.Task<int> Method2Async();
+
+        global::System.Threading.Tasks.Task<string?> Method3Async();
+
         void CreateInvokeHttpClient(int i = 5, int? iNull = null, int iDefault = 0, int? iNullablaDefault = null, string? appIdNull = null, string? appIdDefault = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct myStruct = default, global::ProxyInterfaceSourceGeneratorTests.Source.MyStruct? myNullableStruct = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassNull = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass myClassDefault = null!, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableNull = null, global::ProxyInterfaceSourceGeneratorTests.Source.MyClass? myClassNullableDefault = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata = null, global::System.Threading.CancellationToken token = default);
+
+        bool TryParse(string s1, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] params int[]? ii);
+
+        bool TryParse(string s2, [global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out int? i);
     }
 }
 #nullable restore
