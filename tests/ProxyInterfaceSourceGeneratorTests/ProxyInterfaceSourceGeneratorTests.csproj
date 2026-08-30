@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Include="Akka.Remote" Version="1.5.48" />
         <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+        <PackageReference Include="Azure.Search.Documents" Version="12.0.0" />
         <PackageReference Include="CultureAwareTesting.xUnit" Version="0.0.1.1" />
         <PackageReference Include="Mapster" Version="7.4.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
@@ -36,6 +37,10 @@
 
     <ItemGroup>
         <PackageReference Include="CSharp.SourceGenerators.Extensions" Version="0.0.15" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Destination\AzureSearchGenerated\" />
     </ItemGroup>
 
 </Project>

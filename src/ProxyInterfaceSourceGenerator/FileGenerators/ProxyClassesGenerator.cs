@@ -223,7 +223,7 @@ using System;
             {
                 var type = GetParameterType(parameterSymbol, out _);
 
-                methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
+                methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type, SupportsNullable));
 
                 // Do not add the '_' for a 'ref' parameter.
                 invokeParameters.Add($"{parameterSymbol.GetRefKindPrefix()}{parameterSymbol.GetSanitizedName()}{(!parameterSymbol.IsRef()).IIf("_")}");

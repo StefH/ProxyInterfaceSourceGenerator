@@ -243,7 +243,7 @@ internal abstract class BaseGenerator
                 }
             }
 
-            methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type));
+            methodParameters.Add(MethodParameterBuilder.Build(parameterSymbol, type, SupportsNullable));
         }
 
         return methodParameters;

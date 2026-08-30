@@ -6,7 +6,7 @@ namespace ProxyInterfaceSourceGenerator.Builders;
 
 internal static class MethodParameterBuilder
 {
-    public static string Build(IParameterSymbol parameterSymbol, string? type)
+    public static string Build(IParameterSymbol parameterSymbol, string? type, bool supportsNullable)
     {
         var stringBuilder = new StringBuilder();
         if (type is not null)
@@ -18,7 +18,7 @@ internal static class MethodParameterBuilder
         }
         
         stringBuilder.Append(parameterSymbol.GetSanitizedName()); // "s" or "i" or ...
-        stringBuilder.Append(parameterSymbol.GetDefaultValue()); // "" or the value
+        stringBuilder.Append(parameterSymbol.GetDefaultValue(supportsNullable)); // "" or the value
 
         return stringBuilder.ToString();
     }

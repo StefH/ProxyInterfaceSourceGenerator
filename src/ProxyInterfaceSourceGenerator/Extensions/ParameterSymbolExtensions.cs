@@ -32,7 +32,7 @@ internal static class ParameterSymbolExtensions
 
     public static string GetParamsPrefix(this IParameterSymbol ps) => ps.IsParams ? "params " : string.Empty;
 
-    public static string GetDefaultValue(this IParameterSymbol ps)
+    public static string GetDefaultValue(this IParameterSymbol ps, bool supportsNullable)
     {
         if (!ps.HasExplicitDefaultValue)
         {
@@ -45,14 +45,14 @@ internal static class ParameterSymbolExtensions
             if (defaultValueSyntax.IsKind(SyntaxKind.DefaultLiteralExpression) ||
                 defaultValueSyntax.IsKind(SyntaxKind.DefaultExpression))
             {
-                return IsNonNullableReferenceTypeInNullableEnabledContext(ps)
+                return supportsNullable && ps.Type.IsReferenceType && ps.NullableAnnotation == NullableAnnotation.NotAnnotated
                     ? $" = {ParameterValueDefault}!"
                     : $" = {ParameterValueDefault}";
             }
 
             if (defaultValueSyntax.IsKind(SyntaxKind.NullLiteralExpression))
             {
-                return IsNonNullableReferenceTypeInNullableEnabledContext(ps)
+                return supportsNullable && ps.Type.IsReferenceType && ps.NullableAnnotation == NullableAnnotation.NotAnnotated
                     ? $" = {ParameterValueNull}!"
                     : $" = {ParameterValueNull}";
             }
@@ -62,7 +62,9 @@ internal static class ParameterSymbolExtensions
 
         if (ps.ExplicitDefaultValue is null)
         {
-            if (IsNonNullableReferenceTypeInNullableEnabledContext(ps))
+            // For metadata symbols (no source syntax), NullableAnnotation can be None or NotAnnotated.
+            // Treat any reference type that is NOT explicitly nullable (Annotated) as non-nullable when nullable is enabled.
+            if (supportsNullable && ps.Type.IsReferenceType && ps.NullableAnnotation != NullableAnnotation.Annotated)
             {
                 return $" = {ParameterValueNull}!";
             }
@@ -111,11 +113,6 @@ internal static class ParameterSymbolExtensions
         }
 
         return null;
-    }
-
-    private static bool IsNonNullableReferenceTypeInNullableEnabledContext(IParameterSymbol ps)
-    {
-        return ps.Type.IsReferenceType && ps.NullableAnnotation == NullableAnnotation.NotAnnotated;
     }
 
     public static TypeEnum GetTypeEnum(this IParameterSymbol p) => p.Type.GetTypeEnum();
