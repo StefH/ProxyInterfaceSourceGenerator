@@ -1,4 +1,4 @@
-# 0.12.0 (30 August 2026)
-- #94 Fix null default [bug]
+# 0.13.0 (30 August 2026)
+- #95 Support NullableAnnotation.None [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/ProxyInterfaceSourceGenerator/blob/main/ReleaseNotes.md
